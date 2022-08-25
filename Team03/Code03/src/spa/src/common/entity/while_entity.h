@@ -5,12 +5,8 @@
 #ifndef SPA_WHILE_ENTITY_H
 #define SPA_WHILE_ENTITY_H
 
+#include "statement_entity.h"
 
-#include "entity.h"
+class WhileEntity : public StatementEntity {};
 
-class WhileEntity : public Entity {
-
-};
-
-
-#endif //SPA_WHILE_ENTITY_H
+#endif // SPA_WHILE_ENTITY_H
