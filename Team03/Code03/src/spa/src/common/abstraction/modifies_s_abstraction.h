@@ -5,16 +5,20 @@
 #ifndef SPA_MODIFIES_S_ABSTRACTION_H
 #define SPA_MODIFIES_S_ABSTRACTION_H
 
-
-#include "common/entity/statement_entity.h"
 #include "abstraction.h"
+#include "common/entity/statement_entity.h"
 
-class ModifiesSAbstraction : public Abstraction<StatementRef, Entity> {
+class ModifiesSAbstraction : public Abstraction<StatementEntity, Entity> {
 public:
-    const StatementEntity &getLeftHandSide() override;
+  ModifiesSAbstraction(StatementEntity lhs, Entity rhs);
 
-    const Entity &getRightHandSide() override;
+  const StatementEntity &GetLeftHandSide() const override;
+
+  const Entity &GetRightHandSide() const override;
+
+private:
+  StatementEntity lhs_;
+  Entity rhs_;
 };
 
-
-#endif //SPA_MODIFIES_S_ABSTRACTION_H
+#endif // SPA_MODIFIES_S_ABSTRACTION_H

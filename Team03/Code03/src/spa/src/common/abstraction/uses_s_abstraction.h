@@ -5,16 +5,20 @@
 #ifndef SPA_USES_S_ABSTRACTION_H
 #define SPA_USES_S_ABSTRACTION_H
 
-
-#include "common/entity/statement_entity.h"
 #include "abstraction.h"
+#include "common/entity/statement_entity.h"
 
 class UsesSAbstraction : public Abstraction<StatementEntity, StatementEntity> {
 public:
-    const StatementEntity &getLeftHandSide() override;
+  UsesSAbstraction(StatementEntity lhs, StatementEntity rhs);
 
-    const StatementEntity &getRightHandSide() override;
+  const StatementEntity &GetLeftHandSide() const override;
+
+  const StatementEntity &GetRightHandSide() const override;
+
+private:
+  StatementEntity lhs_;
+  StatementEntity rhs_;
 };
 
-
-#endif //SPA_USES_S_ABSTRACTION_H
+#endif // SPA_USES_S_ABSTRACTION_H
