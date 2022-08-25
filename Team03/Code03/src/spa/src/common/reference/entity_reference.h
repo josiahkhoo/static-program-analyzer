@@ -5,12 +5,8 @@
 #ifndef SPA_ENTITY_REFERENCE_H
 #define SPA_ENTITY_REFERENCE_H
 
-
 #include "reference.h"
 
-class EntityReference : public Reference {
+class EntityReference : public Reference {};
 
-};
-
-
-#endif //SPA_ENTITY_REFERENCE_H
+#endif // SPA_ENTITY_REFERENCE_H
