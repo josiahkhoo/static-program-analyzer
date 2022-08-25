@@ -9,4 +9,4 @@
 
 class VariableEntity : public Entity {};
 
-#endif // SPA_VARIABLE_ENTITY_H
+#endif  // SPA_VARIABLE_ENTITY_H

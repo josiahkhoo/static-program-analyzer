@@ -9,7 +9,7 @@
 #include "statement_entity.h"
 
 class IfEntity : public StatementEntity {
-public:
+ public:
 };
 
-#endif // SPA_IF_ENTITY_H
+#endif  // SPA_IF_ENTITY_H

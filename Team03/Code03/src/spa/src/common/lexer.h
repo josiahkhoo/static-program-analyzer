@@ -9,8 +9,8 @@
 #include "vector"
 
 class Lexer {
-public:
+ public:
   virtual std::vector<Token> lex(std::istream &stream) = 0;
 };
 
-#endif // SPA_LEXER_H
+#endif  // SPA_LEXER_H

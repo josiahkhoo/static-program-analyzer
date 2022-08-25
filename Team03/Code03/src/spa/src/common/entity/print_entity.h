@@ -10,11 +10,11 @@
 #include "variable_entity.h"
 
 class PrintEntity : public StatementEntity {
-public:
+ public:
   PrintEntity(int line_number, VariableEntity &variable_entity);
 
-private:
+ private:
   VariableEntity &variable_entity_;
 };
 
-#endif // SPA_PRINT_ENTITY_H
+#endif  // SPA_PRINT_ENTITY_H

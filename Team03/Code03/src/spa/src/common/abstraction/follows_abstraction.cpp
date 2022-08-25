@@ -7,6 +7,10 @@
 FollowsAbstraction::FollowsAbstraction(StatementEntity lhs, StatementEntity rhs)
     : lhs_(lhs), rhs_(rhs) {}
 
-const StatementEntity &FollowsAbstraction::GetLeftHandSide() const { return lhs_; }
+const StatementEntity &FollowsAbstraction::GetLeftHandSide() const {
+  return lhs_;
+}
 
-const StatementEntity &FollowsAbstraction::GetRightHandSide() const { return rhs_; }
+const StatementEntity &FollowsAbstraction::GetRightHandSide() const {
+  return rhs_;
+}

@@ -9,4 +9,4 @@
 
 class ConstantEntity : public Entity {};
 
-#endif // SPA_CONSTANT_ENTITY_H
+#endif  // SPA_CONSTANT_ENTITY_H

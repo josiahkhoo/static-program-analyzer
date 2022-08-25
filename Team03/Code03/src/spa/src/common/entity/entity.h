@@ -9,4 +9,4 @@
 
 class Entity {};
 
-#endif // SPA_ENTITY_H
+#endif  // SPA_ENTITY_H

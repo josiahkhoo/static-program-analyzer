@@ -10,4 +10,4 @@
 
 class AssignEntity : public StatementEntity {};
 
-#endif // SPA_ASSIGN_ENTITY_H
+#endif  // SPA_ASSIGN_ENTITY_H

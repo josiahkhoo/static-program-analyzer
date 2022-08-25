@@ -7,4 +7,4 @@
 
 enum TimesDivideQuotientOperator { TIMES, DIVIDE, QUOTIENT };
 
-#endif // SPA_TIMES_DIVIDE_QUOTIENT_OPERATOR_H
+#endif  // SPA_TIMES_DIVIDE_QUOTIENT_OPERATOR_H

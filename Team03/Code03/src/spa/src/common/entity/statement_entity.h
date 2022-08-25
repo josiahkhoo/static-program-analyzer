@@ -8,15 +8,15 @@
 #include "entity.h"
 
 class StatementEntity : public Entity, public Stringable {
-public:
+ public:
   explicit StatementEntity(int line_number);
 
   int GetLineNumber() const;
 
   std::string ToString() const override;
 
-protected:
+ protected:
   int line_number_;
 };
 
-#endif // SPA_STATEMENT_ENTITY_H
+#endif  // SPA_STATEMENT_ENTITY_H

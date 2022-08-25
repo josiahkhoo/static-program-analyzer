@@ -11,32 +11,32 @@
 // The token class is responsible for representing a single token.
 // It holds the value for numbers and identifiers.
 class Token {
-public:
+ public:
   enum Kind {
-    NUMBER,                // E.g. "0", "10", "012"
-    IDENTIFIER,            // E.g. "hi", "h2"
-    LEFT_ROUND_BRACKET,    // (
-    RIGHT_ROUND_BRACKET,   // )
-    LEFT_CURLY_BRACKET,    // {
-    RIGHT_CURLY_BRACKET,   // }
-    DOUBLE_EQUAL,          // ==
-    EQUAL,                 // =
-    LESS_THAN,             // <
-    LESS_THAN_OR_EQUAL,    // <=
-    GREATER_THAN,          // >
-    GREATER_THAN_OR_EQUAL, // >=
-    PLUS,                  // +
-    MINUS,                 // -
-    ASTERISK,              // *
-    SLASH,                 // /
-    COMMA,                 // ,
-    PERCENT,               // %
-    SEMICOLON,             // "
-    OR,                    // ||
-    AND,                   // &&
-    NOT,                   // !
-    NEXT_LINE,             // \n
-    END                    // \0
+    NUMBER,                 // E.g. "0", "10", "012"
+    IDENTIFIER,             // E.g. "hi", "h2"
+    LEFT_ROUND_BRACKET,     // (
+    RIGHT_ROUND_BRACKET,    // )
+    LEFT_CURLY_BRACKET,     // {
+    RIGHT_CURLY_BRACKET,    // }
+    DOUBLE_EQUAL,           // ==
+    EQUAL,                  // =
+    LESS_THAN,              // <
+    LESS_THAN_OR_EQUAL,     // <=
+    GREATER_THAN,           // >
+    GREATER_THAN_OR_EQUAL,  // >=
+    PLUS,                   // +
+    MINUS,                  // -
+    ASTERISK,               // *
+    SLASH,                  // /
+    COMMA,                  // ,
+    PERCENT,                // %
+    SEMICOLON,              // "
+    OR,                     // ||
+    AND,                    // &&
+    NOT,                    // !
+    NEXT_LINE,              // \n
+    END                     // \0
   };
 
   // Constructs a token that does not hold a value.
@@ -53,7 +53,7 @@ public:
 
   std::string GetValue() const;
 
-private:
+ private:
   Kind kind_;
   std::optional<std::string> value_;
 
@@ -61,4 +61,4 @@ private:
   static bool CanHoldValue(Kind kind);
 };
 
-#endif // SPA_TOKEN_H
+#endif  // SPA_TOKEN_H

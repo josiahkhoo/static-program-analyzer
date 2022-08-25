@@ -9,4 +9,4 @@
 
 class WhileEntity : public StatementEntity {};
 
-#endif // SPA_WHILE_ENTITY_H
+#endif  // SPA_WHILE_ENTITY_H

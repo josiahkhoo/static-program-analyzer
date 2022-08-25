@@ -21,6 +21,7 @@
 #include "common/entity/while_entity.h"
 #include "common/queryable.h"
 #include "common/uniqueryable.h"
+
 class QueryablePkb : public Queryable<AssignEntity>,
                      public Queryable<CallEntity>,
                      public Queryable<ConstantEntity>,
@@ -94,4 +95,4 @@ class QueryablePkb : public Queryable<AssignEntity>,
                      public Uniqueryable<ParentTAbstraction, WhileEntity>,
                      public Uniqueryable<UsesSAbstraction, WhileEntity> {};
 
-#endif // SPA_QUERYABLE_PKB_H
+#endif  // SPA_QUERYABLE_PKB_H

@@ -14,4 +14,4 @@ enum EqualityOperator {
   LESSER_THAN_OR_EQUALS,
 };
 
-#endif // SPA_EQUALITY_OPERATOR_H
+#endif  // SPA_EQUALITY_OPERATOR_H

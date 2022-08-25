@@ -7,9 +7,10 @@
 
 #include <vector>
 
-template <class T, class R> class Uniqueryable {
-public:
+template <class T, class R>
+class Uniqueryable {
+ public:
   virtual std::vector<R> query(T) = 0;
 };
 
-#endif // SPA_UNIQUERYABLE_H
+#endif  // SPA_UNIQUERYABLE_H

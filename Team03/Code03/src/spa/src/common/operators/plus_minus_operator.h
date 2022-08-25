@@ -10,4 +10,4 @@ enum PlusMinusOperator {
   MINUS,
 };
 
-#endif // SPA_PLUS_MINUS_OPERATOR_H
+#endif  // SPA_PLUS_MINUS_OPERATOR_H

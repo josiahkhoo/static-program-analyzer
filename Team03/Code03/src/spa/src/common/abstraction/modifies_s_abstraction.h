@@ -9,16 +9,16 @@
 #include "common/entity/statement_entity.h"
 
 class ModifiesSAbstraction : public Abstraction<StatementEntity, Entity> {
-public:
+ public:
   ModifiesSAbstraction(StatementEntity lhs, Entity rhs);
 
   const StatementEntity &GetLeftHandSide() const override;
 
   const Entity &GetRightHandSide() const override;
 
-private:
+ private:
   StatementEntity lhs_;
   Entity rhs_;
 };
 
-#endif // SPA_MODIFIES_S_ABSTRACTION_H
+#endif  // SPA_MODIFIES_S_ABSTRACTION_H

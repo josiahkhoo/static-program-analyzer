@@ -7,8 +7,9 @@
 
 // Abstraction template that specifies two things, a left hand side class and a
 // right hand side class.
-template <class T, class U> class Abstraction {
-public:
+template <class T, class U>
+class Abstraction {
+ public:
   // Gets the left hand side of the abstraction.
   virtual const T &GetLeftHandSide() const = 0;
 
@@ -16,4 +17,4 @@ public:
   virtual const U &GetRightHandSide() const = 0;
 };
 
-#endif // SPA_ABSTRACTION_H
+#endif  // SPA_ABSTRACTION_H

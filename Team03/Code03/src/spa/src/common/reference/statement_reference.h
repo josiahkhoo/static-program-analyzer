@@ -9,4 +9,4 @@
 
 class StatementReference : public Reference {};
 
-#endif // SPA_STATEMENT_REFERENCE_H
+#endif  // SPA_STATEMENT_REFERENCE_H

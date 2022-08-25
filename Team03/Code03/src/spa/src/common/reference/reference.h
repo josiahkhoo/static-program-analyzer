@@ -7,4 +7,4 @@
 
 class Reference {};
 
-#endif // SPA_REFERENCE_H
+#endif  // SPA_REFERENCE_H

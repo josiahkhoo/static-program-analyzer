@@ -9,4 +9,4 @@
 
 class CallEntity : public Entity {};
 
-#endif // SPA_CALL_ENTITY_H
+#endif  // SPA_CALL_ENTITY_H

@@ -1,11 +1,13 @@
 #pragma once
 
-#include "queryable_pkb.h"
-#include "storable_pkb.h"
-#include <iostream>
 #include <stdio.h>
+
+#include <iostream>
 #include <string>
 #include <vector>
+
+#include "common/queryable_pkb.h"
+#include "common/storable_pkb.h"
 
 typedef short PROC;
 

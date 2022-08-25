@@ -9,4 +9,4 @@
 
 class ProcedureEntity : public Entity {};
 
-#endif // SPA_PROCEDURE_ENTITY_H
+#endif  // SPA_PROCEDURE_ENTITY_H

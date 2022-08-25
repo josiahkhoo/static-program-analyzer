@@ -9,4 +9,4 @@
 
 class EntityReference : public Reference {};
 
-#endif // SPA_ENTITY_REFERENCE_H
+#endif  // SPA_ENTITY_REFERENCE_H

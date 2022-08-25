@@ -20,4 +20,5 @@ bool Token::CanHoldValue(Kind kind) {
 
 std::string Token::GetValue() const {
   assert(CanHoldValue(kind_));
-  return value_.value(); }
+  return value_.value();
+}

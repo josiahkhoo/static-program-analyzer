@@ -7,4 +7,4 @@
 
 enum LogicalOperator { AND, OR, INVERSE };
 
-#endif // SPA_MODIFIER_H
+#endif  // SPA_MODIFIER_H

@@ -10,16 +10,16 @@
 
 class FollowsTAbstraction
     : public Abstraction<StatementEntity, StatementEntity> {
-public:
+ public:
   FollowsTAbstraction(StatementEntity lhs, StatementEntity rhs);
 
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
 
-private:
+ private:
   StatementEntity lhs_;
   StatementEntity rhs_;
 };
 
-#endif // SPA_FOLLOWS_T_ABSTRACTION_H
+#endif  // SPA_FOLLOWS_T_ABSTRACTION_H

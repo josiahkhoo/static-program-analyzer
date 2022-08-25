@@ -10,16 +10,16 @@
 
 class ParentTAbstraction
     : public Abstraction<StatementEntity, StatementEntity> {
-public:
+ public:
   ParentTAbstraction(StatementEntity lhs, StatementEntity rhs);
 
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
 
-private:
+ private:
   StatementEntity lhs_;
   StatementEntity rhs_;
 };
 
-#endif // SPA_PARENT_T_ABSTRACTION_H
+#endif  // SPA_PARENT_T_ABSTRACTION_H

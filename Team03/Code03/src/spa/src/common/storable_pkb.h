@@ -37,4 +37,4 @@ class StorablePkb : public Storable<AssignEntity>,
                     public Storable<ParentTAbstraction>,
                     public Storable<UsesSAbstraction> {};
 
-#endif // SPA_STORABLE_PKB_H
+#endif  // SPA_STORABLE_PKB_H
