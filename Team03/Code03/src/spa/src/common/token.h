@@ -51,6 +51,8 @@ public:
   // Check if the token is not a specified kind.
   bool IsNot(Kind kind);
 
+  std::string GetValue() const;
+
 private:
   Kind kind_;
   std::optional<std::string> value_;
