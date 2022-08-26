@@ -17,6 +17,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           style: file
+          repo-root: 'Team03/Code03'
 
       - name: Fail fast?!
         if: steps.linter.outputs.checks-failed > 0
