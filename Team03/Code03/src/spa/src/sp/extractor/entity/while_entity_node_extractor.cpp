@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #include "while_entity_node_extractor.h"
 
 std::optional<WhileEntity> WhileEntityNodeExtractor::TryExtractFromNode(

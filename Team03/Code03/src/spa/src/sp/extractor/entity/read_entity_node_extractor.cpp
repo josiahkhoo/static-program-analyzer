@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #include "read_entity_node_extractor.h"
 
 std::optional<ReadEntity> ReadEntityNodeExtractor::TryExtractFromNode(

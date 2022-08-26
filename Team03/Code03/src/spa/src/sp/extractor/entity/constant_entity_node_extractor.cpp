@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 26/8/22.
-//
-
 #include "constant_entity_node_extractor.h"
 
 std::optional<ConstantEntity> ConstantEntityNodeExtractor::TryExtractFromNode(

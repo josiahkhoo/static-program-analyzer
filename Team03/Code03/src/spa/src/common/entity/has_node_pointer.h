@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #ifndef SPA_HAS_NODE_POINTER_H
 #define SPA_HAS_NODE_POINTER_H
 

@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #include "procedure_entity_node_extractor.h"
 
 std::optional<ProcedureEntity> ProcedureEntityNodeExtractor::TryExtractFromNode(

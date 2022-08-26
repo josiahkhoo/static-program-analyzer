@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #include "entity_extractor_result.h"
 
 #include <utility>

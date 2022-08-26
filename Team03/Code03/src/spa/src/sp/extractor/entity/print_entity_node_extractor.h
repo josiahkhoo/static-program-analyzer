@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 27/8/22.
-//
-
 #ifndef SPA_PRINT_ENTITY_NODE_EXTRACTOR_H
 #define SPA_PRINT_ENTITY_NODE_EXTRACTOR_H
 
