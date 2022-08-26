@@ -1,6 +1,3 @@
-//
-// Created by Josiah Khoo on 25/8/22.
-//
 #include "token.h"
 
 Token::Token(Token::Kind kind) : kind_(kind) { assert(!CanHoldValue(kind)); }

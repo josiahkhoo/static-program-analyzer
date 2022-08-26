@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 24/8/22.
-//
-
 #include "parent_t_abstraction.h"
 
 ParentTAbstraction::ParentTAbstraction(StatementEntity lhs, StatementEntity rhs)
