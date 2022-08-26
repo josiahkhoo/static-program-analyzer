@@ -38,15 +38,16 @@ class TNode {
     Constant,
   };
 
-  int GetLine();
-  std::vector<TNode> GetChildren();
-  Type GetType();
-  std::optional<int> GetIntValue();
-  std::optional<std::string> GetStringValue();
-  bool IsStatement();
-  bool IsExpression();
-  bool IsOperator();
-  bool IsLeaf();
+  int GetLine() const;
+  std::vector<TNode> GetChildren() const;
+  Type GetType() const;
+  std::optional<int> GetIntValue() const;
+  std::optional<std::string> GetStringValue() const;
+  bool IsStatement() const;
+  bool IsExpression() const;
+  bool IsOperator() const;
+  bool IsLeaf() const;
+  bool IsType(Type type) const;
 };
 
 #endif  // SPA_T_NODE_H
