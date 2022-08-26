@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 25/8/22.
-//
-
 #include "catch.hpp"
 #include "common/token.h"
 

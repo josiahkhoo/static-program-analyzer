@@ -13,10 +13,10 @@ typedef short PROC;
 
 class t_node;
 
-class VarTable; // no need to #include "VarTable.h" as all I need is pointer
+class VarTable;  // no need to #include "VarTable.h" as all I need is pointer
 
 class PKB : public QueryablePkb, public StorablePkb {
-public:
+ public:
   static VarTable *varTable;
   static int setProcToAST(PROC p, t_node *r);
   static t_node *getRootAST(PROC p);

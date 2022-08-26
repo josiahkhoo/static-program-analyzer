@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 24/8/22.
-//
-
 #ifndef SPA_PARENT_ABSTRACTION_H
 #define SPA_PARENT_ABSTRACTION_H
 
