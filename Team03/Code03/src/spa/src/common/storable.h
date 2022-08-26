@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 25/8/22.
-//
-
 #ifndef SPA_STORABLE_H
 #define SPA_STORABLE_H
 

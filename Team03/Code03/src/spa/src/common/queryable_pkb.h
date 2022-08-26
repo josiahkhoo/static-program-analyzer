@@ -1,16 +1,12 @@
-//
-// Created by Josiah Khoo on 25/8/22.
-//
-
 #ifndef SPA_QUERYABLE_PKB_H
 #define SPA_QUERYABLE_PKB_H
 
-#include "common/abstraction/follows_abstraction.h"
-#include "common/abstraction/follows_t_abstraction.h"
-#include "common/abstraction/modifies_s_abstraction.h"
-#include "common/abstraction/parent_abstraction.h"
-#include "common/abstraction/parent_t_abstraction.h"
-#include "common/abstraction/uses_s_abstraction.h"
+#include "common/clause/follows_clause.h"
+#include "common/clause/follows_t_clause.h"
+#include "common/clause/modifies_s_clause.h"
+#include "common/clause/parent_clause.h"
+#include "common/clause/parent_t_clause.h"
+#include "common/clause/uses_s_clause.h"
 #include "common/entity/assign_entity.h"
 #include "common/entity/call_entity.h"
 #include "common/entity/constant_entity.h"
@@ -20,79 +16,80 @@
 #include "common/entity/read_entity.h"
 #include "common/entity/while_entity.h"
 #include "common/queryable.h"
-#include "common/uniqueryable.h"
+#include "common/queryable_one_arg.h"
 
-class QueryablePkb : public Queryable<AssignEntity>,
-                     public Queryable<CallEntity>,
-                     public Queryable<ConstantEntity>,
-                     public Queryable<IfEntity>,
-                     public Queryable<PrintEntity>,
-                     public Queryable<ProcedureEntity>,
-                     public Queryable<ReadEntity>,
-                     public Queryable<VariableEntity>,
-                     public Queryable<WhileEntity>,
+class QueryablePkb
+    : public Queryable<AssignEntity>,
+      public Queryable<CallEntity>,
+      public Queryable<ConstantEntity>,
+      public Queryable<IfEntity>,
+      public Queryable<PrintEntity>,
+      public Queryable<ProcedureEntity>,
+      public Queryable<ReadEntity>,
+      public Queryable<VariableEntity>,
+      public Queryable<WhileEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, AssignEntity>,
-                     public Uniqueryable<FollowsTAbstraction, AssignEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, AssignEntity>,
-                     public Uniqueryable<ParentAbstraction, AssignEntity>,
-                     public Uniqueryable<ParentTAbstraction, AssignEntity>,
-                     public Uniqueryable<UsesSAbstraction, AssignEntity>,
+      public QueryableWithOneArg<FollowsClause, AssignEntity>,
+      public QueryableWithOneArg<FollowsTClause, AssignEntity>,
+      public QueryableWithOneArg<ModifiesSClause, AssignEntity>,
+      public QueryableWithOneArg<ParentClause, AssignEntity>,
+      public QueryableWithOneArg<ParentTClause, AssignEntity>,
+      public QueryableWithOneArg<UsesSClause, AssignEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, CallEntity>,
-                     public Uniqueryable<FollowsTAbstraction, CallEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, CallEntity>,
-                     public Uniqueryable<ParentAbstraction, CallEntity>,
-                     public Uniqueryable<ParentTAbstraction, CallEntity>,
-                     public Uniqueryable<UsesSAbstraction, CallEntity>,
+      public QueryableWithOneArg<FollowsClause, CallEntity>,
+      public QueryableWithOneArg<FollowsTClause, CallEntity>,
+      public QueryableWithOneArg<ModifiesSClause, CallEntity>,
+      public QueryableWithOneArg<ParentClause, CallEntity>,
+      public QueryableWithOneArg<ParentTClause, CallEntity>,
+      public QueryableWithOneArg<UsesSClause, CallEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, ConstantEntity>,
-                     public Uniqueryable<FollowsTAbstraction, ConstantEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, ConstantEntity>,
-                     public Uniqueryable<ParentAbstraction, ConstantEntity>,
-                     public Uniqueryable<ParentTAbstraction, ConstantEntity>,
-                     public Uniqueryable<UsesSAbstraction, ConstantEntity>,
+      public QueryableWithOneArg<FollowsClause, ConstantEntity>,
+      public QueryableWithOneArg<FollowsTClause, ConstantEntity>,
+      public QueryableWithOneArg<ModifiesSClause, ConstantEntity>,
+      public QueryableWithOneArg<ParentClause, ConstantEntity>,
+      public QueryableWithOneArg<ParentTClause, ConstantEntity>,
+      public QueryableWithOneArg<UsesSClause, ConstantEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, IfEntity>,
-                     public Uniqueryable<FollowsTAbstraction, IfEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, IfEntity>,
-                     public Uniqueryable<ParentAbstraction, IfEntity>,
-                     public Uniqueryable<ParentTAbstraction, IfEntity>,
-                     public Uniqueryable<UsesSAbstraction, IfEntity>,
+      public QueryableWithOneArg<FollowsClause, IfEntity>,
+      public QueryableWithOneArg<FollowsTClause, IfEntity>,
+      public QueryableWithOneArg<ModifiesSClause, IfEntity>,
+      public QueryableWithOneArg<ParentClause, IfEntity>,
+      public QueryableWithOneArg<ParentTClause, IfEntity>,
+      public QueryableWithOneArg<UsesSClause, IfEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, PrintEntity>,
-                     public Uniqueryable<FollowsTAbstraction, PrintEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, PrintEntity>,
-                     public Uniqueryable<ParentAbstraction, PrintEntity>,
-                     public Uniqueryable<ParentTAbstraction, PrintEntity>,
-                     public Uniqueryable<UsesSAbstraction, PrintEntity>,
+      public QueryableWithOneArg<FollowsClause, PrintEntity>,
+      public QueryableWithOneArg<FollowsTClause, PrintEntity>,
+      public QueryableWithOneArg<ModifiesSClause, PrintEntity>,
+      public QueryableWithOneArg<ParentClause, PrintEntity>,
+      public QueryableWithOneArg<ParentTClause, PrintEntity>,
+      public QueryableWithOneArg<UsesSClause, PrintEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, ProcedureEntity>,
-                     public Uniqueryable<FollowsTAbstraction, ProcedureEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, ProcedureEntity>,
-                     public Uniqueryable<ParentAbstraction, ProcedureEntity>,
-                     public Uniqueryable<ParentTAbstraction, ProcedureEntity>,
-                     public Uniqueryable<UsesSAbstraction, ProcedureEntity>,
+      public QueryableWithOneArg<FollowsClause, ProcedureEntity>,
+      public QueryableWithOneArg<FollowsTClause, ProcedureEntity>,
+      public QueryableWithOneArg<ModifiesSClause, ProcedureEntity>,
+      public QueryableWithOneArg<ParentClause, ProcedureEntity>,
+      public QueryableWithOneArg<ParentTClause, ProcedureEntity>,
+      public QueryableWithOneArg<UsesSClause, ProcedureEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, ReadEntity>,
-                     public Uniqueryable<FollowsTAbstraction, ReadEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, ReadEntity>,
-                     public Uniqueryable<ParentAbstraction, ReadEntity>,
-                     public Uniqueryable<ParentTAbstraction, ReadEntity>,
-                     public Uniqueryable<UsesSAbstraction, ReadEntity>,
+      public QueryableWithOneArg<FollowsClause, ReadEntity>,
+      public QueryableWithOneArg<FollowsTClause, ReadEntity>,
+      public QueryableWithOneArg<ModifiesSClause, ReadEntity>,
+      public QueryableWithOneArg<ParentClause, ReadEntity>,
+      public QueryableWithOneArg<ParentTClause, ReadEntity>,
+      public QueryableWithOneArg<UsesSClause, ReadEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, VariableEntity>,
-                     public Uniqueryable<FollowsTAbstraction, VariableEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, VariableEntity>,
-                     public Uniqueryable<ParentAbstraction, VariableEntity>,
-                     public Uniqueryable<ParentTAbstraction, VariableEntity>,
-                     public Uniqueryable<UsesSAbstraction, VariableEntity>,
+      public QueryableWithOneArg<FollowsClause, VariableEntity>,
+      public QueryableWithOneArg<FollowsTClause, VariableEntity>,
+      public QueryableWithOneArg<ModifiesSClause, VariableEntity>,
+      public QueryableWithOneArg<ParentClause, VariableEntity>,
+      public QueryableWithOneArg<ParentTClause, VariableEntity>,
+      public QueryableWithOneArg<UsesSClause, VariableEntity>,
 
-                     public Uniqueryable<FollowsAbstraction, WhileEntity>,
-                     public Uniqueryable<FollowsTAbstraction, WhileEntity>,
-                     public Uniqueryable<ModifiesSAbstraction, WhileEntity>,
-                     public Uniqueryable<ParentAbstraction, WhileEntity>,
-                     public Uniqueryable<ParentTAbstraction, WhileEntity>,
-                     public Uniqueryable<UsesSAbstraction, WhileEntity> {};
+      public QueryableWithOneArg<FollowsClause, WhileEntity>,
+      public QueryableWithOneArg<FollowsTClause, WhileEntity>,
+      public QueryableWithOneArg<ModifiesSClause, WhileEntity>,
+      public QueryableWithOneArg<ParentClause, WhileEntity>,
+      public QueryableWithOneArg<ParentTClause, WhileEntity>,
+      public QueryableWithOneArg<UsesSClause, WhileEntity> {};
 
 #endif  // SPA_QUERYABLE_PKB_H

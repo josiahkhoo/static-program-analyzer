@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 26/8/22.
-//
-
 #ifndef SPA_T_NODE_H
 #define SPA_T_NODE_H
 

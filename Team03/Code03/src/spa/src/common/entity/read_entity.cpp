@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 24/8/22.
-//
-
 #include "read_entity.h"
 
 ReadEntity::ReadEntity(int line_number, VariableEntity variable_entity)
