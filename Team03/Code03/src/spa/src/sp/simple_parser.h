@@ -2,7 +2,7 @@
 #define SPA_SIMPLE_PARSER_H
 
 #include "common/parser.h"
-#include "t_node.h"
+#include "common/t_node.h"
 
 class SimpleParser : public Parser<TNode> {
   TNode parse(std::vector<Token> tokens) override;

@@ -5,11 +5,11 @@
 
 class StatementEntity : public Entity, public Stringable {
  public:
-  explicit StatementEntity(int line_number);
+  StatementEntity(const TNode* node_ptr, int line_number);
 
-  int GetLineNumber() const;
+  [[nodiscard]] int GetLineNumber() const;
 
-  std::string ToString() const override;
+  [[nodiscard]] std::string ToString() const override;
 
  protected:
   int line_number_;

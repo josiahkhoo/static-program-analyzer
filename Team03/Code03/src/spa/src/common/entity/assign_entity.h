@@ -4,6 +4,9 @@
 #include "entity.h"
 #include "statement_entity.h"
 
-class AssignEntity : public StatementEntity {};
+class AssignEntity : public StatementEntity {
+ public:
+  explicit AssignEntity(const TNode* node_ptr, int line_number);
+};
 
 #endif  // SPA_ASSIGN_ENTITY_H

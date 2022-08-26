@@ -1,0 +1,16 @@
+//
+// Created by Josiah Khoo on 27/8/22.
+//
+
+#ifndef SPA_IF_ENTITY_NODE_EXTRACTOR_H
+#define SPA_IF_ENTITY_NODE_EXTRACTOR_H
+
+#include "common/entity/if_entity.h"
+#include "sp/extractor/node_extractor.h"
+
+class IfEntityNodeExtractor : NodeExtractor<IfEntity> {
+ public:
+  [[nodiscard]] std::optional<IfEntity> TryExtractFromNode(const TNode& ast) const override;
+};
+
+#endif  // SPA_IF_ENTITY_NODE_EXTRACTOR_H

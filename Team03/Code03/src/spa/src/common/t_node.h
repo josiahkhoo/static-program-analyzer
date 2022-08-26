@@ -44,6 +44,7 @@ class TNode {
   bool IsOperator() const;
   bool IsLeaf() const;
   bool IsType(Type type) const;
+  bool IsNotType(Type type) const;
 };
 
 #endif  // SPA_T_NODE_H

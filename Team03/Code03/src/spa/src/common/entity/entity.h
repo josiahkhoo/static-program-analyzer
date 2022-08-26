@@ -2,7 +2,14 @@
 #define SPA_ENTITY_H
 
 #include "common/stringable.h"
+#include "has_node_pointer.h"
 
-class Entity {};
+class Entity : public HasNodePointer {
+ public:
+  explicit Entity(const TNode* node_ptr);
+  [[nodiscard]] const TNode* GetNodePointer() const;
+ private:
+  const TNode* node_ptr_;
+};
 
 #endif  // SPA_ENTITY_H

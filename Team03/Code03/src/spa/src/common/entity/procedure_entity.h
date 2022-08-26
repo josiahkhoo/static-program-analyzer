@@ -3,6 +3,14 @@
 
 #include "entity.h"
 
-class ProcedureEntity : public Entity {};
+class ProcedureEntity : public Entity {
+ public:
+  explicit ProcedureEntity(const TNode* node_ptr, std::string name);
+
+  [[nodiscard]] std::string GetName() const;
+
+ private:
+  std::string name_;
+};
 
 #endif  // SPA_PROCEDURE_ENTITY_H
