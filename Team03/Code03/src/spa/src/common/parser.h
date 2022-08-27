@@ -2,6 +2,7 @@
 #define SPA_PARSER_H
 
 #include "token.h"
+#include <vector>
 
 template <class T>
 class Parser {

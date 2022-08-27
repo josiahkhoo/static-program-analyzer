@@ -3,6 +3,7 @@
 
 #include <optional>
 #include <vector>
+#include <string>
 
 class TNode {
  public:
