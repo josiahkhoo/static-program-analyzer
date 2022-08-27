@@ -1,6 +1,5 @@
-#include "sp/extractor/entity_extractor.h"
-
 #include "catch.hpp"
+#include "sp/extractor/entity_extractor.h"
 
 TEST_CASE("Entity Extractor", "[EntityExtractor]") {
   AssignEntityNodeExtractor assign_extractor = AssignEntityNodeExtractor();

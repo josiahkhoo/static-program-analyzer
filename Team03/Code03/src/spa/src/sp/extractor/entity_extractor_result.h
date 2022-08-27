@@ -13,16 +13,16 @@
 
 class EntityExtractorResult {
  public:
-  std::vector<AssignEntity> GetAssignEntities() const;
-  std::vector<CallEntity> GetCallEntities() const;
-  std::vector<ConstantEntity> GetConstantEntities() const;
-  std::vector<IfEntity> GetIfEntities() const;
-  std::vector<PrintEntity> GetPrintEntities() const;
-  std::vector<ProcedureEntity> GetProcedureEntities() const;
-  std::vector<ReadEntity> GetReadEntities() const;
-  std::vector<StatementEntity> GetStatementEntities() const;
-  std::vector<VariableEntity> GetVariableEntities() const;
-  std::vector<WhileEntity> GetWhileEntities() const;
+  [[nodiscard]] std::vector<AssignEntity> GetAssignEntities() const;
+  [[nodiscard]] std::vector<CallEntity> GetCallEntities() const;
+  [[nodiscard]] std::vector<ConstantEntity> GetConstantEntities() const;
+  [[nodiscard]] std::vector<IfEntity> GetIfEntities() const;
+  [[nodiscard]] std::vector<PrintEntity> GetPrintEntities() const;
+  [[nodiscard]] std::vector<ProcedureEntity> GetProcedureEntities() const;
+  [[nodiscard]] std::vector<ReadEntity> GetReadEntities() const;
+  [[nodiscard]] std::vector<StatementEntity> GetStatementEntities() const;
+  [[nodiscard]] std::vector<VariableEntity> GetVariableEntities() const;
+  [[nodiscard]] std::vector<WhileEntity> GetWhileEntities() const;
 
  private:
   std::vector<AssignEntity> assign_entities_;
