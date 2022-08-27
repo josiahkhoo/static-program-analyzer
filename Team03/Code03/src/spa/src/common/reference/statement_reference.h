@@ -2,6 +2,7 @@
 #define SPA_STATEMENT_REFERENCE_H
 
 #include <optional>
+#include <string>
 
 #include "reference.h"
 

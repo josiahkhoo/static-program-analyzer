@@ -1,4 +1,5 @@
 #include "token.h"
+#include <cassert>
 
 Token::Token(Token::Kind kind) : kind_(kind) { assert(!CanHoldValue(kind)); }
 
