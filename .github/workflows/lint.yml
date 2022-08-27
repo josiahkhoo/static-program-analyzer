@@ -1,25 +1,18 @@
-# Workflow syntax:
-# https://help.github.com/en/articles/workflow-syntax-for-github-actions
-name: cpp-linter
+name: test-clang-format
 
 on:
   pull_request:
     branches: [ "master" ]
 
 jobs:
-  cpp-linter:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: cpp-linter/cpp-linter-action@v1
-        id: linter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          style: file
 
-      - name: Fail fast?!
-        if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
-        # for actual deployment
-        # run: exit 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: DoozyX/clang-format-lint-action@v0.14
+        with:
+          source: './Team03/Code03/src/spa/src ./Team03/Code03/src/unit_testing/src'
+          extensions: 'h,cpp'
+          clangFormatVersion: 14
+          style: google
