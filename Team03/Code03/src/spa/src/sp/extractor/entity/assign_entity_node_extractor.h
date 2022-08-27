@@ -6,6 +6,7 @@
 
 class AssignEntityNodeExtractor : public NodeExtractor<AssignEntity> {
  public:
+  AssignEntityNodeExtractor();
   [[nodiscard]] std::optional<AssignEntity> TryExtractFromNode(
       const TNode& ast) const override;
 };

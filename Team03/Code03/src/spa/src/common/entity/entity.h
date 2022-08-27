@@ -7,7 +7,8 @@
 class Entity : public HasNodePointer {
  public:
   explicit Entity(const TNode &node);
-  [[nodiscard]] const TNode* GetNodePointer() const;
+  [[nodiscard]] const TNode *GetNodePointer() const;
+
  private:
   const TNode &node_;
 };

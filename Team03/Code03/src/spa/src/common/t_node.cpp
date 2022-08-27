@@ -16,11 +16,13 @@ int TNode::GetLineNumber() const { return line_number_; }
 
 std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
   assert(!IsLeaf());
-  if (IsType(Inverse)) {
+  if (IsType(Inverse) || IsType(Print) || IsType(Read) || IsType(Call)) {
     assert(children_.size() == 1);
-  } else if (IsStatement() || IsEqualityOperator() || IsLogicalOperator() ||
-             IsTimesDivideQuotientOperator()) {
+  } else if (IsType(While) || IsType(Assign) || IsEqualityOperator() ||
+             IsLogicalOperator() || IsTimesDivideQuotientOperator()) {
     assert(children_.size() == 2);
+  } else if (IsType(IfElseThen)) {
+    assert(children_.size() == 3);
   }
   return children_;
 }
