@@ -12,9 +12,16 @@ TNode::TNode(TNode::Type type, int line_number, int int_val)
 TNode::TNode(TNode::Type type, int line_number, std::string string_val)
     : type_(type), line_number_(line_number), maybe_string_(string_val) {}
 
-int TNode::GetLine() const { return line_number_; }
+int TNode::GetLineNumber() const { return line_number_; }
 
 std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
+  assert(!IsLeaf());
+  if (IsType(Inverse)) {
+    assert(children_.size() == 1);
+  } else if (IsStatement() || IsEqualityOperator() || IsLogicalOperator() ||
+             IsTimesDivideQuotientOperator()) {
+    assert(children_.size() == 2);
+  }
   return children_;
 }
 

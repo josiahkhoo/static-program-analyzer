@@ -41,7 +41,7 @@ class TNode {
   TNode(Type type, int line_number, int int_val);
   TNode(Type type, int line_number, std::string string_val);
 
-  [[nodiscard]] int GetLine() const;
+  [[nodiscard]] int GetLineNumber() const;
   [[nodiscard]] std::vector<std::shared_ptr<TNode>> GetChildren() const;
   [[nodiscard]] Type GetType() const;
   [[nodiscard]] int GetIntValue() const;

@@ -5,5 +5,5 @@ std::optional<WhileEntity> WhileEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::While)) {
     return {};
   }
-  return std::make_optional<WhileEntity>(ast, ast.GetLine());
+  return std::make_optional<WhileEntity>(ast, ast.GetLineNumber());
 }
