@@ -123,9 +123,9 @@ void EntityExtractor::RecursivelyExtractNode(
               if_entities, print_entities, procedure_entities, read_entities,
               statement_entities, variable_entities, while_entities);
   if (!node.IsLeaf()) {
-    for (TNode child : node.GetChildren()) {
+    for (std::shared_ptr<TNode> child : node.GetChildren()) {
       RecursivelyExtractNode(
-          child, assign_entities, call_entities, constant_entities, if_entities,
+          *child, assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities);
     }
