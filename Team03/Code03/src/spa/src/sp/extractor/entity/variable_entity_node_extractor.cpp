@@ -5,5 +5,5 @@ std::optional<VariableEntity> VariableEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Variable)) {
     return {};
   }
-  return std::make_optional<VariableEntity>(&ast, ast.GetStringValue().value());
+  return std::make_optional<VariableEntity>(ast, ast.GetStringValue());
 }

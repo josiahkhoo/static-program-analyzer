@@ -6,7 +6,7 @@
 
 class IfEntity : public StatementEntity {
  public:
-  explicit IfEntity(const TNode* node_ptr, int line_number);
+  explicit IfEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_IF_ENTITY_H

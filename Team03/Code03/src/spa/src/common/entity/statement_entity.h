@@ -5,7 +5,7 @@
 
 class StatementEntity : public Entity, public Stringable {
  public:
-  StatementEntity(const TNode* node_ptr, int line_number);
+  StatementEntity(const TNode &node, int line_number);
 
   [[nodiscard]] int GetLineNumber() const;
 

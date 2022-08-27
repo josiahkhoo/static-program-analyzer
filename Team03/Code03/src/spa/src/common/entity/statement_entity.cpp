@@ -1,7 +1,7 @@
 #include "statement_entity.h"
 
-StatementEntity::StatementEntity(const TNode* node_ptr, int line_number)
-    : Entity(node_ptr), line_number_(line_number) {}
+StatementEntity::StatementEntity(const TNode &node, int line_number)
+    : Entity(node), line_number_(line_number) {}
 
 int StatementEntity::GetLineNumber() const { return line_number_; }
 

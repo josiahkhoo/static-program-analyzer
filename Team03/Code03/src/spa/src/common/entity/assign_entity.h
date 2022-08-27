@@ -6,7 +6,7 @@
 
 class AssignEntity : public StatementEntity {
  public:
-  explicit AssignEntity(const TNode* node_ptr, int line_number);
+  explicit AssignEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_ASSIGN_ENTITY_H

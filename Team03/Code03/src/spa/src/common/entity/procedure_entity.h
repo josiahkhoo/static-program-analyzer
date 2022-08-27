@@ -5,7 +5,7 @@
 
 class ProcedureEntity : public Entity {
  public:
-  explicit ProcedureEntity(const TNode* node_ptr, std::string name);
+  explicit ProcedureEntity(const TNode &node, std::string name);
 
   [[nodiscard]] std::string GetName() const;
 

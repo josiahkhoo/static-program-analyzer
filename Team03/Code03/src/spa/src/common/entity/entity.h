@@ -6,10 +6,10 @@
 
 class Entity : public HasNodePointer {
  public:
-  explicit Entity(const TNode* node_ptr);
+  explicit Entity(const TNode &node);
   [[nodiscard]] const TNode* GetNodePointer() const;
  private:
-  const TNode* node_ptr_;
+  const TNode &node_;
 };
 
 #endif  // SPA_ENTITY_H

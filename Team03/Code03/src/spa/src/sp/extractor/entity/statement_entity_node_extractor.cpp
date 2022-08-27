@@ -5,5 +5,5 @@ std::optional<StatementEntity> StatementEntityNodeExtractor::TryExtractFromNode(
   if (!ast.IsStatement()) {
     return {};
   }
-  return std::make_optional<StatementEntity>(&ast, ast.GetLine());
+  return std::make_optional<StatementEntity>(ast, ast.GetLine());
 }

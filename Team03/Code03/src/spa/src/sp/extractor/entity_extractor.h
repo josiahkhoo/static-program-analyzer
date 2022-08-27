@@ -27,7 +27,7 @@ class EntityExtractor {
       const VariableEntityNodeExtractor &variable_entity_node_extractor,
       const WhileEntityNodeExtractor &while_entity_node_extractor);
 
-  EntityExtractorResult Extract(const TNode &ast) const;
+  [[nodiscard]] EntityExtractorResult Extract(const TNode &ast) const;
 
  private:
   // Extractors

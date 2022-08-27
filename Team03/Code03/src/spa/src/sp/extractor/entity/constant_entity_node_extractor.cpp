@@ -5,5 +5,5 @@ std::optional<ConstantEntity> ConstantEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Constant)) {
     return {};
   }
-  return std::make_optional<ConstantEntity>(&ast, ast.GetIntValue().value());
+  return std::make_optional<ConstantEntity>(ast, ast.GetIntValue());
 }

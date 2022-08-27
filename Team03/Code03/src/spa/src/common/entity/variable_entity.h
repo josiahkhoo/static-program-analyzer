@@ -5,7 +5,7 @@
 
 class VariableEntity : public Entity {
  public:
-  explicit VariableEntity(const TNode* node_ptr, std::string name);
+  explicit VariableEntity(const TNode &node, std::string name);
 
   [[nodiscard]] std::string GetName() const;
 

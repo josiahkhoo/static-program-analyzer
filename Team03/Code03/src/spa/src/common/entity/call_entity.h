@@ -6,7 +6,7 @@
 
 class CallEntity : public StatementEntity {
  public:
-  explicit CallEntity(const TNode* node_ptr, int line_number);
+  explicit CallEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_CALL_ENTITY_H

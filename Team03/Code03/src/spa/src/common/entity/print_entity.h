@@ -7,7 +7,7 @@
 
 class PrintEntity : public StatementEntity {
  public:
-  explicit PrintEntity(const TNode* node_ptr, int line_number);
+  explicit PrintEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_PRINT_ENTITY_H

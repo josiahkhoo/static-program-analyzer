@@ -5,5 +5,5 @@ std::optional<AssignEntity> AssignEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Assign)) {
     return {};
   }
-  return std::make_optional<AssignEntity>(&ast, ast.GetLine());
+  return std::make_optional<AssignEntity>(ast, ast.GetLine());
 }

@@ -5,5 +5,5 @@ std::optional<ProcedureEntity> ProcedureEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::IfElseThen)) {
     return {};
   }
-  return std::make_optional<ProcedureEntity>(&ast, ast.GetStringValue().value());
+  return std::make_optional<ProcedureEntity>(ast, ast.GetStringValue());
 }

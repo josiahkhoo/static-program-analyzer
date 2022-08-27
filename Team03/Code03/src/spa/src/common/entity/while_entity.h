@@ -5,7 +5,7 @@
 
 class WhileEntity : public StatementEntity {
  public:
-  explicit WhileEntity(const TNode* node_ptr, int line_number_);
+  explicit WhileEntity(const TNode &node, int line_number_);
 };
 
 #endif  // SPA_WHILE_ENTITY_H
