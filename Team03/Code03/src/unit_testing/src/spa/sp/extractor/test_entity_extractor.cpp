@@ -3,12 +3,25 @@
 #include "catch.hpp"
 
 TEST_CASE("Entity Extractor", "[EntityExtractor]") {
+  AssignEntityNodeExtractor assign_extractor = AssignEntityNodeExtractor();
+  CallEntityNodeExtractor call_extractor = CallEntityNodeExtractor();
+  ConstantEntityNodeExtractor constant_extractor =
+      ConstantEntityNodeExtractor();
+  IfEntityNodeExtractor if_extractor = IfEntityNodeExtractor();
+  PrintEntityNodeExtractor print_extractor = PrintEntityNodeExtractor();
+  ProcedureEntityNodeExtractor procedure_extractor =
+      ProcedureEntityNodeExtractor();
+  ReadEntityNodeExtractor read_extractor = ReadEntityNodeExtractor();
+  StatementEntityNodeExtractor statement_extractor =
+      StatementEntityNodeExtractor();
+  VariableEntityNodeExtractor variable_extractor =
+      VariableEntityNodeExtractor();
+  WhileEntityNodeExtractor while_extractor = WhileEntityNodeExtractor();
+
   EntityExtractor entity_extractor_under_test = EntityExtractor(
-      AssignEntityNodeExtractor(), CallEntityNodeExtractor(),
-      ConstantEntityNodeExtractor(), IfEntityNodeExtractor(),
-      PrintEntityNodeExtractor(), ProcedureEntityNodeExtractor(),
-      ReadEntityNodeExtractor(), StatementEntityNodeExtractor(),
-      VariableEntityNodeExtractor(), WhileEntityNodeExtractor());
+      assign_extractor, call_extractor, constant_extractor, if_extractor,
+      print_extractor, procedure_extractor, read_extractor, statement_extractor,
+      variable_extractor, while_extractor);
 
   SECTION("Extract single-depth constant node") {
     TNode single_depth_node = TNode(TNode::Constant, 1, 2);
