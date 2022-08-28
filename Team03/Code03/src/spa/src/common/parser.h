@@ -1,8 +1,9 @@
 #ifndef SPA_PARSER_H
 #define SPA_PARSER_H
 
-#include "token.h"
 #include <vector>
+
+#include "token.h"
 
 template <class T>
 class Parser {
