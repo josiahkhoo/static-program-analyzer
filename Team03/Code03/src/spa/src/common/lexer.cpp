@@ -64,8 +64,7 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::AND, "^(&&)"},
     {Token::NOT, "^(!)"},
     {Token::NEXT_LINE, "^(\n)"},
-    {Token::END, "^(\0)"}
-};
+    {Token::END, "^(\0)"}};
 
 // Splits given stream of text into a list of lines
 std::vector<std::string> splitLines(std::istream& stream) {
