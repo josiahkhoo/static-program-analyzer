@@ -4,40 +4,9 @@
 
 #include <iostream>
 #include <istream>
-#include <map>
 #include <regex>
 
 #include "token.h"
-
-std::string prettyPrintType(Token::Kind t) {
-  std::map<Token::Kind, std::string> m = {
-      {Token::WHITESPACE, "WHTESPACE"},
-      {Token::NUMBER, "NUMBER"},
-      {Token::IDENTIFIER, "IDENTIFIER"},
-      {Token::LEFT_ROUND_BRACKET, "LEFT_ROUND_BRACKET"},
-      {Token::RIGHT_ROUND_BRACKET, "RIGHT_ROUND_BRACKET"},
-      {Token::LEFT_CURLY_BRACKET, "LEFT_CURLY_BRACKET"},
-      {Token::RIGHT_CURLY_BRACKET, "RIGHT_CURLY_BRACKET"},
-      {Token::DOUBLE_EQUAL, "DOUBLE_EQUAL"},
-      {Token::EQUAL, "EQUAL"},
-      {Token::LESS_THAN, "LESS_THAN"},
-      {Token::LESS_THAN_OR_EQUAL, "LESS_THAN_OR_EQUAL"},
-      {Token::GREATER_THAN, "GREATER_THAN"},
-      {Token::GREATER_THAN_OR_EQUAL, "GREATER_THAN_OR_EQUAL"},
-      {Token::PLUS, "PLUS"},
-      {Token::MINUS, "MINUS"},
-      {Token::ASTERISK, "ASTERISK"},
-      {Token::SLASH, "SLASH"},
-      {Token::COMMA, "COMMA"},
-      {Token::PERCENT, "PERCENT"},
-      {Token::SEMICOLON, "SEMICOLON"},
-      {Token::OR, "OR"},
-      {Token::AND, "AND"},
-      {Token::NOT, "NOT"},
-      {Token::NEXT_LINE, "NEXT_LINE"},
-      {Token::END, "END"}};
-  return m[t];
-}
 
 std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::WHITESPACE, "^(\\s+)"},
@@ -79,12 +48,11 @@ std::vector<std::string> splitLines(std::istream& stream) {
 }
 
 // Generates given stream of lex into tokens
-std::vector<Token> Lexer::lex(std::istream& stream) {
+std::vector<Token> Lexer::Lex(std::istream& stream) const {
   std::vector<Token> tokens;
   std::vector<std::string> lines = splitLines(stream);
 
-  for (int line_no = 1; line_no <= lines.size(); line_no++) {
-    std::string line = lines[line_no - 1];
+  for (std::string line : lines) {
     while (!line.empty()) {
       for (auto const& pair : rules) {
         std::smatch matched_regex;
@@ -99,7 +67,7 @@ std::vector<Token> Lexer::lex(std::istream& stream) {
           // else skip whitespaces
 
           if (DEBUG)
-            std::cout << prettyPrintType(pair.first) << ", "
+            std::cout << tokens.back().PrettyPrintKind() << ", "
                       << matched_regex.str() << "\n";
 
           line = line.substr(static_cast<int>(matched_regex.str().size()));

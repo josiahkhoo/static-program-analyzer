@@ -50,6 +50,8 @@ class Token {
 
   [[nodiscard]] std::string GetValue() const;
 
+  [[nodiscard]] std::string PrettyPrintKind() const;
+
  private:
   Kind kind_;
   std::optional<std::string> value_;

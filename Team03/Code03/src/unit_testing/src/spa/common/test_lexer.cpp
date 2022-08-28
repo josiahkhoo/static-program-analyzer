@@ -9,7 +9,8 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
   std::istringstream str_stream(
       "1\nh1\n(\n)\n{\n}\n==\n=\n<=\n<\n>=\n>\n+"
       "\n-\n*\n/\n,\n%\n;\n||\n&&\n!");
-  std::vector<Token> tokens = Lexer::lex(str_stream);
+  Lexer lex;
+  std::vector<Token> tokens = lex.Lex(str_stream);
 
   REQUIRE(tokens.size() == 22);
 
@@ -48,7 +49,8 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
   std::istringstream str_stream(
       "if (x==1) then {\n"
       "    z = x + 1; }");
-  std::vector<Token> tokens = Lexer::lex(str_stream);
+  Lexer lex;
+  std::vector<Token> tokens = lex.Lex(str_stream);
 
   REQUIRE(tokens.size() == 15);
 

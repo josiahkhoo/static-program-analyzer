@@ -6,7 +6,7 @@
 
 class Lexer {
  public:
-  static std::vector<Token> lex(std::istream &stream);
+  std::vector<Token> Lex(std::istream &stream) const;
 };
 
 #endif  // SPA_LEXER_H
