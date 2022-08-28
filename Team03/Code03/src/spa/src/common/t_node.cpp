@@ -1,7 +1,7 @@
 #include "t_node.h"
 
-#include <utility>
 #include <cassert>
+#include <utility>
 
 TNode::TNode(TNode::Type type, int line_number,
              std::vector<std::shared_ptr<TNode>> children)
