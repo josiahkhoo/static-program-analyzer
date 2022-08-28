@@ -56,6 +56,32 @@ public:
     /* ====================================
      * General Entity Getter Methods
      * ==================================== */
+    // get stored procedures in ProcedureStorage
+    std::unordered_set<std::string> getProcedures();
+
+    // get stored variables in VariableStorage
+    std::unordered_set<std::string> getVariables();
+
+    // get stored constants in ConstantStorage
+    std::unordered_set<int> getConstants();
+
+    // get stored call statements in StatementStorage
+    std::unordered_set<int> getCallStatements();
+
+    // get stored read statements in StatementStorage
+    std::unordered_set<int> getReadStatements();
+
+    // get stored print statements in StatementStorage
+    std::unordered_set<int> getPrintStatements();
+
+    // get stored assign statements in StatementStorage
+    std::unordered_set<int> getAssignStatements();
+
+    // get stored if statements in StatementStorage
+    std::unordered_set<int> getIfStatements();
+
+    // get stored while statements in StatementStorage
+    std::unordered_set<int> getWhileStatements();
 
     /* ====================================
      * Clear All Entity Storages

@@ -43,6 +43,42 @@ void EntityManager::addWhileStatement(WhileEntity statement) {
     statementStore.addWhileStatement(statement);
 }
 
+std::unordered_set<std::string> EntityManager::getProcedures() {
+    return procedureStore.getProcedures();
+}
+
+std::unordered_set<std::string> EntityManager::getVariables() {
+    return variableStore.getVariables();
+}
+
+std::unordered_set<int> EntityManager::getConstants() {
+    return constantStore.getConstants();
+}
+
+std::unordered_set<int> EntityManager::getCallStatements() {
+    return statementStore.getCallStatements();
+}
+
+std::unordered_set<int> EntityManager::getReadStatements() {
+    return statementStore.getReadStatements();
+}
+
+std::unordered_set<int> EntityManager::getPrintStatements() {
+    return statementStore.getPrintStatements();
+}
+
+std::unordered_set<int> EntityManager::getAssignStatements() {
+    return statementStore.getAssignStatements();
+}
+
+std::unordered_set<int> EntityManager::getIfStatements() {
+    return statementStore.getIfStatements();
+}
+
+std::unordered_set<int> EntityManager::getWhileStatements() {
+    return statementStore.getWhileStatements();
+}
+
 void EntityManager::clear() {
     procedureStore.clear();
     statementStore.clear();
