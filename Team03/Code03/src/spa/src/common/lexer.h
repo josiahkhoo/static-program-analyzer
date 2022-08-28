@@ -5,7 +5,7 @@
 #include "vector"
 
 class Lexer {
-public:
+ public:
   static std::vector<Token> lex(std::istream &stream);
 };
 

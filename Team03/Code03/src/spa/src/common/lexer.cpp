@@ -1,12 +1,13 @@
 #define DEBUG 0
 
 #include "lexer.h"
-#include "token.h"
 
 #include <iostream>
 #include <istream>
 #include <map>
 #include <regex>
+
+#include "token.h"
 
 std::string prettyPrintType(Token::Kind t) {
   std::map<Token::Kind, std::string> m = {
@@ -34,8 +35,7 @@ std::string prettyPrintType(Token::Kind t) {
       {Token::AND, "AND"},
       {Token::NOT, "NOT"},
       {Token::NEXT_LINE, "NEXT_LINE"},
-      {Token::END, "END"}
-  };
+      {Token::END, "END"}};
   return m[t];
 }
 
@@ -79,8 +79,8 @@ std::vector<std::string> splitLines(std::istream& stream) {
   return lines;
 }
 
-// Generates given stream of tex into tokens
-std::vector <Token> Lexer::lex(std::istream &stream) {
+// Generates given stream of lex into tokens
+std::vector<Token> Lexer::lex(std::istream& stream) {
   std::vector<Token> tokens;
   std::vector<std::string> lines = splitLines(stream);
 
@@ -93,8 +93,7 @@ std::vector <Token> Lexer::lex(std::istream &stream) {
           if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {
             Token found_token(pair.first, matched_regex.str());
             tokens.push_back(found_token);
-          }
-          else if (pair.first != Token::WHITESPACE) {
+          } else if (pair.first != Token::WHITESPACE) {
             Token found_token(pair.first);
             tokens.push_back(found_token);
           }
