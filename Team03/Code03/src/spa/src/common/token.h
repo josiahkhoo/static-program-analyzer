@@ -9,6 +9,7 @@
 class Token {
  public:
   enum Kind {
+    WHITESPACE,             // blank space
     NUMBER,                 // E.g. "0", "10", "012"
     IDENTIFIER,             // E.g. "hi", "h2"
     LEFT_ROUND_BRACKET,     // (
@@ -17,10 +18,10 @@ class Token {
     RIGHT_CURLY_BRACKET,    // }
     DOUBLE_EQUAL,           // ==
     EQUAL,                  // =
-    LESS_THAN,              // <
     LESS_THAN_OR_EQUAL,     // <=
-    GREATER_THAN,           // >
+    LESS_THAN,              // <
     GREATER_THAN_OR_EQUAL,  // >=
+    GREATER_THAN,           // >
     PLUS,                   // +
     MINUS,                  // -
     ASTERISK,               // *
@@ -47,7 +48,7 @@ class Token {
   // Check if the token is not a specified kind.
   bool IsNot(Kind kind);
 
-  std::string GetValue() const;
+  [[nodiscard]] std::string GetValue() const;
 
  private:
   Kind kind_;

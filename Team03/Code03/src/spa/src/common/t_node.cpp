@@ -1,5 +1,6 @@
 #include "t_node.h"
 
+#include <cassert>
 #include <utility>
 
 TNode::TNode(TNode::Type type, int line_number,
