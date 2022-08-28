@@ -7,10 +7,7 @@
 
 class PrintEntity : public StatementEntity {
  public:
-  PrintEntity(int line_number, VariableEntity &variable_entity);
-
- private:
-  VariableEntity &variable_entity_;
+  explicit PrintEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_PRINT_ENTITY_H

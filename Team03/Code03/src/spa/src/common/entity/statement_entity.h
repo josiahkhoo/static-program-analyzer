@@ -1,15 +1,16 @@
 #ifndef SPA_STATEMENT_ENTITY_H
 #define SPA_STATEMENT_ENTITY_H
 
+#include "common/stringable.h"
 #include "entity.h"
 
 class StatementEntity : public Entity, public Stringable {
  public:
-  explicit StatementEntity(int line_number);
+  StatementEntity(const TNode &node, int line_number);
 
-  int GetLineNumber() const;
+  [[nodiscard]] int GetLineNumber() const;
 
-  std::string ToString() const override;
+  [[nodiscard]] std::string ToString() const override;
 
  protected:
   int line_number_;

@@ -14,5 +14,3 @@ TEST_CASE("Construct value token", "[token]") {
   REQUIRE(t.GetValue() == val);
   REQUIRE_FALSE(t.Is(Token::IDENTIFIER));
 }
-
-

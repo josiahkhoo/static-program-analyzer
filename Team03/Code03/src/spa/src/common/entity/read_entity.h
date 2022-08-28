@@ -7,10 +7,7 @@
 
 class ReadEntity : public StatementEntity {
  public:
-  ReadEntity(int line_number, VariableEntity variable_entity);
-
- private:
-  VariableEntity variable_entity_;
+  explicit ReadEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_READ_ENTITY_H
