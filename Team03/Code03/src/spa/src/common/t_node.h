@@ -1,6 +1,7 @@
 #ifndef SPA_T_NODE_H
 #define SPA_T_NODE_H
 
+#include <memory>
 #include <optional>
 #include <string>
 #include <vector>
