@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        build-type: [ Release, Debug ]
+        build-type: [ Release ]
 
     steps:
       - uses: actions/checkout@v2
