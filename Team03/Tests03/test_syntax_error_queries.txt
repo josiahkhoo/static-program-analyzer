@@ -1,0 +1,10 @@
+1 - (SYNTAX ERROR) Extra semicolon in query
+variable v;
+Select v;
+SyntaxError
+5000
+2 - (SYNTAX ERROR) Select not capitalised
+variable v;
+select v
+SyntaxError
+5000
