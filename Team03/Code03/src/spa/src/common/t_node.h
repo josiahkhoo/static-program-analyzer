@@ -58,6 +58,8 @@ class TNode {
   [[nodiscard]] bool IsLeaf() const;
   [[nodiscard]] bool IsType(Type type) const;
   [[nodiscard]] bool IsNotType(Type type) const;
+  bool operator==(const TNode& rhs) const;
+  bool operator!=(const TNode& rhs) const;
 
  private:
   Type type_;
@@ -66,5 +68,18 @@ class TNode {
   std::optional<int> maybe_int_;
   std::optional<std::string> maybe_string_;
 };
+
+namespace std {
+template <>
+class hash<TNode> {
+ public:
+  /// Hash function for TNode using prime numbers 200771 and 300823 on the
+  /// address. \param t_node \return size_t.
+  size_t operator()(const TNode& t_node) const {
+    auto u = (uintptr_t)&t_node;
+    return (u * 200771) + (u % 300823);
+  }
+};
+};  // namespace std
 
 #endif  // SPA_T_NODE_H
