@@ -1,0 +1,41 @@
+name: cmake-windows
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: windows-2019
+    strategy:
+      fail-fast: true
+      matrix:
+        build-type: [ Release ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Build Project
+        run: |
+          cd Team03/Code03
+          mkdir build
+          cd build
+          cmake -A x64 ..
+          cmake --build . --target unit_testing --config ${{matrix.build-type}}
+          cmake --build . --target integration_testing --config ${{matrix.build-type}}
+          cmake --build . --target autotester --config ${{matrix.build-type}}
+          cd ../..
+
+      - name: Run unit tests
+        run: ./Team03/Code03/build/src/unit_testing/${{matrix.build-type}}/unit_testing.exe
