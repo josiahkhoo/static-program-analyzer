@@ -16,10 +16,11 @@ test_dir_arg: str = args.test_dir
 os_type: str = args.os
 
 # Scripts
+# Comment out tests that you don't want to test
 test_array = (
-    ("Entities Only", "entities_only"),
-    ("Semantic Errors", "semantic_errors"),
-    ("Syntax Errors", "syntax_errors"),
+    # ("Entities Only", "entities_only"),
+    # ("Semantic Errors", "semantic_errors"),
+    # ("Syntax Errors", "syntax_errors"),
 )
 
 overall_passed_test_cases = 0
