@@ -116,7 +116,7 @@ TNode SimpleParser::ParseAssign() {
 
   // Parse var name on lhs
   std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseName());
+      std::make_shared<TNode>(ParseVarName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::EQUAL);
 
@@ -134,7 +134,7 @@ TNode SimpleParser::ParseRead() {
   Expect("read");
   std::vector<std::shared_ptr<TNode>> children_;
   std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseName());
+      std::make_shared<TNode>(ParseVarName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
@@ -146,7 +146,7 @@ TNode SimpleParser::ParsePrint() {
   Expect("print");
   std::vector<std::shared_ptr<TNode>> children_;
   std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseName());
+      std::make_shared<TNode>(ParseVarName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
