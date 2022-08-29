@@ -5,7 +5,9 @@
 
 TNode::TNode(TNode::Type type, int line_number, std::string string_val,
              std::vector<std::shared_ptr<TNode>> children)
-    : type_(type), line_number_(line_number), maybe_string_(string_val),
+    : type_(type),
+      line_number_(line_number),
+      maybe_string_(string_val),
       children_(std::move(children)) {}
 
 TNode::TNode(TNode::Type type, int line_number,

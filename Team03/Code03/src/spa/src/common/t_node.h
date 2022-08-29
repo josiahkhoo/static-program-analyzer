@@ -39,7 +39,7 @@ class TNode {
   };
 
   TNode(TNode::Type type, int line_number, std::string string_val,
-               std::vector<std::shared_ptr<TNode>> children);
+        std::vector<std::shared_ptr<TNode>> children);
   TNode(Type type, int line_number,
         std::vector<std::shared_ptr<TNode>> children);
   TNode(Type type, int line_number, int int_val);

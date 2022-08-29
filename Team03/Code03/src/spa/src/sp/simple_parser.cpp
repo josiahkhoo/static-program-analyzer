@@ -21,7 +21,7 @@ bool SimpleParser::MatchString(const std::string& s) {
 }
 
 void SimpleParser::Expect(Token::Kind kind) {
-  if(MatchKind(kind)) {
+  if (MatchKind(kind)) {
     token_pos_++;
   } else {
     throw std::runtime_error("Expected a different token kind");
@@ -29,27 +29,27 @@ void SimpleParser::Expect(Token::Kind kind) {
 }
 
 void SimpleParser::Expect(const std::string& s) {
-  if(MatchString(s)) {
+  if (MatchString(s)) {
     token_pos_++;
   } else {
     throw std::runtime_error("Expected a different token string");
   }
 }
 
-
 TNode SimpleParser::Parse(std::vector<Token> tokens_) {
   try {
     this->tokens_ = tokens_;
     std::vector<std::shared_ptr<TNode>> children_;
     do {
-      std::shared_ptr<TNode> shared_children_node_ptr_ = std::make_shared<TNode>(ParseProcedure());
+      std::shared_ptr<TNode> shared_children_node_ptr_ =
+          std::make_shared<TNode>(ParseProcedure());
       children_.emplace_back(shared_children_node_ptr_);
     } while (!MatchKind(Token::END));
     TNode program_node_(TNode::Program, 0, children_);
     return program_node_;
-  }
-  catch(const std::runtime_error& e_) {
-    TNode invalid_node_(TNode::Invalid, 0, std::vector<std::shared_ptr<TNode>>());
+  } catch (const std::runtime_error& e_) {
+    TNode invalid_node_(TNode::Invalid, 0,
+                        std::vector<std::shared_ptr<TNode>>());
     return invalid_node_;
   }
 }
@@ -61,7 +61,8 @@ TNode SimpleParser::ParseProcedure() {
 
   Expect(Token::LEFT_CURLY_BRACKET);
   std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_children_node_ptr_ = std::make_shared<TNode>(ParseStatementList());
+  std::shared_ptr<TNode> shared_children_node_ptr_ =
+      std::make_shared<TNode>(ParseStatementList());
   children_.emplace_back(shared_children_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
@@ -73,7 +74,8 @@ TNode SimpleParser::ParseStatementList() {
   std::vector<std::shared_ptr<TNode>> children_;
 
   do {
-    std::shared_ptr<TNode> shared_children_node_ptr_ = std::make_shared<TNode>(ParseStatement());
+    std::shared_ptr<TNode> shared_children_node_ptr_ =
+        std::make_shared<TNode>(ParseStatement());
     children_.emplace_back(shared_children_node_ptr_);
   } while (!MatchKind(Token::RIGHT_CURLY_BRACKET));
 
@@ -84,13 +86,13 @@ TNode SimpleParser::ParseStatementList() {
 TNode SimpleParser::ParseStatement() {
   line_number_++;
 
-  //Check if next token is '=', it is an assignment if it is.
-  if(Peek(token_pos_ + 1).Is(Token::EQUAL)) {
+  // Check if next token is '=', it is an assignment if it is.
+  if (Peek(token_pos_ + 1).Is(Token::EQUAL)) {
     return ParseAssign();
   }
 
   if (!MatchKind(Token::IDENTIFIER)) {
-    throw std::runtime_error ("Expected IDENTIFIER but got something else");
+    throw std::runtime_error("Expected IDENTIFIER but got something else");
   }
 
   if (Peek(token_pos_).GetValue() == "read") {
@@ -104,20 +106,23 @@ TNode SimpleParser::ParseStatement() {
   } else if (Peek(token_pos_).GetValue() == "if") {
     return ParseIf();
   } else {
-    throw std::runtime_error ("Failed to parse statement with Token name " + Peek(token_pos_).GetValue());
+    throw std::runtime_error("Failed to parse statement with Token name " +
+                             Peek(token_pos_).GetValue());
   }
 }
 
 TNode SimpleParser::ParseAssign() {
   std::vector<std::shared_ptr<TNode>> children_;
 
-  //Parse var name on lhs
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ = std::make_shared<TNode>(ParseName());
+  // Parse var name on lhs
+  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+      std::make_shared<TNode>(ParseName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::EQUAL);
 
-  //Parse Expr on rhs
-  std::shared_ptr<TNode> shared_expr_node_ptr_ = std::make_shared<TNode>(ParseExpr());
+  // Parse Expr on rhs
+  std::shared_ptr<TNode> shared_expr_node_ptr_ =
+      std::make_shared<TNode>(ParseExpr());
   children_.emplace_back(shared_expr_node_ptr_);
   Expect(Token::SEMICOLON);
 
@@ -128,7 +133,8 @@ TNode SimpleParser::ParseAssign() {
 TNode SimpleParser::ParseRead() {
   Expect("read");
   std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ = std::make_shared<TNode>(ParseName());
+  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+      std::make_shared<TNode>(ParseName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
@@ -139,7 +145,8 @@ TNode SimpleParser::ParseRead() {
 TNode SimpleParser::ParsePrint() {
   Expect("print");
   std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ = std::make_shared<TNode>(ParseName());
+  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+      std::make_shared<TNode>(ParseName());
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
@@ -162,12 +169,14 @@ TNode SimpleParser::ParseWhile() {
   std::vector<std::shared_ptr<TNode>> children_;
 
   Expect(Token::LEFT_ROUND_BRACKET);
-  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ = std::make_shared<TNode>(ParseCondExpr());
+  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
+      std::make_shared<TNode>(ParseCondExpr());
   children_.emplace_back(shared_cond_expr_node_ptr_);
   Expect(Token::RIGHT_ROUND_BRACKET);
 
   Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_stmt_list_node_ptr_ = std::make_shared<TNode>(ParseStatementList());
+  std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
+      std::make_shared<TNode>(ParseStatementList());
   children_.emplace_back(shared_stmt_list_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
@@ -179,22 +188,25 @@ TNode SimpleParser::ParseIf() {
   Expect("if");
   std::vector<std::shared_ptr<TNode>> children_;
 
-  //Parse condition
+  // Parse condition
   Expect(Token::LEFT_ROUND_BRACKET);
-  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ = std::make_shared<TNode>(ParseCondExpr());
+  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
+      std::make_shared<TNode>(ParseCondExpr());
   children_.emplace_back(shared_cond_expr_node_ptr_);
   Expect(Token::RIGHT_ROUND_BRACKET);
 
-  //Parse 'then' statement list
+  // Parse 'then' statement list
   Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_then_stmt_list_node_ptr_ = std::make_shared<TNode>(ParseStatementList());
+  std::shared_ptr<TNode> shared_then_stmt_list_node_ptr_ =
+      std::make_shared<TNode>(ParseStatementList());
   children_.emplace_back(shared_then_stmt_list_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
-  //Parse 'else' statement list
+  // Parse 'else' statement list
   Expect("else");
   Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_else_stmt_list_node_ptr_ = std::make_shared<TNode>(ParseStatementList());
+  std::shared_ptr<TNode> shared_else_stmt_list_node_ptr_ =
+      std::make_shared<TNode>(ParseStatementList());
   children_.emplace_back(shared_else_stmt_list_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
@@ -202,14 +214,14 @@ TNode SimpleParser::ParseIf() {
   return if_node_;
 }
 
-TNode SimpleParser::ParseCondExpr(){
+TNode SimpleParser::ParseCondExpr() {
   // rel_expr | '!' '(' cond_expr ')' |
   // '(' cond_expr ')' '&&' '(' cond_expr ')' |
   // '(' cond_expr ')' '||' '(' cond_expr ')'
 
   // Check for empty condition
   if (MatchKind(Token::RIGHT_ROUND_BRACKET)) {
-    throw std::runtime_error ("Empty condition!");
+    throw std::runtime_error("Empty condition!");
   }
 
   if (MatchKind(Token::NOT)) {
@@ -218,7 +230,8 @@ TNode SimpleParser::ParseCondExpr(){
     std::vector<std::shared_ptr<TNode>> children_;
 
     Expect(Token::LEFT_ROUND_BRACKET);
-    std::shared_ptr<TNode> shared_cond_expr_node_ptr_ = std::make_shared<TNode>(ParseCondExpr());
+    std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
+        std::make_shared<TNode>(ParseCondExpr());
     children_.emplace_back(shared_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
@@ -230,7 +243,8 @@ TNode SimpleParser::ParseCondExpr(){
     std::vector<std::shared_ptr<TNode>> children_;
 
     Expect(Token::LEFT_ROUND_BRACKET);
-    std::shared_ptr<TNode> shared_lhs_cond_expr_node_ptr_ = std::make_shared<TNode>(ParseCondExpr());
+    std::shared_ptr<TNode> shared_lhs_cond_expr_node_ptr_ =
+        std::make_shared<TNode>(ParseCondExpr());
     children_.emplace_back(shared_lhs_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
@@ -244,11 +258,13 @@ TNode SimpleParser::ParseCondExpr(){
       Expect(Token::OR);
       type = TNode::Or;
     } else {
-      throw std::runtime_error ("Expected boolean operator but got something else!");
+      throw std::runtime_error(
+          "Expected boolean operator but got something else!");
     }
 
     Expect(Token::LEFT_ROUND_BRACKET);
-    std::shared_ptr<TNode> shared_rhs_cond_expr_node_ptr_ = std::make_shared<TNode>(ParseCondExpr());
+    std::shared_ptr<TNode> shared_rhs_cond_expr_node_ptr_ =
+        std::make_shared<TNode>(ParseCondExpr());
     children_.emplace_back(shared_rhs_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
@@ -265,7 +281,8 @@ TNode SimpleParser::ParseRelExpr() {
   // rel_factor '<' rel_factor | rel_factor '<=' rel_factor |
   // rel_factor '==' rel_factor | rel_factor '!=' rel_factor
   std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_lhs_rel_factor_node_ptr_ = std::make_shared<TNode>(ParseRelFactor());
+  std::shared_ptr<TNode> shared_lhs_rel_factor_node_ptr_ =
+      std::make_shared<TNode>(ParseRelFactor());
   children_.emplace_back(shared_lhs_rel_factor_node_ptr_);
 
   TNode::Type type;
@@ -288,10 +305,12 @@ TNode SimpleParser::ParseRelExpr() {
     Expect(Token::NOT_EQUAL);
     type = TNode::NotEqual;
   } else {
-    throw std::runtime_error("Expected rel expr operator but got something else!");
+    throw std::runtime_error(
+        "Expected rel expr operator but got something else!");
   }
 
-  std::shared_ptr<TNode> shared_rhs_rel_factor_node_ptr_ = std::make_shared<TNode>(ParseRelFactor());
+  std::shared_ptr<TNode> shared_rhs_rel_factor_node_ptr_ =
+      std::make_shared<TNode>(ParseRelFactor());
   children_.emplace_back(shared_rhs_rel_factor_node_ptr_);
 
   TNode rel_expr_node_(type, line_number_, children_);
@@ -321,10 +340,12 @@ TNode SimpleParser::ParseExpr() {
       type = TNode::Minus;
     }
 
-    std::shared_ptr<TNode> shared_lhs_node_ptr_ = std::make_shared<TNode>(expr_node_);
+    std::shared_ptr<TNode> shared_lhs_node_ptr_ =
+        std::make_shared<TNode>(expr_node_);
     children_.emplace_back(shared_lhs_node_ptr_);
 
-    std::shared_ptr<TNode> shared_rhs_node_ptr_ = std::make_shared<TNode>(ParseTerm());
+    std::shared_ptr<TNode> shared_rhs_node_ptr_ =
+        std::make_shared<TNode>(ParseTerm());
     children_.emplace_back(shared_rhs_node_ptr_);
 
     TNode new_expr_node_(type, line_number_, children_);
@@ -338,8 +359,7 @@ TNode SimpleParser::ParseTerm() {
   // term '*' factor | term '/' factor | term '%' factor | factor
   TNode term_node_ = ParseFactor();
   while (!MatchKind(Token::END) &&
-         ((MatchKind(Token::ASTERISK)) ||
-          MatchKind(Token::SLASH) ||
+         ((MatchKind(Token::ASTERISK)) || MatchKind(Token::SLASH) ||
           MatchKind(Token::PERCENT))) {
     std::vector<std::shared_ptr<TNode>> children_;
 
@@ -348,7 +368,7 @@ TNode SimpleParser::ParseTerm() {
       // '*'
       Expect(Token::ASTERISK);
       type = TNode::Multiply;
-    } else if (MatchKind(Token::SLASH)){
+    } else if (MatchKind(Token::SLASH)) {
       // '/'
       Expect(Token::SLASH);
       type = TNode::Divide;
@@ -358,10 +378,12 @@ TNode SimpleParser::ParseTerm() {
       type = TNode::Modulo;
     }
 
-    std::shared_ptr<TNode> shared_lhs_node_ptr_ = std::make_shared<TNode>(term_node_);
+    std::shared_ptr<TNode> shared_lhs_node_ptr_ =
+        std::make_shared<TNode>(term_node_);
     children_.emplace_back(shared_lhs_node_ptr_);
 
-    std::shared_ptr<TNode> shared_rhs_node_ptr_ = std::make_shared<TNode>(ParseFactor());
+    std::shared_ptr<TNode> shared_rhs_node_ptr_ =
+        std::make_shared<TNode>(ParseFactor());
     children_.emplace_back(shared_rhs_node_ptr_);
 
     TNode new_term_node_(type, line_number_, children_);
@@ -369,21 +391,20 @@ TNode SimpleParser::ParseTerm() {
     term_node_ = new_term_node_;
   }
   return term_node_;
-
 }
 
 TNode SimpleParser::ParseFactor() {
   // var_name | const_value | '(' expr ')'
-    if (MatchKind(Token::IDENTIFIER)) {
-      return ParseVarName();
-    } else if (MatchKind(Token::NUMBER)) {
-      return ParseConstValue();
-    } else {
-      Expect(Token::LEFT_ROUND_BRACKET);
-      TNode factor_node_ = ParseExpr();
-      Expect(Token::RIGHT_ROUND_BRACKET);
-      return factor_node_;
-    }
+  if (MatchKind(Token::IDENTIFIER)) {
+    return ParseVarName();
+  } else if (MatchKind(Token::NUMBER)) {
+    return ParseConstValue();
+  } else {
+    Expect(Token::LEFT_ROUND_BRACKET);
+    TNode factor_node_ = ParseExpr();
+    Expect(Token::RIGHT_ROUND_BRACKET);
+    return factor_node_;
+  }
 }
 
 TNode SimpleParser::ParseVarName() {

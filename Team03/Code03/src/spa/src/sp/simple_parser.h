@@ -1,9 +1,9 @@
 #ifndef SPA_SIMPLE_PARSER_H
 #define SPA_SIMPLE_PARSER_H
 
+#include "common/lexer.h"
 #include "common/parser.h"
 #include "common/t_node.h"
-#include "common/lexer.h"
 #include "common/token.h"
 
 class SimpleParser : public Parser<TNode> {
@@ -26,23 +26,23 @@ class SimpleParser : public Parser<TNode> {
   TNode ParseStatementList();
   TNode ParseStatement();
 
-  TNode ParseAssign ();
-  TNode ParseRead ();
-  TNode ParsePrint ();
-  TNode ParseCall ();
-  TNode ParseWhile ();
-  TNode ParseIf ();
+  TNode ParseAssign();
+  TNode ParseRead();
+  TNode ParsePrint();
+  TNode ParseCall();
+  TNode ParseWhile();
+  TNode ParseIf();
 
-  TNode ParseCondExpr ();
-  TNode ParseRelExpr ();
+  TNode ParseCondExpr();
+  TNode ParseRelExpr();
 
-  TNode ParseRelFactor ();
-  TNode ParseExpr ();
-  TNode ParseTerm ();
-  TNode ParseFactor ();
+  TNode ParseRelFactor();
+  TNode ParseExpr();
+  TNode ParseTerm();
+  TNode ParseFactor();
 
-  TNode ParseVarName ();
-  TNode ParseConstValue ();
+  TNode ParseVarName();
+  TNode ParseConstValue();
 };
 
 #endif  // SPA_SIMPLE_PARSER_H
