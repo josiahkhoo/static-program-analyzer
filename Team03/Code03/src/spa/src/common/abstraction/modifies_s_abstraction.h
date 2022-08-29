@@ -3,18 +3,20 @@
 
 #include "abstraction.h"
 #include "common/entity/statement_entity.h"
+#include "common/entity/variable_entity.h"
 
-class ModifiesSAbstraction : public Abstraction<StatementEntity, Entity> {
+class ModifiesSAbstraction
+    : public Abstraction<StatementEntity, VariableEntity> {
  public:
-  ModifiesSAbstraction(StatementEntity lhs, Entity rhs);
+  ModifiesSAbstraction(StatementEntity lhs, VariableEntity rhs);
 
   const StatementEntity &GetLeftHandSide() const override;
 
-  const Entity &GetRightHandSide() const override;
+  const VariableEntity &GetRightHandSide() const override;
 
  private:
   StatementEntity lhs_;
-  Entity rhs_;
+  VariableEntity rhs_;
 };
 
 #endif  // SPA_MODIFIES_S_ABSTRACTION_H
