@@ -68,3 +68,11 @@ bool TNode::IsLeaf() const { return IsType(Variable) || IsType(Constant); }
 bool TNode::IsType(TNode::Type type) const { return type_ == type; }
 
 bool TNode::IsNotType(TNode::Type type) const { return !IsType(type); }
+
+bool TNode::operator==(const TNode& rhs) const {
+  return type_ == rhs.type_ && line_number_ == rhs.line_number_ &&
+         children_ == rhs.children_ && maybe_int_ == rhs.maybe_int_ &&
+         maybe_string_ == rhs.maybe_string_;
+}
+
+bool TNode::operator!=(const TNode& rhs) const { return !(rhs == *this); }
