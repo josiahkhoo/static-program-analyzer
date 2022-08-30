@@ -17,18 +17,6 @@ class DesignExtractor {
  private:
   const EntityExtractor &entity_extractor_;
   const AbstractionExtractor &abstraction_extractor_;
-
-  [[nodiscard]] std::unordered_map<TNode, StatementEntity>
-  GetTNodeStatementEntityMap(
-      const std::vector<StatementEntity> &statement_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, VariableEntity>
-  GetTNodeVariableEntityMap(
-      const std::vector<VariableEntity> &variable_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
-  GetTNodeConstantEntityMap(
-      const std::vector<ConstantEntity> &constant_entities) const;
 };
 
 #endif  // SPA_DESIGN_EXTRACTOR_H
