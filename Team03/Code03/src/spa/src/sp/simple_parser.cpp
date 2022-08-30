@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
-SimpleParser simple_parser_{};
+SimpleParser::SimpleParser() = default;
 
 Token SimpleParser::Peek(int pos) {
   if (pos >= tokens_.size()) {
