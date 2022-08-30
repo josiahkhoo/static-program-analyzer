@@ -47,7 +47,7 @@ void FollowsTAbstractionExtractor::RetrieveFromChildren(
     std::vector<FollowsTAbstraction>* follows_t_abstractions,
     const std::vector<std::shared_ptr<TNode>>& children,
     std::unordered_map<TNode, StatementEntity*>& t_node_stmt_ent_umap) const {
-  for (int i = 0; i < children.size() - 1; i++) {
+  for (int i = 0; i < (int)children.size() - 1; i++) {
     for (int j = i + 1; j < children.size(); j++) {
       auto lhs = t_node_stmt_ent_umap[*children[i]];
       auto rhs = t_node_stmt_ent_umap[*children[j]];
