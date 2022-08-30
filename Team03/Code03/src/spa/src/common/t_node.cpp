@@ -16,7 +16,6 @@ TNode::TNode(TNode::Type type, int line_number, std::string string_val)
 int TNode::GetLineNumber() const { return line_number_; }
 
 std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
-  assert(!IsLeaf());
   if (IsType(Inverse) || IsType(Print) || IsType(Read) || IsType(Call)) {
     assert(children_.size() == 1);
   } else if (IsType(While) || IsType(Assign) || IsEqualityOperator() ||

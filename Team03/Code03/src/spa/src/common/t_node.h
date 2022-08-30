@@ -73,8 +73,7 @@ class hash<TNode> {
   /// Hash function for TNode using prime numbers 200771 and 300823 on the
   /// address. \param t_node \return size_t.
   size_t operator()(const TNode& t_node) const {
-    auto u = (uintptr_t)&t_node;
-    return (u * 200771) + (u % 300823);
+    return (t_node.GetLineNumber() * 200771) + (t_node.GetType() % 300823);
   }
 };
 };  // namespace std
