@@ -24,9 +24,10 @@
 
 class AbstractionExtractorImpl : public AbstractionExtractor {
  public:
-  AbstractionExtractorImpl(
-      const FollowsAbstractionExtractor& follows_abstraction_extractor,
-      const FollowsTAbstractionExtractor& follows_t_abstraction_extractor);
+  AbstractionExtractorImpl(const SubAbstractionExtractor<FollowsAbstraction>&
+                               follows_abstraction_extractor,
+                           const SubAbstractionExtractor<FollowsTAbstraction>&
+                               follows_t_abstraction_extractor);
   [[nodiscard]] AbstractionExtractorResult Extract(
       const std::vector<AssignEntity>& assign_entities,
       const std::vector<CallEntity>& call_entities,
@@ -40,8 +41,10 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       const std::vector<WhileEntity>& while_entities) const override;
 
  private:
-  const FollowsAbstractionExtractor& follows_abstraction_extractor_;
-  const FollowsTAbstractionExtractor& follows_t_abstraction_extractor_;
+  const SubAbstractionExtractor<FollowsAbstraction>&
+      follows_abstraction_extractor_;
+  const SubAbstractionExtractor<FollowsTAbstraction>&
+      follows_t_abstraction_extractor_;
 
   [[nodiscard]] std::unordered_map<TNode, StatementEntity*>
   GetTNodeStatementEntityMap(

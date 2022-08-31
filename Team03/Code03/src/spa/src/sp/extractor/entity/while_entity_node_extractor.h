@@ -4,7 +4,7 @@
 #include "common/entity/while_entity.h"
 #include "sp/extractor/node_extractor.h"
 
-class WhileEntityNodeExtractor : NodeExtractor<WhileEntity> {
+class WhileEntityNodeExtractor : public NodeExtractor<WhileEntity> {
  public:
   [[nodiscard]] std::optional<WhileEntity> TryExtractFromNode(
       const TNode& ast) const override;

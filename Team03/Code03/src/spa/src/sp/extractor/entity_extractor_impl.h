@@ -17,31 +17,31 @@
 class EntityExtractorImpl : public EntityExtractor {
  public:
   EntityExtractorImpl(
-      const AssignEntityNodeExtractor &assign_entity_node_extractor,
-      const CallEntityNodeExtractor &call_entity_node_extractor,
-      const ConstantEntityNodeExtractor &constant_entity_node_extractor,
-      const IfEntityNodeExtractor &if_entity_node_extractor,
-      const PrintEntityNodeExtractor &print_entity_node_extractor,
-      const ProcedureEntityNodeExtractor &procedure_entity_node_extractor,
-      const ReadEntityNodeExtractor &read_entity_node_extractor,
-      const StatementEntityNodeExtractor &statement_entity_node_extractor,
-      const VariableEntityNodeExtractor &variable_entity_node_extractor,
-      const WhileEntityNodeExtractor &while_entity_node_extractor);
+      const NodeExtractor<AssignEntity> &assign_entity_node_extractor,
+      const NodeExtractor<CallEntity> &call_entity_node_extractor,
+      const NodeExtractor<ConstantEntity> &constant_entity_node_extractor,
+      const NodeExtractor<IfEntity> &if_entity_node_extractor,
+      const NodeExtractor<PrintEntity> &print_entity_node_extractor,
+      const NodeExtractor<ProcedureEntity> &procedure_entity_node_extractor,
+      const NodeExtractor<ReadEntity> &read_entity_node_extractor,
+      const NodeExtractor<StatementEntity> &statement_entity_node_extractor,
+      const NodeExtractor<VariableEntity> &variable_entity_node_extractor,
+      const NodeExtractor<WhileEntity> &while_entity_node_extractor);
 
   [[nodiscard]] EntityExtractorResult Extract(const TNode &ast) const override;
 
  private:
   // Extractors
-  const AssignEntityNodeExtractor &assign_entity_node_extractor_;
-  const CallEntityNodeExtractor &call_entity_node_extractor_;
-  const ConstantEntityNodeExtractor &constant_entity_node_extractor_;
-  const IfEntityNodeExtractor &if_entity_node_extractor_;
-  const PrintEntityNodeExtractor &print_entity_node_extractor_;
-  const ProcedureEntityNodeExtractor &procedure_entity_node_extractor_;
-  const ReadEntityNodeExtractor &read_entity_node_extractor_;
-  const StatementEntityNodeExtractor &statement_entity_node_extractor_;
-  const VariableEntityNodeExtractor &variable_entity_node_extractor_;
-  const WhileEntityNodeExtractor &while_entity_node_extractor_;
+  const NodeExtractor<AssignEntity> &assign_entity_node_extractor_;
+  const NodeExtractor<CallEntity> &call_entity_node_extractor_;
+  const NodeExtractor<ConstantEntity> &constant_entity_node_extractor_;
+  const NodeExtractor<IfEntity> &if_entity_node_extractor_;
+  const NodeExtractor<PrintEntity> &print_entity_node_extractor_;
+  const NodeExtractor<ProcedureEntity> &procedure_entity_node_extractor_;
+  const NodeExtractor<ReadEntity> &read_entity_node_extractor_;
+  const NodeExtractor<StatementEntity> &statement_entity_node_extractor_;
+  const NodeExtractor<VariableEntity> &variable_entity_node_extractor_;
+  const NodeExtractor<WhileEntity> &while_entity_node_extractor_;
 
   void ExtractNode(const TNode &node,
                    std::vector<AssignEntity> *assign_entities,

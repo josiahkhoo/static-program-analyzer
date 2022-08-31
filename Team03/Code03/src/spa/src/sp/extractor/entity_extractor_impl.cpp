@@ -1,16 +1,16 @@
 #include "entity_extractor_impl.h"
 
 EntityExtractorImpl::EntityExtractorImpl(
-    const AssignEntityNodeExtractor& assign_entity_node_extractor,
-    const CallEntityNodeExtractor& call_entity_node_extractor,
-    const ConstantEntityNodeExtractor& constant_entity_node_extractor,
-    const IfEntityNodeExtractor& if_entity_node_extractor,
-    const PrintEntityNodeExtractor& print_entity_node_extractor,
-    const ProcedureEntityNodeExtractor& procedure_entity_node_extractor,
-    const ReadEntityNodeExtractor& read_entity_node_extractor,
-    const StatementEntityNodeExtractor& statement_entity_node_extractor,
-    const VariableEntityNodeExtractor& variable_entity_node_extractor,
-    const WhileEntityNodeExtractor& while_entity_node_extractor)
+    const NodeExtractor<AssignEntity>& assign_entity_node_extractor,
+    const NodeExtractor<CallEntity>& call_entity_node_extractor,
+    const NodeExtractor<ConstantEntity>& constant_entity_node_extractor,
+    const NodeExtractor<IfEntity>& if_entity_node_extractor,
+    const NodeExtractor<PrintEntity>& print_entity_node_extractor,
+    const NodeExtractor<ProcedureEntity>& procedure_entity_node_extractor,
+    const NodeExtractor<ReadEntity>& read_entity_node_extractor,
+    const NodeExtractor<StatementEntity>& statement_entity_node_extractor,
+    const NodeExtractor<VariableEntity>& variable_entity_node_extractor,
+    const NodeExtractor<WhileEntity>& while_entity_node_extractor)
     : assign_entity_node_extractor_(assign_entity_node_extractor),
       call_entity_node_extractor_(call_entity_node_extractor),
       constant_entity_node_extractor_(constant_entity_node_extractor),

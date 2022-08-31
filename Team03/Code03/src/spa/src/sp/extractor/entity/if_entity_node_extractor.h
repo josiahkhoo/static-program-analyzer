@@ -4,7 +4,7 @@
 #include "common/entity/if_entity.h"
 #include "sp/extractor/node_extractor.h"
 
-class IfEntityNodeExtractor : NodeExtractor<IfEntity> {
+class IfEntityNodeExtractor : public NodeExtractor<IfEntity> {
  public:
   [[nodiscard]] std::optional<IfEntity> TryExtractFromNode(
       const TNode& ast) const override;

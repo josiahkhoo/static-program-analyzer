@@ -1,8 +1,10 @@
 #include "abstraction_extractor_impl.h"
 
 AbstractionExtractorImpl::AbstractionExtractorImpl(
-    const FollowsAbstractionExtractor& follows_abstraction_extractor,
-    const FollowsTAbstractionExtractor& follows_t_abstraction_extractor)
+    const SubAbstractionExtractor<FollowsAbstraction>&
+        follows_abstraction_extractor,
+    const SubAbstractionExtractor<FollowsTAbstraction>&
+        follows_t_abstraction_extractor)
     : follows_abstraction_extractor_(follows_abstraction_extractor),
       follows_t_abstraction_extractor_(follows_t_abstraction_extractor) {}
 
