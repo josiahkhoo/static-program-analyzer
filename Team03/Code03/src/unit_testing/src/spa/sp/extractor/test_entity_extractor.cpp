@@ -1,60 +1,90 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "sp/extractor/entity_extractor.h"
+using namespace fakeit;
 
 TEST_CASE("Entity Extractor", "[EntityExtractor]") {
-  AssignEntityNodeExtractor assign_extractor = AssignEntityNodeExtractor();
-  CallEntityNodeExtractor call_extractor = CallEntityNodeExtractor();
-  ConstantEntityNodeExtractor constant_extractor =
-      ConstantEntityNodeExtractor();
-  IfEntityNodeExtractor if_extractor = IfEntityNodeExtractor();
-  PrintEntityNodeExtractor print_extractor = PrintEntityNodeExtractor();
-  ProcedureEntityNodeExtractor procedure_extractor =
-      ProcedureEntityNodeExtractor();
-  ReadEntityNodeExtractor read_extractor = ReadEntityNodeExtractor();
-  StatementEntityNodeExtractor statement_extractor =
-      StatementEntityNodeExtractor();
-  VariableEntityNodeExtractor variable_extractor =
-      VariableEntityNodeExtractor();
-  WhileEntityNodeExtractor while_extractor = WhileEntityNodeExtractor();
+  Mock<AssignEntityNodeExtractor> mock_assign_extractor;
+  When(Method(mock_assign_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<CallEntityNodeExtractor> mock_call_extractor;
+  When(Method(mock_call_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<ConstantEntityNodeExtractor> mock_constant_extractor;
+  When(Method(mock_constant_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<IfEntityNodeExtractor> mock_if_extractor;
+  When(Method(mock_if_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<PrintEntityNodeExtractor> mock_print_extractor;
+  When(Method(mock_print_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<ProcedureEntityNodeExtractor> mock_procedure_extractor;
+  When(Method(mock_procedure_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<ReadEntityNodeExtractor> mock_read_extractor;
+  When(Method(mock_read_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<StatementEntityNodeExtractor> mock_statement_extractor;
+  When(Method(mock_statement_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<VariableEntityNodeExtractor> mock_variable_extractor;
+  When(Method(mock_variable_extractor, TryExtractFromNode)).AlwaysReturn({});
+  Mock<WhileEntityNodeExtractor> mock_while_extractor;
+  When(Method(mock_while_extractor, TryExtractFromNode)).AlwaysReturn({});
 
   EntityExtractor entity_extractor_under_test = EntityExtractor(
-      assign_extractor, call_extractor, constant_extractor, if_extractor,
-      print_extractor, procedure_extractor, read_extractor, statement_extractor,
-      variable_extractor, while_extractor);
+      mock_assign_extractor.get(), mock_call_extractor.get(),
+      mock_constant_extractor.get(), mock_if_extractor.get(),
+      mock_print_extractor.get(), mock_procedure_extractor.get(),
+      mock_read_extractor.get(), mock_statement_extractor.get(),
+      mock_variable_extractor.get(), mock_while_extractor.get());
 
-  SECTION("Extract single-depth constant node") {
+  SECTION("Extract single-depth node") {
     TNode single_depth_node = TNode(TNode::Constant, 1, 2);
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(single_depth_node);
-    REQUIRE(res.GetAssignEntities().empty());
-    REQUIRE(res.GetCallEntities().empty());
-    REQUIRE(res.GetConstantEntities().size() == 1);
-    REQUIRE(res.GetIfEntities().empty());
-    REQUIRE(res.GetPrintEntities().empty());
-    REQUIRE(res.GetProcedureEntities().empty());
-    REQUIRE(res.GetReadEntities().empty());
-    REQUIRE(res.GetStatementEntities().empty());
-    REQUIRE(res.GetVariableEntities().empty());
-    REQUIRE(res.GetWhileEntities().empty());
+    Verify(Method(mock_assign_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_call_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_constant_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(
+        Method(mock_if_extractor, TryExtractFromNode).Using(single_depth_node));
+    Verify(Method(mock_while_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_variable_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_statement_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_read_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_procedure_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+    Verify(Method(mock_print_extractor, TryExtractFromNode)
+               .Using(single_depth_node));
+
+    VerifyNoOtherInvocations(Method(mock_assign_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_call_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_constant_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_if_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_while_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_variable_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_statement_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_read_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_procedure_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_print_extractor, TryExtractFromNode));
+
+    mock_assign_extractor.ClearInvocationHistory();
+    mock_call_extractor.ClearInvocationHistory();
+    mock_constant_extractor.ClearInvocationHistory();
+    mock_if_extractor.ClearInvocationHistory();
+    mock_print_extractor.ClearInvocationHistory();
+    mock_procedure_extractor.ClearInvocationHistory();
+    mock_read_extractor.ClearInvocationHistory();
+    mock_statement_extractor.ClearInvocationHistory();
+    mock_variable_extractor.ClearInvocationHistory();
+    mock_while_extractor.ClearInvocationHistory();
   }
 
-  SECTION("Extract single-depth variable node") {
-    TNode single_depth_node = TNode(TNode::Variable, 1, "var");
-    EntityExtractorResult res =
-        entity_extractor_under_test.Extract(single_depth_node);
-    REQUIRE(res.GetAssignEntities().empty());
-    REQUIRE(res.GetCallEntities().empty());
-    REQUIRE(res.GetConstantEntities().empty());
-    REQUIRE(res.GetIfEntities().empty());
-    REQUIRE(res.GetPrintEntities().empty());
-    REQUIRE(res.GetProcedureEntities().empty());
-    REQUIRE(res.GetReadEntities().empty());
-    REQUIRE(res.GetStatementEntities().empty());
-    REQUIRE(res.GetVariableEntities().size() == 1);
-    REQUIRE(res.GetWhileEntities().empty());
-  }
-
-  SECTION("Extract 2-depth assign constant variable node") {
+  SECTION("Extract 2-depth node") {
     std::shared_ptr<TNode> shared_constant_node_ptr =
         std::make_shared<TNode>(TNode::Constant, 1, 2);
     std::shared_ptr<TNode> shared_variable_node_ptr =
@@ -63,24 +93,89 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
         TNode::Assign, 1, {shared_variable_node_ptr, shared_constant_node_ptr});
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(assign_node);
-    REQUIRE(res.GetAssignEntities().size() == 1);
-    REQUIRE(res.GetCallEntities().empty());
-    REQUIRE(res.GetConstantEntities().size() == 1);
-    REQUIRE(res.GetIfEntities().empty());
-    REQUIRE(res.GetPrintEntities().empty());
-    REQUIRE(res.GetProcedureEntities().empty());
-    REQUIRE(res.GetReadEntities().empty());
-    REQUIRE(res.GetStatementEntities().size() == 1);
-    REQUIRE(res.GetVariableEntities().size() == 1);
-    REQUIRE(res.GetWhileEntities().empty());
 
-    REQUIRE(res.GetAssignEntities()[0].GetNodePointer() == &assign_node);
-    REQUIRE(res.GetStatementEntities()[0].GetNodePointer() == &assign_node);
+    Verify(
+        Method(mock_assign_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(Method(mock_call_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(
+        Method(mock_constant_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(Method(mock_if_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(Method(mock_while_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(
+        Method(mock_variable_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(Method(mock_statement_extractor, TryExtractFromNode)
+               .Using(assign_node));
+    Verify(Method(mock_read_extractor, TryExtractFromNode).Using(assign_node));
+    Verify(Method(mock_procedure_extractor, TryExtractFromNode)
+               .Using(assign_node));
+    Verify(Method(mock_print_extractor, TryExtractFromNode).Using(assign_node));
 
-    REQUIRE(res.GetConstantEntities()[0].GetNodePointer() ==
-            shared_constant_node_ptr.get());
+    Verify(Method(mock_assign_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_call_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_constant_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_if_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_while_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_variable_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_statement_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_read_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_procedure_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
+    Verify(Method(mock_print_extractor, TryExtractFromNode)
+               .Using(*shared_variable_node_ptr));
 
-    REQUIRE(res.GetVariableEntities()[0].GetNodePointer() ==
-            shared_variable_node_ptr.get());
+    Verify(Method(mock_assign_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_call_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_constant_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_if_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_while_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_variable_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_statement_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_read_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_procedure_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+    Verify(Method(mock_print_extractor, TryExtractFromNode)
+               .Using(*shared_constant_node_ptr));
+
+    VerifyNoOtherInvocations(Method(mock_assign_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_call_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_constant_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_if_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_while_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_variable_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_statement_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_read_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(
+        Method(mock_procedure_extractor, TryExtractFromNode));
+    VerifyNoOtherInvocations(Method(mock_print_extractor, TryExtractFromNode));
+
+    mock_assign_extractor.ClearInvocationHistory();
+    mock_call_extractor.ClearInvocationHistory();
+    mock_constant_extractor.ClearInvocationHistory();
+    mock_if_extractor.ClearInvocationHistory();
+    mock_print_extractor.ClearInvocationHistory();
+    mock_procedure_extractor.ClearInvocationHistory();
+    mock_read_extractor.ClearInvocationHistory();
+    mock_statement_extractor.ClearInvocationHistory();
+    mock_variable_extractor.ClearInvocationHistory();
+    mock_while_extractor.ClearInvocationHistory();
   }
 }
