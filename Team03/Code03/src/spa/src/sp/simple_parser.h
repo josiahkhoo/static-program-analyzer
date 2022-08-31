@@ -13,7 +13,8 @@ class SimpleParser : public Parser<TNode> {
 
  private:
   int token_pos_ = 0;
-  int line_number_ = 0;
+  int statement_number_ = 0;
+  int t_node_id_ = 0;
   std::vector<Token> tokens_;
 
   Token Peek(int pos);

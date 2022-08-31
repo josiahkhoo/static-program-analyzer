@@ -40,15 +40,18 @@ TNode SimpleParser::Parse(std::vector<Token> tokens_) {
   try {
     this->tokens_ = tokens_;
     std::vector<std::shared_ptr<TNode>> children_;
+
     do {
       std::shared_ptr<TNode> shared_children_node_ptr_ =
           std::make_shared<TNode>(ParseProcedure());
       children_.emplace_back(shared_children_node_ptr_);
     } while (!MatchKind(Token::END));
-    TNode program_node_(TNode::Program, 0, children_);
+
+    t_node_id_++;
+    TNode program_node_(t_node_id_, TNode::Program, children_);
     return program_node_;
   } catch (const std::runtime_error& e_) {
-    TNode invalid_node_(TNode::Invalid, 0,
+    TNode invalid_node_(0, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
     return invalid_node_;
   }
@@ -66,7 +69,8 @@ TNode SimpleParser::ParseProcedure() {
   children_.emplace_back(shared_children_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
-  TNode procedure_node_(TNode::Procedure, 0, proc_name_, children_);
+  t_node_id_++;
+  TNode procedure_node_(t_node_id_, TNode::Procedure, proc_name_, children_);
   return procedure_node_;
 }
 
@@ -79,12 +83,13 @@ TNode SimpleParser::ParseStatementList() {
     children_.emplace_back(shared_children_node_ptr_);
   } while (!MatchKind(Token::RIGHT_CURLY_BRACKET));
 
-  TNode statement_list_node_(TNode::StatementList, 0, children_);
+  t_node_id_++;
+  TNode statement_list_node_(t_node_id_, TNode::StatementList, children_);
   return statement_list_node_;
 }
 
 TNode SimpleParser::ParseStatement() {
-  line_number_++;
+  statement_number_++;
 
   // Check if next token is '=', it is an assignment if it is.
   if (Peek(token_pos_ + 1).Is(Token::EQUAL)) {
@@ -126,7 +131,8 @@ TNode SimpleParser::ParseAssign() {
   children_.emplace_back(shared_expr_node_ptr_);
   Expect(Token::SEMICOLON);
 
-  TNode assign_node_(TNode::Assign, line_number_, children_);
+  t_node_id_++;
+  TNode assign_node_(t_node_id_, TNode::Assign, statement_number_, children_);
   return assign_node_;
 }
 
@@ -138,7 +144,8 @@ TNode SimpleParser::ParseRead() {
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
-  TNode read_node_(TNode::Read, line_number_, children_);
+  t_node_id_++;
+  TNode read_node_(t_node_id_, TNode::Read, statement_number_, children_);
   return read_node_;
 }
 
@@ -150,7 +157,8 @@ TNode SimpleParser::ParsePrint() {
   children_.emplace_back(shared_var_name_node_ptr_);
   Expect(Token::SEMICOLON);
 
-  TNode print_node_(TNode::Print, line_number_, children_);
+  t_node_id_++;
+  TNode print_node_(t_node_id_, TNode::Print, statement_number_, children_);
   return print_node_;
 }
 
@@ -160,7 +168,8 @@ TNode SimpleParser::ParseCall() {
   Expect(Token::IDENTIFIER);
   Expect(Token::SEMICOLON);
 
-  TNode call_node_(TNode::Call, line_number_, proc_name_);
+  t_node_id_++;
+  TNode call_node_(t_node_id_, TNode::Call, statement_number_, proc_name_);
   return call_node_;
 }
 
@@ -180,7 +189,8 @@ TNode SimpleParser::ParseWhile() {
   children_.emplace_back(shared_stmt_list_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
-  TNode while_node_(TNode::While, line_number_, children_);
+  t_node_id_++;
+  TNode while_node_(t_node_id_, TNode::While, statement_number_, children_);
   return while_node_;
 }
 
@@ -210,7 +220,8 @@ TNode SimpleParser::ParseIf() {
   children_.emplace_back(shared_else_stmt_list_node_ptr_);
   Expect(Token::RIGHT_CURLY_BRACKET);
 
-  TNode if_node_(TNode::IfElseThen, line_number_, children_);
+  t_node_id_++;
+  TNode if_node_(t_node_id_, TNode::IfElseThen, statement_number_, children_);
   return if_node_;
 }
 
@@ -235,7 +246,8 @@ TNode SimpleParser::ParseCondExpr() {
     children_.emplace_back(shared_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
-    TNode not_node_(TNode::Not, line_number_, children_);
+    t_node_id_++;
+    TNode not_node_(t_node_id_, TNode::Not, statement_number_, children_);
     return not_node_;
   } else if (MatchKind(Token::LEFT_ROUND_BRACKET)) {
     // '(' cond_expr ')' '&&' '(' cond_expr ')' |
@@ -268,7 +280,8 @@ TNode SimpleParser::ParseCondExpr() {
     children_.emplace_back(shared_rhs_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
-    TNode cond_node_(type, line_number_, children_);
+    t_node_id_++;
+    TNode cond_node_(t_node_id_, type, statement_number_, children_);
     return cond_node_;
   } else {
     // rel_expr
@@ -313,7 +326,8 @@ TNode SimpleParser::ParseRelExpr() {
       std::make_shared<TNode>(ParseRelFactor());
   children_.emplace_back(shared_rhs_rel_factor_node_ptr_);
 
-  TNode rel_expr_node_(type, line_number_, children_);
+  t_node_id_++;
+  TNode rel_expr_node_(t_node_id_, type, statement_number_, children_);
   return rel_expr_node_;
 }
 
@@ -348,7 +362,8 @@ TNode SimpleParser::ParseExpr() {
         std::make_shared<TNode>(ParseTerm());
     children_.emplace_back(shared_rhs_node_ptr_);
 
-    TNode new_expr_node_(type, line_number_, children_);
+    t_node_id_++;
+    TNode new_expr_node_(t_node_id_, type, statement_number_, children_);
 
     expr_node_ = new_expr_node_;
   }
@@ -386,7 +401,8 @@ TNode SimpleParser::ParseTerm() {
         std::make_shared<TNode>(ParseFactor());
     children_.emplace_back(shared_rhs_node_ptr_);
 
-    TNode new_term_node_(type, line_number_, children_);
+    t_node_id_++;
+    TNode new_term_node_(t_node_id_, type, statement_number_, children_);
 
     term_node_ = new_term_node_;
   }
@@ -410,13 +426,17 @@ TNode SimpleParser::ParseFactor() {
 TNode SimpleParser::ParseVarName() {
   std::string var_name_ = Peek(token_pos_).GetValue();
   Expect(Token::IDENTIFIER);
-  TNode name_node_(TNode::Variable, line_number_, var_name_);
+
+  t_node_id_++;
+  TNode name_node_(t_node_id_, TNode::Variable, statement_number_, var_name_);
   return name_node_;
 }
 
 TNode SimpleParser::ParseConstValue() {
   int const_value_ = stoi(Peek(token_pos_).GetValue());
   Expect(Token::NUMBER);
-  TNode const_value_node_(TNode::Constant, line_number_, const_value_);
+
+  t_node_id_++;
+  TNode const_value_node_(t_node_id_, TNode::Constant, statement_number_, const_value_);
   return const_value_node_;
 }

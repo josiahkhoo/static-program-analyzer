@@ -38,14 +38,15 @@ class TNode {
     Invalid
   };
 
-  TNode(TNode::Type type, int line_number, std::string string_val,
+  TNode(int id, TNode::Type type, std::string string_val,
         std::vector<std::shared_ptr<TNode>> children);
-  TNode(Type type, int line_number,
+  TNode(int id, TNode::Type type, std::vector<std::shared_ptr<TNode>> children);
+  TNode(int id, TNode::Type type, int statement_number,
         std::vector<std::shared_ptr<TNode>> children);
-  TNode(Type type, int line_number, int int_val);
-  TNode(Type type, int line_number, std::string string_val);
+  TNode(int id, TNode::Type type, int statement_number, int int_val);
+  TNode(int id, TNode::Type type, int statement_number, std::string string_val);
 
-  [[nodiscard]] int GetLineNumber() const;
+  [[nodiscard]] int GetStatementNumber() const;
   [[nodiscard]] std::vector<std::shared_ptr<TNode>> GetChildren() const;
   [[nodiscard]] Type GetType() const;
   [[nodiscard]] int GetIntValue() const;
@@ -63,7 +64,8 @@ class TNode {
 
  private:
   Type type_;
-  int line_number_;
+  std::optional<int> statement_number_;
+  int unique_id_;
   std::vector<std::shared_ptr<TNode>> children_;
   std::optional<int> maybe_int_;
   std::optional<std::string> maybe_string_;
