@@ -13,6 +13,8 @@ class ModifiesSAbstraction
   const StatementEntity &GetLeftHandSide() const override;
 
   const VariableEntity &GetRightHandSide() const override;
+  bool operator==(const ModifiesSAbstraction &rhs) const;
+  bool operator!=(const ModifiesSAbstraction &rhs) const;
 
  private:
   StatementEntity lhs_;

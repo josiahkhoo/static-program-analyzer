@@ -12,6 +12,8 @@ class FollowsTAbstraction
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
+  bool operator==(const FollowsTAbstraction &rhs) const;
+  bool operator!=(const FollowsTAbstraction &rhs) const;
 
  private:
   StatementEntity lhs_;
