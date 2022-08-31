@@ -175,6 +175,7 @@ TNode SimpleParser::ParseCall() {
 
 TNode SimpleParser::ParseWhile() {
   Expect("while");
+  int while_statement_number_ = statement_number_;
   std::vector<std::shared_ptr<TNode>> children_;
 
   Expect(Token::LEFT_ROUND_BRACKET);
@@ -190,12 +191,14 @@ TNode SimpleParser::ParseWhile() {
   Expect(Token::RIGHT_CURLY_BRACKET);
 
   t_node_id_++;
-  TNode while_node_(t_node_id_, TNode::While, statement_number_, children_);
+  TNode while_node_(t_node_id_, TNode::While, while_statement_number_,
+                    children_);
   return while_node_;
 }
 
 TNode SimpleParser::ParseIf() {
   Expect("if");
+  int if_statement_number_ = statement_number_;
   std::vector<std::shared_ptr<TNode>> children_;
 
   // Parse condition
@@ -221,7 +224,8 @@ TNode SimpleParser::ParseIf() {
   Expect(Token::RIGHT_CURLY_BRACKET);
 
   t_node_id_++;
-  TNode if_node_(t_node_id_, TNode::IfElseThen, statement_number_, children_);
+  TNode if_node_(t_node_id_, TNode::IfElseThen, if_statement_number_,
+                 children_);
   return if_node_;
 }
 
