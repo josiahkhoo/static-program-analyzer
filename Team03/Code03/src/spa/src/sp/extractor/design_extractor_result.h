@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 30/8/22.
-//
-
 #ifndef SPA_DESIGN_EXTRACTOR_RESULT_H
 #define SPA_DESIGN_EXTRACTOR_RESULT_H
 

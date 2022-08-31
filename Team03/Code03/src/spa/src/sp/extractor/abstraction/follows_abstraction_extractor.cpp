@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 30/8/22.
-//
-
 #include "follows_abstraction_extractor.h"
 
 std::vector<FollowsAbstraction> FollowsAbstractionExtractor::Extract(
