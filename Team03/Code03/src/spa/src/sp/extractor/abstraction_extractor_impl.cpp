@@ -1,12 +1,12 @@
-#include "abstraction_extractor.h"
+#include "abstraction_extractor_impl.h"
 
-AbstractionExtractor::AbstractionExtractor(
+AbstractionExtractorImpl::AbstractionExtractorImpl(
     const FollowsAbstractionExtractor& follows_abstraction_extractor,
     const FollowsTAbstractionExtractor& follows_t_abstraction_extractor)
     : follows_abstraction_extractor_(follows_abstraction_extractor),
       follows_t_abstraction_extractor_(follows_t_abstraction_extractor) {}
 
-AbstractionExtractorResult AbstractionExtractor::Extract(
+AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity>& assign_entities,
     const std::vector<CallEntity>& call_entities,
     const std::vector<ConstantEntity>& constant_entities,
@@ -42,7 +42,7 @@ AbstractionExtractorResult AbstractionExtractor::Extract(
 }
 
 std::unordered_map<TNode, StatementEntity*>
-AbstractionExtractor::GetTNodeStatementEntityMap(
+AbstractionExtractorImpl::GetTNodeStatementEntityMap(
     const std::vector<StatementEntity>& statement_entities) const {
   std::unordered_map<TNode, StatementEntity*> umap;
   for (auto statement_entity : statement_entities)
@@ -52,7 +52,7 @@ AbstractionExtractor::GetTNodeStatementEntityMap(
 }
 
 std::unordered_map<TNode, VariableEntity*>
-AbstractionExtractor::GetTNodeVariableEntityMap(
+AbstractionExtractorImpl::GetTNodeVariableEntityMap(
     const std::vector<VariableEntity>& variable_entities) const {
   std::unordered_map<TNode, VariableEntity*> umap;
   for (auto variable_entity : variable_entities)
@@ -61,7 +61,7 @@ AbstractionExtractor::GetTNodeVariableEntityMap(
 }
 
 std::unordered_map<TNode, ConstantEntity*>
-AbstractionExtractor::GetTNodeConstantEntityMap(
+AbstractionExtractorImpl::GetTNodeConstantEntityMap(
     const std::vector<ConstantEntity>& constant_entities) const {
   std::unordered_map<TNode, ConstantEntity*> umap;
   for (auto constant_entity : constant_entities)

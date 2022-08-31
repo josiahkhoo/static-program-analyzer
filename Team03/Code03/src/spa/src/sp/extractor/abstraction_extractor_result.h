@@ -25,6 +25,8 @@ class AbstractionExtractorResult {
   [[nodiscard]] std::vector<ParentAbstraction> GetParentAbstractions() const;
   [[nodiscard]] std::vector<ParentTAbstraction> GetParentTAbstractions() const;
   [[nodiscard]] std::vector<UsesSAbstraction> GetUsesSAbstractions() const;
+  bool operator==(const AbstractionExtractorResult& rhs) const;
+  bool operator!=(const AbstractionExtractorResult& rhs) const;
 
  private:
   std::vector<FollowsAbstraction> follows_abstractions_;

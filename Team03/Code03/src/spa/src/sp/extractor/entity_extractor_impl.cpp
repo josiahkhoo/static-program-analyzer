@@ -1,6 +1,6 @@
-#include "entity_extractor.h"
+#include "entity_extractor_impl.h"
 
-EntityExtractor::EntityExtractor(
+EntityExtractorImpl::EntityExtractorImpl(
     const AssignEntityNodeExtractor& assign_entity_node_extractor,
     const CallEntityNodeExtractor& call_entity_node_extractor,
     const ConstantEntityNodeExtractor& constant_entity_node_extractor,
@@ -22,7 +22,7 @@ EntityExtractor::EntityExtractor(
       variable_entity_node_extractor_(variable_entity_node_extractor),
       while_entity_node_extractor_(while_entity_node_extractor) {}
 
-EntityExtractorResult EntityExtractor::Extract(const TNode& ast) const {
+EntityExtractorResult EntityExtractorImpl::Extract(const TNode& ast) const {
   std::vector<AssignEntity> assign_entities;
   std::vector<CallEntity> call_entities;
   std::vector<ConstantEntity> constant_entities;
@@ -45,7 +45,7 @@ EntityExtractorResult EntityExtractor::Extract(const TNode& ast) const {
           while_entities};
 }
 
-void EntityExtractor::ExtractNode(
+void EntityExtractorImpl::ExtractNode(
     const TNode& node, std::vector<AssignEntity>* assign_entities,
     std::vector<CallEntity>* call_entities,
     std::vector<ConstantEntity>* constant_entities,
@@ -108,7 +108,7 @@ void EntityExtractor::ExtractNode(
   }
 }
 
-void EntityExtractor::RecursivelyExtractNode(
+void EntityExtractorImpl::RecursivelyExtractNode(
     const TNode& node, std::vector<AssignEntity>* assign_entities,
     std::vector<CallEntity>* call_entities,
     std::vector<ConstantEntity>* constant_entities,

@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "sp/extractor/entity_extractor.h"
+#include "sp/extractor/entity_extractor_impl.h"
 
 TEST_CASE("Entity Extractor", "[EntityExtractor]") {
   AssignEntityNodeExtractor assign_extractor = AssignEntityNodeExtractor();
@@ -17,7 +17,7 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
       VariableEntityNodeExtractor();
   WhileEntityNodeExtractor while_extractor = WhileEntityNodeExtractor();
 
-  EntityExtractor entity_extractor_under_test = EntityExtractor(
+  EntityExtractorImpl entity_extractor_under_test = EntityExtractorImpl(
       assign_extractor, call_extractor, constant_extractor, if_extractor,
       print_extractor, procedure_extractor, read_extractor, statement_extractor,
       variable_extractor, while_extractor);
