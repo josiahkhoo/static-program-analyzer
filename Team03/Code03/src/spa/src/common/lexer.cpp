@@ -29,6 +29,8 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::COMMA, "^(,)"},
     {Token::PERCENT, "^(%)"},
     {Token::SEMICOLON, "^(;)"},
+    {Token::INVERTED_COMMAS, "^(\")"},
+    {Token::UNDERSCORE, "^(_)"},
     {Token::OR, "^(\\|\\|)"},
     {Token::AND, "^(&&)"},
     {Token::NOT, "^(!)"},

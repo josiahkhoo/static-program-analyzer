@@ -28,7 +28,9 @@ class Token {
     SLASH,                  // /
     COMMA,                  // ,
     PERCENT,                // %
-    SEMICOLON,              // "
+    SEMICOLON,              // ;
+    INVERTED_COMMAS,        // "
+    UNDERSCORE,             // _
     OR,                     // ||
     AND,                    // &&
     NOT,                    // !
