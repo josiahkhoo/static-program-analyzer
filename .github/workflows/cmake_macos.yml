@@ -14,7 +14,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        build-type: [ Release, Debug ]
+        build-type: [ Release ]
 
     steps:
       - uses: actions/checkout@v3
