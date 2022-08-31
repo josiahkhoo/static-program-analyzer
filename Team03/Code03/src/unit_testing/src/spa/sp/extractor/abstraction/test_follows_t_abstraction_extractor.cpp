@@ -49,20 +49,14 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
-    REQUIRE((abstractions[0].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[0].GetRightHandSide().GetNodePointer() ==
-                 re2.GetNodePointer()));
+    REQUIRE((abstractions[0].GetLeftHandSide() == re1 &&
+             abstractions[0].GetRightHandSide() == re2));
     // Check Follows(1,3)
-    REQUIRE((abstractions[1].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[1].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[1].GetLeftHandSide() == re1 &&
+             abstractions[1].GetRightHandSide() == re3));
     // Check Follows(2,3)
-    REQUIRE((abstractions[2].GetLeftHandSide().GetNodePointer() ==
-                 re2.GetNodePointer() &&
-             abstractions[2].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[2].GetLeftHandSide() == re2 &&
+             abstractions[2].GetRightHandSide() == re3));
   }
 
   SECTION("Extract from If") {
@@ -116,20 +110,14 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
-    REQUIRE((abstractions[0].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[0].GetRightHandSide().GetNodePointer() ==
-                 re2.GetNodePointer()));
+    REQUIRE((abstractions[0].GetLeftHandSide() == re1 &&
+             abstractions[0].GetRightHandSide() == re2));
     // Check Follows(1,3)
-    REQUIRE((abstractions[1].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[1].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[1].GetLeftHandSide() == re1 &&
+             abstractions[1].GetRightHandSide() == re3));
     // Check Follows(2,3)
-    REQUIRE((abstractions[2].GetLeftHandSide().GetNodePointer() ==
-                 re2.GetNodePointer() &&
-             abstractions[2].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[2].GetLeftHandSide() == re2 &&
+             abstractions[2].GetRightHandSide() == re3));
   }
 
   SECTION("Extract from While") {
@@ -181,19 +169,13 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
-    REQUIRE((abstractions[0].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[0].GetRightHandSide().GetNodePointer() ==
-                 re2.GetNodePointer()));
+    REQUIRE((abstractions[0].GetLeftHandSide() == re1 &&
+             abstractions[0].GetRightHandSide() == re2));
     // Check Follows(1,3)
-    REQUIRE((abstractions[1].GetLeftHandSide().GetNodePointer() ==
-                 re1.GetNodePointer() &&
-             abstractions[1].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[1].GetLeftHandSide() == re1 &&
+             abstractions[1].GetRightHandSide() == re3));
     // Check Follows(2,3)
-    REQUIRE((abstractions[2].GetLeftHandSide().GetNodePointer() ==
-                 re2.GetNodePointer() &&
-             abstractions[2].GetRightHandSide().GetNodePointer() ==
-                 re3.GetNodePointer()));
+    REQUIRE((abstractions[2].GetLeftHandSide() == re2 &&
+             abstractions[2].GetRightHandSide() == re3));
   }
 }
