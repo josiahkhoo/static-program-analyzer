@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "sp/extractor/entity_extractor.h"
+#include "sp/extractor/entity_extractor_impl.h"
 using namespace fakeit;
 
 TEST_CASE("Entity Extractor", "[EntityExtractor]") {
@@ -25,7 +25,7 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
   Mock<WhileEntityNodeExtractor> mock_while_extractor;
   When(Method(mock_while_extractor, TryExtractFromNode)).AlwaysReturn({});
 
-  EntityExtractor entity_extractor_under_test = EntityExtractor(
+  EntityExtractorImpl entity_extractor_under_test = EntityExtractorImpl(
       mock_assign_extractor.get(), mock_call_extractor.get(),
       mock_constant_extractor.get(), mock_if_extractor.get(),
       mock_print_extractor.get(), mock_procedure_extractor.get(),
