@@ -1,5 +1,11 @@
 #include "abstraction_extractor.h"
 
+AbstractionExtractor::AbstractionExtractor(
+    const FollowsAbstractionExtractor& follows_abstraction_extractor,
+    const FollowsTAbstractionExtractor& follows_t_abstraction_extractor)
+    : follows_abstraction_extractor_(follows_abstraction_extractor),
+      follows_t_abstraction_extractor_(follows_t_abstraction_extractor) {}
+
 AbstractionExtractorResult AbstractionExtractor::Extract(
     const std::vector<AssignEntity>& assign_entities,
     const std::vector<CallEntity>& call_entities,
@@ -17,7 +23,22 @@ AbstractionExtractorResult AbstractionExtractor::Extract(
       GetTNodeVariableEntityMap(variable_entities);
   std::unordered_map<TNode, ConstantEntity*> t_node_const_ent_umap =
       GetTNodeConstantEntityMap(constant_entities);
-  return {{}, {}, {}, {}, {}, {}};
+
+  std::vector<FollowsAbstraction> follows_abstractions =
+      follows_abstraction_extractor_.Extract(
+          assign_entities, call_entities, constant_entities, if_entities,
+          print_entities, procedure_entities, read_entities, statement_entities,
+          variable_entities, while_entities, t_node_stmt_ent_umap,
+          t_node_var_ent_umap, t_node_const_ent_umap);
+
+  std::vector<FollowsTAbstraction> follows_t_abstractions =
+      follows_t_abstraction_extractor_.Extract(
+          assign_entities, call_entities, constant_entities, if_entities,
+          print_entities, procedure_entities, read_entities, statement_entities,
+          variable_entities, while_entities, t_node_stmt_ent_umap,
+          t_node_var_ent_umap, t_node_const_ent_umap);
+
+  return {follows_abstractions, follows_t_abstractions, {}, {}, {}, {}};
 }
 
 std::unordered_map<TNode, StatementEntity*>

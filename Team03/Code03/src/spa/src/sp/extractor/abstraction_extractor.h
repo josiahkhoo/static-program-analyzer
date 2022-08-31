@@ -18,9 +18,14 @@
 #include "common/entity/statement_entity.h"
 #include "common/entity/variable_entity.h"
 #include "common/entity/while_entity.h"
+#include "sp/extractor/abstraction/follows_abstraction_extractor.h"
+#include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
 
 class AbstractionExtractor {
  public:
+  AbstractionExtractor(
+      const FollowsAbstractionExtractor& follows_abstraction_extractor,
+      const FollowsTAbstractionExtractor& follows_t_abstraction_extractor);
   [[nodiscard]] AbstractionExtractorResult Extract(
       const std::vector<AssignEntity>& assign_entities,
       const std::vector<CallEntity>& call_entities,
@@ -34,6 +39,9 @@ class AbstractionExtractor {
       const std::vector<WhileEntity>& while_entities) const;
 
  private:
+  const FollowsAbstractionExtractor& follows_abstraction_extractor_;
+  const FollowsTAbstractionExtractor& follows_t_abstraction_extractor_;
+
   [[nodiscard]] std::unordered_map<TNode, StatementEntity*>
   GetTNodeStatementEntityMap(
       const std::vector<StatementEntity>& statement_entities) const;
