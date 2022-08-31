@@ -437,6 +437,7 @@ TNode SimpleParser::ParseConstValue() {
   Expect(Token::NUMBER);
 
   t_node_id_++;
-  TNode const_value_node_(t_node_id_, TNode::Constant, statement_number_, const_value_);
+  TNode const_value_node_(t_node_id_, TNode::Constant, statement_number_,
+                          const_value_);
   return const_value_node_;
 }

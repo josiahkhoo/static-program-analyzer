@@ -16,14 +16,23 @@ TNode::TNode(int id, TNode::Type type,
 
 TNode::TNode(int id, TNode::Type type, int statement_number,
              std::vector<std::shared_ptr<TNode>> children)
-    : unique_id_(id), type_(type),
-      statement_number_(statement_number), children_(std::move(children)) {}
+    : unique_id_(id),
+      type_(type),
+      statement_number_(statement_number),
+      children_(std::move(children)) {}
 
 TNode::TNode(int id, TNode::Type type, int statement_number, int int_val)
-    : unique_id_(id), type_(type), statement_number_(statement_number), maybe_int_(int_val) {}
+    : unique_id_(id),
+      type_(type),
+      statement_number_(statement_number),
+      maybe_int_(int_val) {}
 
-TNode::TNode(int id, TNode::Type type, int statement_number, std::string string_val)
-    : unique_id_(id), type_(type), statement_number_(statement_number), maybe_string_(string_val) {}
+TNode::TNode(int id, TNode::Type type, int statement_number,
+             std::string string_val)
+    : unique_id_(id),
+      type_(type),
+      statement_number_(statement_number),
+      maybe_string_(string_val) {}
 
 int TNode::GetStatementNumber() const {
   assert(statement_number_.has_value());
@@ -85,7 +94,7 @@ bool TNode::IsNotType(TNode::Type type) const { return !IsType(type); }
 
 bool TNode::operator==(const TNode& rhs) const {
   return type_ == rhs.type_ && statement_number_ == rhs.statement_number_ &&
-         maybe_int_ == rhs.maybe_int_ &&
-         maybe_string_ == rhs.maybe_string_;}
+         maybe_int_ == rhs.maybe_int_ && maybe_string_ == rhs.maybe_string_;
+}
 
 bool TNode::operator!=(const TNode& rhs) const { return !(rhs == *this); }

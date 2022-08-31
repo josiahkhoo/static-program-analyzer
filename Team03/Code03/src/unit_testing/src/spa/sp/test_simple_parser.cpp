@@ -1,12 +1,11 @@
+#include <iostream>
+
 #include "catch.hpp"
 #include "sp/simple_parser.h"
-
-#include <iostream>
 
 bool deepEqual(TNode node1, TNode node2);
 
 bool deepEqual(TNode node1, TNode node2) {
-
   if (node1 != node2) {
     return false;
   }
@@ -31,8 +30,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::IDENTIFIER, "x"),
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
-                                  Token(Token::END)
-                                  };
+                                  Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
     TNode variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
@@ -63,14 +61,10 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
   SECTION("Test read statement") {
     std::vector<Token> tokens_ = {
-        Token(Token::IDENTIFIER, "procedure"),
-        Token(Token::IDENTIFIER, "main"),
-        Token(Token::LEFT_CURLY_BRACKET),
-        Token(Token::IDENTIFIER, "read"),
-        Token(Token::IDENTIFIER, "x"),
-        Token(Token::SEMICOLON),
-        Token(Token::RIGHT_CURLY_BRACKET),
-        Token(Token::END)};
+        Token(Token::IDENTIFIER, "procedure"), Token(Token::IDENTIFIER, "main"),
+        Token(Token::LEFT_CURLY_BRACKET),      Token(Token::IDENTIFIER, "read"),
+        Token(Token::IDENTIFIER, "x"),         Token(Token::SEMICOLON),
+        Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
     TNode variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
@@ -91,7 +85,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
         std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program,  {shared_program_node_ptr_});
+    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
 
     TNode invalid_node_(0, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
@@ -102,14 +96,10 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
 
   SECTION("Test call statement") {
     std::vector<Token> tokens_ = {
-        Token(Token::IDENTIFIER, "procedure"),
-        Token(Token::IDENTIFIER, "main"),
-        Token(Token::LEFT_CURLY_BRACKET),
-        Token(Token::IDENTIFIER, "call"),
-        Token(Token::IDENTIFIER, "x"),
-        Token(Token::SEMICOLON),
-        Token(Token::RIGHT_CURLY_BRACKET),
-        Token(Token::END)};
+        Token(Token::IDENTIFIER, "procedure"), Token(Token::IDENTIFIER, "main"),
+        Token(Token::LEFT_CURLY_BRACKET),      Token(Token::IDENTIFIER, "call"),
+        Token(Token::IDENTIFIER, "x"),         Token(Token::SEMICOLON),
+        Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
 
     TNode res = simple_parser_.Parse(tokens_);
 
@@ -150,8 +140,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::IDENTIFIER, "x"),
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
-                                  Token(Token::END)
-    };
+                                  Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
     TNode print_variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
@@ -208,8 +197,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::NUMBER, "1"),
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
-                                  Token(Token::END)
-    };
+                                  Token(Token::END)};
 
     TNode res = simple_parser_.Parse(tokens_);
 
@@ -225,8 +213,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     TNode lhs_var_node_ = TNode(0, TNode::Variable, 1, "x");
     std::shared_ptr<TNode> lhs_node_ptr_ =
         std::make_shared<TNode>(lhs_var_node_);
-    std::shared_ptr<TNode> plus_node_ptr_ =
-        std::make_shared<TNode>(plus_node_);
+    std::shared_ptr<TNode> plus_node_ptr_ = std::make_shared<TNode>(plus_node_);
     TNode assign_node_ =
         TNode(0, TNode::Assign, 1, {lhs_node_ptr_, plus_node_ptr_});
 
