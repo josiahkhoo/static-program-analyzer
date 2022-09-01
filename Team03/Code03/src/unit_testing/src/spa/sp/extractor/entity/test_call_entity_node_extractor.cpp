@@ -10,7 +10,8 @@ TEST_CASE("Call Entity Node Extractor", "[CallEntityNodeExtractor]") {
     std::optional<CallEntity> maybe_call_entity =
         extractor_under_test.TryExtractFromNode(mock_call_node);
     CallEntity call_entity = maybe_call_entity.value();
-    REQUIRE(call_entity.GetLineNumber() == mock_call_node.GetStatementNumber());
+    REQUIRE(call_entity.GetStatementNumber() ==
+            mock_call_node.GetStatementNumber());
     REQUIRE(call_entity.GetNodePointer() == &mock_call_node);
   }
 

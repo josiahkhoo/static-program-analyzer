@@ -10,7 +10,8 @@ TEST_CASE("Read Entity Node Extractor", "[ReadEntityNodeExtractor]") {
     std::optional<ReadEntity> maybe_read_entity =
         extractor_under_test.TryExtractFromNode(mock_read_node);
     ReadEntity read_entity = maybe_read_entity.value();
-    REQUIRE(read_entity.GetLineNumber() == mock_read_node.GetStatementNumber());
+    REQUIRE(read_entity.GetStatementNumber() ==
+            mock_read_node.GetStatementNumber());
     REQUIRE(read_entity.GetNodePointer() == &mock_read_node);
   }
 

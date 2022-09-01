@@ -10,7 +10,8 @@ TEST_CASE("If Entity Node Extractor", "[IfEntityNodeExtractor]") {
     std::optional<IfEntity> maybe_if_entity =
         extractor_under_test.TryExtractFromNode(mock_if_node);
     IfEntity if_entity = maybe_if_entity.value();
-    REQUIRE(if_entity.GetLineNumber() == mock_if_node.GetStatementNumber());
+    REQUIRE(if_entity.GetStatementNumber() ==
+            mock_if_node.GetStatementNumber());
     REQUIRE(if_entity.GetNodePointer() == &mock_if_node);
   }
 

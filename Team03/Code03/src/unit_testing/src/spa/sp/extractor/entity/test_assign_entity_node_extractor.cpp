@@ -10,7 +10,7 @@ TEST_CASE("Assign Entity Node Extractor", "[AssignEntityNodeExtractor]") {
     std::optional<AssignEntity> maybe_assign_entity =
         extractor_under_test.TryExtractFromNode(mock_assign_node);
     AssignEntity assign_entity = maybe_assign_entity.value();
-    REQUIRE(assign_entity.GetLineNumber() ==
+    REQUIRE(assign_entity.GetStatementNumber() ==
             mock_assign_node.GetStatementNumber());
     REQUIRE(assign_entity.GetNodePointer() == &mock_assign_node);
   }

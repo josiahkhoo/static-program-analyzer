@@ -10,7 +10,7 @@ TEST_CASE("Print Entity Node Extractor", "[PrintEntityNodeExtractor]") {
     std::optional<PrintEntity> maybe_print_entity =
         extractor_under_test.TryExtractFromNode(mock_print_node);
     PrintEntity print_entity = maybe_print_entity.value();
-    REQUIRE(print_entity.GetLineNumber() ==
+    REQUIRE(print_entity.GetStatementNumber() ==
             mock_print_node.GetStatementNumber());
     REQUIRE(print_entity.GetNodePointer() == &mock_print_node);
   }

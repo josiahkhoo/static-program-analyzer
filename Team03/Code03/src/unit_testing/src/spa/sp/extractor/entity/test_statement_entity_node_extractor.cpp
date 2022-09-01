@@ -11,7 +11,7 @@ TEST_CASE("Statement Entity Node Extractor", "[StatementEntityNodeExtractor]") {
     std::optional<StatementEntity> maybe_statement_entity =
         extractor_under_test.TryExtractFromNode(mock_statement_node);
     StatementEntity statement_entity = maybe_statement_entity.value();
-    REQUIRE(statement_entity.GetLineNumber() ==
+    REQUIRE(statement_entity.GetStatementNumber() ==
             mock_statement_node.GetStatementNumber());
     REQUIRE(statement_entity.GetNodePointer() == &mock_statement_node);
   }

@@ -10,7 +10,7 @@ TEST_CASE("While Entity Node Extractor", "[WhileEntityNodeExtractor]") {
     std::optional<WhileEntity> maybe_while_entity =
         extractor_under_test.TryExtractFromNode(mock_while_node);
     WhileEntity while_entity = maybe_while_entity.value();
-    REQUIRE(while_entity.GetLineNumber() ==
+    REQUIRE(while_entity.GetStatementNumber() ==
             mock_while_node.GetStatementNumber());
     REQUIRE(while_entity.GetNodePointer() == &mock_while_node);
   }
