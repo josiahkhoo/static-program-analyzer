@@ -16,7 +16,7 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
   DesignExtractorImpl extractor_under_test = DesignExtractorImpl(
       mock_entity_extractor.get(), mock_abstraction_extractor.get());
 
-  TNode test_node = TNode(TNode::Program, 0, "");
+  TNode test_node = TNode(1, TNode::Program, 0, "");
   SECTION("Calls entity extractor and abstraction extractor") {
     DesignExtractorResult der = extractor_under_test.Extract(test_node);
     Verify(Method(mock_entity_extractor, Extract).Using(test_node));

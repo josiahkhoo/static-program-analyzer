@@ -23,7 +23,7 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
       variable_extractor, while_extractor);
 
   SECTION("Extract single-depth constant node") {
-    TNode single_depth_node = TNode(0, TNode::Constant, 1, 2);
+    TNode single_depth_node = TNode(1, TNode::Constant, 1, 2);
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(single_depth_node);
     REQUIRE(res.GetAssignEntities().empty());
@@ -39,7 +39,7 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
   }
 
   SECTION("Extract single-depth variable node") {
-    TNode single_depth_node = TNode(0, TNode::Variable, 1, "var");
+    TNode single_depth_node = TNode(2, TNode::Variable, 1, "var");
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(single_depth_node);
     REQUIRE(res.GetAssignEntities().empty());
@@ -56,11 +56,11 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
 
   SECTION("Extract 2-depth assign constant variable node") {
     std::shared_ptr<TNode> shared_constant_node_ptr =
-        std::make_shared<TNode>(0, TNode::Constant, 1, 2);
+        std::make_shared<TNode>(1, TNode::Constant, 1, 2);
     std::shared_ptr<TNode> shared_variable_node_ptr =
-        std::make_shared<TNode>(0, TNode::Variable, 1, "var");
+        std::make_shared<TNode>(2, TNode::Variable, 1, "var");
     TNode assign_node =
-        TNode(0, TNode::Assign, 1,
+        TNode(3, TNode::Assign, 1,
               {shared_variable_node_ptr, shared_constant_node_ptr});
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(assign_node);

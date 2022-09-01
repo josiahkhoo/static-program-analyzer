@@ -6,7 +6,7 @@ TEST_CASE("Assign Entity Node Extractor", "[AssignEntityNodeExtractor]") {
 
   SECTION("Extract Assign Node") {
     TNode mock_assign_node =
-        TNode(0, TNode::Assign, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::Assign, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<AssignEntity> maybe_assign_entity =
         extractor_under_test.TryExtractFromNode(mock_assign_node);
     AssignEntity assign_entity = maybe_assign_entity.value();
@@ -17,7 +17,7 @@ TEST_CASE("Assign Entity Node Extractor", "[AssignEntityNodeExtractor]") {
 
   SECTION("Extract empty from non-Assign Node") {
     TNode mock_non_assign_node =
-        TNode(0, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<AssignEntity> maybe_assign_entity =
         extractor_under_test.TryExtractFromNode(mock_non_assign_node);
     REQUIRE_FALSE(maybe_assign_entity.has_value());

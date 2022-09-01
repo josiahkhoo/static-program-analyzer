@@ -6,7 +6,7 @@ TEST_CASE("If Entity Node Extractor", "[IfEntityNodeExtractor]") {
 
   SECTION("Extract If Node") {
     TNode mock_if_node =
-        TNode(0, TNode::IfElseThen, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::IfElseThen, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<IfEntity> maybe_if_entity =
         extractor_under_test.TryExtractFromNode(mock_if_node);
     IfEntity if_entity = maybe_if_entity.value();
@@ -16,7 +16,7 @@ TEST_CASE("If Entity Node Extractor", "[IfEntityNodeExtractor]") {
 
   SECTION("Extract empty from non-If Node") {
     TNode mock_non_if_node =
-        TNode(0, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<IfEntity> maybe_if_entity =
         extractor_under_test.TryExtractFromNode(mock_non_if_node);
     REQUIRE_FALSE(maybe_if_entity.has_value());

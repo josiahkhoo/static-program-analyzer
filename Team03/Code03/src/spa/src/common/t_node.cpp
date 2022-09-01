@@ -40,7 +40,7 @@ int TNode::GetStatementNumber() const {
 }
 
 std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
-  if (IsType(Inverse) || IsType(Print) || IsType(Read) || IsType(Call)) {
+  if (IsType(Inverse) || IsType(Print) || IsType(Read)) {
     assert(children_.size() == 1);
   } else if (IsType(While) || IsType(Assign) || IsEqualityOperator() ||
              IsLogicalOperator() || IsTimesDivideQuotientOperator()) {
@@ -50,6 +50,8 @@ std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
   }
   return children_;
 }
+
+int TNode::GetId() const { return unique_id_; }
 
 TNode::Type TNode::GetType() const { return type_; }
 

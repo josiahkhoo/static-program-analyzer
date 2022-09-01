@@ -33,7 +33,7 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
       mock_variable_extractor.get(), mock_while_extractor.get());
 
   SECTION("Extract single-depth node") {
-    TNode single_depth_node = TNode(TNode::Constant, 1, 2);
+    TNode single_depth_node = TNode(1, TNode::Constant, 1, 2);
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(single_depth_node);
     Verify(Method(mock_assign_extractor, TryExtractFromNode)
@@ -86,11 +86,12 @@ TEST_CASE("Entity Extractor", "[EntityExtractor]") {
 
   SECTION("Extract 2-depth node") {
     std::shared_ptr<TNode> shared_constant_node_ptr =
-        std::make_shared<TNode>(TNode::Constant, 1, 2);
+        std::make_shared<TNode>(1, TNode::Constant, 1, 2);
     std::shared_ptr<TNode> shared_variable_node_ptr =
-        std::make_shared<TNode>(TNode::Variable, 1, "var");
-    TNode assign_node = TNode(
-        TNode::Assign, 1, {shared_variable_node_ptr, shared_constant_node_ptr});
+        std::make_shared<TNode>(2, TNode::Variable, 1, "var");
+    TNode assign_node =
+        TNode(3, TNode::Assign, 1,
+              {shared_variable_node_ptr, shared_constant_node_ptr});
     EntityExtractorResult res =
         entity_extractor_under_test.Extract(assign_node);
 

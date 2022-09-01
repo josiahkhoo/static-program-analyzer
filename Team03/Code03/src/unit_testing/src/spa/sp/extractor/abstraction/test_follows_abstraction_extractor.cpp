@@ -5,18 +5,18 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
   FollowsAbstractionExtractor extractor_under_test =
       FollowsAbstractionExtractor();
   SECTION("Extract from Procedure") {
-    TNode variable_node1 = TNode(TNode::Variable, 1, "x");
+    TNode variable_node1 = TNode(1, TNode::Variable, 1, "x");
     TNode read_node1 =
-        TNode(TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
+        TNode(2, TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
 
-    TNode variable_node2 = TNode(TNode::Variable, 2, "x");
+    TNode variable_node2 = TNode(3, TNode::Variable, 2, "x");
     TNode read_node2 =
-        TNode(TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
+        TNode(4, TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
 
-    TNode variable_node3 = TNode(TNode::Variable, 3, "x");
+    TNode variable_node3 = TNode(5, TNode::Variable, 3, "x");
     TNode read_node3 =
-        TNode(TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
-    TNode procedure_node = TNode(TNode::Procedure, 0,
+        TNode(6, TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
+    TNode procedure_node = TNode(7, TNode::Procedure, 0,
                                  {std::make_shared<TNode>(read_node1),
                                   std::make_shared<TNode>(read_node2),
                                   std::make_shared<TNode>(read_node3)});
@@ -27,9 +27,9 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         VariableEntity(variable_node2, variable_node2.GetStringValue());
     VariableEntity v3 =
         VariableEntity(variable_node3, variable_node3.GetStringValue());
-    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetLineNumber());
-    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetLineNumber());
-    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetLineNumber());
+    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetStatementNumber());
+    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
+    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     ProcedureEntity p = ProcedureEntity(procedure_node, "proc");
     std::unordered_map<TNode, StatementEntity*> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
@@ -56,25 +56,25 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
   }
 
   SECTION("Extract from If") {
-    TNode variable_node1 = TNode(TNode::Variable, 2, "x");
+    TNode variable_node1 = TNode(1, TNode::Variable, 2, "x");
     TNode read_node1 =
-        TNode(TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
+        TNode(2, TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
 
-    TNode variable_node2 = TNode(TNode::Variable, 3, "x");
+    TNode variable_node2 = TNode(3, TNode::Variable, 3, "x");
     TNode read_node2 =
-        TNode(TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
+        TNode(4, TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
 
-    TNode variable_node3 = TNode(TNode::Variable, 4, "x");
+    TNode variable_node3 = TNode(5, TNode::Variable, 4, "x");
     TNode read_node3 =
-        TNode(TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
-    TNode if_node = TNode(TNode::Equal, 0, {});
-    TNode then_node = TNode(TNode::StatementList, 0,
+        TNode(6, TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
+    TNode if_node = TNode(7, TNode::Equal, 0, {});
+    TNode then_node = TNode(8, TNode::StatementList, 0,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2),
                              std::make_shared<TNode>(read_node3)});
-    TNode else_node = TNode(TNode::StatementList, 0, {});
+    TNode else_node = TNode(9, TNode::StatementList, 0, {});
     TNode if_else_then_node = TNode(
-        TNode::IfElseThen, 0,
+        10, TNode::IfElseThen, 0,
         {std::make_shared<TNode>(if_node), std::make_shared<TNode>(then_node),
          std::make_shared<TNode>(else_node)});
 
@@ -84,9 +84,9 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         VariableEntity(variable_node2, variable_node2.GetStringValue());
     VariableEntity v3 =
         VariableEntity(variable_node3, variable_node3.GetStringValue());
-    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetLineNumber());
-    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetLineNumber());
-    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetLineNumber());
+    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetStatementNumber());
+    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
+    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     IfEntity if_ent = IfEntity(if_else_then_node, 1);
     std::unordered_map<TNode, StatementEntity*> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
@@ -113,23 +113,23 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
   }
 
   SECTION("Extract from While") {
-    TNode variable_node1 = TNode(TNode::Variable, 2, "x");
+    TNode variable_node1 = TNode(1, TNode::Variable, 2, "x");
     TNode read_node1 =
-        TNode(TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
+        TNode(2, TNode::Read, 1, {std::make_shared<TNode>(variable_node1)});
 
-    TNode variable_node2 = TNode(TNode::Variable, 3, "x");
+    TNode variable_node2 = TNode(3, TNode::Variable, 3, "x");
     TNode read_node2 =
-        TNode(TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
+        TNode(4, TNode::Read, 2, {std::make_shared<TNode>(variable_node2)});
 
-    TNode variable_node3 = TNode(TNode::Variable, 4, "x");
+    TNode variable_node3 = TNode(5, TNode::Variable, 4, "x");
     TNode read_node3 =
-        TNode(TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
-    TNode cond_node = TNode(TNode::Equal, 0, {});
-    TNode loop_node = TNode(TNode::StatementList, 0,
+        TNode(6, TNode::Read, 3, {std::make_shared<TNode>(variable_node3)});
+    TNode cond_node = TNode(7, TNode::Equal, 0, {});
+    TNode loop_node = TNode(8, TNode::StatementList, 0,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2),
                              std::make_shared<TNode>(read_node3)});
-    TNode while_node = TNode(TNode::While, 0,
+    TNode while_node = TNode(9, TNode::While, 0,
                              {std::make_shared<TNode>(cond_node),
                               std::make_shared<TNode>(loop_node)});
 
@@ -139,9 +139,9 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         VariableEntity(variable_node2, variable_node2.GetStringValue());
     VariableEntity v3 =
         VariableEntity(variable_node3, variable_node3.GetStringValue());
-    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetLineNumber());
-    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetLineNumber());
-    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetLineNumber());
+    ReadEntity re1 = ReadEntity(read_node1, read_node1.GetStatementNumber());
+    ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
+    ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     WhileEntity while_entity = WhileEntity(while_node, 1);
     std::unordered_map<TNode, StatementEntity*> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
