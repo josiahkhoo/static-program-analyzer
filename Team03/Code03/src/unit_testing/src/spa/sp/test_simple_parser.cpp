@@ -73,31 +73,31 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
     std::shared_ptr<TNode> shared_print_node_ptr_ =
-        std::make_shared<TNode>(variable_x_node_);
-    TNode print_node_ = TNode(0, TNode::Print, 1, {shared_print_node_ptr_});
+        std::make_shared<TNode>(variable_x_node);
+    TNode print_node = TNode(2, TNode::Print, 1, {shared_print_node_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(print_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(print_node);
+    TNode stmt_list_node =
+        TNode(3, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(4, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(5, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(6, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
   SECTION("Test read statement") {
     std::vector<Token> tokens_ = {
@@ -107,31 +107,31 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
     std::shared_ptr<TNode> shared_read_node_ptr_ =
-        std::make_shared<TNode>(variable_x_node_);
-    TNode read_node_ = TNode(0, TNode::Read, 1, {shared_read_node_ptr_});
+        std::make_shared<TNode>(variable_x_node);
+    TNode read_node = TNode(2, TNode::Read, 1, {shared_read_node_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(read_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(read_node);
+    TNode stmt_list_node =
+        TNode(3, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(4, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(5, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(6, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
 
   SECTION("Test call statement") {
@@ -143,27 +143,27 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
 
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode call_node_ = TNode(0, TNode::Call, 1, "x");
+    TNode call_node = TNode(1, TNode::Call, 1, "x");
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(call_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(call_node);
+    TNode stmt_list_node =
+        TNode(2, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(3, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(4, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(5, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
 
   SECTION("Test print,call and read statement") {
@@ -183,48 +183,48 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::END)};
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode print_variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode print_variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
     std::shared_ptr<TNode> shared_print_node_ptr_ =
-        std::make_shared<TNode>(print_variable_x_node_);
-    TNode print_node_ = TNode(0, TNode::Print, 1, {shared_print_node_ptr_});
+        std::make_shared<TNode>(print_variable_x_node);
+    TNode print_node = TNode(2, TNode::Print, 1, {shared_print_node_ptr_});
 
-    TNode call_node_ = TNode(0, TNode::Call, 2, "x");
+    TNode call_node = TNode(3, TNode::Call, 2, "x");
 
-    TNode read_variable_x_node_ = TNode(0, TNode::Variable, 3, "x");
+    TNode read_variable_x_node = TNode(4, TNode::Variable, 3, "x");
 
     std::shared_ptr<TNode> shared_read_node_ptr_ =
-        std::make_shared<TNode>(read_variable_x_node_);
-    TNode read_node_ = TNode(0, TNode::Read, 3, {shared_read_node_ptr_});
+        std::make_shared<TNode>(read_variable_x_node);
+    TNode read_node = TNode(5, TNode::Read, 3, {shared_read_node_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_print_node_ptr_ =
-        std::make_shared<TNode>(print_node_);
+        std::make_shared<TNode>(print_node);
 
     std::shared_ptr<TNode> shared_stmt_list_call_node_ptr_ =
-        std::make_shared<TNode>(call_node_);
+        std::make_shared<TNode>(call_node);
 
     std::shared_ptr<TNode> shared_stmt_list_read_node_ptr_ =
-        std::make_shared<TNode>(read_node_);
+        std::make_shared<TNode>(read_node);
 
-    TNode stmt_list_node_ = TNode(
-        0, TNode::StatementList,
+    TNode stmt_list_node = TNode(
+        6, TNode::StatementList,
         {shared_stmt_list_print_node_ptr_, shared_stmt_list_call_node_ptr_,
          shared_stmt_list_read_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(7, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(8, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(9, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
   SECTION("Test assign statement x = x + 1;") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
@@ -241,41 +241,41 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
 
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode rhs_var_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode rhs_var_node = TNode(1, TNode::Variable, 1, "x");
     std::shared_ptr<TNode> lhs_plus_var_node_ptr_ =
-        std::make_shared<TNode>(rhs_var_node_);
-    TNode const_node_ = TNode(0, TNode::Constant, 1, 1);
+        std::make_shared<TNode>(rhs_var_node);
+    TNode const_node_ = TNode(2, TNode::Constant, 1, 1);
     std::shared_ptr<TNode> rhs_const_node_ptr_ =
         std::make_shared<TNode>(const_node_);
-    TNode plus_node_ =
-        TNode(0, TNode::Plus, 1, {lhs_plus_var_node_ptr_, rhs_const_node_ptr_});
+    TNode plus_node =
+        TNode(3, TNode::Plus, 1, {lhs_plus_var_node_ptr_, rhs_const_node_ptr_});
 
-    TNode lhs_var_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode lhs_var_node = TNode(4, TNode::Variable, 1, "x");
     std::shared_ptr<TNode> lhs_node_ptr_ =
-        std::make_shared<TNode>(lhs_var_node_);
-    std::shared_ptr<TNode> plus_node_ptr_ = std::make_shared<TNode>(plus_node_);
-    TNode assign_node_ =
-        TNode(0, TNode::Assign, 1, {lhs_node_ptr_, plus_node_ptr_});
+        std::make_shared<TNode>(lhs_var_node);
+    std::shared_ptr<TNode> plus_node_ptr_ = std::make_shared<TNode>(plus_node);
+    TNode assign_node =
+        TNode(5, TNode::Assign, 1, {lhs_node_ptr_, plus_node_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(assign_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(assign_node);
+    TNode stmt_list_node =
+        TNode(6, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(7, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(8, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(9, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
 
   SECTION("Test while statement with print x;") {
@@ -298,59 +298,59 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
 
     TNode res = simple_parser_.Parse(tokens_);
 
-    TNode variable_x_node_ = TNode(0, TNode::Variable, 2, "x");
+    TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
 
     std::shared_ptr<TNode> variable_x_node_ptr_ =
-        std::make_shared<TNode>(variable_x_node_);
-    TNode print_node_ = TNode(0, TNode::Print, 2, {variable_x_node_ptr_});
+        std::make_shared<TNode>(variable_x_node);
+    TNode print_node = TNode(2, TNode::Print, 2, {variable_x_node_ptr_});
 
     std::shared_ptr<TNode> print_node_ptr_ =
-        std::make_shared<TNode>(print_node_);
-    TNode while_stmt_list_node_ =
-        TNode(0, TNode::StatementList, {print_node_ptr_});
+        std::make_shared<TNode>(print_node);
+    TNode while_stmt_list_node =
+        TNode(3, TNode::StatementList, {print_node_ptr_});
 
     // WHILE CONDITION NODE
-    TNode cond_variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode cond_variable_x_node = TNode(4, TNode::Variable, 1, "x");
 
-    TNode cond_const_node_ = TNode(0, TNode::Constant, 1, 0);
+    TNode cond_const_node = TNode(5, TNode::Constant, 1, 0);
 
     std::shared_ptr<TNode> cond_variable_node_ptr_ =
-        std::make_shared<TNode>(cond_variable_x_node_);
+        std::make_shared<TNode>(cond_variable_x_node);
 
     std::shared_ptr<TNode> cond_const_node_ptr_ =
-        std::make_shared<TNode>(cond_const_node_);
+        std::make_shared<TNode>(cond_const_node);
 
-    TNode not_eq_node_ = TNode(0, TNode::NotEqual, 1,
+    TNode not_eq_node = TNode(6, TNode::NotEqual, 1,
                                {cond_variable_node_ptr_, cond_const_node_ptr_});
 
     // WHILE NODE
     std::shared_ptr<TNode> while_stmt_list_ptr_ =
-        std::make_shared<TNode>(while_stmt_list_node_);
+        std::make_shared<TNode>(while_stmt_list_node);
     std::shared_ptr<TNode> while_cond_node_ptr_ =
-        std::make_shared<TNode>(not_eq_node_);
+        std::make_shared<TNode>(not_eq_node);
 
-    TNode while_node_ =
-        TNode(0, TNode::While, 1, {while_cond_node_ptr_, while_stmt_list_ptr_});
+    TNode while_node =
+        TNode(7, TNode::While, 1, {while_cond_node_ptr_, while_stmt_list_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(while_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(while_node);
+    TNode stmt_list_node =
+        TNode(8, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(9, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node(10, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node(11, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
 
   SECTION("Test if statement with print x;") {
@@ -380,72 +380,72 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     TNode res = simple_parser_.Parse(tokens_);
 
     // THEN STATEMENT LIST
-    TNode variable_x_node_ = TNode(0, TNode::Variable, 2, "x");
+    TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
 
     std::shared_ptr<TNode> variable_x_node_ptr_ =
-        std::make_shared<TNode>(variable_x_node_);
-    TNode print_node_ = TNode(0, TNode::Print, 2, {variable_x_node_ptr_});
+        std::make_shared<TNode>(variable_x_node);
+    TNode print_node = TNode(2, TNode::Print, 2, {variable_x_node_ptr_});
 
     std::shared_ptr<TNode> print_node_ptr_ =
-        std::make_shared<TNode>(print_node_);
-    TNode then_stmt_list_node_ =
-        TNode(0, TNode::StatementList, {print_node_ptr_});
+        std::make_shared<TNode>(print_node);
+    TNode then_stmt_list_node =
+        TNode(3, TNode::StatementList, {print_node_ptr_});
 
     // ELSE STATEMENT LIST
-    TNode variable_y_node_ = TNode(0, TNode::Variable, 3, "y");
+    TNode variable_y_node = TNode(4, TNode::Variable, 3, "y");
 
     std::shared_ptr<TNode> variable_y_node_ptr_ =
-        std::make_shared<TNode>(variable_y_node_);
-    TNode read_node_ = TNode(0, TNode::Read, 3, {variable_y_node_ptr_});
+        std::make_shared<TNode>(variable_y_node);
+    TNode read_node = TNode(5, TNode::Read, 3, {variable_y_node_ptr_});
 
-    std::shared_ptr<TNode> read_node_ptr_ = std::make_shared<TNode>(read_node_);
-    TNode else_stmt_list_node_ =
-        TNode(0, TNode::StatementList, {read_node_ptr_});
+    std::shared_ptr<TNode> read_node_ptr_ = std::make_shared<TNode>(read_node);
+    TNode else_stmt_list_node =
+        TNode(6, TNode::StatementList, {read_node_ptr_});
 
     // IF CONDITION NODE
-    TNode cond_variable_x_node_ = TNode(0, TNode::Variable, 1, "x");
+    TNode cond_variable_x_node = TNode(7, TNode::Variable, 1, "x");
 
-    TNode cond_const_node_ = TNode(0, TNode::Constant, 1, 0);
+    TNode cond_const_node = TNode(8, TNode::Constant, 1, 0);
 
     std::shared_ptr<TNode> cond_variable_node_ptr_ =
-        std::make_shared<TNode>(cond_variable_x_node_);
+        std::make_shared<TNode>(cond_variable_x_node);
 
     std::shared_ptr<TNode> cond_const_node_ptr_ =
-        std::make_shared<TNode>(cond_const_node_);
+        std::make_shared<TNode>(cond_const_node);
 
-    TNode not_eq_node_ = TNode(0, TNode::NotEqual, 1,
+    TNode not_eq_node = TNode(9, TNode::NotEqual, 1,
                                {cond_variable_node_ptr_, cond_const_node_ptr_});
 
     // IF NODE
     std::shared_ptr<TNode> then_stmt_list_ptr_ =
-        std::make_shared<TNode>(then_stmt_list_node_);
+        std::make_shared<TNode>(then_stmt_list_node);
     std::shared_ptr<TNode> else_stmt_list_ptr_ =
-        std::make_shared<TNode>(else_stmt_list_node_);
+        std::make_shared<TNode>(else_stmt_list_node);
     std::shared_ptr<TNode> if_cond_node_ptr_ =
-        std::make_shared<TNode>(not_eq_node_);
+        std::make_shared<TNode>(not_eq_node);
 
-    TNode if_node_ =
-        TNode(0, TNode::IfElseThen, 1,
+    TNode if_node =
+        TNode(10, TNode::IfElseThen, 1,
               {if_cond_node_ptr_, then_stmt_list_ptr_, else_stmt_list_ptr_});
 
     std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-        std::make_shared<TNode>(if_node_);
-    TNode stmt_list_node_ =
-        TNode(0, TNode::StatementList, {shared_stmt_list_node_ptr_});
+        std::make_shared<TNode>(if_node);
+    TNode stmt_list_node =
+        TNode(11, TNode::StatementList, {shared_stmt_list_node_ptr_});
 
     std::shared_ptr<TNode> shared_procedure_node_ptr_ =
-        std::make_shared<TNode>(stmt_list_node_);
-    TNode procedure_node_ =
-        TNode(0, TNode::Procedure, "main", {shared_procedure_node_ptr_});
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node =
+        TNode(12, TNode::Procedure, "main", {shared_procedure_node_ptr_});
 
     std::shared_ptr<TNode> shared_program_node_ptr_ =
-        std::make_shared<TNode>(procedure_node_);
-    TNode program_node_(0, TNode::Program, {shared_program_node_ptr_});
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(13, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node = TNode(14, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
 
-    REQUIRE_FALSE(deepEqual(res, invalid_node_));
-    REQUIRE(deepEqual(res, program_node_));
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
   }
 }

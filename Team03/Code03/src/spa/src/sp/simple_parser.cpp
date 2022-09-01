@@ -351,7 +351,7 @@ TNode SimpleParser::ParseRelFactor() {
 
 TNode SimpleParser::ParseExpr() {
   // expr '+' term | expr '-' term | term
-  TNode expr_node = TNode(ParseTerm());
+  TNode expr_node = ParseTerm();
   while (!MatchKind(Token::END) &&
          ((MatchKind(Token::PLUS)) || MatchKind(Token::MINUS))) {
     std::vector<std::shared_ptr<TNode>> children_;
@@ -386,7 +386,7 @@ TNode SimpleParser::ParseExpr() {
 
 TNode SimpleParser::ParseTerm() {
   // term '*' factor | term '/' factor | term '%' factor | factor
-  TNode term_node = TNode(ParseFactor());
+  TNode term_node = ParseFactor();
   while (!MatchKind(Token::END) &&
          ((MatchKind(Token::ASTERISK)) || MatchKind(Token::SLASH) ||
           MatchKind(Token::PERCENT))) {
