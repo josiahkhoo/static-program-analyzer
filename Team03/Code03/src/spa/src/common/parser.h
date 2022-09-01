@@ -7,7 +7,7 @@
 
 template <class T>
 class Parser {
-  virtual T parse(std::vector<Token> tokens) = 0;
+  virtual T Parse(std::vector<Token> tokens) = 0;
 };
 
 #endif  // SPA_PARSER_H

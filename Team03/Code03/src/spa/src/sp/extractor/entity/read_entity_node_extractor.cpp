@@ -5,5 +5,5 @@ std::optional<ReadEntity> ReadEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Read)) {
     return {};
   }
-  return std::make_optional<ReadEntity>(ast, ast.GetLineNumber());
+  return std::make_optional<ReadEntity>(ast, ast.GetStatementNumber());
 }
