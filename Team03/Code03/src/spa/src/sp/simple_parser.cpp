@@ -48,12 +48,13 @@ TNode SimpleParser::Parse(std::vector<Token> tokens_) {
     } while (!MatchKind(Token::END));
 
     t_node_id_++;
-    TNode program_node_(t_node_id_, TNode::Program, children_);
-    return program_node_;
+    TNode program_node = TNode(t_node_id_,
+                               TNode::Program, children_);
+    return program_node;
   } catch (const std::runtime_error& e_) {
-    TNode invalid_node_(0, TNode::Invalid,
+    TNode invalid_node(0, TNode::Invalid,
                         std::vector<std::shared_ptr<TNode>>());
-    return invalid_node_;
+    return invalid_node;
   }
 }
 
@@ -70,8 +71,9 @@ TNode SimpleParser::ParseProcedure() {
   Expect(Token::RIGHT_CURLY_BRACKET);
 
   t_node_id_++;
-  TNode procedure_node_(t_node_id_, TNode::Procedure, proc_name_, children_);
-  return procedure_node_;
+  TNode procedure_node = TNode(t_node_id_, TNode::Procedure,
+                               proc_name_, children_);
+  return procedure_node;
 }
 
 TNode SimpleParser::ParseStatementList() {
@@ -84,8 +86,9 @@ TNode SimpleParser::ParseStatementList() {
   } while (!MatchKind(Token::RIGHT_CURLY_BRACKET));
 
   t_node_id_++;
-  TNode statement_list_node_(t_node_id_, TNode::StatementList, children_);
-  return statement_list_node_;
+  TNode statement_list_node = TNode(t_node_id_,
+                                    TNode::StatementList, children_);
+  return statement_list_node;
 }
 
 TNode SimpleParser::ParseStatement() {
@@ -132,8 +135,9 @@ TNode SimpleParser::ParseAssign() {
   Expect(Token::SEMICOLON);
 
   t_node_id_++;
-  TNode assign_node_(t_node_id_, TNode::Assign, statement_number_, children_);
-  return assign_node_;
+  TNode assign_node = TNode(t_node_id_, TNode::Assign,
+                            statement_number_, children_);
+  return assign_node;
 }
 
 TNode SimpleParser::ParseRead() {
@@ -145,8 +149,9 @@ TNode SimpleParser::ParseRead() {
   Expect(Token::SEMICOLON);
 
   t_node_id_++;
-  TNode read_node_(t_node_id_, TNode::Read, statement_number_, children_);
-  return read_node_;
+  TNode read_node = TNode(t_node_id_, TNode::Read,
+                          statement_number_, children_);
+  return read_node;
 }
 
 TNode SimpleParser::ParsePrint() {
@@ -158,8 +163,9 @@ TNode SimpleParser::ParsePrint() {
   Expect(Token::SEMICOLON);
 
   t_node_id_++;
-  TNode print_node_(t_node_id_, TNode::Print, statement_number_, children_);
-  return print_node_;
+  TNode print_node = TNode(t_node_id_, TNode::Print,
+                           statement_number_, children_);
+  return print_node;
 }
 
 TNode SimpleParser::ParseCall() {
@@ -169,8 +175,9 @@ TNode SimpleParser::ParseCall() {
   Expect(Token::SEMICOLON);
 
   t_node_id_++;
-  TNode call_node_(t_node_id_, TNode::Call, statement_number_, proc_name_);
-  return call_node_;
+  TNode call_node = TNode(t_node_id_, TNode::Call,
+                          statement_number_, proc_name_);
+  return call_node;
 }
 
 TNode SimpleParser::ParseWhile() {
@@ -191,9 +198,9 @@ TNode SimpleParser::ParseWhile() {
   Expect(Token::RIGHT_CURLY_BRACKET);
 
   t_node_id_++;
-  TNode while_node_(t_node_id_, TNode::While, while_statement_number_,
-                    children_);
-  return while_node_;
+  TNode while_node = TNode(t_node_id_, TNode::While,
+                           while_statement_number_,children_);
+  return while_node;
 }
 
 TNode SimpleParser::ParseIf() {
@@ -224,9 +231,9 @@ TNode SimpleParser::ParseIf() {
   Expect(Token::RIGHT_CURLY_BRACKET);
 
   t_node_id_++;
-  TNode if_node_(t_node_id_, TNode::IfElseThen, if_statement_number_,
-                 children_);
-  return if_node_;
+  TNode if_node = TNode(t_node_id_, TNode::IfElseThen,
+                 if_statement_number_,children_);
+  return if_node;
 }
 
 TNode SimpleParser::ParseCondExpr() {
@@ -251,8 +258,9 @@ TNode SimpleParser::ParseCondExpr() {
     Expect(Token::RIGHT_ROUND_BRACKET);
 
     t_node_id_++;
-    TNode not_node_(t_node_id_, TNode::Not, statement_number_, children_);
-    return not_node_;
+    TNode not_node = TNode(t_node_id_, TNode::Not,
+                           statement_number_, children_);
+    return not_node;
   } else if (MatchKind(Token::LEFT_ROUND_BRACKET)) {
     // '(' cond_expr ')' '&&' '(' cond_expr ')' |
     // '(' cond_expr ')' '||' '(' cond_expr ')'
@@ -285,8 +293,9 @@ TNode SimpleParser::ParseCondExpr() {
     Expect(Token::RIGHT_ROUND_BRACKET);
 
     t_node_id_++;
-    TNode cond_node_(t_node_id_, type, statement_number_, children_);
-    return cond_node_;
+    TNode cond_node = TNode(t_node_id_, type,
+                     statement_number_, children_);
+    return cond_node;
   } else {
     // rel_expr
     return ParseRelExpr();
@@ -331,8 +340,8 @@ TNode SimpleParser::ParseRelExpr() {
   children_.emplace_back(shared_rhs_rel_factor_node_ptr_);
 
   t_node_id_++;
-  TNode rel_expr_node_(t_node_id_, type, statement_number_, children_);
-  return rel_expr_node_;
+  TNode rel_expr_node = TNode(t_node_id_, type, statement_number_, children_);
+  return rel_expr_node;
 }
 
 TNode SimpleParser::ParseRelFactor() {
@@ -342,7 +351,7 @@ TNode SimpleParser::ParseRelFactor() {
 
 TNode SimpleParser::ParseExpr() {
   // expr '+' term | expr '-' term | term
-  TNode expr_node_ = ParseTerm();
+  TNode expr_node = TNode(ParseTerm());
   while (!MatchKind(Token::END) &&
          ((MatchKind(Token::PLUS)) || MatchKind(Token::MINUS))) {
     std::vector<std::shared_ptr<TNode>> children_;
@@ -359,7 +368,7 @@ TNode SimpleParser::ParseExpr() {
     }
 
     std::shared_ptr<TNode> shared_lhs_node_ptr_ =
-        std::make_shared<TNode>(expr_node_);
+        std::make_shared<TNode>(expr_node);
     children_.emplace_back(shared_lhs_node_ptr_);
 
     std::shared_ptr<TNode> shared_rhs_node_ptr_ =
@@ -367,16 +376,17 @@ TNode SimpleParser::ParseExpr() {
     children_.emplace_back(shared_rhs_node_ptr_);
 
     t_node_id_++;
-    TNode new_expr_node_(t_node_id_, type, statement_number_, children_);
+    TNode new_expr_node = TNode(t_node_id_, type,
+                                statement_number_, children_);
 
-    expr_node_ = new_expr_node_;
+    expr_node = new_expr_node;
   }
-  return expr_node_;
+  return expr_node;
 }
 
 TNode SimpleParser::ParseTerm() {
   // term '*' factor | term '/' factor | term '%' factor | factor
-  TNode term_node_ = ParseFactor();
+  TNode term_node = TNode(ParseFactor());
   while (!MatchKind(Token::END) &&
          ((MatchKind(Token::ASTERISK)) || MatchKind(Token::SLASH) ||
           MatchKind(Token::PERCENT))) {
@@ -398,7 +408,7 @@ TNode SimpleParser::ParseTerm() {
     }
 
     std::shared_ptr<TNode> shared_lhs_node_ptr_ =
-        std::make_shared<TNode>(term_node_);
+        std::make_shared<TNode>(term_node);
     children_.emplace_back(shared_lhs_node_ptr_);
 
     std::shared_ptr<TNode> shared_rhs_node_ptr_ =
@@ -406,11 +416,12 @@ TNode SimpleParser::ParseTerm() {
     children_.emplace_back(shared_rhs_node_ptr_);
 
     t_node_id_++;
-    TNode new_term_node_(t_node_id_, type, statement_number_, children_);
+    TNode new_term_node = TNode(t_node_id_, type,
+                         statement_number_, children_);
 
-    term_node_ = new_term_node_;
+    term_node = new_term_node;
   }
-  return term_node_;
+  return term_node;
 }
 
 TNode SimpleParser::ParseFactor() {
@@ -421,9 +432,9 @@ TNode SimpleParser::ParseFactor() {
     return ParseConstValue();
   } else {
     Expect(Token::LEFT_ROUND_BRACKET);
-    TNode factor_node_ = ParseExpr();
+    TNode factor_node = TNode(ParseExpr());
     Expect(Token::RIGHT_ROUND_BRACKET);
-    return factor_node_;
+    return factor_node;
   }
 }
 
@@ -432,8 +443,9 @@ TNode SimpleParser::ParseVarName() {
   Expect(Token::IDENTIFIER);
 
   t_node_id_++;
-  TNode name_node_(t_node_id_, TNode::Variable, statement_number_, var_name_);
-  return name_node_;
+  TNode name_node = TNode(t_node_id_, TNode::Variable,
+                          statement_number_, var_name_);
+  return name_node;
 }
 
 TNode SimpleParser::ParseConstValue() {
@@ -441,7 +453,7 @@ TNode SimpleParser::ParseConstValue() {
   Expect(Token::NUMBER);
 
   t_node_id_++;
-  TNode const_value_node_(t_node_id_, TNode::Constant, statement_number_,
-                          const_value_);
-  return const_value_node_;
+  TNode const_value_node = TNode(t_node_id_, TNode::Constant,
+                                 statement_number_,const_value_);
+  return const_value_node;
 }
