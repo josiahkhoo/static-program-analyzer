@@ -93,8 +93,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(5, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(6, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(6, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -127,8 +127,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(5, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(6, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(6, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -159,8 +159,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(4, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(5, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(5, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -220,8 +220,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(8, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(9, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(9, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -271,8 +271,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(8, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(9, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(9, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -321,7 +321,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(cond_const_node);
 
     TNode not_eq_node = TNode(6, TNode::NotEqual, 1,
-                               {cond_variable_node_ptr_, cond_const_node_ptr_});
+                              {cond_variable_node_ptr_, cond_const_node_ptr_});
 
     // WHILE NODE
     std::shared_ptr<TNode> while_stmt_list_ptr_ =
@@ -347,7 +347,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     TNode program_node(10, TNode::Program, {shared_program_node_ptr_});
 
     TNode invalid_node(11, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+                       std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
@@ -414,7 +414,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(cond_const_node);
 
     TNode not_eq_node = TNode(9, TNode::NotEqual, 1,
-                               {cond_variable_node_ptr_, cond_const_node_ptr_});
+                              {cond_variable_node_ptr_, cond_const_node_ptr_});
 
     // IF NODE
     std::shared_ptr<TNode> then_stmt_list_ptr_ =
@@ -442,8 +442,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         std::make_shared<TNode>(procedure_node);
     TNode program_node = TNode(13, TNode::Program, {shared_program_node_ptr_});
 
-    TNode invalid_node = TNode(14, TNode::Invalid,
-                        std::vector<std::shared_ptr<TNode>>());
+    TNode invalid_node =
+        TNode(14, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
 
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
