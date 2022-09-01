@@ -51,6 +51,8 @@ std::vector<std::shared_ptr<TNode>> TNode::GetChildren() const {
   return children_;
 }
 
+int TNode::GetId() const { return unique_id_; }
+
 TNode::Type TNode::GetType() const { return type_; }
 
 int TNode::GetIntValue() const {

@@ -4,7 +4,7 @@
 #include "common/entity/variable_entity.h"
 #include "sp/extractor/node_extractor.h"
 
-class VariableEntityNodeExtractor : NodeExtractor<VariableEntity> {
+class VariableEntityNodeExtractor : public NodeExtractor<VariableEntity> {
  public:
   [[nodiscard]] std::optional<VariableEntity> TryExtractFromNode(
       const TNode& ast) const override;

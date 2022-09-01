@@ -4,7 +4,7 @@
 #include "common/entity/statement_entity.h"
 #include "sp/extractor/node_extractor.h"
 
-class StatementEntityNodeExtractor : NodeExtractor<StatementEntity> {
+class StatementEntityNodeExtractor : public NodeExtractor<StatementEntity> {
  public:
   StatementEntityNodeExtractor() {}
 

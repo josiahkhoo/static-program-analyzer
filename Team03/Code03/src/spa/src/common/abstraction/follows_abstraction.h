@@ -15,6 +15,12 @@ class FollowsAbstraction
 
  private:
   StatementEntity lhs_;
+
+ public:
+  bool operator==(const FollowsAbstraction &rhs) const;
+  bool operator!=(const FollowsAbstraction &rhs) const;
+
+ private:
   StatementEntity rhs_;
 };
 

@@ -11,6 +11,8 @@ class ParentAbstraction : public Abstraction<StatementEntity, StatementEntity> {
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
+  bool operator==(const ParentAbstraction &rhs) const;
+  bool operator!=(const ParentAbstraction &rhs) const;
 
  private:
   StatementEntity lhs_;

@@ -49,6 +49,7 @@ class TNode {
   [[nodiscard]] int GetStatementNumber() const;
   [[nodiscard]] std::vector<std::shared_ptr<TNode>> GetChildren() const;
   [[nodiscard]] Type GetType() const;
+  [[nodiscard]] int GetId() const;
   [[nodiscard]] int GetIntValue() const;
   [[nodiscard]] std::string GetStringValue() const;
   [[nodiscard]] bool IsStatement() const;
@@ -78,8 +79,7 @@ class hash<TNode> {
   /// Hash function for TNode using prime numbers 200771 and 300823 on the
   /// address. \param t_node \return size_t.
   size_t operator()(const TNode& t_node) const {
-    auto u = (uintptr_t)&t_node;
-    return (u * 200771) + (u % 300823);
+    return (t_node.GetId() * 200771) + (t_node.GetType() % 300823);
   }
 };
 };  // namespace std

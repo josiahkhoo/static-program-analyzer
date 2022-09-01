@@ -11,3 +11,11 @@ const StatementEntity &FollowsTAbstraction::GetLeftHandSide() const {
 const StatementEntity &FollowsTAbstraction::GetRightHandSide() const {
   return rhs_;
 }
+
+bool FollowsTAbstraction::operator==(const FollowsTAbstraction &rhs) const {
+  return lhs_ == rhs.lhs_ && rhs_ == rhs.rhs_;
+}
+
+bool FollowsTAbstraction::operator!=(const FollowsTAbstraction &rhs) const {
+  return !(rhs == *this);
+}

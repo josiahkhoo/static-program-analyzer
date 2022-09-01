@@ -6,7 +6,7 @@ TEST_CASE("Procedure Entity Node Extractor", "[ProcedureEntityNodeExtractor]") {
       ProcedureEntityNodeExtractor();
 
   SECTION("Extract Procedure Node") {
-    TNode mock_procedure_node = TNode(0, TNode::Procedure, 1, "procedure");
+    TNode mock_procedure_node = TNode(1, TNode::Procedure, 1, "procedure");
     std::optional<ProcedureEntity> maybe_procedure_entity =
         extractor_under_test.TryExtractFromNode(mock_procedure_node);
     ProcedureEntity procedure_entity = maybe_procedure_entity.value();
@@ -16,7 +16,7 @@ TEST_CASE("Procedure Entity Node Extractor", "[ProcedureEntityNodeExtractor]") {
 
   SECTION("Extract empty from non-Procedure Node") {
     TNode mock_non_procedure_node =
-        TNode(0, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<ProcedureEntity> maybe_procedure_entity =
         extractor_under_test.TryExtractFromNode(mock_non_procedure_node);
     REQUIRE_FALSE(maybe_procedure_entity.has_value());

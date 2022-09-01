@@ -7,7 +7,7 @@ TEST_CASE("Constant TNode", "[TNode]") {
   int int_value = 2;
   TNode::Type type = TNode::Constant;
   // When
-  TNode constant_node = TNode(0, type, line_number, int_value);
+  TNode constant_node = TNode(1, type, line_number, int_value);
 
   SECTION("Is Leaf") { REQUIRE(constant_node.IsLeaf()); }
   SECTION("Is Type") { REQUIRE(constant_node.IsType(type)); }
@@ -26,7 +26,7 @@ TEST_CASE("Variable TNode", "[TNode]") {
   std::string name = "a";
   TNode::Type type = TNode::Variable;
   // When
-  TNode variable_node = TNode(0, type, line_number, name);
+  TNode variable_node = TNode(1, type, line_number, name);
   // Then
   SECTION("Is Leaf") { REQUIRE(variable_node.IsLeaf()); }
   SECTION("Is Type") { REQUIRE(variable_node.IsType(type)); }
@@ -42,13 +42,13 @@ TEST_CASE("Variable TNode", "[TNode]") {
 TEST_CASE("Assign TNode", "[TNode]") {
   // Given
   int line_number = 1;
-  TNode variable_node = TNode(0, TNode::Variable, 1, "a");
-  TNode constant_node = TNode(0, TNode::Constant, 1, 2);
+  TNode variable_node = TNode(1, TNode::Variable, 1, "a");
+  TNode constant_node = TNode(2, TNode::Constant, 1, 2);
   std::vector<std::shared_ptr<TNode>> children = {
       std::make_shared<TNode>(variable_node),
       std::make_shared<TNode>(constant_node)};
   // When
-  TNode assign_node = TNode(0, TNode::Assign, 1, children);
+  TNode assign_node = TNode(3, TNode::Assign, 1, children);
   // Then
   SECTION("Is Statement") { REQUIRE(assign_node.IsStatement()); }
   SECTION("Is Type") { REQUIRE(assign_node.IsType(TNode::Assign)); }
@@ -68,13 +68,13 @@ TEST_CASE("Assign TNode", "[TNode]") {
 TEST_CASE("Plus TNode", "[TNode]") {
   // Given
   int line_number = 1;
-  TNode variable_node = TNode(0, TNode::Variable, 1, "a");
-  TNode constant_node = TNode(0, TNode::Constant, 1, 2);
+  TNode variable_node = TNode(1, TNode::Variable, 1, "a");
+  TNode constant_node = TNode(2, TNode::Constant, 1, 2);
   std::vector<std::shared_ptr<TNode>> children = {
       std::make_shared<TNode>(variable_node),
       std::make_shared<TNode>(constant_node)};
   // When
-  TNode assign_node = TNode(0, TNode::Plus, 1, children);
+  TNode assign_node = TNode(3, TNode::Plus, 1, children);
   // Then
   SECTION("Is Plus Minus Operator") {
     REQUIRE(assign_node.IsPlusMinusOperator());
@@ -94,13 +94,13 @@ TEST_CASE("Plus TNode", "[TNode]") {
 TEST_CASE("Equals TNode", "[TNode]") {
   // Given
   int line_number = 1;
-  TNode variable_node = TNode(0, TNode::Variable, 1, "a");
-  TNode constant_node = TNode(0, TNode::Constant, 1, 2);
+  TNode variable_node = TNode(1, TNode::Variable, 1, "a");
+  TNode constant_node = TNode(2, TNode::Constant, 1, 2);
   std::vector<std::shared_ptr<TNode>> children = {
       std::make_shared<TNode>(variable_node),
       std::make_shared<TNode>(constant_node)};
   // When
-  TNode assign_node = TNode(0, TNode::Equal, 1, children);
+  TNode assign_node = TNode(3, TNode::Equal, 1, children);
   // Then
   SECTION("Is Equal Operator") { REQUIRE(assign_node.IsEqualityOperator()); }
   SECTION("Is Type") { REQUIRE(assign_node.IsType(TNode::Equal)); }
@@ -118,13 +118,13 @@ TEST_CASE("Equals TNode", "[TNode]") {
 TEST_CASE("Multiply TNode", "[TNode]") {
   // Given
   int line_number = 1;
-  TNode variable_node = TNode(0, TNode::Variable, 1, "a");
-  TNode constant_node = TNode(0, TNode::Constant, 1, 2);
+  TNode variable_node = TNode(1, TNode::Variable, 1, "a");
+  TNode constant_node = TNode(2, TNode::Constant, 1, 2);
   std::vector<std::shared_ptr<TNode>> children = {
       std::make_shared<TNode>(variable_node),
       std::make_shared<TNode>(constant_node)};
   // When
-  TNode assign_node = TNode(0, TNode::Multiply, 1, children);
+  TNode assign_node = TNode(3, TNode::Multiply, 1, children);
   // Then
   SECTION("Is Times Divide Quotient Operator") {
     REQUIRE(assign_node.IsTimesDivideQuotientOperator());
@@ -147,14 +147,14 @@ TEST_CASE("And TNode", "[TNode]") {
   // Given
   int line_number = 1;
   TNode variable_node =
-      TNode(0, TNode::Equal, 1, std::vector<std::shared_ptr<TNode>>());
+      TNode(1, TNode::Equal, 1, std::vector<std::shared_ptr<TNode>>());
   TNode constant_node =
-      TNode(0, TNode::Equal, 1, std::vector<std::shared_ptr<TNode>>());
+      TNode(2, TNode::Equal, 1, std::vector<std::shared_ptr<TNode>>());
   std::vector<std::shared_ptr<TNode>> children = {
       std::make_shared<TNode>(variable_node),
       std::make_shared<TNode>(constant_node)};
   // When
-  TNode assign_node = TNode(0, TNode::And, 1, children);
+  TNode assign_node = TNode(3, TNode::And, 1, children);
   // Then
   SECTION("Is Logical Operator") { REQUIRE(assign_node.IsLogicalOperator()); }
   SECTION("Is Type") { REQUIRE(assign_node.IsType(TNode::And)); }
