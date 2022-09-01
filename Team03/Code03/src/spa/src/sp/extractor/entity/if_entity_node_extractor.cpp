@@ -5,5 +5,5 @@ std::optional<IfEntity> IfEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::IfElseThen)) {
     return {};
   }
-  return std::make_optional<IfEntity>(ast, ast.GetLineNumber());
+  return std::make_optional<IfEntity>(ast, ast.GetStatementNumber());
 }

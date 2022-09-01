@@ -18,6 +18,7 @@ class Token {
     RIGHT_CURLY_BRACKET,    // }
     DOUBLE_EQUAL,           // ==
     EQUAL,                  // =
+    NOT_EQUAL,              // !=
     LESS_THAN_OR_EQUAL,     // <=
     LESS_THAN,              // <
     GREATER_THAN_OR_EQUAL,  // >=
