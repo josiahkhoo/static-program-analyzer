@@ -7,6 +7,7 @@
 
 template <class T>
 class Parser {
+ public:
   virtual T Parse(std::vector<Token> tokens) = 0;
 };
 
