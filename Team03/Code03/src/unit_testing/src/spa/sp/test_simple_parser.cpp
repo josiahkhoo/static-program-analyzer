@@ -363,6 +363,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::NOT_EQUAL),
                                   Token(Token::NUMBER, "0"),
                                   Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::IDENTIFIER, "then"),
                                   Token(Token::LEFT_CURLY_BRACKET),
                                   Token(Token::IDENTIFIER, "print"),
                                   Token(Token::IDENTIFIER, "x"),
