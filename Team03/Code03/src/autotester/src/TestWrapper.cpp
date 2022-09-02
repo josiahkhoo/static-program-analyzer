@@ -1,6 +1,6 @@
 #include "TestWrapper.h"
 
-// implementation code of WrapperFactory - do NOT modify the next 5 lines
+// implementation code of WrapperFactory - do NOT modify the next_ 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
 
 AbstractWrapper* WrapperFactory::createWrapper() {

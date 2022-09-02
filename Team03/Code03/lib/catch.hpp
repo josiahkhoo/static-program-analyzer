@@ -3846,7 +3846,7 @@ namespace Catch {
         public:
             GeneratorUntypedBase() = default;
             virtual ~GeneratorUntypedBase();
-            // Attempts to move the generator to the next element
+            // Attempts to move the generator to the next_ element
              //
              // Returns true iff the move succeeded (and a valid element
              // can be retrieved).
@@ -3944,7 +3944,7 @@ namespace Generators {
         // Returns the current element of the generator
         //
         // \Precondition The generator is either freshly constructed,
-        // or the last call to `next()` returned true
+        // or the last call to `next_()` returned true
         virtual T const& get() const = 0;
         using type = T;
     };
@@ -4042,7 +4042,7 @@ namespace Generators {
             if (m_current >= m_generators.size()) {
                 return false;
             }
-            const bool current_status = m_generators[m_current].next();
+            const bool current_status = m_generators[m_current].next_();
             if (!current_status) {
                 ++m_current;
             }
@@ -7014,7 +7014,7 @@ namespace Catch {
             template <typename Estimator, typename Iterator>
             sample jackknife(Estimator&& estimator, Iterator first, Iterator last) {
                 auto n = last - first;
-                auto second = std::next(first);
+                auto second = std::next_(first);
                 sample results;
                 results.reserve(n);
 
@@ -7105,7 +7105,7 @@ namespace Catch {
 
                 std::vector<double> deltas;
                 deltas.reserve(k);
-                std::transform(std::next(times.begin()), times.end(), times.begin(),
+                std::transform(std::next_(times.begin()), times.end(), times.begin(),
                     std::back_inserter(deltas),
                     [](TimePoint<Clock> a, TimePoint<Clock> b) { return static_cast<double>((a - b).count()); });
 
@@ -8246,7 +8246,7 @@ namespace Catch {
             // If you find your debugger stopping you here then go one level up on the
             // call-stack for the code that caused it (typically a failed assertion)
 
-            // (To go back to the test and change execution, jump over the throw, next)
+            // (To go back to the test and change execution, jump over the throw, next_)
             CATCH_BREAK_INTO_DEBUGGER();
         }
         if (m_reaction.shouldThrow) {
@@ -12691,7 +12691,7 @@ namespace Catch {
                     return false;
                 }();
 
-                // This check is a bit tricky, because m_generator->next()
+                // This check is a bit tricky, because m_generator->next_()
                 // has a side-effect, where it consumes generator's current
                 // value, but we do not want to invoke the side-effect if
                 // this generator is still waiting for any child to start.
@@ -15564,7 +15564,7 @@ namespace {
                     break;
                 }
                 // The header is valid, check data
-                // The next encBytes bytes must together be a valid utf-8
+                // The next_ encBytes bytes must together be a valid utf-8
                 // This means: bitpattern 10XX XXXX and the extracted value is sane (ish)
                 bool valid = true;
                 uint32_t value = headerValue(c);

@@ -1,40 +1,25 @@
 #include "query_string.h"
 
-SelectClause QueryString::GetSelectClause() const { return select_clause_; }
-std::vector<DeclarationClause> QueryString::GetDeclarationClauses() const { return declaration_clauses_; }
-std::vector<FollowsClause> QueryString::GetFollowsClauses() const {	return follows_clauses_; }
-std::vector<FollowsTClause> QueryString::GetFollowsTClauses() const { return follows_t_clauses_; }
-std::vector<ModifiesPClause> QueryString::GetModifiesPClauses() const { return modifies_p_clauses_; }
-std::vector<ModifiesSClause> QueryString::GetModifiesSClauses() const {	return modifies_s_clauses_; }
-std::vector<ParentClause> QueryString::GetParentClauses() const { return parent_clauses_; }
-std::vector<ParentTClause> QueryString::GetParentTClauses() const { return parent_t_clauses_; }
-std::vector<PatternClause> QueryString::GetPatternClauses() const { return pattern_clauses_; }
-std::vector<UsesPClause> QueryString::GetUsesPClauses() const { return uses_p_clauses_; }
-std::vector<UsesSClause> QueryString::GetUsesSClauses() const { return uses_s_clauses_; }
+#include <utility>
 
-void QueryString::AddSelectClause(SelectClause select_clause_) const
-{
-	this->select_clause_ = select_clause_;
+QueryString::QueryString(Select select, std::vector<Entity> entities,
+                         std::vector<FollowsClause> follows,
+                         std::vector<FollowsTClause> followsTs)
+    : select_(std::move(select)), entities_(std::move(entities)),
+      follows_(std::move(follows)), follows_ts_(std::move(followsTs)) {}
+
+Select QueryString::GetSelect() const {
+  return select_;
 }
 
-int QueryString::AddDeclarationClause(DeclarationClause clause_) const
-{
-	declaration_clauses_.push_back(clause_);
-	return declaration_clauses_.size;
+const std::vector<Entity>& QueryString::GetEntities() const {
+  return entities_;
 }
 
-int QueryString::AddFollowsClause(FollowsClause clause_) const
-{
-	follows_clauses_.push_back(clause_);
-	return follows_clauses_.size;
-SelectClause QueryString::GetSelectClause() const {
-  return select_clause_;
+const std::vector<FollowsClause>& QueryString::GetFollows() const {
+  return follows_;
 }
 
-std::vector<QueryTail> QueryString::GetTails() const {
-  return {};
-}
-
-void QueryString::AddSelectClause(SelectClause select_clause) {
-  select_clause_ = select_clause;
+const std::vector<FollowsTClause>& QueryString::GetFollowsTs() const {
+  return follows_ts_;
 }

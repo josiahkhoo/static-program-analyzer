@@ -1,20 +1,26 @@
 #ifndef SPA_QUERY_STRING_BUILDER_H
 #define SPA_QUERY_STRING_BUILDER_H
 
-#include "common/parser.h"
-#include "common/t_node.h"
+#include "common/clause/follows_clause.h"
+#include "common/clause/follows_t_clause.h"
+#include "common/clause/select.h"
+#include "common/entity/entity.h"
 #include "query_string.h"
 
-class QueryStringBuilder : public Parser<QueryString> {
-public:
-	QueryString parse(std::vector<Token> tokens_) override;
+class QueryStringBuilder {
+ public:
+  void AddDeclaration(Entity declared_entity);
+  void AddSelect(Select select_clause);
+  void AddFollows(FollowsClause follows_clause);
+  void AddFollowsT(FollowsTClause follows_t_clause);
 
-private:
-  int token_pos_ = 0;
-  std::vector<Token> tokens_;
-  Token next;
-  QueryString queryString;
+  QueryString GetQueryString();
 
+ private:
+  std::vector<Entity> entities_;
+  std::vector<FollowsClause> follows_;
+  std::vector<FollowsTClause> follows_ts_;
+  Select select_;
 };
 
 #endif  // SPA_QUERY_STRING_BUILDER_H
