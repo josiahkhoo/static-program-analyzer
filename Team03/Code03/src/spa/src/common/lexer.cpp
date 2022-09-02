@@ -31,6 +31,7 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::SEMICOLON, "^(;)"},
     {Token::OR, "^(\\|\\|)"},
     {Token::AND, "^(&&)"},
+    {Token::NOT_EQUAL, "^(!=)"},
     {Token::NOT, "^(!)"},
     {Token::NEXT_LINE, "^(\n)"},
     {Token::END, "^(\0)"}};
