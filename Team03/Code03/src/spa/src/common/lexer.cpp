@@ -77,5 +77,7 @@ std::vector<Token> Lexer::Lex(std::istream& stream) const {
       }
     }
   }
+  Token end_token = Token(Token::END);
+  tokens.push_back(end_token);
   return tokens;
 }
