@@ -36,6 +36,8 @@ jobs:
         run: ${{github.workspace}}/build/src/unit_testing/unit_testing
 
       - name: Integration Test
+        env:
+          SAMPLE_SOURCE_PATH: ${{github.workspace}}/Team03/Tests03/Sample_source.txt
         run: ${{github.workspace}}/build/src/integration_testing/integration_testing
 
       - name: Automated Autotester Test

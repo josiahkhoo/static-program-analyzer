@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 2/9/22.
-//
-
 #include "source_processor.h"
 
 #include "fstream"

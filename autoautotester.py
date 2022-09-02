@@ -38,8 +38,8 @@ for test in test_array:
         command = command.replace("/", "\\")
         command += "> nul"
         output_path = output_path.replace("/", "\\")
-    else:
-        command += "> /dev/null"
+    # else:
+    #     command += "> /dev/null"
     os.system(command)
     with open(output_path) as f:
         output = f.read()

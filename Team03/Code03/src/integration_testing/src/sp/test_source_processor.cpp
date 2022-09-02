@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "common/lexer.h"
+#include "cstdlib"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
@@ -88,7 +89,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       lexer, simple_parser, design_extractor, storable_pkb_stub);
 
   SECTION("Parse valid source file") {
-    source_processor_under_test.Process(
-        "../../../../Tests03/Sample_source.txt");
+    std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
+    source_processor_under_test.Process(filepath);
   }
 }

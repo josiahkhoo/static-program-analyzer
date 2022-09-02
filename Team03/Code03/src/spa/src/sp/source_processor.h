@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 2/9/22.
-//
-
 #ifndef SPA_SOURCE_PROCESSOR_H
 #define SPA_SOURCE_PROCESSOR_H
 
