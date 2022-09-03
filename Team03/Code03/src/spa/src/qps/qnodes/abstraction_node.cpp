@@ -1,12 +1,10 @@
 #include "abstraction_node.h"
 
-AbstractionNode::AbstractionNode(SuchThat* clause, QNode* left_node,
-                                 QNode* right_node)
-    : clause_(*clause), QNode(left_node, right_node) {}
+AbstractionNode::AbstractionNode(SuchThat* clause,
+                                 std::shared_ptr<QNode> left_node,
+                                 std::shared_ptr<QNode> right_node)
+    : clause_(clause), QNode(std::move(left_node), std::move(right_node)) {}
 
 std::vector<Entity> AbstractionNode::Execute(QueryablePkb& pkb) {
-  if (this->IsLeaf()) {
-    return pkb.query(clause_);
-  }
-  return {};
+  return pkb.query(*clause_);
 }
