@@ -12,7 +12,7 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
   Lexer lex;
   std::vector<Token> tokens = lex.Lex(str_stream);
 
-  REQUIRE(tokens.size() == 22);
+  REQUIRE(tokens.size() == 23);
 
   REQUIRE(tokens[0].GetValue() == "1");
   REQUIRE(tokens[1].GetValue() == "h1");
@@ -38,7 +38,8 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
                                 Token::SEMICOLON,
                                 Token::OR,
                                 Token::AND,
-                                Token::NOT};
+                                Token::NOT,
+                                Token::END};
 
   for (int i = 0; i < tokens.size(); i++) {
     REQUIRE(tokens[i].Is(k[i]));
@@ -52,7 +53,7 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
   Lexer lex;
   std::vector<Token> tokens = lex.Lex(str_stream);
 
-  REQUIRE(tokens.size() == 15);
+  REQUIRE(tokens.size() == 16);
 
   std::vector<Token::Kind> k = {Token::IDENTIFIER,
                                 Token::LEFT_ROUND_BRACKET,
@@ -68,7 +69,8 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
                                 Token::PLUS,
                                 Token::NUMBER,
                                 Token::SEMICOLON,
-                                Token::RIGHT_CURLY_BRACKET};
+                                Token::RIGHT_CURLY_BRACKET,
+                                Token::END};
 
   for (int i = 0; i < tokens.size(); i++) {
     REQUIRE(tokens[i].Is(k[i]));

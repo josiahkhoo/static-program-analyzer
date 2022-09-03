@@ -215,6 +215,7 @@ TNode SimpleParser::ParseIf() {
   Expect(Token::RIGHT_ROUND_BRACKET);
 
   // Parse 'then' statement list
+  Expect("then");
   Expect(Token::LEFT_CURLY_BRACKET);
   std::shared_ptr<TNode> shared_then_stmt_list_node_ptr_ =
       std::make_shared<TNode>(ParseStatementList());

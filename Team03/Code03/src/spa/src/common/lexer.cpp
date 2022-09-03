@@ -33,6 +33,7 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::UNDERSCORE, "^(_)"},
     {Token::OR, "^(\\|\\|)"},
     {Token::AND, "^(&&)"},
+    {Token::NOT_EQUAL, "^(!=)"},
     {Token::NOT, "^(!)"},
     {Token::NEXT_LINE, "^(\n)"},
     {Token::END, "^(\0)"}};
@@ -78,5 +79,7 @@ std::vector<Token> Lexer::Lex(std::istream& stream) const {
       }
     }
   }
+  Token end_token = Token(Token::END);
+  tokens.push_back(end_token);
   return tokens;
 }
