@@ -7,6 +7,7 @@ class Select {
  public:
   explicit Select(EntityReference entity);
   [[nodiscard]] const EntityReference &GetEntity() const;
+
  private:
   EntityReference entity_;
 };

@@ -12,4 +12,4 @@ class EntityNode : public QNode {
   std::vector<Entity> Execute(QueryablePkb& pkb) override;
 };
 
-#endif  // SPA_FOLLOWS_NODE_H
+#endif  // SPA_ENTITY_NODE_H

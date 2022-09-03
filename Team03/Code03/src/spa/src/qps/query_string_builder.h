@@ -9,18 +9,17 @@
 
 class QueryStringBuilder {
  public:
-  void AddDeclaration(Entity declared_entity);
+  QueryStringBuilder();
+  void AddDeclaration(const EntityReference& declared_entity);
   void AddSelect(Select select_clause);
-  void AddFollows(FollowsClause follows_clause);
-  void AddFollowsT(FollowsTClause follows_t_clause);
+  void AddSuchThat(const SuchThat& such_that);
 
   QueryString GetQueryString();
 
  private:
-  std::vector<Entity> entities_;
-  std::vector<FollowsClause> follows_;
-  std::vector<FollowsTClause> follows_ts_;
-  Select select_;
+  std::vector<EntityReference> entities_;
+  std::vector<SuchThat> such_that_;
+  std::optional<Select> select_;
 };
 
 #endif  // SPA_QUERY_STRING_BUILDER_H

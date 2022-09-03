@@ -11,17 +11,15 @@
 
 class QueryString {
  public:
-  explicit QueryString(Select select, std::vector<Entity> entities, std::vector<FollowsClause> follows, std::vector<FollowsTClause> followsTs);
-
+  explicit QueryString(Select select, std::vector<EntityReference> entities,
+                       std::vector<SuchThat> such_that);
   [[nodiscard]] Select GetSelect() const;
-  [[nodiscard]] const std::vector<Entity>& GetEntities() const;
-  [[nodiscard]] const std::vector<FollowsClause>& GetFollows() const;
-  [[nodiscard]] const std::vector<FollowsTClause>& GetFollowsTs() const;
+  [[nodiscard]] const std::vector<EntityReference>& GetEntities() const;
+  [[nodiscard]] const std::vector<SuchThat>& GetSuchThat() const;
 
  private:
-  std::vector<Entity> entities_;
-  std::vector<FollowsClause> follows_;
-  std::vector<FollowsTClause> follows_ts_;
+  std::vector<EntityReference> entities_;
+  std::vector<SuchThat> such_that_;
   Select select_;
 };
 

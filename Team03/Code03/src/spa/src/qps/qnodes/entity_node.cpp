@@ -6,5 +6,5 @@ EntityNode::EntityNode(Select* select, QNode* left_node, QNode* right_node)
 }
 
 std::vector<Entity> EntityNode::Execute(QueryablePkb& pkb) {
-  return {};
+  return pkb.query(select_->GetEntity());
 }

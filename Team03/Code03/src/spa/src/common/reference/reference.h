@@ -15,9 +15,9 @@ class Reference {
   void SetSynonym(const std::string& synonym);
   void SetWildCard();
 
-   private:
-    std::optional<std::string> synonym_;
-    bool is_wild_card_;
+ private:
+  std::optional<std::string> synonym_;
+  bool is_wild_card_;
 };
 
 #endif  // SPA_REFERENCE_H

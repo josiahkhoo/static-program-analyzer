@@ -92,27 +92,14 @@ class QueryablePkb
       public QueryableWithOneArg<ParentTClause, WhileEntity>,
       public QueryableWithOneArg<UsesSClause, WhileEntity> {
  public:
-  [[nodiscard]] std::vector<Entity> queryAllAssign(EntityReference e) const;
-  [[nodiscard]] std::vector<Entity> queryFollows(Reference r1, Reference r2)
-      const;
-  [[nodiscard]] std::vector<Entity> queryFollowsT(Reference r1, Reference r2)
-      const;
+  [[nodiscard]] std::vector<Entity> query(EntityReference e) const;
+  [[nodiscard]] std::vector<Entity> query(SuchThat c) const;
 };
 
 // Temporary implementation
 
-std::vector<Entity> QueryablePkb::queryAllAssign(EntityReference e) const {
-  return {};
-}
+std::vector<Entity> QueryablePkb::query(EntityReference e) const { return {}; }
 
-std::vector<Entity> QueryablePkb::queryFollows(Reference r1,
-                                               Reference r2) const {
-  return {};
-}
-
-std::vector<Entity> QueryablePkb::queryFollowsT(Reference r1,
-                                               Reference r2) const {
-  return {};
-}
+std::vector<Entity> QueryablePkb::query(SuchThat c) const { return {}; }
 
 #endif  // SPA_QUERYABLE_PKB_H

@@ -5,7 +5,7 @@
 
 EntityNode Planner::Plan(const QueryString& q_string) const {
   Select select_clause = q_string.GetSelect();
-  std::vector<FollowsClause> f_clauses = q_string.GetFollows();
+  std::vector<SuchThat> clauses = q_string.GetSuchThat();
 
   return EntityNode(&select_clause, nullptr, nullptr);
 }
