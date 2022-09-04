@@ -1,6 +1,7 @@
 #ifndef SPA_ABSTRACTION_NODE_H
 #define SPA_ABSTRACTION_NODE_H
 
+#include "common/clause/clause.h"
 #include "q_node.h"
 
 class AbstractionNode : public QNode {
@@ -9,7 +10,7 @@ class AbstractionNode : public QNode {
 
  public:
   explicit AbstractionNode(Clause clause);
-  std::vector<std::string> Fetch(QueryablePkb& pkb) override;
+  std::unordered_set<std::string> Fetch(QueryablePkb& pkb) override;
 };
 
 #endif  // SPA_ABSTRACTION_NODE_H
