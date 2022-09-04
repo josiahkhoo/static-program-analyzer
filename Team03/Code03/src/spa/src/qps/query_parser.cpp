@@ -16,7 +16,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
     tokens_ = tokens;
     ParseDeclaration();
     ParseSelect();
-    ParseSuchThat();
+    ParseClause();
   } catch (const std::runtime_error& e_) {
     std::cout << e_.what();
   }
@@ -59,7 +59,7 @@ void QueryParser::Expect(const std::string& s) {
   }
 }
 
-StatementReference QueryParser::ExpectStmtRef() {
+StatementReference QueryParser::ExtractStmtRef() {
   StatementReference stmtRef = *new StatementReference();
 
   if (MatchKind(Token::IDENTIFIER)) {
@@ -101,7 +101,7 @@ void QueryParser::ParseSelect() {
   query_string_builder_.AddSelect(new_select);
 }
 
-void QueryParser::ParseSuchThat() {
+void QueryParser::ParseClause() {
   while (!MatchKind(Token::END)) {
     if (MatchString("such")) {
       token_pos_++;
@@ -120,14 +120,14 @@ void QueryParser::ParseFollow() {
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
-  StatementReference stmtRef1 = ExpectStmtRef();
+  StatementReference stmtRef1 = ExtractStmtRef();
 
   Expect(Token::COMMA);
 
   // Get stmt2
-  StatementReference stmtRef2 = ExpectStmtRef();
+  StatementReference stmtRef2 = ExtractStmtRef();
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   FollowsClause folCl = FollowsClause(stmtRef1, stmtRef2);
-  query_string_builder_.AddSuchThat(folCl);
+  query_string_builder_.AddClause(folCl);
 }

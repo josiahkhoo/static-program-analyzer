@@ -11,14 +11,16 @@
 
 class QNode {
  private:
-  std::shared_ptr<QNode> left_node_;
-  std::shared_ptr<QNode> right_node_;
-
+  QNode* left_node_;
+  QNode* right_node_;
  public:
-  explicit QNode(std::shared_ptr<QNode> left_node,
-                 std::shared_ptr<QNode> right_node);
-  std::vector<Entity> Execute(QueryablePkb &pkb);
+  explicit QNode();
+  void SetLeftNode(QNode* leftNode);
+  void SetRightNode(QNode* rightNode);
+  [[nodiscard]] QNode* GetLeftNode() const;
+  [[nodiscard]] QNode* GetRightNode() const;
   [[nodiscard]] bool IsLeaf() const;
+  virtual std::vector<std::string> Fetch(QueryablePkb &pkb);
 };
 
 #endif  // SPA_Q_NODE_H

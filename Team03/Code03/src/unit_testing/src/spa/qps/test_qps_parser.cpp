@@ -45,5 +45,5 @@ TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
   REQUIRE(res.GetEntities().front().GetIdentifier() == e.GetIdentifier());
   REQUIRE(res.GetSelect().GetEntity().GetIdentifier() ==
           expected_select.GetEntity().GetIdentifier());
-  REQUIRE(res.GetSuchThat().size() == 1);
+  REQUIRE(res.GetClause().size() == 1);
 }

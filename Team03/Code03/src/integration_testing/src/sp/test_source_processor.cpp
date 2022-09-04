@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "cstdlib"

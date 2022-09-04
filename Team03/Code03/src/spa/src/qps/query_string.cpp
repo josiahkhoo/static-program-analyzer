@@ -3,10 +3,10 @@
 #include <utility>
 
 QueryString::QueryString(Select select, std::vector<EntityReference> entities,
-                         std::vector<SuchThat> such_that)
+                         std::vector<Clause> clauses)
     : select_(std::move(select)),
       entities_(std::move(entities)),
-      such_that_(std::move(such_that)) {}
+      clauses_(clauses) {}
 
 Select QueryString::GetSelect() const { return select_; }
 
@@ -14,6 +14,4 @@ const std::vector<EntityReference>& QueryString::GetEntities() const {
   return entities_;
 }
 
-const std::vector<SuchThat>& QueryString::GetSuchThat() const {
-  return such_that_;
-}
+const std::vector<Clause>& QueryString::GetClause() const { return clauses_; }

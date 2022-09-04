@@ -1,19 +1,17 @@
 #include "q_node.h"
 
-#include <utility>
+QNode::QNode() : left_node_(nullptr), right_node_(nullptr) {};
 
-QNode::QNode(std::shared_ptr<QNode> left_node,
-             std::shared_ptr<QNode> right_node)
-    : left_node_(std::move(left_node)), right_node_(std::move(right_node)) {}
+void QNode::SetLeftNode(QNode* leftNode) { left_node_ = leftNode; }
+
+void QNode::SetRightNode(QNode* rightNode) { right_node_ = rightNode; }
+
+QNode* QNode::GetLeftNode() const { return left_node_; }
+
+QNode* QNode::GetRightNode() const { return right_node_; }
 
 bool QNode::IsLeaf() const {
   return (left_node_ == nullptr && right_node_ == nullptr);
 }
 
-std::vector<Entity> QNode::Execute(QueryablePkb& pkb) {
-  if (IsLeaf()) {
-    return {};
-  } else {
-    return left_node_->Execute(pkb);
-  }
-}
+std::vector<std::string> QNode::Fetch(QueryablePkb& pkb) { return {}; }

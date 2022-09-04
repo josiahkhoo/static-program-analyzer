@@ -5,12 +5,11 @@
 
 class AbstractionNode : public QNode {
  private:
-  SuchThat* clause_;
+  Clause clause_;
 
  public:
-  explicit AbstractionNode(SuchThat* clause, std::shared_ptr<QNode> left_node,
-                           std::shared_ptr<QNode> right_node);
-  std::vector<Entity> Execute(QueryablePkb &pkb);
+  explicit AbstractionNode(Clause clause);
+  std::vector<std::string> Fetch(QueryablePkb& pkb) override;
 };
 
 #endif  // SPA_ABSTRACTION_NODE_H

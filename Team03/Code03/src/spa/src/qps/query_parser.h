@@ -21,11 +21,11 @@ class QueryParser : public Parser<QueryString> {
   bool MatchStmtRef();
   void Expect(Token::Kind kind);
   void Expect(const std::string& s);
-  StatementReference ExpectStmtRef();
+  StatementReference ExtractStmtRef();
 
   void ParseDeclaration();
   void ParseSelect();
-  void ParseSuchThat();
+  void ParseClause();
   void ParseFollow();
 };
 

@@ -6,11 +6,11 @@
 
 class EntityNode : public QNode {
  private:
-  Select* select_;
+  Select select_;
+
  public:
-  explicit EntityNode(Select* select, std::shared_ptr<QNode> left_node,
-                 std::shared_ptr<QNode> right_node);
-  std::vector<Entity> Execute(QueryablePkb &pkb);
+  explicit EntityNode(Select select);
+  std::vector<std::string> Fetch(QueryablePkb& pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H

@@ -6,21 +6,30 @@
 
 Planner::Planner() = default;
 
-QNode Planner::Plan(const QueryString& q_string) const {
+QNode* Planner::Plan(const QueryString& q_string) {
   Select select_clause = q_string.GetSelect();
-  std::vector<SuchThat> clauses = q_string.GetSuchThat();
+  std::vector<Clause> clauses = q_string.GetClause();
 
+  QNode* root;
   if (clauses.empty()) {
-    return EntityNode(&select_clause, nullptr, nullptr);
+    root = new EntityNode(select_clause);
+  } else {
+    root = BuildQTree(clauses);
   }
-
-  // Back to Front clause sequence
-  std::shared_ptr<QNode> curr = nullptr;
-  for(int i = clauses.size() - 1; i >= 0; i--) {
-    SuchThat base = clauses[i];
-    AbstractionNode aNode = AbstractionNode(&base, curr, nullptr);
-    curr = std::shared_ptr<QNode>(&aNode);
-  }
-  return *curr;
+  return root;
 }
 
+QNode* Planner::BuildQTree(std::vector<Clause>& clauses) const {
+  QNode* root;
+
+  if (clauses.empty()) {
+    return nullptr;
+  }
+  Clause data = clauses.front();
+  clauses.erase(clauses.begin());
+
+  root = new AbstractionNode(data);
+  root->SetLeftNode(BuildQTree(clauses));
+  root->SetRightNode(BuildQTree(clauses));
+  return root;
+}

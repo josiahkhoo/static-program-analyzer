@@ -12,14 +12,14 @@
 class QueryString {
  public:
   explicit QueryString(Select select, std::vector<EntityReference> entities,
-                       std::vector<SuchThat> such_that);
+                       std::vector<Clause> clauses);
   [[nodiscard]] Select GetSelect() const;
   [[nodiscard]] const std::vector<EntityReference>& GetEntities() const;
-  [[nodiscard]] const std::vector<SuchThat>& GetSuchThat() const;
+  [[nodiscard]] const std::vector<Clause>& GetClause() const;
 
  private:
   std::vector<EntityReference> entities_;
-  std::vector<SuchThat> such_that_;
+  std::vector<Clause> clauses_;
   Select select_;
 };
 

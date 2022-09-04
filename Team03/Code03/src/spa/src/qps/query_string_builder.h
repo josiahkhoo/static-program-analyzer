@@ -12,13 +12,13 @@ class QueryStringBuilder {
   QueryStringBuilder();
   void AddDeclaration(const EntityReference& declared_entity);
   void AddSelect(Select select_clause);
-  void AddSuchThat(const SuchThat& such_that);
+  void AddClause(const Clause& such_that);
 
   QueryString GetQueryString();
 
  private:
   std::vector<EntityReference> entities_;
-  std::vector<SuchThat> such_that_;
+  std::vector<Clause> such_that_;
   std::optional<Select> select_;
 };
 

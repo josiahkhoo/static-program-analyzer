@@ -1,10 +1,19 @@
 #ifndef SPA_CLAUSE_H
 #define SPA_CLAUSE_H
 
-#include "common/pair.h"
-#include "common/such_that.h"
+#include "common/entity/entity.h"
+#include "common/query_operator.h"
+#include "common/reference/reference.h"
 
-template <class T, class U>
-class Clause : public Pair<T, U>, public SuchThat {};
+class Clause : public QueryOperator {
+ public:
+  explicit Clause(Reference lhs, Reference rhs);
+  [[nodiscard]] const Reference &GetLeftHandSide() const;
+  [[nodiscard]] const Reference &GetRightHandSide() const;
+
+ private:
+  Reference lhs_;
+  Reference rhs_;
+};
 
 #endif  // SPA_CLAUSE_H
