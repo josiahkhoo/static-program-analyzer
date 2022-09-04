@@ -10,7 +10,7 @@ TEST_CASE("Test without 'Select' builder", "[QueryStringBuilder]") {
   e.SetWildCard();
   qsb.AddDeclaration(e);
 
-  REQUIRE_THROWS_WITH(qsb.GetQueryString(), "Bad optional access");
+  REQUIRE_THROWS(qsb.GetQueryString());
 }
 
 TEST_CASE("Test with 'Select' builder", "[QueryStringBuilder]") {
