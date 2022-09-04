@@ -4,15 +4,40 @@
 
 class QueryablePkbStub : public QueryablePkb {
  public:
-  std::vector<std::string> query(EntityReference t) override { return {"1"}; };
+  [[nodiscard]] std::unordered_set<std::string> QueryAll(
+      EntityType type) const override {
+    return {"1"};
+  }
 
-  std::vector<std::string> query(Clause t) override { return {"1"}; };
+  [[nodiscard]] std::unordered_set<std::string> QueryAllFollow(
+      EntityType type) const override {
+    return {"1"};
+  }
 
-  std::vector<std::string> query(AssignEntity t) override { return {"1"}; };
+  [[nodiscard]] std::unordered_set<std::string> QueryAllFollowBy(
+      EntityType type) const override {
+    return {"1"};
+  }
 
-  std::vector<std::string> query(FollowsClause t) override { return {"1"}; };
+  [[nodiscard]] std::unordered_set<std::string> QueryFollow(
+      int statement_number, EntityType type) const override {
+    return {"1"};
+  }
 
-  std::vector<std::string> query(FollowsTClause t) override { return {"1"}; };
+  [[nodiscard]] std::unordered_set<std::string> QueryFollowBy(
+      int statement_number, EntityType type) const override {
+    return {"1"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryFollowT(
+      int statement_number, EntityType type) const override {
+    return {"1"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryFollowTBy(
+      int statement_number, EntityType type) const override {
+    return {"1"};
+  }
 };
 
 TEST_CASE("Test construct 1 node: Select", "[Planner]") {

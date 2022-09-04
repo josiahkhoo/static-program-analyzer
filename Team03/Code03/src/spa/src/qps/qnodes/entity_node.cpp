@@ -2,6 +2,6 @@
 
 EntityNode::EntityNode(Select select) : QNode(), select_(select) {}
 
-std::vector<std::string> EntityNode::Fetch(QueryablePkb& pkb) {
-  return pkb.query(select_.GetEntity());
+std::unordered_set<std::string> EntityNode::Fetch(QueryablePkb& pkb) {
+  return pkb.QueryAll(EntityType::VARIABLE);
 }

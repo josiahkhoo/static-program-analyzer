@@ -21,7 +21,7 @@ class QNode {
   [[nodiscard]] QNode* GetLeftNode() const;
   [[nodiscard]] QNode* GetRightNode() const;
   [[nodiscard]] bool IsLeaf() const;
-  virtual std::vector<std::string> Fetch(QueryablePkb& pkb);
+  virtual std::unordered_set<std::string> Fetch(QueryablePkb& pkb);
 };
 
 #endif  // SPA_Q_NODE_H
