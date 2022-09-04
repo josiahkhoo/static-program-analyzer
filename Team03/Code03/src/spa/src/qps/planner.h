@@ -8,8 +8,9 @@ class Planner {
  public:
   explicit Planner();
   [[nodiscard]] QNode* Plan(const QueryString& q_string);
+
  private:
-  QNode* BuildQTree(std::vector<Clause> &clauses) const;
+  QNode* BuildQTree(std::vector<Clause>& clauses) const;
 };
 
 #endif  // SPA_PLANNER_H

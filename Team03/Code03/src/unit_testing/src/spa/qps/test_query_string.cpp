@@ -26,5 +26,6 @@ TEST_CASE("Test with 'Assign a; Select a such that Follows(1, a)'",
   QueryString qs = QueryString(s, {}, {f});
 
   REQUIRE_FALSE(qs.GetClause()[0].GetLeftHandSide().IsSynonym());
-  REQUIRE(qs.GetClause()[0].GetRightHandSide().GetSynonym() == f.GetRightHandSide().GetSynonym());
+  REQUIRE(qs.GetClause()[0].GetRightHandSide().GetSynonym() ==
+          f.GetRightHandSide().GetSynonym());
 }

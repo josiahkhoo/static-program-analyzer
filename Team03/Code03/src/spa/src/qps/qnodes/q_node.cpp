@@ -1,6 +1,6 @@
 #include "q_node.h"
 
-QNode::QNode() : left_node_(nullptr), right_node_(nullptr) {};
+QNode::QNode() : left_node_(nullptr), right_node_(nullptr){};
 
 void QNode::SetLeftNode(QNode* leftNode) { left_node_ = leftNode; }
 

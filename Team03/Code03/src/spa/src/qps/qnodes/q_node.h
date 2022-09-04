@@ -13,6 +13,7 @@ class QNode {
  private:
   QNode* left_node_;
   QNode* right_node_;
+
  public:
   explicit QNode();
   void SetLeftNode(QNode* leftNode);
@@ -20,7 +21,7 @@ class QNode {
   [[nodiscard]] QNode* GetLeftNode() const;
   [[nodiscard]] QNode* GetRightNode() const;
   [[nodiscard]] bool IsLeaf() const;
-  virtual std::vector<std::string> Fetch(QueryablePkb &pkb);
+  virtual std::vector<std::string> Fetch(QueryablePkb& pkb);
 };
 
 #endif  // SPA_Q_NODE_H
