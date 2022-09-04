@@ -39,3 +39,11 @@ jobs:
 
       - name: Run unit tests
         run: ./Team03/Code03/build/src/unit_testing/${{matrix.build-type}}/unit_testing.exe
+
+      - name: Run integration tests
+        env:
+          SAMPLE_SOURCE_PATH: ${{github.workspace}}\\Team03\\Tests03\\Sample_source.txt
+        run: ./Team03/Code03/build/src/integration_testing/${{matrix.build-type}}/integration_testing.exe
+
+      - name: Run automated autotester tests
+        run: python autoautotester.py --autotester_path ./Team03/Code03/build/src/autotester/${{matrix.build-type}}/autotester.exe --test_dir ./Team03/Tests03 --os windows

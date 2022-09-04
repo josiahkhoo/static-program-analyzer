@@ -10,3 +10,11 @@ const StatementEntity &ParentAbstraction::GetLeftHandSide() const {
 const StatementEntity &ParentAbstraction::GetRightHandSide() const {
   return rhs_;
 }
+
+bool ParentAbstraction::operator==(const ParentAbstraction &rhs) const {
+  return lhs_ == rhs.lhs_ && rhs_ == rhs.rhs_;
+}
+
+bool ParentAbstraction::operator!=(const ParentAbstraction &rhs) const {
+  return !(rhs == *this);
+}

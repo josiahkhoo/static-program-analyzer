@@ -1,10 +1,10 @@
 #include "statement_entity.h"
 
-StatementEntity::StatementEntity(const TNode &node, int line_number)
-    : Entity(node), line_number_(line_number) {}
+StatementEntity::StatementEntity(const TNode &node, int statement_number_)
+    : Entity(node), statement_number_(statement_number_) {}
 
-int StatementEntity::GetLineNumber() const { return line_number_; }
+int StatementEntity::GetStatementNumber() const { return statement_number_; }
 
 std::string StatementEntity::ToString() const {
-  return std::to_string(line_number_);
+  return std::to_string(statement_number_);
 }

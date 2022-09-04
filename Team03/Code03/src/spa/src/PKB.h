@@ -41,6 +41,8 @@ class PKB : public QueryablePkb, public StorablePkb {
     void store(std::vector<AssignEntity> ts);
     void store(std::vector<IfEntity> ts);
     void store(std::vector<WhileEntity> ts);
+
+    std::unordered_set<std::string> query();
 private:
     static EntityManager entityManager;
 };

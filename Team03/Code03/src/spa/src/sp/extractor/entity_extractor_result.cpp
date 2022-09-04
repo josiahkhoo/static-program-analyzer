@@ -64,3 +64,20 @@ std::vector<VariableEntity> EntityExtractorResult::GetVariableEntities() const {
 std::vector<WhileEntity> EntityExtractorResult::GetWhileEntities() const {
   return while_entities_;
 }
+
+bool EntityExtractorResult::operator==(const EntityExtractorResult& rhs) const {
+  return assign_entities_ == rhs.assign_entities_ &&
+         call_entities_ == rhs.call_entities_ &&
+         constant_entities_ == rhs.constant_entities_ &&
+         if_entities_ == rhs.if_entities_ &&
+         print_entities_ == rhs.print_entities_ &&
+         procedure_entities_ == rhs.procedure_entities_ &&
+         read_entities == rhs.read_entities &&
+         statement_entities_ == rhs.statement_entities_ &&
+         variable_entities_ == rhs.variable_entities_ &&
+         while_entities_ == rhs.while_entities_;
+}
+
+bool EntityExtractorResult::operator!=(const EntityExtractorResult& rhs) const {
+  return !(rhs == *this);
+}

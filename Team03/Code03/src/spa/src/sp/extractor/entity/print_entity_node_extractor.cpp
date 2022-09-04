@@ -5,5 +5,5 @@ std::optional<PrintEntity> PrintEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Print)) {
     return {};
   }
-  return std::make_optional<PrintEntity>(ast, ast.GetLineNumber());
+  return std::make_optional<PrintEntity>(ast, ast.GetStatementNumber());
 }

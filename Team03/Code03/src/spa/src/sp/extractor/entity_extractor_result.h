@@ -38,6 +38,8 @@ class EntityExtractorResult {
                         std::vector<StatementEntity> statement_entities,
                         std::vector<VariableEntity> variable_entities,
                         std::vector<WhileEntity> while_entities);
+  bool operator==(const EntityExtractorResult& rhs) const;
+  bool operator!=(const EntityExtractorResult& rhs) const;
 
  private:
   std::vector<CallEntity> call_entities_;

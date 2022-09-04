@@ -6,7 +6,7 @@ TEST_CASE("Variable Entity Node Extractor", "[VariableEntityNodeExtractor]") {
       VariableEntityNodeExtractor();
 
   SECTION("Extract Variable Node") {
-    TNode mock_variable_node = TNode(TNode::Variable, 1, "variable1");
+    TNode mock_variable_node = TNode(1, TNode::Variable, 1, "variable1");
     std::optional<VariableEntity> maybe_variable_entity =
         extractor_under_test.TryExtractFromNode(mock_variable_node);
     VariableEntity variable_entity = maybe_variable_entity.value();
@@ -16,7 +16,7 @@ TEST_CASE("Variable Entity Node Extractor", "[VariableEntityNodeExtractor]") {
 
   SECTION("Extract empty from non-Variable Node") {
     TNode mock_non_variable_node =
-        TNode(TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
+        TNode(1, TNode::And, 1, std::vector<std::shared_ptr<TNode>>());
     std::optional<VariableEntity> maybe_variable_entity =
         extractor_under_test.TryExtractFromNode(mock_non_variable_node);
     REQUIRE_FALSE(maybe_variable_entity.has_value());

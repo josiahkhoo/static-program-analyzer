@@ -5,5 +5,5 @@ std::optional<CallEntity> CallEntityNodeExtractor::TryExtractFromNode(
   if (ast.IsNotType(TNode::Call)) {
     return {};
   }
-  return std::make_optional<CallEntity>(ast, ast.GetLineNumber());
+  return std::make_optional<CallEntity>(ast, ast.GetStatementNumber());
 }

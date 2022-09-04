@@ -63,3 +63,5 @@ void PKB::store(std::vector<WhileEntity> ts) {
         entityManager.addWhileStatement(entity);
     }
 }
+
+std::unordered_set<std::string> queryAllProcedures() {}

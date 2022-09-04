@@ -1,95 +1,28 @@
 #ifndef SPA_QUERYABLE_PKB_H
 #define SPA_QUERYABLE_PKB_H
 
-#include "common/clause/follows_clause.h"
-#include "common/clause/follows_t_clause.h"
-#include "common/clause/modifies_s_clause.h"
-#include "common/clause/parent_clause.h"
-#include "common/clause/parent_t_clause.h"
-#include "common/clause/uses_s_clause.h"
-#include "common/entity/assign_entity.h"
-#include "common/entity/call_entity.h"
-#include "common/entity/constant_entity.h"
-#include "common/entity/if_entity.h"
-#include "common/entity/print_entity.h"
-#include "common/entity/procedure_entity.h"
-#include "common/entity/read_entity.h"
-#include "common/entity/while_entity.h"
-#include "common/queryable.h"
-#include "common/queryable_one_arg.h"
+#include "common/entity/entity_type.h"
+#include "string"
+#include "unordered_set"
 
-class QueryablePkb
-    : public Queryable<AssignEntity>,
-      public Queryable<CallEntity>,
-      public Queryable<ConstantEntity>,
-      public Queryable<IfEntity>,
-      public Queryable<PrintEntity>,
-      public Queryable<ProcedureEntity>,
-      public Queryable<ReadEntity>,
-      public Queryable<VariableEntity>,
-      public Queryable<WhileEntity>,
+class QueryablePkb {
+ public:
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAll(
+      EntityType type) const = 0;
 
-      public QueryableWithOneArg<FollowsClause, AssignEntity>,
-      public QueryableWithOneArg<FollowsTClause, AssignEntity>,
-      public QueryableWithOneArg<ModifiesSClause, AssignEntity>,
-      public QueryableWithOneArg<ParentClause, AssignEntity>,
-      public QueryableWithOneArg<ParentTClause, AssignEntity>,
-      public QueryableWithOneArg<UsesSClause, AssignEntity>,
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllFollow(
+      EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllFollowBy(
+      EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryFollow(
+      int statement_number, EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowBy(
+      int statement_number, EntityType type) const = 0;
 
-      public QueryableWithOneArg<FollowsClause, CallEntity>,
-      public QueryableWithOneArg<FollowsTClause, CallEntity>,
-      public QueryableWithOneArg<ModifiesSClause, CallEntity>,
-      public QueryableWithOneArg<ParentClause, CallEntity>,
-      public QueryableWithOneArg<ParentTClause, CallEntity>,
-      public QueryableWithOneArg<UsesSClause, CallEntity>,
-
-      public QueryableWithOneArg<FollowsClause, ConstantEntity>,
-      public QueryableWithOneArg<FollowsTClause, ConstantEntity>,
-      public QueryableWithOneArg<ModifiesSClause, ConstantEntity>,
-      public QueryableWithOneArg<ParentClause, ConstantEntity>,
-      public QueryableWithOneArg<ParentTClause, ConstantEntity>,
-      public QueryableWithOneArg<UsesSClause, ConstantEntity>,
-
-      public QueryableWithOneArg<FollowsClause, IfEntity>,
-      public QueryableWithOneArg<FollowsTClause, IfEntity>,
-      public QueryableWithOneArg<ModifiesSClause, IfEntity>,
-      public QueryableWithOneArg<ParentClause, IfEntity>,
-      public QueryableWithOneArg<ParentTClause, IfEntity>,
-      public QueryableWithOneArg<UsesSClause, IfEntity>,
-
-      public QueryableWithOneArg<FollowsClause, PrintEntity>,
-      public QueryableWithOneArg<FollowsTClause, PrintEntity>,
-      public QueryableWithOneArg<ModifiesSClause, PrintEntity>,
-      public QueryableWithOneArg<ParentClause, PrintEntity>,
-      public QueryableWithOneArg<ParentTClause, PrintEntity>,
-      public QueryableWithOneArg<UsesSClause, PrintEntity>,
-
-      public QueryableWithOneArg<FollowsClause, ProcedureEntity>,
-      public QueryableWithOneArg<FollowsTClause, ProcedureEntity>,
-      public QueryableWithOneArg<ModifiesSClause, ProcedureEntity>,
-      public QueryableWithOneArg<ParentClause, ProcedureEntity>,
-      public QueryableWithOneArg<ParentTClause, ProcedureEntity>,
-      public QueryableWithOneArg<UsesSClause, ProcedureEntity>,
-
-      public QueryableWithOneArg<FollowsClause, ReadEntity>,
-      public QueryableWithOneArg<FollowsTClause, ReadEntity>,
-      public QueryableWithOneArg<ModifiesSClause, ReadEntity>,
-      public QueryableWithOneArg<ParentClause, ReadEntity>,
-      public QueryableWithOneArg<ParentTClause, ReadEntity>,
-      public QueryableWithOneArg<UsesSClause, ReadEntity>,
-
-      public QueryableWithOneArg<FollowsClause, VariableEntity>,
-      public QueryableWithOneArg<FollowsTClause, VariableEntity>,
-      public QueryableWithOneArg<ModifiesSClause, VariableEntity>,
-      public QueryableWithOneArg<ParentClause, VariableEntity>,
-      public QueryableWithOneArg<ParentTClause, VariableEntity>,
-      public QueryableWithOneArg<UsesSClause, VariableEntity>,
-
-      public QueryableWithOneArg<FollowsClause, WhileEntity>,
-      public QueryableWithOneArg<FollowsTClause, WhileEntity>,
-      public QueryableWithOneArg<ModifiesSClause, WhileEntity>,
-      public QueryableWithOneArg<ParentClause, WhileEntity>,
-      public QueryableWithOneArg<ParentTClause, WhileEntity>,
-      public QueryableWithOneArg<UsesSClause, WhileEntity> {};
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowT(
+      int statement_number, EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowTBy(
+      int statement_number, EntityType type) const = 0;
+};
 
 #endif  // SPA_QUERYABLE_PKB_H

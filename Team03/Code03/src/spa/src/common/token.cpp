@@ -25,7 +25,7 @@ std::string Token::GetValue() const {
 
 std::string Token::PrettyPrintKind() const {
   std::unordered_map<Token::Kind, std::string> mapper = {
-      {Token::WHITESPACE, "WHTESPACE"},
+      {Token::WHITESPACE, "WHITESPACE"},
       {Token::NUMBER, "NUMBER"},
       {Token::IDENTIFIER, "IDENTIFIER"},
       {Token::LEFT_ROUND_BRACKET, "LEFT_ROUND_BRACKET"},
@@ -34,6 +34,7 @@ std::string Token::PrettyPrintKind() const {
       {Token::RIGHT_CURLY_BRACKET, "RIGHT_CURLY_BRACKET"},
       {Token::DOUBLE_EQUAL, "DOUBLE_EQUAL"},
       {Token::EQUAL, "EQUAL"},
+      {Token::NOT_EQUAL, "NOT_EQUAL"},
       {Token::LESS_THAN, "LESS_THAN"},
       {Token::LESS_THAN_OR_EQUAL, "LESS_THAN_OR_EQUAL"},
       {Token::GREATER_THAN, "GREATER_THAN"},

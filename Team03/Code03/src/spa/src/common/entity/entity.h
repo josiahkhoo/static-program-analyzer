@@ -7,6 +7,8 @@ class Entity : public HasNodePointer {
  public:
   explicit Entity(const TNode &node);
   [[nodiscard]] const TNode *GetNodePointer() const;
+  bool operator==(const Entity &rhs) const;
+  bool operator!=(const Entity &rhs) const;
 
  private:
   const TNode &node_;
