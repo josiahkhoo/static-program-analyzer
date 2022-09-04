@@ -4,10 +4,9 @@
 #include "clause.h"
 #include "common/reference/statement_reference.h"
 
-class FollowsClause : public Clause<StatementReference, StatementReference> {
-  const StatementReference &GetLeftHandSide() const override;
-
-  const StatementReference &GetRightHandSide() const override;
+class FollowsClause : public Clause {
+ public:
+  FollowsClause(StatementReference lhs, StatementReference rhs);
 };
 
 #endif  // SPA_FOLLOWS_CLAUSE_H

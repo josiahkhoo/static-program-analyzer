@@ -4,10 +4,9 @@
 #include "clause.h"
 #include "common/reference/statement_reference.h"
 
-class ParentTClause : public Clause<StatementReference, StatementReference> {
-  const StatementReference &GetLeftHandSide() const override;
-
-  const StatementReference &GetRightHandSide() const override;
+class ParentTClause : public Clause {
+  const StatementReference &GetLeftHandSide() const;
+  const StatementReference &GetRightHandSide() const;
 };
 
 #endif  // SPA_PARENT_T_CLAUSE_H

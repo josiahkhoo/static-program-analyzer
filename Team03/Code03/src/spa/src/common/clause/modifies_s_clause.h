@@ -5,9 +5,8 @@
 #include "common/reference/entity_reference.h"
 #include "common/reference/statement_reference.h"
 
-class ModifiesSClause : public Clause<StatementReference, EntityReference> {
-  const StatementReference &GetLeftHandSide() const override;
-
-  const EntityReference &GetRightHandSide() const override;
+class ModifiesSClause : public Clause {
+  const StatementReference &GetLeftHandSide() const;
+  const EntityReference &GetRightHandSide() const;
 };
 #endif  // SPA_MODIFIES_S_CLAUSE_H
