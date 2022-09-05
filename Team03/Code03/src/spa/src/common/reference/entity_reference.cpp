@@ -1,5 +1,6 @@
 #include "entity_reference.h"
 
+#include <cassert>
 #include <utility>
 
 EntityReference::EntityReference() : Reference(true) {}
