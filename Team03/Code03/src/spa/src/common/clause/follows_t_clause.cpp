@@ -1,5 +1,6 @@
 #include "follows_t_clause.h"
 
+#include <cassert>
 #include <utility>
 
 FollowsTClause::FollowsTClause(StatementReference lhs, StatementReference rhs)
