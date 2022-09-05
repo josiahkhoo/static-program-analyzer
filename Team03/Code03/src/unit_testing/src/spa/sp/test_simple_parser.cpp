@@ -6,42 +6,6 @@
 bool deepEqual(TNode node1, TNode node2);
 
 bool deepEqual(TNode node1, TNode node2) {
-  //  if (node1.GetType() == TNode::Program && node2.GetType() ==
-  //  TNode::Program) {
-  //    std::cout << "Pass Program\n";
-  //  }
-  //  if (node1.GetType() == TNode::Procedure && node2.GetType() ==
-  //  TNode::Procedure) {
-  //    std::cout << "Pass Procedure\n";
-  //  }
-  //  if (node1.GetType() == TNode::StatementList && node2.GetType() ==
-  //  TNode::StatementList) {
-  //    std::cout << "Pass StatementList\n";
-  //  }
-  //  if (node1.GetType() == TNode::IfElseThen && node2.GetType() ==
-  //  TNode::IfElseThen) {
-  //    std::cout << "Pass If\n";
-  //  }
-  //  if (node1.GetType() == TNode::NotEqual && node2.GetType() ==
-  //  TNode::NotEqual) {
-  //    std::cout << "Pass NotEqual\n";
-  //  }
-  //  if (node1.GetType() == TNode::Variable && node2.GetType() ==
-  //  TNode::Variable) {
-  //    std::cout << "Pass Variable\n";
-  //  }
-  //  if (node1.GetType() == TNode::Constant && node2.GetType() ==
-  //  TNode::Constant) {
-  //    std::cout << "Pass Constant\n";
-  //  }
-  //  if (node1.GetType() == TNode::Print && node2.GetType() == TNode::Print) {
-  //    std::cout << "Pass Print\n";
-  //  }
-  //
-  //  if (node1.GetType() == TNode::Read && node2.GetType() == TNode::Read) {
-  //    std::cout << "Pass Read\n";
-  //  }
-
   if (node1 != node2) {
     // std::cout << "not equal node\n";
     return false;

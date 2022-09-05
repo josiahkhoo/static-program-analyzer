@@ -11,15 +11,15 @@
 
 class QueryString {
  public:
-  explicit QueryString(Select select, std::vector<EntityReference> entities,
-                       std::vector<Clause> clauses);
+  explicit QueryString(Select select, std::vector<Synonym> declared_synonyms,
+                       std::vector<std::shared_ptr<Clause>> clauses);
   [[nodiscard]] Select GetSelect() const;
-  [[nodiscard]] const std::vector<EntityReference>& GetEntities() const;
-  [[nodiscard]] const std::vector<Clause>& GetClause() const;
+  [[nodiscard]] const std::vector<Synonym>& GetSynonyms() const;
+  [[nodiscard]] const std::vector<std::shared_ptr<Clause>>& GetClauses() const;
 
  private:
-  std::vector<EntityReference> entities_;
-  std::vector<Clause> clauses_;
+  std::vector<std::shared_ptr<Clause>> clauses_;
+  std::vector<Synonym> declared_synonyms_;
   Select select_;
 };
 

@@ -60,19 +60,22 @@ void QueryParser::Expect(const std::string& s) {
 }
 
 StatementReference QueryParser::ExtractStmtRef() {
-  StatementReference stmtRef = *new StatementReference();
+  StatementReference statement_reference;
 
   if (MatchKind(Token::IDENTIFIER)) {
-    stmtRef.SetSynonym(Peek(token_pos_).GetValue());
+    // Checks current declared synonyms to do matching
+    Synonym synonym =
+        query_string_builder_.GetSynonym(Peek(token_pos_).GetValue());
+    statement_reference = StatementReference(synonym);
   } else if (MatchKind(Token::UNDERSCORE)) {
-    stmtRef.SetWildCard();
+    statement_reference = StatementReference();
   } else if (MatchKind(Token::NUMBER)) {
-    stmtRef.SetLineNumber(Peek(token_pos_).GetValue());
+    statement_reference = StatementReference(stoi(Peek(token_pos_).GetValue()));
   } else {
     throw std::runtime_error("Expected a stmtRef");
   }
   token_pos_++;
-  return stmtRef;
+  return statement_reference;
 }
 
 void QueryParser::ParseDeclaration() {
@@ -80,12 +83,9 @@ void QueryParser::ParseDeclaration() {
   Expect("assign");
   next = Peek(token_pos_);
   Expect(Token::IDENTIFIER);
-
-  EntityReference new_entity = EntityReference();
-  new_entity.SetIdentifier(next.GetValue());
-
+  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
   Expect(Token::SEMICOLON);
-  query_string_builder_.AddDeclaration(new_entity);
+  query_string_builder_.AddDeclaration(synonym);
 }
 
 void QueryParser::ParseSelect() {
@@ -94,9 +94,8 @@ void QueryParser::ParseSelect() {
   next = Peek(token_pos_);
   Expect(Token::IDENTIFIER);
 
-  EntityReference new_entity = EntityReference();
-  new_entity.SetIdentifier(next.GetValue());
-  Select new_select = Select(new_entity);
+  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Select new_select = Select(synonym);
 
   query_string_builder_.AddSelect(new_select);
 }
@@ -128,6 +127,7 @@ void QueryParser::ParseFollow() {
   StatementReference stmtRef2 = ExtractStmtRef();
 
   Expect(Token::RIGHT_ROUND_BRACKET);
-  FollowsClause folCl = FollowsClause(stmtRef1, stmtRef2);
+  std::shared_ptr<FollowsClause> folCl =
+      std::make_shared<FollowsClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddClause(folCl);
 }

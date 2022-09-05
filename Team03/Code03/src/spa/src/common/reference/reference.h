@@ -4,19 +4,26 @@
 #include <optional>
 #include <string>
 
+#include "common/entity/entity_type.h"
+#include "synonym.h"
+
 class Reference {
  public:
-  explicit Reference();
-  [[nodiscard]] std::optional<std::string> GetSynonym() const;
+  explicit Reference(bool is_wild_card);
+  explicit Reference(Synonym synonym_);
 
+  [[nodiscard]] Synonym GetSynonym() const;
   [[nodiscard]] bool IsSynonym() const;
   [[nodiscard]] bool IsWildCard() const;
-
-  void SetSynonym(const std::string& synonym);
-  void SetWildCard();
+  [[nodiscard]] virtual bool IsLineNumber() const = 0;
+  [[nodiscard]] virtual int GetLineNumber() const = 0;
+  [[nodiscard]] virtual bool IsIdentifier() const = 0;
+  [[nodiscard]] virtual std::string GetIdentifier() const = 0;
+  bool operator==(const Reference& rhs) const;
+  bool operator!=(const Reference& rhs) const;
 
  private:
-  std::optional<std::string> synonym_;
+  std::optional<Synonym> synonym_;
   bool is_wild_card_;
 };
 

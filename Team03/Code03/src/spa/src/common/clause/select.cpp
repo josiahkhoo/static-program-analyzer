@@ -2,6 +2,6 @@
 
 #include <utility>
 
-Select::Select(EntityReference entity) : entity_(std::move(entity)) {}
+Select::Select(Synonym synonym) : synonym_(std::move(synonym)) {}
 
-const EntityReference& Select::GetEntity() const { return entity_; }
+Synonym Select::GetSynonym() const { return synonym_; }

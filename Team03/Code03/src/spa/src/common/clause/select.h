@@ -6,11 +6,11 @@
 
 class Select : public QueryOperator {
  public:
-  explicit Select(EntityReference entity);
-  [[nodiscard]] const EntityReference &GetEntity() const;
+  explicit Select(Synonym synonym);
+  [[nodiscard]] Synonym GetSynonym() const;
 
  private:
-  EntityReference entity_;
+  Synonym synonym_;
 };
 
 #endif  // SPA_SELECT_H
