@@ -1,7 +1,9 @@
 #include "entity_node.h"
 
-EntityNode::EntityNode(Select select) : QNode(), select_(select) {}
+#include <utility>
 
-std::unordered_set<std::string> EntityNode::Fetch(QueryablePkb& pkb) {
-  return pkb.QueryAll(EntityType::VARIABLE);
+EntityNode::EntityNode(Select select) : QNode(), select_(std::move(select)) {}
+
+std::unordered_set<std::string> EntityNode::Fetch(const QueryablePkb& pkb) {
+  return pkb.QueryAll(select_.GetSynonym().GetEntityType());
 }

@@ -11,8 +11,12 @@ class StatementReference : public Reference {
   explicit StatementReference();
   explicit StatementReference(int line_number);
   explicit StatementReference(Synonym synonym);
-  [[nodiscard]] int GetLineNumber() const;
-  [[nodiscard]] bool IsLineNumber() const;
+
+  [[nodiscard]] bool IsLineNumber() const override;
+  [[nodiscard]] int GetLineNumber() const override;
+
+  [[nodiscard]] bool IsIdentifier() const override;
+  [[nodiscard]] std::string GetIdentifier() const override;
 
  private:
   std::optional<int> line_number_;

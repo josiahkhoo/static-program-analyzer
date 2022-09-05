@@ -10,7 +10,7 @@ class EntityNode : public QNode {
 
  public:
   explicit EntityNode(Select select);
-  std::unordered_set<std::string> Fetch(QueryablePkb& pkb) override;
+  std::unordered_set<std::string> Fetch(const QueryablePkb& pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H

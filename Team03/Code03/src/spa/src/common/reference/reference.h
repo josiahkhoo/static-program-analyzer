@@ -15,6 +15,10 @@ class Reference {
   [[nodiscard]] Synonym GetSynonym() const;
   [[nodiscard]] bool IsSynonym() const;
   [[nodiscard]] bool IsWildCard() const;
+  [[nodiscard]] virtual bool IsLineNumber() const = 0;
+  [[nodiscard]] virtual int GetLineNumber() const = 0;
+  [[nodiscard]] virtual bool IsIdentifier() const = 0;
+  [[nodiscard]] virtual std::string GetIdentifier() const = 0;
   bool operator==(const Reference& rhs) const;
   bool operator!=(const Reference& rhs) const;
 

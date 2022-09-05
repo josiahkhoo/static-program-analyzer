@@ -8,6 +8,10 @@
 // include your other headers here
 #include "AbstractWrapper.h"
 #include "common/lexer.h"
+#include "qps/evaluator.h"
+#include "qps/planner.h"
+#include "qps/query_parser.h"
+#include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
@@ -77,7 +81,46 @@ class TestWrapper : public AbstractWrapper {
     void store(std::vector<UsesSAbstraction> abstractions) override {}
   };
 
+  class QueryablePkbStub : public QueryablePkb {
+   public:
+    [[nodiscard]] std::unordered_set<std::string> QueryAll(
+        EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllFollow(
+        EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllFollowBy(
+        EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryFollow(
+        int statement_number, EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowBy(
+        int statement_number, EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowT(
+        int statement_number, EntityType type) const override {
+      return {"1"};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowTBy(
+        int statement_number, EntityType type) const override {
+      return {"1"};
+    }
+  };
+
   StorablePkbStub storable_pkb_stub_;
+  QueryablePkbStub queryable_pkb_stub_;
 
   // SP dependencies:
   SimpleParser simple_parser_;
@@ -109,6 +152,15 @@ class TestWrapper : public AbstractWrapper {
 
   SourceProcessor source_processor_ = SourceProcessor(
       lexer_, simple_parser_, design_extractor_, storable_pkb_stub_);
+
+  // QPS dependencies:
+  QueryParser query_parser_;
+  Planner planner_;
+  Evaluator evaluator_;
+
+  QueryProcessingSubsystem query_processing_subsystem =
+      QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
+                               queryable_pkb_stub_);
 };
 
 #endif

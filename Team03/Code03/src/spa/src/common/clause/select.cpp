@@ -4,4 +4,4 @@
 
 Select::Select(Synonym synonym) : synonym_(std::move(synonym)) {}
 
-const Synonym& Select::GetSynonym() const { return synonym_; }
+Synonym Select::GetSynonym() const { return synonym_; }

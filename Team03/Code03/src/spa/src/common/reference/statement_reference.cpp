@@ -19,3 +19,10 @@ bool StatementReference::IsLineNumber() const {
 
 StatementReference::StatementReference(int line_number)
     : line_number_(line_number), Reference(false) {}
+
+bool StatementReference::IsIdentifier() const { return false; }
+
+std::string StatementReference::GetIdentifier() const {
+  assert(IsIdentifier());
+  return "";
+}

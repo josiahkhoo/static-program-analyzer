@@ -49,7 +49,7 @@ TEST_CASE("Query Select", "[Evaluator]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   Select s = Select(syn);
   QueryString qs = QueryString(s, {syn}, {});
-  QNode* root = p.Plan(qs);
+  std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected = pkb.QueryAll(EntityType::ASSIGN);

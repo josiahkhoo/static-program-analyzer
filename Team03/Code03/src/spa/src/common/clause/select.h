@@ -7,7 +7,7 @@
 class Select : public QueryOperator {
  public:
   explicit Select(Synonym synonym);
-  [[nodiscard]] const Synonym &GetSynonym() const;
+  [[nodiscard]] Synonym GetSynonym() const;
 
  private:
   Synonym synonym_;
