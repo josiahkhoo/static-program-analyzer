@@ -1,6 +1,13 @@
-#include <iostream>
+#include "relationship_manager.h"
 
-using namespace std;
+RelationshipManager::RelationshipManager() {};
+
+void RelationshipManager::AddFollowsAbstraction(FollowsAbstraction followsAbs) {
+	followsStore.AddFollowsRelationship();
+};
+
+void RelationshipManager::AddFollowsTAbstraction(FollowsTAbstraction followsTAbs);
+
 
 int main() {
 	cout << "relationshipsss" << endl;

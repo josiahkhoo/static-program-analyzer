@@ -21,6 +21,9 @@
 #include "common/queryable_pkb.h"
 #include "common/storable_pkb.h"
 #include "pkb/entity_store/entity_manager.h"
+#include "pkb/relationship_store/relationship_manager.h"
+#include "common/abstraction/follows_abstraction.h"
+#include "common/abstraction/follows_t_abstraction.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
  public:
@@ -53,8 +56,22 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   std::unordered_set<std::string> QueryAll(EntityType type);
 
+
+  /* ====================================
+   * Abstractions Store Methods
+   * ==================================== */
+  // Follows
+  void store(std::vector<FollowsAbstraction> abstractions);
+
+  // FollowsT
+  void store(std::vector<FollowsTAbstraction> abstractions);
+
+  std::unordered_set<std::string> QueryFollow(
+    int statement_number, EntityType type);
+
  private:
   static EntityManager entityManager;
+  static RelationshipManager relationshipManager;
 };
 
 #endif  // SPA_PKB_H

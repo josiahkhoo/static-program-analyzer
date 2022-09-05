@@ -64,6 +64,12 @@ void PKB::store(std::vector<WhileEntity> ts) {
   }
 }
 
+void PKB::store(std::vector<FollowsAbstraction> abstractions) {
+  for (FollowsAbstraction abstraction: abstractions) {
+    relationshipManager.AddFollowsAbstraction(abstraction);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
   switch (type) {
     case PROCEDURE:
@@ -88,3 +94,8 @@ std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
       return entityManager.GetWhileStatements();
   }
 }
+
+//std::unordered_set<std::string> PKB::QueryFollow(
+//  int statement_number, EntityType type) {
+//  return relationshipManager.getFollow(statement_number, entityManager.get(type));
+//}
