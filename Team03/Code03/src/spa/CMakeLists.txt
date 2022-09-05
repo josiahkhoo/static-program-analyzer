@@ -4,4 +4,5 @@ add_library(spa ${srcs} ${headers} src/common/entity/entity.h src/common/abstrac
 # this makes the headers accessible for other projects which uses spa lib
 target_include_directories(spa PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-
+#add_executable(relationship_manager "src/pkb/relationship_store/relationship_manager.cpp" "src/pkb/relationship_store/relationship_manager.h")
+#install (TARGETS relationship_manager DESTINATION "relationship_manager/bin")
