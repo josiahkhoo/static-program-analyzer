@@ -6,6 +6,7 @@ TEST_CASE("Variable Storage Management", "[VariableStorage]") {
       TNode(1, TNode::Variable, 1, std::vector<std::shared_ptr<TNode>>());
   VariableEntity variable_entity = VariableEntity(mock_variable_node, "X");
   VariableStorage variable_storage;
+  variable_storage.Clear();
   variable_storage.AddVariable(variable_entity);
   std::unordered_set<std::string> variable_list =
       variable_storage.GetVariables();

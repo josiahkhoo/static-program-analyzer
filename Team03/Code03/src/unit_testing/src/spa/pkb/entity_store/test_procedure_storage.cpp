@@ -7,6 +7,7 @@ TEST_CASE("Procedure Storage Management", "[ProcedureStorage]") {
   ProcedureEntity procedure_entity =
       ProcedureEntity(mock_procedure_node, "TESTPROC");
   ProcedureStorage procedure_storage;
+  procedure_storage.Clear();
   procedure_storage.AddProcedure(procedure_entity);
   std::unordered_set<std::string> procedure_list =
       procedure_storage.GetProcedures();

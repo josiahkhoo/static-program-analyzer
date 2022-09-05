@@ -6,6 +6,7 @@ TEST_CASE("Call Storage Management", "[StatementStorage]") {
       TNode(1, TNode::Call, 1, std::vector<std::shared_ptr<TNode>>());
   CallEntity call_entity = CallEntity(mock_call_node, 1);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddCallStatement(call_entity);
   std::unordered_set<std::string> call_list =
       statement_storage.GetCallStatements();
@@ -22,6 +23,7 @@ TEST_CASE("Read Storage Management", "[StatementStorage]") {
       TNode(2, TNode::Read, 2, std::vector<std::shared_ptr<TNode>>());
   ReadEntity read_entity = ReadEntity(mock_read_node, 2);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddReadStatement(read_entity);
   std::unordered_set<std::string> read_list =
       statement_storage.GetReadStatements();
@@ -38,6 +40,7 @@ TEST_CASE("Print Storage Management", "[StatementStorage]") {
       TNode(3, TNode::Print, 3, std::vector<std::shared_ptr<TNode>>());
   PrintEntity print_entity = PrintEntity(mock_print_node, 3);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddPrintStatement(print_entity);
   std::unordered_set<std::string> print_list =
       statement_storage.GetPrintStatements();
@@ -54,6 +57,7 @@ TEST_CASE("Assign Storage Management", "[StatementStorage]") {
       TNode(4, TNode::Assign, 4, std::vector<std::shared_ptr<TNode>>());
   AssignEntity assign_entity = AssignEntity(mock_assign_node, 4);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddAssignStatement(assign_entity);
   std::unordered_set<std::string> assign_list =
       statement_storage.GetAssignStatements();
@@ -70,6 +74,7 @@ TEST_CASE("If Storage Management", "[StatementStorage]") {
       TNode(5, TNode::IfElseThen, 5, std::vector<std::shared_ptr<TNode>>());
   IfEntity if_entity = IfEntity(mock_if_node, 5);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddIfStatement(if_entity);
   std::unordered_set<std::string> if_list = statement_storage.GetIfStatements();
   std::unordered_set<std::string> statement_list =
@@ -85,6 +90,7 @@ TEST_CASE("While Storage Management", "[StatementStorage]") {
       TNode(6, TNode::While, 6, std::vector<std::shared_ptr<TNode>>());
   WhileEntity while_entity = WhileEntity(mock_while_node, 6);
   StatementStorage statement_storage;
+  statement_storage.Clear();
   statement_storage.AddWhileStatement(while_entity);
   std::unordered_set<std::string> while_list =
       statement_storage.GetWhileStatements();
