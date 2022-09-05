@@ -1,5 +1,6 @@
 #include "statement_reference.h"
 
+#include <cassert>
 #include <utility>
 
 StatementReference::StatementReference() : Reference(true) {}

@@ -1,5 +1,7 @@
 #include "reference.h"
 
+#include <cassert>
+
 Synonym Reference::GetSynonym() const {
   assert(synonym_.has_value());
   return synonym_.value();
