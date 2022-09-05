@@ -1,5 +1,7 @@
 #include "query_string_builder.h"
 
+#include <stdexcept>
+
 QueryStringBuilder::QueryStringBuilder() = default;
 
 void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
