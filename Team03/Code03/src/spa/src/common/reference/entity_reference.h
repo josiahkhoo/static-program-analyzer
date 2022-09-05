@@ -11,8 +11,12 @@ class EntityReference : public Reference {
   explicit EntityReference();
   explicit EntityReference(std::string identifier);
   explicit EntityReference(Synonym synonym);
-  [[nodiscard]] bool IsIdentifier() const;
-  [[nodiscard]] std::string GetIdentifier() const;
+
+  [[nodiscard]] bool IsLineNumber() const override;
+  [[nodiscard]] int GetLineNumber() const override;
+
+  [[nodiscard]] bool IsIdentifier() const override;
+  [[nodiscard]] std::string GetIdentifier() const override;
 
  private:
   std::optional<std::string> identifier_;

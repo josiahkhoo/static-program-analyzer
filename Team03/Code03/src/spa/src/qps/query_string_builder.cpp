@@ -17,7 +17,7 @@ QueryString QueryStringBuilder::GetQueryString() {
   return QueryString(select_.value(), declared_synonyms_, such_that_);
 }
 
-void QueryStringBuilder::AddClause(const Clause& such_that) {
+void QueryStringBuilder::AddClause(std::shared_ptr<Clause> such_that) {
   such_that_.push_back(such_that);
 }
 

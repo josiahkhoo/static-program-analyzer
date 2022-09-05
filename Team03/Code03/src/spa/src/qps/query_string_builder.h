@@ -12,14 +12,14 @@ class QueryStringBuilder {
   QueryStringBuilder();
   void AddDeclaration(const Synonym& declared_synonym);
   void AddSelect(Select select_clause);
-  void AddClause(const Clause& such_that);
+  void AddClause(std::shared_ptr<Clause> such_that);
 
   QueryString GetQueryString();
   [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
 
  private:
   std::vector<Synonym> declared_synonyms_;
-  std::vector<Clause> such_that_;
+  std::vector<std::shared_ptr<Clause>> such_that_;
   std::optional<Select> select_;
 };
 

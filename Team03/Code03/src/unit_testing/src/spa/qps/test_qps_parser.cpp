@@ -47,6 +47,7 @@ TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSelect().GetSynonym() == syn);
-  REQUIRE(res.GetClause().size() == 1);
-  REQUIRE(res.GetClause()[0] == f);
+  REQUIRE(res.GetClauses().size() == 1);
+  REQUIRE(res.GetClauses()[0]->GetLeftHandSide() == f.GetLeftHandSide());
+  REQUIRE(res.GetClauses()[0]->GetRightHandSide() == f.GetRightHandSide());
 }

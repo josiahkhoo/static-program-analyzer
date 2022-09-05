@@ -127,6 +127,7 @@ void QueryParser::ParseFollow() {
   StatementReference stmtRef2 = ExtractStmtRef();
 
   Expect(Token::RIGHT_ROUND_BRACKET);
-  FollowsClause folCl = FollowsClause(stmtRef1, stmtRef2);
+  std::shared_ptr<FollowsClause> folCl =
+      std::make_shared<FollowsClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddClause(folCl);
 }
