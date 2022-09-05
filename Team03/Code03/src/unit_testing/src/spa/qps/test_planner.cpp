@@ -2,8 +2,6 @@
 #include "common/queryable_pkb.h"
 #include "qps/planner.h"
 
-
-
 TEST_CASE("Test construct 1 node: Select", "[Planner]") {
   Planner p = Planner();
 
