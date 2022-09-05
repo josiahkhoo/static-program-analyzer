@@ -1,10 +1,4 @@
-//
-// Created by Josiah Khoo on 5/9/22.
-//
-
 #include "query_processing_subsystem.h"
-
-#include <strstream>
 
 QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer& lexer, QueryParser& query_parser, const Planner& planner,
