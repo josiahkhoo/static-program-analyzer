@@ -23,7 +23,7 @@ test_array = (
     # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
-    ("Sprint 1", "sprint_1"),
+    # ("Sprint 1", "sprint_1"),
 )
 
 overall_passed_test_cases = 0
