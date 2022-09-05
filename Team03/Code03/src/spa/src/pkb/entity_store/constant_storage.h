@@ -1,26 +1,26 @@
 #ifndef SPA_CONSTANT_STORAGE_H
 #define SPA_CONSTANT_STORAGE_H
 
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include <string>
 
 #include "common/entity/constant_entity.h"
 
 class ConstantStorage {
-public:
-    ConstantStorage();
+ public:
+  ConstantStorage();
 
-    void addConstant(ConstantEntity constant);
+  void AddConstant(ConstantEntity constant);
 
-    std::unordered_set<std::string> getConstants();
+  std::unordered_set<std::string> GetConstants();
 
-    // Empty storage
-    void clear();
+  // Empty storage
+  void Clear();
 
-private:
-    static std::unordered_set<std::string> constantList;
+ private:
+  static std::unordered_set<std::string> constantList;
 };
 
-#endif // SPA_CONSTANT_STORAGE_H
+#endif  // SPA_CONSTANT_STORAGE_H

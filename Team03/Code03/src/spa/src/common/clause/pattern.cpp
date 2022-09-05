@@ -3,7 +3,7 @@
 #include <utility>
 
 Pattern::Pattern(EntityReference entity, std::string expression)
-        : entity_(std::move(entity)), expression_(std::move(expression)) {}
+    : entity_(std::move(entity)), expression_(std::move(expression)) {}
 
 const EntityReference &Pattern::GetEntity() const { return entity_; }
 

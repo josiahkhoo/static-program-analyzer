@@ -8,18 +8,18 @@
 #include "common/entity/procedure_entity.h"
 
 class ProcedureStorage {
-public:
-    ProcedureStorage();
+ public:
+  ProcedureStorage();
 
-    void addProcedure(ProcedureEntity procedure);
+  void AddProcedure(ProcedureEntity procedure);
 
-    std::unordered_set<std::string> getProcedures();
+  std::unordered_set<std::string> GetProcedures();
 
-    // Empty storage
-    void clear();
+  // Empty storage
+  void Clear();
 
-private:
-    static std::unordered_set<std::string> procedureList;
+ private:
+  static std::unordered_set<std::string> procedureList;
 };
 
-#endif // SPA_PROCEDURE_STORAGE_H
+#endif  // SPA_PROCEDURE_STORAGE_H

@@ -4,14 +4,12 @@ std::unordered_set<std::string> VariableStorage::variableList;
 
 VariableStorage::VariableStorage() {}
 
-void VariableStorage::addVariable(VariableEntity variable) {
-    variableList.emplace(variable.GetName());
+void VariableStorage::AddVariable(VariableEntity variable) {
+  variableList.emplace(variable.GetName());
 }
 
-std::unordered_set<std::string> VariableStorage::getVariables() {
-    return variableList;
+std::unordered_set<std::string> VariableStorage::GetVariables() {
+  return variableList;
 }
 
-void VariableStorage::clear() {
-    variableList.clear();
-}
+void VariableStorage::Clear() { variableList.clear(); }

@@ -1,59 +1,59 @@
 #ifndef SPA_STATEMENT_STORAGE_H
 #define SPA_STATEMENT_STORAGE_H
 
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include <string>
 
-#include "common/entity/call_entity.h"
-#include "common/entity/read_entity.h"
-#include "common/entity/print_entity.h"
 #include "common/entity/assign_entity.h"
+#include "common/entity/call_entity.h"
 #include "common/entity/if_entity.h"
+#include "common/entity/print_entity.h"
+#include "common/entity/read_entity.h"
 #include "common/entity/while_entity.h"
 
 class StatementStorage {
-public:
-    StatementStorage();
+ public:
+  StatementStorage();
 
-    void addCallStatement(CallEntity callEntity);
+  void AddCallStatement(CallEntity callEntity);
 
-    void addReadStatement(ReadEntity readEntity);
+  void AddReadStatement(ReadEntity readEntity);
 
-    void addPrintStatement(PrintEntity printEntity);
+  void AddPrintStatement(PrintEntity printEntity);
 
-    void addAssignStatement(AssignEntity assignEntity);
+  void AddAssignStatement(AssignEntity assignEntity);
 
-    void addIfStatement(IfEntity ifEntity);
+  void AddIfStatement(IfEntity ifEntity);
 
-    void addWhileStatement(WhileEntity whileEntity);
+  void AddWhileStatement(WhileEntity whileEntity);
 
-    std::unordered_set<std::string> getStatements();
+  std::unordered_set<std::string> GetStatements();
 
-    std::unordered_set<std::string> getCallStatements();
+  std::unordered_set<std::string> GetCallStatements();
 
-    std::unordered_set<std::string> getReadStatements();
+  std::unordered_set<std::string> GetReadStatements();
 
-    std::unordered_set<std::string> getPrintStatements();
+  std::unordered_set<std::string> GetPrintStatements();
 
-    std::unordered_set<std::string> getAssignStatements();
+  std::unordered_set<std::string> GetAssignStatements();
 
-    std::unordered_set<std::string> getIfStatements();
+  std::unordered_set<std::string> GetIfStatements();
 
-    std::unordered_set<std::string> getWhileStatements();
+  std::unordered_set<std::string> GetWhileStatements();
 
-    // Empty storage
-    void clear();
+  // Empty storage
+  void Clear();
 
-private:
-    static std::unordered_set<std::string> statementList;
-    static std::unordered_set<std::string> callStatementList;
-    static std::unordered_set<std::string> readStatementList;
-    static std::unordered_set<std::string> printStatementList;
-    static std::unordered_set<std::string> assignStatementList;
-    static std::unordered_set<std::string> ifStatementList;
-    static std::unordered_set<std::string> whileStatementList;
+ private:
+  static std::unordered_set<std::string> statementList;
+  static std::unordered_set<std::string> callStatementList;
+  static std::unordered_set<std::string> readStatementList;
+  static std::unordered_set<std::string> printStatementList;
+  static std::unordered_set<std::string> assignStatementList;
+  static std::unordered_set<std::string> ifStatementList;
+  static std::unordered_set<std::string> whileStatementList;
 };
 
-#endif // SPA_STATEMENT_STORAGE_H
+#endif  // SPA_STATEMENT_STORAGE_H

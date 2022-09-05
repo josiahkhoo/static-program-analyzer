@@ -8,32 +8,32 @@
 #include "synonym.h"
 
 class Reference {
-public:
-    explicit Reference(bool is_wild_card);
+ public:
+  explicit Reference(bool is_wild_card);
 
-    explicit Reference(Synonym synonym_);
+  explicit Reference(Synonym synonym_);
 
-    [[nodiscard]] Synonym GetSynonym() const;
+  [[nodiscard]] Synonym GetSynonym() const;
 
-    [[nodiscard]] bool IsSynonym() const;
+  [[nodiscard]] bool IsSynonym() const;
 
-    [[nodiscard]] bool IsWildCard() const;
+  [[nodiscard]] bool IsWildCard() const;
 
-    [[nodiscard]] virtual bool IsLineNumber() const = 0;
+  [[nodiscard]] virtual bool IsLineNumber() const = 0;
 
-    [[nodiscard]] virtual int GetLineNumber() const = 0;
+  [[nodiscard]] virtual int GetLineNumber() const = 0;
 
-    [[nodiscard]] virtual bool IsIdentifier() const = 0;
+  [[nodiscard]] virtual bool IsIdentifier() const = 0;
 
-    [[nodiscard]] virtual std::string GetIdentifier() const = 0;
+  [[nodiscard]] virtual std::string GetIdentifier() const = 0;
 
-    bool operator==(const Reference &rhs) const;
+  bool operator==(const Reference &rhs) const;
 
-    bool operator!=(const Reference &rhs) const;
+  bool operator!=(const Reference &rhs) const;
 
-private:
-    std::optional<Synonym> synonym_;
-    bool is_wild_card_;
+ private:
+  std::optional<Synonym> synonym_;
+  bool is_wild_card_;
 };
 
 #endif  // SPA_REFERENCE_H

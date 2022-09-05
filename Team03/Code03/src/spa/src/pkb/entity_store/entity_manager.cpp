@@ -7,85 +7,85 @@ ConstantStorage EntityManager::constantStore;
 
 EntityManager::EntityManager() {}
 
-void EntityManager::addProcedure(ProcedureEntity procedure) {
-    procedureStore.addProcedure(procedure);
+void EntityManager::AddProcedure(ProcedureEntity procedure) {
+  procedureStore.AddProcedure(procedure);
 }
 
-void EntityManager::addVariable(VariableEntity variable) {
-    variableStore.addVariable(variable);
+void EntityManager::AddVariable(VariableEntity variable) {
+  variableStore.AddVariable(variable);
 }
 
-void EntityManager::addConstant(ConstantEntity constant) {
-    constantStore.addConstant(constant);
+void EntityManager::AddConstant(ConstantEntity constant) {
+  constantStore.AddConstant(constant);
 }
 
-void EntityManager::addCallStatement(CallEntity statement) {
-    statementStore.addCallStatement(statement);
+void EntityManager::AddCallStatement(CallEntity statement) {
+  statementStore.AddCallStatement(statement);
 }
 
-void EntityManager::addReadStatement(ReadEntity statement) {
-    statementStore.addReadStatement(statement);
+void EntityManager::AddReadStatement(ReadEntity statement) {
+  statementStore.AddReadStatement(statement);
 }
 
-void EntityManager::addPrintStatement(PrintEntity statement) {
-    statementStore.addPrintStatement(statement);
+void EntityManager::AddPrintStatement(PrintEntity statement) {
+  statementStore.AddPrintStatement(statement);
 }
 
-void EntityManager::addAssignStatement(AssignEntity statement) {
-    statementStore.addAssignStatement(statement);
+void EntityManager::AddAssignStatement(AssignEntity statement) {
+  statementStore.AddAssignStatement(statement);
 }
 
-void EntityManager::addIfStatement(IfEntity statement) {
-    statementStore.addIfStatement(statement);
+void EntityManager::AddIfStatement(IfEntity statement) {
+  statementStore.AddIfStatement(statement);
 }
 
-void EntityManager::addWhileStatement(WhileEntity statement) {
-    statementStore.addWhileStatement(statement);
+void EntityManager::AddWhileStatement(WhileEntity statement) {
+  statementStore.AddWhileStatement(statement);
 }
 
-std::unordered_set<std::string> EntityManager::getProcedures() {
-    return procedureStore.getProcedures();
+std::unordered_set<std::string> EntityManager::GetProcedures() {
+  return procedureStore.GetProcedures();
 }
 
-std::unordered_set<std::string> EntityManager::getVariables() {
-    return variableStore.getVariables();
+std::unordered_set<std::string> EntityManager::GetVariables() {
+  return variableStore.GetVariables();
 }
 
-std::unordered_set<std::string> EntityManager::getConstants() {
-    return constantStore.getConstants();
+std::unordered_set<std::string> EntityManager::GetConstants() {
+  return constantStore.GetConstants();
 }
 
-std::unordered_set<std::string> EntityManager::getStatements() {
-    return statementStore.getStatements();
+std::unordered_set<std::string> EntityManager::GetStatements() {
+  return statementStore.GetStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getCallStatements() {
-    return statementStore.getCallStatements();
+std::unordered_set<std::string> EntityManager::GetCallStatements() {
+  return statementStore.GetCallStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getReadStatements() {
-    return statementStore.getReadStatements();
+std::unordered_set<std::string> EntityManager::GetReadStatements() {
+  return statementStore.GetReadStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getPrintStatements() {
-    return statementStore.getPrintStatements();
+std::unordered_set<std::string> EntityManager::GetPrintStatements() {
+  return statementStore.GetPrintStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getAssignStatements() {
-    return statementStore.getAssignStatements();
+std::unordered_set<std::string> EntityManager::GetAssignStatements() {
+  return statementStore.GetAssignStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getIfStatements() {
-    return statementStore.getIfStatements();
+std::unordered_set<std::string> EntityManager::GetIfStatements() {
+  return statementStore.GetIfStatements();
 }
 
-std::unordered_set<std::string> EntityManager::getWhileStatements() {
-    return statementStore.getWhileStatements();
+std::unordered_set<std::string> EntityManager::GetWhileStatements() {
+  return statementStore.GetWhileStatements();
 }
 
-void EntityManager::clear() {
-    procedureStore.clear();
-    statementStore.clear();
-    variableStore.clear();
-    constantStore.clear();
+void EntityManager::Clear() {
+  procedureStore.Clear();
+  statementStore.Clear();
+  variableStore.Clear();
+  constantStore.Clear();
 }

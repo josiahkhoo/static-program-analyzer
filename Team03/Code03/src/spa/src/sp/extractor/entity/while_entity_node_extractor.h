@@ -5,9 +5,9 @@
 #include "sp/extractor/node_extractor.h"
 
 class WhileEntityNodeExtractor : public NodeExtractor<WhileEntity> {
-public:
-    [[nodiscard]] std::optional<WhileEntity> TryExtractFromNode(
-            const TNode &ast) const override;
+ public:
+  [[nodiscard]] std::optional<WhileEntity> TryExtractFromNode(
+      const TNode &ast) const override;
 };
 
 #endif  // SPA_WHILE_ENTITY_NODE_EXTRACTOR_H

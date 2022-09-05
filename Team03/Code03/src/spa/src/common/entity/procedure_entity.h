@@ -4,13 +4,13 @@
 #include "entity.h"
 
 class ProcedureEntity : public Entity {
-public:
-    explicit ProcedureEntity(const TNode &node, std::string name);
+ public:
+  explicit ProcedureEntity(const TNode &node, std::string name);
 
-    [[nodiscard]] std::string GetName() const;
+  [[nodiscard]] std::string GetName() const;
 
-private:
-    std::string name_;
+ private:
+  std::string name_;
 };
 
 #endif  // SPA_PROCEDURE_ENTITY_H

@@ -12804,7 +12804,7 @@ namespace Catch {
         }
 
         // We have no use for the return value (whether messages should be cleared), because messages were made scoped
-        // and should be let to clear themselves out.
+        // and should be let to Clear themselves out.
         static_cast<void>(m_reporter->assertionEnded(AssertionStats(result, m_messages, m_totals)));
 
         if (result.getResultType() != ResultWas::Warning)

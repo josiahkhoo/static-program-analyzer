@@ -4,8 +4,8 @@
 #define SPA_STRINGABLE_H
 
 class Stringable {
-public:
-    virtual std::string ToString() const = 0;
+ public:
+  virtual std::string ToString() const = 0;
 };
 
 #endif  // SPA_STRINGABLE_H

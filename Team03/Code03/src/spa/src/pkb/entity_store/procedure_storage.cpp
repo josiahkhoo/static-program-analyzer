@@ -4,14 +4,12 @@ std::unordered_set<std::string> ProcedureStorage::procedureList;
 
 ProcedureStorage::ProcedureStorage() {}
 
-void ProcedureStorage::addProcedure(ProcedureEntity procedure) {
-    procedureList.emplace(procedure.GetName());
+void ProcedureStorage::AddProcedure(ProcedureEntity procedure) {
+  procedureList.emplace(procedure.GetName());
 }
 
-std::unordered_set<std::string> ProcedureStorage::getProcedures() {
-    return procedureList;
+std::unordered_set<std::string> ProcedureStorage::GetProcedures() {
+  return procedureList;
 }
 
-void ProcedureStorage::clear() {
-    procedureList.clear();
-}
+void ProcedureStorage::Clear() { procedureList.clear(); }

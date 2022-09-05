@@ -5,24 +5,24 @@
 #include "common/entity/statement_entity.h"
 
 class FollowsAbstraction
-        : public Abstraction<StatementEntity, StatementEntity> {
-public:
-    FollowsAbstraction(StatementEntity lhs, StatementEntity rhs);
+    : public Abstraction<StatementEntity, StatementEntity> {
+ public:
+  FollowsAbstraction(StatementEntity lhs, StatementEntity rhs);
 
-    const StatementEntity &GetLeftHandSide() const override;
+  const StatementEntity &GetLeftHandSide() const override;
 
-    const StatementEntity &GetRightHandSide() const override;
+  const StatementEntity &GetRightHandSide() const override;
 
-private:
-    StatementEntity lhs_;
+ private:
+  StatementEntity lhs_;
 
-public:
-    bool operator==(const FollowsAbstraction &rhs) const;
+ public:
+  bool operator==(const FollowsAbstraction &rhs) const;
 
-    bool operator!=(const FollowsAbstraction &rhs) const;
+  bool operator!=(const FollowsAbstraction &rhs) const;
 
-private:
-    StatementEntity rhs_;
+ private:
+  StatementEntity rhs_;
 };
 
 #endif  // SPA_FOLLOWS_ABSTRACTION_H

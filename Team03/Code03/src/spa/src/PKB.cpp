@@ -11,80 +11,80 @@ EntityManager PKB::entityManager;
 PKB::PKB() {}
 
 void PKB::store(std::vector<ProcedureEntity> ts) {
-    for (ProcedureEntity entity: ts) {
-        entityManager.addProcedure(entity);
-    }
+  for (ProcedureEntity entity : ts) {
+    entityManager.AddProcedure(entity);
+  }
 }
 
 void PKB::store(std::vector<VariableEntity> ts) {
-    for (VariableEntity entity: ts) {
-        entityManager.addVariable(entity);
-    }
+  for (VariableEntity entity : ts) {
+    entityManager.AddVariable(entity);
+  }
 }
 
 void PKB::store(std::vector<ConstantEntity> ts) {
-    for (ConstantEntity entity: ts) {
-        entityManager.addConstant(entity);
-    }
+  for (ConstantEntity entity : ts) {
+    entityManager.AddConstant(entity);
+  }
 }
 
 void PKB::store(std::vector<CallEntity> ts) {
-    for (CallEntity entity: ts) {
-        entityManager.addCallStatement(entity);
-    }
+  for (CallEntity entity : ts) {
+    entityManager.AddCallStatement(entity);
+  }
 }
 
 void PKB::store(std::vector<ReadEntity> ts) {
-    for (ReadEntity entity: ts) {
-        entityManager.addReadStatement(entity);
-    }
+  for (ReadEntity entity : ts) {
+    entityManager.AddReadStatement(entity);
+  }
 }
 
 void PKB::store(std::vector<PrintEntity> ts) {
-    for (PrintEntity entity: ts) {
-        entityManager.addPrintStatement(entity);
-    }
+  for (PrintEntity entity : ts) {
+    entityManager.AddPrintStatement(entity);
+  }
 }
 
 void PKB::store(std::vector<AssignEntity> ts) {
-    for (AssignEntity entity: ts) {
-        entityManager.addAssignStatement(entity);
-    }
+  for (AssignEntity entity : ts) {
+    entityManager.AddAssignStatement(entity);
+  }
 }
 
 void PKB::store(std::vector<IfEntity> ts) {
-    for (IfEntity entity: ts) {
-        entityManager.addIfStatement(entity);
-    }
+  for (IfEntity entity : ts) {
+    entityManager.AddIfStatement(entity);
+  }
 }
 
 void PKB::store(std::vector<WhileEntity> ts) {
-    for (WhileEntity entity: ts) {
-        entityManager.addWhileStatement(entity);
-    }
+  for (WhileEntity entity : ts) {
+    entityManager.AddWhileStatement(entity);
+  }
 }
 
-std::unordered_set<std::string> PKB::QueryALl(EntityType type) {
-    switch (type) {
-        case PROCEDURE:
-            return entityManager.getProcedures();
-        case CONSTANT:
-            return entityManager.getConstants();
-        case VARIABLE:
-            return entityManager.getVariables();
-        case STATEMENT:
-            return entityManager.getStatements();
-        case CALL:
-            return entityManager.getCallStatements();
-        case READ:
-            return entityManager.getReadStatements();
-        case PRINT:
-            return entityManager.getPrintStatements();
-        case ASSIGN:
-            return entityManager.getAssignStatements();
-        case IF:
-            return entityManager.getIfStatements();
-        case WHILE:
-            return entityManager.getWhileStatements();
-    }
+std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
+  switch (type) {
+    case PROCEDURE:
+      return entityManager.GetProcedures();
+    case CONSTANT:
+      return entityManager.GetConstants();
+    case VARIABLE:
+      return entityManager.GetVariables();
+    case STATEMENT:
+      return entityManager.GetStatements();
+    case CALL:
+      return entityManager.GetCallStatements();
+    case READ:
+      return entityManager.GetReadStatements();
+    case PRINT:
+      return entityManager.GetPrintStatements();
+    case ASSIGN:
+      return entityManager.GetAssignStatements();
+    case IF:
+      return entityManager.GetIfStatements();
+    case WHILE:
+      return entityManager.GetWhileStatements();
+  }
 }

@@ -7,60 +7,60 @@
 #include "common/token.h"
 
 class SimpleParser : public Parser<TNode> {
-public:
-    SimpleParser();
+ public:
+  SimpleParser();
 
-    TNode Parse(std::vector<Token> tokens_) override;
+  TNode Parse(std::vector<Token> tokens_) override;
 
-private:
-    int token_pos_ = 0;
-    int statement_number_ = 0;
-    int t_node_id_ = 0;
-    std::vector<Token> tokens_;
+ private:
+  int token_pos_ = 0;
+  int statement_number_ = 0;
+  int t_node_id_ = 0;
+  std::vector<Token> tokens_;
 
-    Token Peek(int pos);
+  Token Peek(int pos);
 
-    bool MatchKind(Token::Kind kind);
+  bool MatchKind(Token::Kind kind);
 
-    bool MatchString(const std::string &s);
+  bool MatchString(const std::string &s);
 
-    void Expect(Token::Kind kind);
+  void Expect(Token::Kind kind);
 
-    void Expect(const std::string &s);
+  void Expect(const std::string &s);
 
-    TNode ParseProcedure();
+  TNode ParseProcedure();
 
-    TNode ParseStatementList();
+  TNode ParseStatementList();
 
-    TNode ParseStatement();
+  TNode ParseStatement();
 
-    TNode ParseAssign();
+  TNode ParseAssign();
 
-    TNode ParseRead();
+  TNode ParseRead();
 
-    TNode ParsePrint();
+  TNode ParsePrint();
 
-    TNode ParseCall();
+  TNode ParseCall();
 
-    TNode ParseWhile();
+  TNode ParseWhile();
 
-    TNode ParseIf();
+  TNode ParseIf();
 
-    TNode ParseCondExpr();
+  TNode ParseCondExpr();
 
-    TNode ParseRelExpr();
+  TNode ParseRelExpr();
 
-    TNode ParseRelFactor();
+  TNode ParseRelFactor();
 
-    TNode ParseExpr();
+  TNode ParseExpr();
 
-    TNode ParseTerm();
+  TNode ParseTerm();
 
-    TNode ParseFactor();
+  TNode ParseFactor();
 
-    TNode ParseVarName();
+  TNode ParseVarName();
 
-    TNode ParseConstValue();
+  TNode ParseConstValue();
 };
 
 #endif  // SPA_SIMPLE_PARSER_H

@@ -5,13 +5,13 @@
 #include "common/reference/entity_reference.h"
 
 class Select : public QueryOperator {
-public:
-    explicit Select(Synonym synonym);
+ public:
+  explicit Select(Synonym synonym);
 
-    [[nodiscard]] Synonym GetSynonym() const;
+  [[nodiscard]] Synonym GetSynonym() const;
 
-private:
-    Synonym synonym_;
+ private:
+  Synonym synonym_;
 };
 
 #endif  // SPA_SELECT_H
