@@ -1,13 +1,19 @@
 #include "entity_reference.h"
 
-EntityReference::EntityReference() : Reference() {}
+#include <cassert>
+#include <utility>
 
-std::optional<std::string> EntityReference::GetIdentifier() const {
-  return identifier_;
+EntityReference::EntityReference() : Reference(true) {}
+
+EntityReference::EntityReference(Synonym synonym)
+    : Reference(std::move(synonym)) {}
+
+std::string EntityReference::GetIdentifier() const {
+  assert(IsIdentifier());
+  return identifier_.value();
 }
 
 bool EntityReference::IsIdentifier() const { return identifier_.has_value(); }
 
-void EntityReference::SetIdentifier(const std::string& identifier) {
-  identifier_ = identifier;
-}
+EntityReference::EntityReference(std::string identifier)
+    : identifier_(identifier), Reference(false) {}

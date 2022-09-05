@@ -10,14 +10,15 @@
 class QueryStringBuilder {
  public:
   QueryStringBuilder();
-  void AddDeclaration(const EntityReference& declared_entity);
+  void AddDeclaration(const Synonym& declared_synonym);
   void AddSelect(Select select_clause);
   void AddClause(const Clause& such_that);
 
   QueryString GetQueryString();
+  [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
 
  private:
-  std::vector<EntityReference> entities_;
+  std::vector<Synonym> declared_synonyms_;
   std::vector<Clause> such_that_;
   std::optional<Select> select_;
 };

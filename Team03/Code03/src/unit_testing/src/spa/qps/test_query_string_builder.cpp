@@ -6,21 +6,16 @@
 TEST_CASE("Test without 'Select' builder", "[QueryStringBuilder]") {
   QueryStringBuilder qsb = QueryStringBuilder();
 
-  EntityReference e = EntityReference();
-  e.SetWildCard();
-  qsb.AddDeclaration(e);
-
   REQUIRE_THROWS(qsb.GetQueryString());
 }
 
 TEST_CASE("Test with 'Select' builder", "[QueryStringBuilder]") {
   QueryStringBuilder qsb = QueryStringBuilder();
 
-  EntityReference e = EntityReference();
-  e.SetWildCard();
-  qsb.AddDeclaration(e);
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select s = Select(syn);
 
-  Select s = Select(e);
+  qsb.AddDeclaration(syn);
   qsb.AddSelect(s);
 
   REQUIRE_NOTHROW(qsb.GetQueryString());

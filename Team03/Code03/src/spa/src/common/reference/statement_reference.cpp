@@ -1,13 +1,21 @@
 #include "statement_reference.h"
 
-StatementReference::StatementReference() : Reference() {}
+#include <cassert>
+#include <utility>
 
-std::optional<int> StatementReference::GetLineNumber() const {
-  return line_no_;
+StatementReference::StatementReference() : Reference(true) {}
+
+StatementReference::StatementReference(Synonym synonym)
+    : Reference(std::move(synonym)) {}
+
+int StatementReference::GetLineNumber() const {
+  assert(IsLineNumber());
+  return line_number_.value();
 }
 
-bool StatementReference::IsLineNumber() const { return line_no_.has_value(); }
-
-void StatementReference::SetLineNumber(const std::string& line_no) {
-  line_no_ = stoi(line_no);
+bool StatementReference::IsLineNumber() const {
+  return line_number_.has_value();
 }
+
+StatementReference::StatementReference(int line_number)
+    : line_number_(line_number), Reference(false) {}

@@ -13,6 +13,12 @@ class Clause : public QueryOperator {
 
  private:
   Reference lhs_;
+
+ public:
+  bool operator==(const Clause &rhs) const;
+  bool operator!=(const Clause &rhs) const;
+
+ private:
   Reference rhs_;
 };
 

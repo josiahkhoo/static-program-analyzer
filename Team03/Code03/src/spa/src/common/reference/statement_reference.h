@@ -7,14 +7,15 @@
 
 class StatementReference : public Reference {
  public:
+  /// Default constructor creates a wildcard statement reference.
   explicit StatementReference();
-  [[nodiscard]] std::optional<int> GetLineNumber() const;
+  explicit StatementReference(int line_number);
+  explicit StatementReference(Synonym synonym);
+  [[nodiscard]] int GetLineNumber() const;
   [[nodiscard]] bool IsLineNumber() const;
 
-  void SetLineNumber(const std::string& line_no);
-
  private:
-  std::optional<int> line_no_;
+  std::optional<int> line_number_;
 };
 
 #endif  // SPA_STATEMENT_REFERENCE_H
