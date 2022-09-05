@@ -1,7 +1,7 @@
 #include "statement_entity_node_extractor.h"
 
 std::optional<StatementEntity> StatementEntityNodeExtractor::TryExtractFromNode(
-    const TNode& ast) const {
+    const TNode &ast) const {
   if (!ast.IsStatement()) {
     return {};
   }

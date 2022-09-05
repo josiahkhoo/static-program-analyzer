@@ -1,7 +1,7 @@
 #include "variable_entity_node_extractor.h"
 
 std::optional<VariableEntity> VariableEntityNodeExtractor::TryExtractFromNode(
-    const TNode& ast) const {
+    const TNode &ast) const {
   if (ast.IsNotType(TNode::Variable)) {
     return {};
   }

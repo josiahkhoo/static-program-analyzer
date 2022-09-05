@@ -17,7 +17,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
     ParseDeclaration();
     ParseSelect();
     ParseClause();
-  } catch (const std::runtime_error& e_) {
+  } catch (const std::runtime_error &e_) {
     std::cout << e_.what();
   }
   return query_string_builder_.GetQueryString();
@@ -34,7 +34,7 @@ bool QueryParser::MatchKind(Token::Kind kind) {
   return Peek(token_pos_).Is(kind);
 }
 
-bool QueryParser::MatchString(const std::string& s) {
+bool QueryParser::MatchString(const std::string &s) {
   return (Peek(token_pos_).GetValue() == s);
 }
 
@@ -51,7 +51,7 @@ void QueryParser::Expect(Token::Kind kind) {
   }
 }
 
-void QueryParser::Expect(const std::string& s) {
+void QueryParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {

@@ -12,6 +12,7 @@
 class Clause : public QueryOperator {
  public:
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
+
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> Fetch(

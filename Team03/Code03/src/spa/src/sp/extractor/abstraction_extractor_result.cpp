@@ -47,7 +47,7 @@ AbstractionExtractorResult::GetParentTAbstractions() const {
 }
 
 bool AbstractionExtractorResult::operator==(
-    const AbstractionExtractorResult& rhs) const {
+    const AbstractionExtractorResult &rhs) const {
   return follows_abstractions_ == rhs.follows_abstractions_ &&
          follows_t_abstractions_ == rhs.follows_t_abstractions_ &&
          modifies_s_abstractions_ == rhs.modifies_s_abstractions_ &&
@@ -57,6 +57,6 @@ bool AbstractionExtractorResult::operator==(
 }
 
 bool AbstractionExtractorResult::operator!=(
-    const AbstractionExtractorResult& rhs) const {
+    const AbstractionExtractorResult &rhs) const {
   return !(rhs == *this);
 }

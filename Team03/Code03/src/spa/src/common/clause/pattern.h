@@ -7,7 +7,9 @@
 class Pattern : public Pair<EntityReference, std::string> {
  public:
   explicit Pattern(EntityReference entity, std::string expression);
+
   [[nodiscard]] const EntityReference &GetEntity() const;
+
   [[nodiscard]] const std::string &GetExpression() const;
 
  private:

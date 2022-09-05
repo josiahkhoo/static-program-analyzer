@@ -11,6 +11,7 @@ class DesignExtractorResult {
 
   [[nodiscard]] AbstractionExtractorResult GetAbstractionExtractorResult()
       const;
+
   [[nodiscard]] EntityExtractorResult GetEntityExtractorResult() const;
 
  private:

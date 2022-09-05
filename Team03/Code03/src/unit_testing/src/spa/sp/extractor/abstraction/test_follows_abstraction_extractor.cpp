@@ -31,16 +31,16 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
     ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
     ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     ProcedureEntity p = ProcedureEntity(procedure_node, "proc");
-    std::unordered_map<TNode, StatementEntity*> stmt_umap = {
+    std::unordered_map<TNode, StatementEntity *> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
         {*re2.GetNodePointer(), &re2},
         {*re3.GetNodePointer(), &re3},
     };
-    std::unordered_map<TNode, VariableEntity*> var_umap = {
+    std::unordered_map<TNode, VariableEntity *> var_umap = {
         {*v1.GetNodePointer(), &v1},
         {*v2.GetNodePointer(), &v2},
         {*v3.GetNodePointer(), &v3}};
-    std::unordered_map<TNode, ConstantEntity*> const_umap = {};
+    std::unordered_map<TNode, ConstantEntity *> const_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
@@ -88,16 +88,16 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
     ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
     ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     IfEntity if_ent = IfEntity(if_else_then_node, 1);
-    std::unordered_map<TNode, StatementEntity*> stmt_umap = {
+    std::unordered_map<TNode, StatementEntity *> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
         {*re2.GetNodePointer(), &re2},
         {*re3.GetNodePointer(), &re3},
     };
-    std::unordered_map<TNode, VariableEntity*> var_umap = {
+    std::unordered_map<TNode, VariableEntity *> var_umap = {
         {*v1.GetNodePointer(), &v1},
         {*v2.GetNodePointer(), &v2},
         {*v3.GetNodePointer(), &v3}};
-    std::unordered_map<TNode, ConstantEntity*> const_umap = {};
+    std::unordered_map<TNode, ConstantEntity *> const_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {if_ent}, {}, {}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
@@ -143,16 +143,16 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
     ReadEntity re2 = ReadEntity(read_node2, read_node2.GetStatementNumber());
     ReadEntity re3 = ReadEntity(read_node3, read_node3.GetStatementNumber());
     WhileEntity while_entity = WhileEntity(while_node, 1);
-    std::unordered_map<TNode, StatementEntity*> stmt_umap = {
+    std::unordered_map<TNode, StatementEntity *> stmt_umap = {
         {*re1.GetNodePointer(), &re1},
         {*re2.GetNodePointer(), &re2},
         {*re3.GetNodePointer(), &re3},
     };
-    std::unordered_map<TNode, VariableEntity*> var_umap = {
+    std::unordered_map<TNode, VariableEntity *> var_umap = {
         {*v1.GetNodePointer(), &v1},
         {*v2.GetNodePointer(), &v2},
         {*v3.GetNodePointer(), &v3}};
-    std::unordered_map<TNode, ConstantEntity*> const_umap = {};
+    std::unordered_map<TNode, ConstantEntity *> const_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {}, {}, {}, {re1, re2, re3}, {re1, re2, re3}, {},

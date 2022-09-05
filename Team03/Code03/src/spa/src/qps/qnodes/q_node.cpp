@@ -18,6 +18,6 @@ bool QNode::IsLeaf() const {
   return (left_node_ == nullptr && right_node_ == nullptr);
 }
 
-std::unordered_set<std::string> QNode::Fetch(const QueryablePkb& pkb) {
+std::unordered_set<std::string> QNode::Fetch(const QueryablePkb &pkb) {
   return {};
 }

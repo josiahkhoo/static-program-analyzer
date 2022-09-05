@@ -39,7 +39,7 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::END, "^(\0)"}};
 
 // Splits given stream of text into a list of lines
-std::vector<std::string> splitLines(std::istream& stream) {
+std::vector<std::string> splitLines(std::istream &stream) {
   std::vector<std::string> lines;
   std::string line;
 
@@ -51,7 +51,7 @@ std::vector<std::string> splitLines(std::istream& stream) {
 }
 
 // Generates given stream of lex into tokens
-std::vector<Token> Lexer::Lex(std::istream& stream) const {
+std::vector<Token> Lexer::Lex(std::istream &stream) const {
   std::vector<Token> tokens;
   std::vector<std::string> lines = splitLines(stream);
 
@@ -64,10 +64,10 @@ std::vector<Token> Lexer::Lex(std::istream& stream) const {
   return tokens;
 }
 
-std::vector<Token> Lexer::LexLine(std::string& line) const {
+std::vector<Token> Lexer::LexLine(std::string &line) const {
   std::vector<Token> tokens;
   while (!line.empty()) {
-    for (auto const& pair : rules) {
+    for (auto const &pair : rules) {
       std::smatch matched_regex;
       if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
         if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {

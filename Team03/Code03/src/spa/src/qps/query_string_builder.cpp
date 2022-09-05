@@ -4,7 +4,7 @@
 
 QueryStringBuilder::QueryStringBuilder() = default;
 
-void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
+void QueryStringBuilder::AddDeclaration(const Synonym &declared_synonym) {
   declared_synonyms_.push_back(declared_synonym);
 }
 
@@ -21,7 +21,7 @@ void QueryStringBuilder::AddClause(std::shared_ptr<Clause> such_that) {
   such_that_.push_back(such_that);
 }
 
-Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
+Synonym QueryStringBuilder::GetSynonym(const std::string &identifier) const {
   for (auto synonym : declared_synonyms_) {
     if (synonym.GetIdentifier() == identifier) {
       return synonym;

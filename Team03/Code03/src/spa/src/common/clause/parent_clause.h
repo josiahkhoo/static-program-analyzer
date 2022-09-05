@@ -6,6 +6,7 @@
 
 class ParentClause : public Clause {
   const StatementReference &GetLeftHandSide() const;
+
   const StatementReference &GetRightHandSide() const;
 };
 

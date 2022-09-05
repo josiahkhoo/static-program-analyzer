@@ -18,6 +18,7 @@ class FollowsAbstraction
 
  public:
   bool operator==(const FollowsAbstraction &rhs) const;
+
   bool operator!=(const FollowsAbstraction &rhs) const;
 
  private:

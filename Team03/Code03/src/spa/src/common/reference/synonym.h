@@ -7,10 +7,14 @@
 class Synonym {
  public:
   Synonym(EntityType entity_type, std::string identifier);
+
   [[nodiscard]] EntityType GetEntityType();
+
   [[nodiscard]] std::string GetIdentifier();
-  bool operator==(const Synonym& rhs) const;
-  bool operator!=(const Synonym& rhs) const;
+
+  bool operator==(const Synonym &rhs) const;
+
+  bool operator!=(const Synonym &rhs) const;
 
  private:
   EntityType entity_type_;

@@ -13,6 +13,7 @@ class SourceProcessor {
  public:
   SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
                   DesignExtractor &design_extractor, StorablePkb &storable_pkb);
+
   void Process(const std::string &filename);
 
  private:

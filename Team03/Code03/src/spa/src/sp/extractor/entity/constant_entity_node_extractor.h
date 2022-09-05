@@ -7,7 +7,7 @@
 class ConstantEntityNodeExtractor : public NodeExtractor<ConstantEntity> {
  public:
   [[nodiscard]] std::optional<ConstantEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+      const TNode &ast) const override;
 };
 
 #endif  // SPA_CONSTANT_ENTITY_NODE_EXTRACTOR_H

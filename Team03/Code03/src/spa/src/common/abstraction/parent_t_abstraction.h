@@ -12,7 +12,9 @@ class ParentTAbstraction
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
+
   bool operator==(const ParentTAbstraction &rhs) const;
+
   bool operator!=(const ParentTAbstraction &rhs) const;
 
  private:

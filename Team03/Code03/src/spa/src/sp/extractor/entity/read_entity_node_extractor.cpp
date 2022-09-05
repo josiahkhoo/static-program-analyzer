@@ -1,7 +1,7 @@
 #include "read_entity_node_extractor.h"
 
 std::optional<ReadEntity> ReadEntityNodeExtractor::TryExtractFromNode(
-    const TNode& ast) const {
+    const TNode &ast) const {
   if (ast.IsNotType(TNode::Read)) {
     return {};
   }

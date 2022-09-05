@@ -1,4 +1,5 @@
 #include <string>
+
 #ifndef SPA_STRINGABLE_H
 #define SPA_STRINGABLE_H
 

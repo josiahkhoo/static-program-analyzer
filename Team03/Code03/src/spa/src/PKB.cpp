@@ -1,13 +1,90 @@
+#include "PKB.h"
+
 #include <stdio.h>
 
 #include <iostream>
 #include <string>
 #include <vector>
 
-using namespace std;
+EntityManager PKB::entityManager;
 
-#include "PKB.h"
+PKB::PKB() {}
 
-int PKB::setProcToAST(PROC p, t_node* r) { return 0; }
+void PKB::store(std::vector<ProcedureEntity> ts) {
+  for (ProcedureEntity entity : ts) {
+    entityManager.AddProcedure(entity);
+  }
+}
 
-t_node* PKB::getRootAST(PROC p) { return nullptr; }
+void PKB::store(std::vector<VariableEntity> ts) {
+  for (VariableEntity entity : ts) {
+    entityManager.AddVariable(entity);
+  }
+}
+
+void PKB::store(std::vector<ConstantEntity> ts) {
+  for (ConstantEntity entity : ts) {
+    entityManager.AddConstant(entity);
+  }
+}
+
+void PKB::store(std::vector<CallEntity> ts) {
+  for (CallEntity entity : ts) {
+    entityManager.AddCallStatement(entity);
+  }
+}
+
+void PKB::store(std::vector<ReadEntity> ts) {
+  for (ReadEntity entity : ts) {
+    entityManager.AddReadStatement(entity);
+  }
+}
+
+void PKB::store(std::vector<PrintEntity> ts) {
+  for (PrintEntity entity : ts) {
+    entityManager.AddPrintStatement(entity);
+  }
+}
+
+void PKB::store(std::vector<AssignEntity> ts) {
+  for (AssignEntity entity : ts) {
+    entityManager.AddAssignStatement(entity);
+  }
+}
+
+void PKB::store(std::vector<IfEntity> ts) {
+  for (IfEntity entity : ts) {
+    entityManager.AddIfStatement(entity);
+  }
+}
+
+void PKB::store(std::vector<WhileEntity> ts) {
+  for (WhileEntity entity : ts) {
+    entityManager.AddWhileStatement(entity);
+  }
+}
+
+std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
+  switch (type) {
+    case PROCEDURE:
+      return entityManager.GetProcedures();
+    case CONSTANT:
+      return entityManager.GetConstants();
+    case VARIABLE:
+      return entityManager.GetVariables();
+    case STATEMENT:
+      return entityManager.GetStatements();
+    case CALL:
+      return entityManager.GetCallStatements();
+    case READ:
+      return entityManager.GetReadStatements();
+    case PRINT:
+      return entityManager.GetPrintStatements();
+    case ASSIGN:
+      return entityManager.GetAssignStatements();
+    case IF:
+      return entityManager.GetIfStatements();
+    case WHILE:
+      return entityManager.GetWhileStatements();
+  }
+}

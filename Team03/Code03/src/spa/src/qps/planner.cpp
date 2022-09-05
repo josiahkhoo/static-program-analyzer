@@ -6,7 +6,7 @@
 
 Planner::Planner() = default;
 
-std::shared_ptr<QNode> Planner::Plan(const QueryString& q_string) const {
+std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
   Select select_clause = q_string.GetSelect();
   std::vector<std::shared_ptr<Clause>> clauses = q_string.GetClauses();
 
@@ -17,7 +17,7 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString& q_string) const {
 }
 
 std::shared_ptr<QNode> Planner::BuildQTree(
-    std::vector<std::shared_ptr<Clause>>& clauses) const {
+    std::vector<std::shared_ptr<Clause>> &clauses) const {
   if (clauses.empty()) {
     return nullptr;
   }
