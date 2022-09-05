@@ -17,7 +17,7 @@ class QNode {
   [[nodiscard]] std::shared_ptr<QNode> GetLeftNode() const;
   [[nodiscard]] std::shared_ptr<QNode> GetRightNode() const;
   [[nodiscard]] bool IsLeaf() const;
-  virtual std::unordered_set<std::string> Fetch(QueryablePkb& pkb);
+  virtual std::unordered_set<std::string> Fetch(const QueryablePkb& pkb);
 
  private:
   std::shared_ptr<QNode> left_node_;

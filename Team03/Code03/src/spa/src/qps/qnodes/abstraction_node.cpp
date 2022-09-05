@@ -7,6 +7,7 @@
 AbstractionNode::AbstractionNode(std::shared_ptr<Clause> clause)
     : QNode(), clause_(std::move(clause)) {}
 
-std::unordered_set<std::string> AbstractionNode::Fetch(QueryablePkb& pkb) {
+std::unordered_set<std::string> AbstractionNode::Fetch(
+    const QueryablePkb& pkb) {
   return clause_->Fetch(pkb);
 }

@@ -56,30 +56,37 @@ std::vector<Token> Lexer::Lex(std::istream& stream) const {
   std::vector<std::string> lines = splitLines(stream);
 
   for (std::string line : lines) {
-    while (!line.empty()) {
-      for (auto const& pair : rules) {
-        std::smatch matched_regex;
-        if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
-          if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {
-            Token found_token(pair.first, matched_regex.str());
-            tokens.push_back(found_token);
-          } else if (pair.first != Token::WHITESPACE) {
-            Token found_token(pair.first);
-            tokens.push_back(found_token);
-          }
-          // else skip whitespaces
-
-          if (DEBUG)
-            std::cout << tokens.back().PrettyPrintKind() << ", "
-                      << matched_regex.str() << "\n";
-
-          line = line.substr(static_cast<int>(matched_regex.str().size()));
-          break;
-        }
-      }
-    }
+    std::vector<Token> new_tokens = LexLine(line);
+    tokens.insert(tokens.end(), new_tokens.begin(), new_tokens.end());
   }
   Token end_token = Token(Token::END);
   tokens.push_back(end_token);
+  return tokens;
+}
+
+std::vector<Token> Lexer::LexLine(std::string& line) const {
+  std::vector<Token> tokens;
+  while (!line.empty()) {
+    for (auto const& pair : rules) {
+      std::smatch matched_regex;
+      if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
+        if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {
+          Token found_token(pair.first, matched_regex.str());
+          tokens.push_back(found_token);
+        } else if (pair.first != Token::WHITESPACE) {
+          Token found_token(pair.first);
+          tokens.push_back(found_token);
+        }
+        // else skip whitespaces
+
+        if (DEBUG)
+          std::cout << tokens.back().PrettyPrintKind() << ", "
+                    << matched_regex.str() << "\n";
+
+        line = line.substr(static_cast<int>(matched_regex.str().size()));
+        break;
+      }
+    }
+  }
   return tokens;
 }

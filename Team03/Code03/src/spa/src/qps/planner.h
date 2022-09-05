@@ -7,7 +7,7 @@
 class Planner {
  public:
   explicit Planner();
-  [[nodiscard]] std::shared_ptr<QNode> Plan(const QueryString& q_string);
+  [[nodiscard]] std::shared_ptr<QNode> Plan(const QueryString& q_string) const;
 
  private:
   std::shared_ptr<QNode> BuildQTree(
