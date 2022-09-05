@@ -8,6 +8,7 @@
 class QueryParser : public Parser<QueryString> {
  public:
   QueryParser();
+
   QueryString Parse(std::vector<Token> tokens_) override;
 
  private:
@@ -16,16 +17,25 @@ class QueryParser : public Parser<QueryString> {
   QueryStringBuilder query_string_builder_;
 
   Token Peek(int pos);
+
   bool MatchKind(Token::Kind kind);
-  bool MatchString(const std::string& s);
+
+  bool MatchString(const std::string &s);
+
   bool MatchStmtRef();
+
   void Expect(Token::Kind kind);
-  void Expect(const std::string& s);
+
+  void Expect(const std::string &s);
+
   StatementReference ExtractStmtRef();
 
   void ParseDeclaration();
+
   void ParseSelect();
+
   void ParseClause();
+
   void ParseFollow();
 };
 

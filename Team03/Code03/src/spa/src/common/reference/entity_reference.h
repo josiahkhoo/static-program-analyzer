@@ -9,13 +9,17 @@ class EntityReference : public Reference {
  public:
   /// Default constructor creates a wildcard entity reference.
   explicit EntityReference();
+
   explicit EntityReference(std::string identifier);
+
   explicit EntityReference(Synonym synonym);
 
   [[nodiscard]] bool IsLineNumber() const override;
+
   [[nodiscard]] int GetLineNumber() const override;
 
   [[nodiscard]] bool IsIdentifier() const override;
+
   [[nodiscard]] std::string GetIdentifier() const override;
 
  private:

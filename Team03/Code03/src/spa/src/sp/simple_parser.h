@@ -9,6 +9,7 @@
 class SimpleParser : public Parser<TNode> {
  public:
   SimpleParser();
+
   TNode Parse(std::vector<Token> tokens_) override;
 
  private:
@@ -18,31 +19,47 @@ class SimpleParser : public Parser<TNode> {
   std::vector<Token> tokens_;
 
   Token Peek(int pos);
+
   bool MatchKind(Token::Kind kind);
-  bool MatchString(const std::string& s);
+
+  bool MatchString(const std::string &s);
+
   void Expect(Token::Kind kind);
-  void Expect(const std::string& s);
+
+  void Expect(const std::string &s);
 
   TNode ParseProcedure();
+
   TNode ParseStatementList();
+
   TNode ParseStatement();
 
   TNode ParseAssign();
+
   TNode ParseRead();
+
   TNode ParsePrint();
+
   TNode ParseCall();
+
   TNode ParseWhile();
+
   TNode ParseIf();
 
   TNode ParseCondExpr();
+
   TNode ParseRelExpr();
 
   TNode ParseRelFactor();
+
   TNode ParseExpr();
+
   TNode ParseTerm();
+
   TNode ParseFactor();
 
   TNode ParseVarName();
+
   TNode ParseConstValue();
 };
 

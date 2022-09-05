@@ -1,8 +1,8 @@
 #include "design_extractor_impl.h"
 
 DesignExtractorImpl::DesignExtractorImpl(
-    const EntityExtractor& entity_extractor,
-    const AbstractionExtractor& abstraction_extractor)
+    const EntityExtractor &entity_extractor,
+    const AbstractionExtractor &abstraction_extractor)
     : entity_extractor_(entity_extractor),
       abstraction_extractor_(abstraction_extractor) {}
 

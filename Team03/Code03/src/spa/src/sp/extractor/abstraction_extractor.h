@@ -14,16 +14,16 @@
 class AbstractionExtractor {
  public:
   virtual AbstractionExtractorResult Extract(
-      const std::vector<AssignEntity>& assign_entities,
-      const std::vector<CallEntity>& call_entities,
-      const std::vector<ConstantEntity>& constant_entities,
-      const std::vector<IfEntity>& if_entities,
-      const std::vector<PrintEntity>& print_entities,
-      const std::vector<ProcedureEntity>& procedure_entities,
-      const std::vector<ReadEntity>& read_entities,
-      const std::vector<StatementEntity>& statement_entities,
-      const std::vector<VariableEntity>& variable_entities,
-      const std::vector<WhileEntity>& while_entities) const = 0;
+      const std::vector<AssignEntity> &assign_entities,
+      const std::vector<CallEntity> &call_entities,
+      const std::vector<ConstantEntity> &constant_entities,
+      const std::vector<IfEntity> &if_entities,
+      const std::vector<PrintEntity> &print_entities,
+      const std::vector<ProcedureEntity> &procedure_entities,
+      const std::vector<ReadEntity> &read_entities,
+      const std::vector<StatementEntity> &statement_entities,
+      const std::vector<VariableEntity> &variable_entities,
+      const std::vector<WhileEntity> &while_entities) const = 0;
 };
 
 #endif  // SPA_ABSTRACTION_EXTRACTOR_H

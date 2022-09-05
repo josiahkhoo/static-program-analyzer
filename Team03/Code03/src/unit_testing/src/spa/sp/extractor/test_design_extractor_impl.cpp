@@ -1,6 +1,7 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "sp/extractor/design_extractor_impl.h"
+
 using namespace fakeit;
 
 TEST_CASE("Design Extractor", "[DesignExtractor]") {

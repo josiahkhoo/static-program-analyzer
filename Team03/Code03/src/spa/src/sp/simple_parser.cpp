@@ -16,7 +16,7 @@ bool SimpleParser::MatchKind(Token::Kind kind) {
   return Peek(token_pos_).Is(kind);
 }
 
-bool SimpleParser::MatchString(const std::string& s) {
+bool SimpleParser::MatchString(const std::string &s) {
   return (Peek(token_pos_).GetValue() == s);
 }
 
@@ -28,7 +28,7 @@ void SimpleParser::Expect(Token::Kind kind) {
   }
 }
 
-void SimpleParser::Expect(const std::string& s) {
+void SimpleParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {
@@ -50,7 +50,7 @@ TNode SimpleParser::Parse(std::vector<Token> tokens_) {
     t_node_id_++;
     TNode program_node = TNode(t_node_id_, TNode::Program, children_);
     return program_node;
-  } catch (const std::runtime_error& e_) {
+  } catch (const std::runtime_error &e_) {
     TNode invalid_node(0, TNode::Invalid,
                        std::vector<std::shared_ptr<TNode>>());
     return invalid_node;

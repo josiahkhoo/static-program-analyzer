@@ -17,16 +17,24 @@ class AbstractionExtractorResult {
       std::vector<ParentAbstraction> parent_abstractions,
       std::vector<ParentTAbstraction> parent_t_abstractions,
       std::vector<UsesSAbstraction> uses_s_abstractions);
+
   [[nodiscard]] std::vector<FollowsAbstraction> GetFollowsAbstractions() const;
+
   [[nodiscard]] std::vector<FollowsTAbstraction> GetFollowsTAbstractions()
       const;
+
   [[nodiscard]] std::vector<ModifiesSAbstraction> GetModifiesSAbstractions()
       const;
+
   [[nodiscard]] std::vector<ParentAbstraction> GetParentAbstractions() const;
+
   [[nodiscard]] std::vector<ParentTAbstraction> GetParentTAbstractions() const;
+
   [[nodiscard]] std::vector<UsesSAbstraction> GetUsesSAbstractions() const;
-  bool operator==(const AbstractionExtractorResult& rhs) const;
-  bool operator!=(const AbstractionExtractorResult& rhs) const;
+
+  bool operator==(const AbstractionExtractorResult &rhs) const;
+
+  bool operator!=(const AbstractionExtractorResult &rhs) const;
 
  private:
   std::vector<FollowsAbstraction> follows_abstractions_;

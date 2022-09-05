@@ -12,15 +12,19 @@ class QueryablePkb {
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllFollow(
       EntityType type) const = 0;
+
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllFollowBy(
       EntityType type) const = 0;
+
   [[nodiscard]] virtual std::unordered_set<std::string> QueryFollow(
       int statement_number, EntityType type) const = 0;
+
   [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowBy(
       int statement_number, EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowT(
       int statement_number, EntityType type) const = 0;
+
   [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowTBy(
       int statement_number, EntityType type) const = 0;
 };

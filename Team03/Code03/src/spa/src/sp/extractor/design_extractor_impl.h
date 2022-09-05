@@ -13,6 +13,7 @@ class DesignExtractorImpl : public DesignExtractor {
  public:
   DesignExtractorImpl(const EntityExtractor &entity_extractor,
                       const AbstractionExtractor &abstraction_extractor);
+
   [[nodiscard]] DesignExtractorResult Extract(TNode ast) const override;
 
  public:

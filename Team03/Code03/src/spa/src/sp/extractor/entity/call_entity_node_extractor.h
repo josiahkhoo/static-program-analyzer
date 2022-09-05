@@ -7,7 +7,7 @@
 class CallEntityNodeExtractor : public NodeExtractor<CallEntity> {
  public:
   [[nodiscard]] std::optional<CallEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+      const TNode &ast) const override;
 };
 
 #endif  // SPA_CALL_ENTITY_NODE_EXTRACTOR_H

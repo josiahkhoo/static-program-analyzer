@@ -7,6 +7,7 @@
 
 class UsesSClause : public Clause {
   const StatementReference &GetLeftHandSide() const;
+
   const EntityReference &GetRightHandSide() const;
 };
 

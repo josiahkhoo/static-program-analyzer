@@ -6,6 +6,7 @@
 class ConstantEntity : public Entity {
  public:
   explicit ConstantEntity(const TNode &node, int value);
+
   [[nodiscard]] int GetValue() const;
 
  private:

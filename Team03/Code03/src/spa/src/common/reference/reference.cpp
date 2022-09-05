@@ -17,10 +17,10 @@ Reference::Reference(Synonym synonym) : synonym_(synonym) {
 
 Reference::Reference(bool is_wild_card) : is_wild_card_(is_wild_card) {}
 
-bool Reference::operator==(const Reference& rhs) const {
+bool Reference::operator==(const Reference &rhs) const {
   return synonym_ == rhs.synonym_ && is_wild_card_ == rhs.is_wild_card_;
 }
 
-bool Reference::operator!=(const Reference& rhs) const {
+bool Reference::operator!=(const Reference &rhs) const {
   return !(rhs == *this);
 }

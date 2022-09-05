@@ -3,7 +3,7 @@
 Evaluator::Evaluator() = default;
 
 std::unordered_set<std::string> Evaluator::Execute(
-    const QueryablePkb& pkb, std::shared_ptr<QNode> q_tree) const {
+    const QueryablePkb &pkb, std::shared_ptr<QNode> q_tree) const {
   if (q_tree == nullptr) {
     return {};
   }

@@ -10,10 +10,10 @@ QueryString::QueryString(Select select, std::vector<Synonym> synonyms,
 
 Select QueryString::GetSelect() const { return select_; }
 
-const std::vector<Synonym>& QueryString::GetSynonyms() const {
+const std::vector<Synonym> &QueryString::GetSynonyms() const {
   return declared_synonyms_;
 }
 
-const std::vector<std::shared_ptr<Clause>>& QueryString::GetClauses() const {
+const std::vector<std::shared_ptr<Clause>> &QueryString::GetClauses() const {
   return clauses_;
 }

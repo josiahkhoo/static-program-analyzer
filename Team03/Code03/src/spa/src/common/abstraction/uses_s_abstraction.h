@@ -11,7 +11,9 @@ class UsesSAbstraction : public Abstraction<StatementEntity, StatementEntity> {
   const StatementEntity &GetLeftHandSide() const override;
 
   const StatementEntity &GetRightHandSide() const override;
+
   bool operator==(const UsesSAbstraction &rhs) const;
+
   bool operator!=(const UsesSAbstraction &rhs) const;
 
  private:

@@ -2,15 +2,15 @@
 
 #include "fstream"
 
-SourceProcessor::SourceProcessor(Lexer& lexer, Parser<TNode>& parser,
-                                 DesignExtractor& design_extractor,
-                                 StorablePkb& storable_pkb)
+SourceProcessor::SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
+                                 DesignExtractor &design_extractor,
+                                 StorablePkb &storable_pkb)
     : lexer_(lexer),
       parser_(parser),
       design_extractor_(design_extractor),
       storable_pkb_(storable_pkb) {}
 
-void SourceProcessor::Process(const std::string& filename) {
+void SourceProcessor::Process(const std::string &filename) {
   std::ifstream source_file = std::ifstream(filename);
   if (!source_file) {
     throw std::runtime_error("Source file not found");
@@ -23,8 +23,8 @@ void SourceProcessor::Process(const std::string& filename) {
 }
 
 void SourceProcessor::StoreDesignExtractorResult(
-    const DesignExtractorResult& design_extractor_result,
-    StorablePkb& storable_pkb) {
+    const DesignExtractorResult &design_extractor_result,
+    StorablePkb &storable_pkb) {
   storable_pkb_.store(
       design_extractor_result.GetEntityExtractorResult().GetAssignEntities());
   storable_pkb.store(

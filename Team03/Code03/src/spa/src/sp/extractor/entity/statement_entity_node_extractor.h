@@ -9,7 +9,7 @@ class StatementEntityNodeExtractor : public NodeExtractor<StatementEntity> {
   StatementEntityNodeExtractor() {}
 
   [[nodiscard]] std::optional<StatementEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+      const TNode &ast) const override;
 };
 
 #endif  // SPA_STATEMENT_ENTITY_NODE_EXTRACTOR_H

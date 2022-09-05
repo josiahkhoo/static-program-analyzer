@@ -65,7 +65,7 @@ std::vector<WhileEntity> EntityExtractorResult::GetWhileEntities() const {
   return while_entities_;
 }
 
-bool EntityExtractorResult::operator==(const EntityExtractorResult& rhs) const {
+bool EntityExtractorResult::operator==(const EntityExtractorResult &rhs) const {
   return assign_entities_ == rhs.assign_entities_ &&
          call_entities_ == rhs.call_entities_ &&
          constant_entities_ == rhs.constant_entities_ &&
@@ -78,6 +78,6 @@ bool EntityExtractorResult::operator==(const EntityExtractorResult& rhs) const {
          while_entities_ == rhs.while_entities_;
 }
 
-bool EntityExtractorResult::operator!=(const EntityExtractorResult& rhs) const {
+bool EntityExtractorResult::operator!=(const EntityExtractorResult &rhs) const {
   return !(rhs == *this);
 }

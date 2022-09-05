@@ -1,9 +1,9 @@
 #include "entity.h"
 
-Entity::Entity(const TNode& node) : node_(node) {}
+Entity::Entity(const TNode &node) : node_(node) {}
 
-const TNode* Entity::GetNodePointer() const { return &node_; }
+const TNode *Entity::GetNodePointer() const { return &node_; }
 
-bool Entity::operator==(const Entity& rhs) const { return node_ == rhs.node_; }
+bool Entity::operator==(const Entity &rhs) const { return node_ == rhs.node_; }
 
-bool Entity::operator!=(const Entity& rhs) const { return !(rhs == *this); }
+bool Entity::operator!=(const Entity &rhs) const { return !(rhs == *this); }

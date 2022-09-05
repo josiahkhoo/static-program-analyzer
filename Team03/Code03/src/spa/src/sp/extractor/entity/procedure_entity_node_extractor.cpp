@@ -1,7 +1,7 @@
 #include "procedure_entity_node_extractor.h"
 
 std::optional<ProcedureEntity> ProcedureEntityNodeExtractor::TryExtractFromNode(
-    const TNode& ast) const {
+    const TNode &ast) const {
   if (ast.IsNotType(TNode::Procedure)) {
     return {};
   }

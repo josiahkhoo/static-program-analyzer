@@ -1,16 +1,16 @@
 #include "entity_extractor_impl.h"
 
 EntityExtractorImpl::EntityExtractorImpl(
-    const NodeExtractor<AssignEntity>& assign_entity_node_extractor,
-    const NodeExtractor<CallEntity>& call_entity_node_extractor,
-    const NodeExtractor<ConstantEntity>& constant_entity_node_extractor,
-    const NodeExtractor<IfEntity>& if_entity_node_extractor,
-    const NodeExtractor<PrintEntity>& print_entity_node_extractor,
-    const NodeExtractor<ProcedureEntity>& procedure_entity_node_extractor,
-    const NodeExtractor<ReadEntity>& read_entity_node_extractor,
-    const NodeExtractor<StatementEntity>& statement_entity_node_extractor,
-    const NodeExtractor<VariableEntity>& variable_entity_node_extractor,
-    const NodeExtractor<WhileEntity>& while_entity_node_extractor)
+    const NodeExtractor<AssignEntity> &assign_entity_node_extractor,
+    const NodeExtractor<CallEntity> &call_entity_node_extractor,
+    const NodeExtractor<ConstantEntity> &constant_entity_node_extractor,
+    const NodeExtractor<IfEntity> &if_entity_node_extractor,
+    const NodeExtractor<PrintEntity> &print_entity_node_extractor,
+    const NodeExtractor<ProcedureEntity> &procedure_entity_node_extractor,
+    const NodeExtractor<ReadEntity> &read_entity_node_extractor,
+    const NodeExtractor<StatementEntity> &statement_entity_node_extractor,
+    const NodeExtractor<VariableEntity> &variable_entity_node_extractor,
+    const NodeExtractor<WhileEntity> &while_entity_node_extractor)
     : assign_entity_node_extractor_(assign_entity_node_extractor),
       call_entity_node_extractor_(call_entity_node_extractor),
       constant_entity_node_extractor_(constant_entity_node_extractor),
@@ -22,7 +22,7 @@ EntityExtractorImpl::EntityExtractorImpl(
       variable_entity_node_extractor_(variable_entity_node_extractor),
       while_entity_node_extractor_(while_entity_node_extractor) {}
 
-EntityExtractorResult EntityExtractorImpl::Extract(const TNode& ast) const {
+EntityExtractorResult EntityExtractorImpl::Extract(const TNode &ast) const {
   std::vector<AssignEntity> assign_entities;
   std::vector<CallEntity> call_entities;
   std::vector<ConstantEntity> constant_entities;
@@ -46,16 +46,16 @@ EntityExtractorResult EntityExtractorImpl::Extract(const TNode& ast) const {
 }
 
 void EntityExtractorImpl::ExtractNode(
-    const TNode& node, std::vector<AssignEntity>* assign_entities,
-    std::vector<CallEntity>* call_entities,
-    std::vector<ConstantEntity>* constant_entities,
-    std::vector<IfEntity>* if_entities,
-    std::vector<PrintEntity>* print_entities,
-    std::vector<ProcedureEntity>* procedure_entities,
-    std::vector<ReadEntity>* read_entities,
-    std::vector<StatementEntity>* statement_entities,
-    std::vector<VariableEntity>* variable_entities,
-    std::vector<WhileEntity>* while_entities) const {
+    const TNode &node, std::vector<AssignEntity> *assign_entities,
+    std::vector<CallEntity> *call_entities,
+    std::vector<ConstantEntity> *constant_entities,
+    std::vector<IfEntity> *if_entities,
+    std::vector<PrintEntity> *print_entities,
+    std::vector<ProcedureEntity> *procedure_entities,
+    std::vector<ReadEntity> *read_entities,
+    std::vector<StatementEntity> *statement_entities,
+    std::vector<VariableEntity> *variable_entities,
+    std::vector<WhileEntity> *while_entities) const {
   std::optional<AssignEntity> maybe_assign_entity =
       assign_entity_node_extractor_.TryExtractFromNode(node);
   if (maybe_assign_entity.has_value()) {
@@ -109,21 +109,21 @@ void EntityExtractorImpl::ExtractNode(
 }
 
 void EntityExtractorImpl::RecursivelyExtractNode(
-    const TNode& node, std::vector<AssignEntity>* assign_entities,
-    std::vector<CallEntity>* call_entities,
-    std::vector<ConstantEntity>* constant_entities,
-    std::vector<IfEntity>* if_entities,
-    std::vector<PrintEntity>* print_entities,
-    std::vector<ProcedureEntity>* procedure_entities,
-    std::vector<ReadEntity>* read_entities,
-    std::vector<StatementEntity>* statement_entities,
-    std::vector<VariableEntity>* variable_entities,
-    std::vector<WhileEntity>* while_entities) const {
+    const TNode &node, std::vector<AssignEntity> *assign_entities,
+    std::vector<CallEntity> *call_entities,
+    std::vector<ConstantEntity> *constant_entities,
+    std::vector<IfEntity> *if_entities,
+    std::vector<PrintEntity> *print_entities,
+    std::vector<ProcedureEntity> *procedure_entities,
+    std::vector<ReadEntity> *read_entities,
+    std::vector<StatementEntity> *statement_entities,
+    std::vector<VariableEntity> *variable_entities,
+    std::vector<WhileEntity> *while_entities) const {
   ExtractNode(node, assign_entities, call_entities, constant_entities,
               if_entities, print_entities, procedure_entities, read_entities,
               statement_entities, variable_entities, while_entities);
   if (!node.IsLeaf()) {
-    for (const std::shared_ptr<TNode>& child : node.GetChildren()) {
+    for (const std::shared_ptr<TNode> &child : node.GetChildren()) {
       RecursivelyExtractNode(
           *child, assign_entities, call_entities, constant_entities,
           if_entities, print_entities, procedure_entities, read_entities,

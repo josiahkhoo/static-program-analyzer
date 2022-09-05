@@ -7,7 +7,7 @@ FollowsTClause::FollowsTClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 std::unordered_set<std::string> FollowsTClause::Fetch(
-    const QueryablePkb& queryable_pkb) const {
+    const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
   if (GetLeftHandSide().IsSynonym()) {
@@ -37,6 +37,6 @@ std::unordered_set<std::string> FollowsTClause::Fetch(
   return {};
 }
 
-const Reference& FollowsTClause::GetLeftHandSide() const { return lhs_; }
+const Reference &FollowsTClause::GetLeftHandSide() const { return lhs_; }
 
-const Reference& FollowsTClause::GetRightHandSide() const { return rhs_; }
+const Reference &FollowsTClause::GetRightHandSide() const { return rhs_; }

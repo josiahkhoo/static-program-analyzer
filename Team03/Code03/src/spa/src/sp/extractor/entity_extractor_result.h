@@ -14,14 +14,23 @@
 class EntityExtractorResult {
  public:
   [[nodiscard]] std::vector<AssignEntity> GetAssignEntities() const;
+
   [[nodiscard]] std::vector<CallEntity> GetCallEntities() const;
+
   [[nodiscard]] std::vector<ConstantEntity> GetConstantEntities() const;
+
   [[nodiscard]] std::vector<IfEntity> GetIfEntities() const;
+
   [[nodiscard]] std::vector<PrintEntity> GetPrintEntities() const;
+
   [[nodiscard]] std::vector<ProcedureEntity> GetProcedureEntities() const;
+
   [[nodiscard]] std::vector<ReadEntity> GetReadEntities() const;
+
   [[nodiscard]] std::vector<StatementEntity> GetStatementEntities() const;
+
   [[nodiscard]] std::vector<VariableEntity> GetVariableEntities() const;
+
   [[nodiscard]] std::vector<WhileEntity> GetWhileEntities() const;
 
  private:
@@ -38,8 +47,10 @@ class EntityExtractorResult {
                         std::vector<StatementEntity> statement_entities,
                         std::vector<VariableEntity> variable_entities,
                         std::vector<WhileEntity> while_entities);
-  bool operator==(const EntityExtractorResult& rhs) const;
-  bool operator!=(const EntityExtractorResult& rhs) const;
+
+  bool operator==(const EntityExtractorResult &rhs) const;
+
+  bool operator!=(const EntityExtractorResult &rhs) const;
 
  private:
   std::vector<CallEntity> call_entities_;
