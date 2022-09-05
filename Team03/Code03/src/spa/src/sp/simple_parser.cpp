@@ -6,451 +6,451 @@
 SimpleParser::SimpleParser() = default;
 
 Token SimpleParser::Peek(int pos) {
-  if (pos >= tokens_.size()) {
-    throw std::runtime_error("No more tokens left to Peek");
-  }
-  return tokens_[pos];
+    if (pos >= tokens_.size()) {
+        throw std::runtime_error("No more tokens left to Peek");
+    }
+    return tokens_[pos];
 }
 
 bool SimpleParser::MatchKind(Token::Kind kind) {
-  return Peek(token_pos_).Is(kind);
+    return Peek(token_pos_).Is(kind);
 }
 
-bool SimpleParser::MatchString(const std::string& s) {
-  return (Peek(token_pos_).GetValue() == s);
+bool SimpleParser::MatchString(const std::string &s) {
+    return (Peek(token_pos_).GetValue() == s);
 }
 
 void SimpleParser::Expect(Token::Kind kind) {
-  if (MatchKind(kind)) {
-    token_pos_++;
-  } else {
-    throw std::runtime_error("Expected a different token kind");
-  }
+    if (MatchKind(kind)) {
+        token_pos_++;
+    } else {
+        throw std::runtime_error("Expected a different token kind");
+    }
 }
 
-void SimpleParser::Expect(const std::string& s) {
-  if (MatchString(s)) {
-    token_pos_++;
-  } else {
-    throw std::runtime_error("Expected a different token string");
-  }
+void SimpleParser::Expect(const std::string &s) {
+    if (MatchString(s)) {
+        token_pos_++;
+    } else {
+        throw std::runtime_error("Expected a different token string");
+    }
 }
 
 TNode SimpleParser::Parse(std::vector<Token> tokens_) {
-  try {
-    this->tokens_ = tokens_;
-    std::vector<std::shared_ptr<TNode>> children_;
+    try {
+        this->tokens_ = tokens_;
+        std::vector<std::shared_ptr<TNode>> children_;
 
-    do {
-      std::shared_ptr<TNode> shared_children_node_ptr_ =
-          std::make_shared<TNode>(ParseProcedure());
-      children_.emplace_back(shared_children_node_ptr_);
-    } while (!MatchKind(Token::END));
+        do {
+            std::shared_ptr<TNode> shared_children_node_ptr_ =
+                    std::make_shared<TNode>(ParseProcedure());
+            children_.emplace_back(shared_children_node_ptr_);
+        } while (!MatchKind(Token::END));
 
-    t_node_id_++;
-    TNode program_node = TNode(t_node_id_, TNode::Program, children_);
-    return program_node;
-  } catch (const std::runtime_error& e_) {
-    TNode invalid_node(0, TNode::Invalid,
-                       std::vector<std::shared_ptr<TNode>>());
-    return invalid_node;
-  }
+        t_node_id_++;
+        TNode program_node = TNode(t_node_id_, TNode::Program, children_);
+        return program_node;
+    } catch (const std::runtime_error &e_) {
+        TNode invalid_node(0, TNode::Invalid,
+                           std::vector<std::shared_ptr<TNode>>());
+        return invalid_node;
+    }
 }
 
 TNode SimpleParser::ParseProcedure() {
-  Expect("procedure");
-  std::string proc_name_ = Peek(token_pos_).GetValue();
-  Expect(Token::IDENTIFIER);
+    Expect("procedure");
+    std::string proc_name_ = Peek(token_pos_).GetValue();
+    Expect(Token::IDENTIFIER);
 
-  Expect(Token::LEFT_CURLY_BRACKET);
-  std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_children_node_ptr_ =
-      std::make_shared<TNode>(ParseStatementList());
-  children_.emplace_back(shared_children_node_ptr_);
-  Expect(Token::RIGHT_CURLY_BRACKET);
+    Expect(Token::LEFT_CURLY_BRACKET);
+    std::vector<std::shared_ptr<TNode>> children_;
+    std::shared_ptr<TNode> shared_children_node_ptr_ =
+            std::make_shared<TNode>(ParseStatementList());
+    children_.emplace_back(shared_children_node_ptr_);
+    Expect(Token::RIGHT_CURLY_BRACKET);
 
-  t_node_id_++;
-  TNode procedure_node =
-      TNode(t_node_id_, TNode::Procedure, proc_name_, children_);
-  return procedure_node;
+    t_node_id_++;
+    TNode procedure_node =
+            TNode(t_node_id_, TNode::Procedure, proc_name_, children_);
+    return procedure_node;
 }
 
 TNode SimpleParser::ParseStatementList() {
-  std::vector<std::shared_ptr<TNode>> children_;
+    std::vector<std::shared_ptr<TNode>> children_;
 
-  do {
-    std::shared_ptr<TNode> shared_children_node_ptr_ =
-        std::make_shared<TNode>(ParseStatement());
-    children_.emplace_back(shared_children_node_ptr_);
-  } while (!MatchKind(Token::RIGHT_CURLY_BRACKET));
+    do {
+        std::shared_ptr<TNode> shared_children_node_ptr_ =
+                std::make_shared<TNode>(ParseStatement());
+        children_.emplace_back(shared_children_node_ptr_);
+    } while (!MatchKind(Token::RIGHT_CURLY_BRACKET));
 
-  t_node_id_++;
-  TNode statement_list_node =
-      TNode(t_node_id_, TNode::StatementList, children_);
-  return statement_list_node;
+    t_node_id_++;
+    TNode statement_list_node =
+            TNode(t_node_id_, TNode::StatementList, children_);
+    return statement_list_node;
 }
 
 TNode SimpleParser::ParseStatement() {
-  statement_number_++;
+    statement_number_++;
 
-  // Check if next token is '=', it is an assignment if it is.
-  if (Peek(token_pos_ + 1).Is(Token::EQUAL)) {
-    return ParseAssign();
-  }
+    // Check if next token is '=', it is an assignment if it is.
+    if (Peek(token_pos_ + 1).Is(Token::EQUAL)) {
+        return ParseAssign();
+    }
 
-  if (!MatchKind(Token::IDENTIFIER)) {
-    throw std::runtime_error("Expected IDENTIFIER but got something else");
-  }
+    if (!MatchKind(Token::IDENTIFIER)) {
+        throw std::runtime_error("Expected IDENTIFIER but got something else");
+    }
 
-  if (Peek(token_pos_).GetValue() == "read") {
-    return ParseRead();
-  } else if (Peek(token_pos_).GetValue() == "print") {
-    return ParsePrint();
-  } else if (Peek(token_pos_).GetValue() == "call") {
-    return ParseCall();
-  } else if (Peek(token_pos_).GetValue() == "while") {
-    return ParseWhile();
-  } else if (Peek(token_pos_).GetValue() == "if") {
-    return ParseIf();
-  } else {
-    throw std::runtime_error("Failed to parse statement with Token name " +
-                             Peek(token_pos_).GetValue());
-  }
+    if (Peek(token_pos_).GetValue() == "read") {
+        return ParseRead();
+    } else if (Peek(token_pos_).GetValue() == "print") {
+        return ParsePrint();
+    } else if (Peek(token_pos_).GetValue() == "call") {
+        return ParseCall();
+    } else if (Peek(token_pos_).GetValue() == "while") {
+        return ParseWhile();
+    } else if (Peek(token_pos_).GetValue() == "if") {
+        return ParseIf();
+    } else {
+        throw std::runtime_error("Failed to parse statement with Token name " +
+                                 Peek(token_pos_).GetValue());
+    }
 }
 
 TNode SimpleParser::ParseAssign() {
-  std::vector<std::shared_ptr<TNode>> children_;
+    std::vector<std::shared_ptr<TNode>> children_;
 
-  // Parse var name on lhs
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseVarName());
-  children_.emplace_back(shared_var_name_node_ptr_);
-  Expect(Token::EQUAL);
+    // Parse var name on lhs
+    std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+            std::make_shared<TNode>(ParseVarName());
+    children_.emplace_back(shared_var_name_node_ptr_);
+    Expect(Token::EQUAL);
 
-  // Parse Expr on rhs
-  std::shared_ptr<TNode> shared_expr_node_ptr_ =
-      std::make_shared<TNode>(ParseExpr());
-  children_.emplace_back(shared_expr_node_ptr_);
-  Expect(Token::SEMICOLON);
+    // Parse Expr on rhs
+    std::shared_ptr<TNode> shared_expr_node_ptr_ =
+            std::make_shared<TNode>(ParseExpr());
+    children_.emplace_back(shared_expr_node_ptr_);
+    Expect(Token::SEMICOLON);
 
-  t_node_id_++;
-  TNode assign_node =
-      TNode(t_node_id_, TNode::Assign, statement_number_, children_);
-  return assign_node;
+    t_node_id_++;
+    TNode assign_node =
+            TNode(t_node_id_, TNode::Assign, statement_number_, children_);
+    return assign_node;
 }
 
 TNode SimpleParser::ParseRead() {
-  Expect("read");
-  std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseVarName());
-  children_.emplace_back(shared_var_name_node_ptr_);
-  Expect(Token::SEMICOLON);
+    Expect("read");
+    std::vector<std::shared_ptr<TNode>> children_;
+    std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+            std::make_shared<TNode>(ParseVarName());
+    children_.emplace_back(shared_var_name_node_ptr_);
+    Expect(Token::SEMICOLON);
 
-  t_node_id_++;
-  TNode read_node =
-      TNode(t_node_id_, TNode::Read, statement_number_, children_);
-  return read_node;
+    t_node_id_++;
+    TNode read_node =
+            TNode(t_node_id_, TNode::Read, statement_number_, children_);
+    return read_node;
 }
 
 TNode SimpleParser::ParsePrint() {
-  Expect("print");
-  std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_var_name_node_ptr_ =
-      std::make_shared<TNode>(ParseVarName());
-  children_.emplace_back(shared_var_name_node_ptr_);
-  Expect(Token::SEMICOLON);
+    Expect("print");
+    std::vector<std::shared_ptr<TNode>> children_;
+    std::shared_ptr<TNode> shared_var_name_node_ptr_ =
+            std::make_shared<TNode>(ParseVarName());
+    children_.emplace_back(shared_var_name_node_ptr_);
+    Expect(Token::SEMICOLON);
 
-  t_node_id_++;
-  TNode print_node =
-      TNode(t_node_id_, TNode::Print, statement_number_, children_);
-  return print_node;
+    t_node_id_++;
+    TNode print_node =
+            TNode(t_node_id_, TNode::Print, statement_number_, children_);
+    return print_node;
 }
 
 TNode SimpleParser::ParseCall() {
-  Expect("call");
-  std::string proc_name_ = Peek(token_pos_).GetValue();
-  Expect(Token::IDENTIFIER);
-  Expect(Token::SEMICOLON);
+    Expect("call");
+    std::string proc_name_ = Peek(token_pos_).GetValue();
+    Expect(Token::IDENTIFIER);
+    Expect(Token::SEMICOLON);
 
-  t_node_id_++;
-  TNode call_node =
-      TNode(t_node_id_, TNode::Call, statement_number_, proc_name_);
-  return call_node;
+    t_node_id_++;
+    TNode call_node =
+            TNode(t_node_id_, TNode::Call, statement_number_, proc_name_);
+    return call_node;
 }
 
 TNode SimpleParser::ParseWhile() {
-  Expect("while");
-  int while_statement_number_ = statement_number_;
-  std::vector<std::shared_ptr<TNode>> children_;
-
-  Expect(Token::LEFT_ROUND_BRACKET);
-  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
-      std::make_shared<TNode>(ParseCondExpr());
-  children_.emplace_back(shared_cond_expr_node_ptr_);
-  Expect(Token::RIGHT_ROUND_BRACKET);
-
-  Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
-      std::make_shared<TNode>(ParseStatementList());
-  children_.emplace_back(shared_stmt_list_node_ptr_);
-  Expect(Token::RIGHT_CURLY_BRACKET);
-
-  t_node_id_++;
-  TNode while_node =
-      TNode(t_node_id_, TNode::While, while_statement_number_, children_);
-  return while_node;
-}
-
-TNode SimpleParser::ParseIf() {
-  Expect("if");
-  int if_statement_number_ = statement_number_;
-  std::vector<std::shared_ptr<TNode>> children_;
-
-  // Parse condition
-  Expect(Token::LEFT_ROUND_BRACKET);
-  std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
-      std::make_shared<TNode>(ParseCondExpr());
-  children_.emplace_back(shared_cond_expr_node_ptr_);
-  Expect(Token::RIGHT_ROUND_BRACKET);
-
-  // Parse 'then' statement list
-  Expect("then");
-  Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_then_stmt_list_node_ptr_ =
-      std::make_shared<TNode>(ParseStatementList());
-  children_.emplace_back(shared_then_stmt_list_node_ptr_);
-  Expect(Token::RIGHT_CURLY_BRACKET);
-
-  // Parse 'else' statement list
-  Expect("else");
-  Expect(Token::LEFT_CURLY_BRACKET);
-  std::shared_ptr<TNode> shared_else_stmt_list_node_ptr_ =
-      std::make_shared<TNode>(ParseStatementList());
-  children_.emplace_back(shared_else_stmt_list_node_ptr_);
-  Expect(Token::RIGHT_CURLY_BRACKET);
-
-  t_node_id_++;
-  TNode if_node =
-      TNode(t_node_id_, TNode::IfElseThen, if_statement_number_, children_);
-  return if_node;
-}
-
-TNode SimpleParser::ParseCondExpr() {
-  // rel_expr | '!' '(' cond_expr ')' |
-  // '(' cond_expr ')' '&&' '(' cond_expr ')' |
-  // '(' cond_expr ')' '||' '(' cond_expr ')'
-
-  // Check for empty condition
-  if (MatchKind(Token::RIGHT_ROUND_BRACKET)) {
-    throw std::runtime_error("Empty condition!");
-  }
-
-  if (MatchKind(Token::NOT)) {
-    // '!' '(' cond_expr ')'
-    Expect(Token::NOT);
+    Expect("while");
+    int while_statement_number_ = statement_number_;
     std::vector<std::shared_ptr<TNode>> children_;
 
     Expect(Token::LEFT_ROUND_BRACKET);
     std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
-        std::make_shared<TNode>(ParseCondExpr());
+            std::make_shared<TNode>(ParseCondExpr());
     children_.emplace_back(shared_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
+    Expect(Token::LEFT_CURLY_BRACKET);
+    std::shared_ptr<TNode> shared_stmt_list_node_ptr_ =
+            std::make_shared<TNode>(ParseStatementList());
+    children_.emplace_back(shared_stmt_list_node_ptr_);
+    Expect(Token::RIGHT_CURLY_BRACKET);
+
     t_node_id_++;
-    TNode not_node =
-        TNode(t_node_id_, TNode::Not, statement_number_, children_);
-    return not_node;
-  } else if (MatchKind(Token::LEFT_ROUND_BRACKET)) {
-    // '(' cond_expr ')' '&&' '(' cond_expr ')' |
-    // '(' cond_expr ')' '||' '(' cond_expr ')'
+    TNode while_node =
+            TNode(t_node_id_, TNode::While, while_statement_number_, children_);
+    return while_node;
+}
+
+TNode SimpleParser::ParseIf() {
+    Expect("if");
+    int if_statement_number_ = statement_number_;
     std::vector<std::shared_ptr<TNode>> children_;
 
+    // Parse condition
     Expect(Token::LEFT_ROUND_BRACKET);
-    std::shared_ptr<TNode> shared_lhs_cond_expr_node_ptr_ =
-        std::make_shared<TNode>(ParseCondExpr());
-    children_.emplace_back(shared_lhs_cond_expr_node_ptr_);
+    std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
+            std::make_shared<TNode>(ParseCondExpr());
+    children_.emplace_back(shared_cond_expr_node_ptr_);
     Expect(Token::RIGHT_ROUND_BRACKET);
 
-    TNode::Type type;
-    if (MatchKind(Token::AND)) {
-      // '(' cond_expr ')' '&&' '(' cond_expr ')'
-      Expect(Token::AND);
-      type = TNode::And;
-    } else if (MatchKind(Token::OR)) {
-      //'(' cond_expr ')' '||' '(' cond_expr ')'
-      Expect(Token::OR);
-      type = TNode::Or;
-    } else {
-      throw std::runtime_error(
-          "Expected boolean operator but got something else!");
-    }
+    // Parse 'then' statement list
+    Expect("then");
+    Expect(Token::LEFT_CURLY_BRACKET);
+    std::shared_ptr<TNode> shared_then_stmt_list_node_ptr_ =
+            std::make_shared<TNode>(ParseStatementList());
+    children_.emplace_back(shared_then_stmt_list_node_ptr_);
+    Expect(Token::RIGHT_CURLY_BRACKET);
 
-    Expect(Token::LEFT_ROUND_BRACKET);
-    std::shared_ptr<TNode> shared_rhs_cond_expr_node_ptr_ =
-        std::make_shared<TNode>(ParseCondExpr());
-    children_.emplace_back(shared_rhs_cond_expr_node_ptr_);
-    Expect(Token::RIGHT_ROUND_BRACKET);
+    // Parse 'else' statement list
+    Expect("else");
+    Expect(Token::LEFT_CURLY_BRACKET);
+    std::shared_ptr<TNode> shared_else_stmt_list_node_ptr_ =
+            std::make_shared<TNode>(ParseStatementList());
+    children_.emplace_back(shared_else_stmt_list_node_ptr_);
+    Expect(Token::RIGHT_CURLY_BRACKET);
 
     t_node_id_++;
-    TNode cond_node = TNode(t_node_id_, type, statement_number_, children_);
-    return cond_node;
-  } else {
-    // rel_expr
-    return ParseRelExpr();
-  }
+    TNode if_node =
+            TNode(t_node_id_, TNode::IfElseThen, if_statement_number_, children_);
+    return if_node;
+}
+
+TNode SimpleParser::ParseCondExpr() {
+    // rel_expr | '!' '(' cond_expr ')' |
+    // '(' cond_expr ')' '&&' '(' cond_expr ')' |
+    // '(' cond_expr ')' '||' '(' cond_expr ')'
+
+    // Check for empty condition
+    if (MatchKind(Token::RIGHT_ROUND_BRACKET)) {
+        throw std::runtime_error("Empty condition!");
+    }
+
+    if (MatchKind(Token::NOT)) {
+        // '!' '(' cond_expr ')'
+        Expect(Token::NOT);
+        std::vector<std::shared_ptr<TNode>> children_;
+
+        Expect(Token::LEFT_ROUND_BRACKET);
+        std::shared_ptr<TNode> shared_cond_expr_node_ptr_ =
+                std::make_shared<TNode>(ParseCondExpr());
+        children_.emplace_back(shared_cond_expr_node_ptr_);
+        Expect(Token::RIGHT_ROUND_BRACKET);
+
+        t_node_id_++;
+        TNode not_node =
+                TNode(t_node_id_, TNode::Not, statement_number_, children_);
+        return not_node;
+    } else if (MatchKind(Token::LEFT_ROUND_BRACKET)) {
+        // '(' cond_expr ')' '&&' '(' cond_expr ')' |
+        // '(' cond_expr ')' '||' '(' cond_expr ')'
+        std::vector<std::shared_ptr<TNode>> children_;
+
+        Expect(Token::LEFT_ROUND_BRACKET);
+        std::shared_ptr<TNode> shared_lhs_cond_expr_node_ptr_ =
+                std::make_shared<TNode>(ParseCondExpr());
+        children_.emplace_back(shared_lhs_cond_expr_node_ptr_);
+        Expect(Token::RIGHT_ROUND_BRACKET);
+
+        TNode::Type type;
+        if (MatchKind(Token::AND)) {
+            // '(' cond_expr ')' '&&' '(' cond_expr ')'
+            Expect(Token::AND);
+            type = TNode::And;
+        } else if (MatchKind(Token::OR)) {
+            //'(' cond_expr ')' '||' '(' cond_expr ')'
+            Expect(Token::OR);
+            type = TNode::Or;
+        } else {
+            throw std::runtime_error(
+                    "Expected boolean operator but got something else!");
+        }
+
+        Expect(Token::LEFT_ROUND_BRACKET);
+        std::shared_ptr<TNode> shared_rhs_cond_expr_node_ptr_ =
+                std::make_shared<TNode>(ParseCondExpr());
+        children_.emplace_back(shared_rhs_cond_expr_node_ptr_);
+        Expect(Token::RIGHT_ROUND_BRACKET);
+
+        t_node_id_++;
+        TNode cond_node = TNode(t_node_id_, type, statement_number_, children_);
+        return cond_node;
+    } else {
+        // rel_expr
+        return ParseRelExpr();
+    }
 }
 
 TNode SimpleParser::ParseRelExpr() {
-  // rel_factor '>' rel_factor | rel_factor '>=' rel_factor |
-  // rel_factor '<' rel_factor | rel_factor '<=' rel_factor |
-  // rel_factor '==' rel_factor | rel_factor '!=' rel_factor
-  std::vector<std::shared_ptr<TNode>> children_;
-  std::shared_ptr<TNode> shared_lhs_rel_factor_node_ptr_ =
-      std::make_shared<TNode>(ParseRelFactor());
-  children_.emplace_back(shared_lhs_rel_factor_node_ptr_);
+    // rel_factor '>' rel_factor | rel_factor '>=' rel_factor |
+    // rel_factor '<' rel_factor | rel_factor '<=' rel_factor |
+    // rel_factor '==' rel_factor | rel_factor '!=' rel_factor
+    std::vector<std::shared_ptr<TNode>> children_;
+    std::shared_ptr<TNode> shared_lhs_rel_factor_node_ptr_ =
+            std::make_shared<TNode>(ParseRelFactor());
+    children_.emplace_back(shared_lhs_rel_factor_node_ptr_);
 
-  TNode::Type type;
-  if (MatchKind(Token::GREATER_THAN)) {
-    Expect(Token::GREATER_THAN);
-    type = TNode::Greater;
-  } else if (MatchKind(Token::GREATER_THAN_OR_EQUAL)) {
-    Expect(Token::GREATER_THAN_OR_EQUAL);
-    type = TNode::GreaterThanEqual;
-  } else if (MatchKind(Token::LESS_THAN)) {
-    Expect(Token::LESS_THAN);
-    type = TNode::Lesser;
-  } else if (MatchKind(Token::LESS_THAN_OR_EQUAL)) {
-    Expect(Token::LESS_THAN_OR_EQUAL);
-    type = TNode::LesserThanEqual;
-  } else if (MatchKind(Token::DOUBLE_EQUAL)) {
-    Expect(Token::DOUBLE_EQUAL);
-    type = TNode::Equal;
-  } else if (MatchKind(Token::NOT_EQUAL)) {
-    Expect(Token::NOT_EQUAL);
-    type = TNode::NotEqual;
-  } else {
-    throw std::runtime_error(
-        "Expected rel expr operator but got something else!");
-  }
+    TNode::Type type;
+    if (MatchKind(Token::GREATER_THAN)) {
+        Expect(Token::GREATER_THAN);
+        type = TNode::Greater;
+    } else if (MatchKind(Token::GREATER_THAN_OR_EQUAL)) {
+        Expect(Token::GREATER_THAN_OR_EQUAL);
+        type = TNode::GreaterThanEqual;
+    } else if (MatchKind(Token::LESS_THAN)) {
+        Expect(Token::LESS_THAN);
+        type = TNode::Lesser;
+    } else if (MatchKind(Token::LESS_THAN_OR_EQUAL)) {
+        Expect(Token::LESS_THAN_OR_EQUAL);
+        type = TNode::LesserThanEqual;
+    } else if (MatchKind(Token::DOUBLE_EQUAL)) {
+        Expect(Token::DOUBLE_EQUAL);
+        type = TNode::Equal;
+    } else if (MatchKind(Token::NOT_EQUAL)) {
+        Expect(Token::NOT_EQUAL);
+        type = TNode::NotEqual;
+    } else {
+        throw std::runtime_error(
+                "Expected rel expr operator but got something else!");
+    }
 
-  std::shared_ptr<TNode> shared_rhs_rel_factor_node_ptr_ =
-      std::make_shared<TNode>(ParseRelFactor());
-  children_.emplace_back(shared_rhs_rel_factor_node_ptr_);
+    std::shared_ptr<TNode> shared_rhs_rel_factor_node_ptr_ =
+            std::make_shared<TNode>(ParseRelFactor());
+    children_.emplace_back(shared_rhs_rel_factor_node_ptr_);
 
-  t_node_id_++;
-  TNode rel_expr_node = TNode(t_node_id_, type, statement_number_, children_);
-  return rel_expr_node;
+    t_node_id_++;
+    TNode rel_expr_node = TNode(t_node_id_, type, statement_number_, children_);
+    return rel_expr_node;
 }
 
 TNode SimpleParser::ParseRelFactor() {
-  // var_name | const_value | expr
-  return ParseExpr();
+    // var_name | const_value | expr
+    return ParseExpr();
 }
 
 TNode SimpleParser::ParseExpr() {
-  // expr '+' term | expr '-' term | term
-  TNode expr_node = ParseTerm();
-  while (!MatchKind(Token::END) &&
-         ((MatchKind(Token::PLUS)) || MatchKind(Token::MINUS))) {
-    std::vector<std::shared_ptr<TNode>> children_;
+    // expr '+' term | expr '-' term | term
+    TNode expr_node = ParseTerm();
+    while (!MatchKind(Token::END) &&
+           ((MatchKind(Token::PLUS)) || MatchKind(Token::MINUS))) {
+        std::vector<std::shared_ptr<TNode>> children_;
 
-    TNode::Type type;
-    if (MatchKind(Token::PLUS)) {
-      // '+'
-      Expect(Token::PLUS);
-      type = TNode::Plus;
-    } else {
-      // '-'
-      Expect(Token::MINUS);
-      type = TNode::Minus;
+        TNode::Type type;
+        if (MatchKind(Token::PLUS)) {
+            // '+'
+            Expect(Token::PLUS);
+            type = TNode::Plus;
+        } else {
+            // '-'
+            Expect(Token::MINUS);
+            type = TNode::Minus;
+        }
+
+        std::shared_ptr<TNode> shared_lhs_node_ptr_ =
+                std::make_shared<TNode>(expr_node);
+        children_.emplace_back(shared_lhs_node_ptr_);
+
+        std::shared_ptr<TNode> shared_rhs_node_ptr_ =
+                std::make_shared<TNode>(ParseTerm());
+        children_.emplace_back(shared_rhs_node_ptr_);
+
+        t_node_id_++;
+        TNode new_expr_node = TNode(t_node_id_, type, statement_number_, children_);
+
+        expr_node = new_expr_node;
     }
-
-    std::shared_ptr<TNode> shared_lhs_node_ptr_ =
-        std::make_shared<TNode>(expr_node);
-    children_.emplace_back(shared_lhs_node_ptr_);
-
-    std::shared_ptr<TNode> shared_rhs_node_ptr_ =
-        std::make_shared<TNode>(ParseTerm());
-    children_.emplace_back(shared_rhs_node_ptr_);
-
-    t_node_id_++;
-    TNode new_expr_node = TNode(t_node_id_, type, statement_number_, children_);
-
-    expr_node = new_expr_node;
-  }
-  return expr_node;
+    return expr_node;
 }
 
 TNode SimpleParser::ParseTerm() {
-  // term '*' factor | term '/' factor | term '%' factor | factor
-  TNode term_node = ParseFactor();
-  while (!MatchKind(Token::END) &&
-         ((MatchKind(Token::ASTERISK)) || MatchKind(Token::SLASH) ||
-          MatchKind(Token::PERCENT))) {
-    std::vector<std::shared_ptr<TNode>> children_;
+    // term '*' factor | term '/' factor | term '%' factor | factor
+    TNode term_node = ParseFactor();
+    while (!MatchKind(Token::END) &&
+           ((MatchKind(Token::ASTERISK)) || MatchKind(Token::SLASH) ||
+            MatchKind(Token::PERCENT))) {
+        std::vector<std::shared_ptr<TNode>> children_;
 
-    TNode::Type type;
-    if (MatchKind(Token::ASTERISK)) {
-      // '*'
-      Expect(Token::ASTERISK);
-      type = TNode::Multiply;
-    } else if (MatchKind(Token::SLASH)) {
-      // '/'
-      Expect(Token::SLASH);
-      type = TNode::Divide;
-    } else {
-      // '%'
-      Expect(Token::PERCENT);
-      type = TNode::Modulo;
+        TNode::Type type;
+        if (MatchKind(Token::ASTERISK)) {
+            // '*'
+            Expect(Token::ASTERISK);
+            type = TNode::Multiply;
+        } else if (MatchKind(Token::SLASH)) {
+            // '/'
+            Expect(Token::SLASH);
+            type = TNode::Divide;
+        } else {
+            // '%'
+            Expect(Token::PERCENT);
+            type = TNode::Modulo;
+        }
+
+        std::shared_ptr<TNode> shared_lhs_node_ptr_ =
+                std::make_shared<TNode>(term_node);
+        children_.emplace_back(shared_lhs_node_ptr_);
+
+        std::shared_ptr<TNode> shared_rhs_node_ptr_ =
+                std::make_shared<TNode>(ParseFactor());
+        children_.emplace_back(shared_rhs_node_ptr_);
+
+        t_node_id_++;
+        TNode new_term_node = TNode(t_node_id_, type, statement_number_, children_);
+
+        term_node = new_term_node;
     }
-
-    std::shared_ptr<TNode> shared_lhs_node_ptr_ =
-        std::make_shared<TNode>(term_node);
-    children_.emplace_back(shared_lhs_node_ptr_);
-
-    std::shared_ptr<TNode> shared_rhs_node_ptr_ =
-        std::make_shared<TNode>(ParseFactor());
-    children_.emplace_back(shared_rhs_node_ptr_);
-
-    t_node_id_++;
-    TNode new_term_node = TNode(t_node_id_, type, statement_number_, children_);
-
-    term_node = new_term_node;
-  }
-  return term_node;
+    return term_node;
 }
 
 TNode SimpleParser::ParseFactor() {
-  // var_name | const_value | '(' expr ')'
-  if (MatchKind(Token::IDENTIFIER)) {
-    return ParseVarName();
-  } else if (MatchKind(Token::NUMBER)) {
-    return ParseConstValue();
-  } else {
-    Expect(Token::LEFT_ROUND_BRACKET);
-    TNode factor_node = TNode(ParseExpr());
-    Expect(Token::RIGHT_ROUND_BRACKET);
-    return factor_node;
-  }
+    // var_name | const_value | '(' expr ')'
+    if (MatchKind(Token::IDENTIFIER)) {
+        return ParseVarName();
+    } else if (MatchKind(Token::NUMBER)) {
+        return ParseConstValue();
+    } else {
+        Expect(Token::LEFT_ROUND_BRACKET);
+        TNode factor_node = TNode(ParseExpr());
+        Expect(Token::RIGHT_ROUND_BRACKET);
+        return factor_node;
+    }
 }
 
 TNode SimpleParser::ParseVarName() {
-  std::string var_name_ = Peek(token_pos_).GetValue();
-  Expect(Token::IDENTIFIER);
+    std::string var_name_ = Peek(token_pos_).GetValue();
+    Expect(Token::IDENTIFIER);
 
-  t_node_id_++;
-  TNode name_node =
-      TNode(t_node_id_, TNode::Variable, statement_number_, var_name_);
-  return name_node;
+    t_node_id_++;
+    TNode name_node =
+            TNode(t_node_id_, TNode::Variable, statement_number_, var_name_);
+    return name_node;
 }
 
 TNode SimpleParser::ParseConstValue() {
-  int const_value_ = stoi(Peek(token_pos_).GetValue());
-  Expect(Token::NUMBER);
+    int const_value_ = stoi(Peek(token_pos_).GetValue());
+    Expect(Token::NUMBER);
 
-  t_node_id_++;
-  TNode const_value_node =
-      TNode(t_node_id_, TNode::Constant, statement_number_, const_value_);
-  return const_value_node;
+    t_node_id_++;
+    TNode const_value_node =
+            TNode(t_node_id_, TNode::Constant, statement_number_, const_value_);
+    return const_value_node;
 }

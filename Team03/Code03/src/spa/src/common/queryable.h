@@ -3,10 +3,10 @@
 
 #include "vector"
 
-template <class T>
+template<class T>
 class Queryable {
- public:
-  virtual std::vector<T> query() = 0;
+public:
+    virtual std::vector<T> query() = 0;
 };
 
 #endif  // SPA_QUERYABLE_H

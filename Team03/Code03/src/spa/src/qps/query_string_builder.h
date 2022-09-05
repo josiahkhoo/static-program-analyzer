@@ -8,19 +8,23 @@
 #include "query_string.h"
 
 class QueryStringBuilder {
- public:
-  QueryStringBuilder();
-  void AddDeclaration(const Synonym& declared_synonym);
-  void AddSelect(Select select_clause);
-  void AddClause(std::shared_ptr<Clause> such_that);
+public:
+    QueryStringBuilder();
 
-  QueryString GetQueryString();
-  [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
+    void AddDeclaration(const Synonym &declared_synonym);
 
- private:
-  std::vector<Synonym> declared_synonyms_;
-  std::vector<std::shared_ptr<Clause>> such_that_;
-  std::optional<Select> select_;
+    void AddSelect(Select select_clause);
+
+    void AddClause(std::shared_ptr<Clause> such_that);
+
+    QueryString GetQueryString();
+
+    [[nodiscard]] Synonym GetSynonym(const std::string &identifier) const;
+
+private:
+    std::vector<Synonym> declared_synonyms_;
+    std::vector<std::shared_ptr<Clause>> such_that_;
+    std::optional<Select> select_;
 };
 
 #endif  // SPA_QUERY_STRING_BUILDER_H

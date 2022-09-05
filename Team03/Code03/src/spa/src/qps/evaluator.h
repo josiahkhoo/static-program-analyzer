@@ -5,10 +5,11 @@
 #include "query_string.h"
 
 class Evaluator {
- public:
-  explicit Evaluator();
-  [[nodiscard]] std::unordered_set<std::string> Execute(
-      const QueryablePkb& pkb, std::shared_ptr<QNode> q_tree) const;
+public:
+    explicit Evaluator();
+
+    [[nodiscard]] std::unordered_set<std::string> Execute(
+            const QueryablePkb &pkb, std::shared_ptr<QNode> q_tree) const;
 };
 
 #endif  // SPA_EVALUATOR_H

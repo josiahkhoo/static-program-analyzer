@@ -6,8 +6,8 @@
 #include "variable_entity.h"
 
 class ReadEntity : public StatementEntity {
- public:
-  explicit ReadEntity(const TNode &node, int line_number);
+public:
+    explicit ReadEntity(const TNode &node, int line_number);
 };
 
 #endif  // SPA_READ_ENTITY_H

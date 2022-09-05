@@ -22,4 +22,5 @@ public:
 private:
     static std::unordered_set<std::string> constantList;
 };
+
 #endif // SPA_CONSTANT_STORAGE_H

@@ -6,8 +6,9 @@
 #include "common/reference/statement_reference.h"
 
 class UsesSClause : public Clause {
-  const StatementReference &GetLeftHandSide() const;
-  const EntityReference &GetRightHandSide() const;
+    const StatementReference &GetLeftHandSide() const;
+
+    const EntityReference &GetRightHandSide() const;
 };
 
 #endif  // SPA_USES_S_CLAUSE_H

@@ -5,11 +5,11 @@
 #include "sp/extractor/node_extractor.h"
 
 class StatementEntityNodeExtractor : public NodeExtractor<StatementEntity> {
- public:
-  StatementEntityNodeExtractor() {}
+public:
+    StatementEntityNodeExtractor() {}
 
-  [[nodiscard]] std::optional<StatementEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+    [[nodiscard]] std::optional<StatementEntity> TryExtractFromNode(
+            const TNode &ast) const override;
 };
 
 #endif  // SPA_STATEMENT_ENTITY_NODE_EXTRACTOR_H

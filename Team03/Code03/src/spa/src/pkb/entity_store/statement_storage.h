@@ -18,18 +18,29 @@ public:
     StatementStorage();
 
     void addCallStatement(CallEntity callEntity);
+
     void addReadStatement(ReadEntity readEntity);
+
     void addPrintStatement(PrintEntity printEntity);
+
     void addAssignStatement(AssignEntity assignEntity);
+
     void addIfStatement(IfEntity ifEntity);
+
     void addWhileStatement(WhileEntity whileEntity);
 
     std::unordered_set<std::string> getStatements();
+
     std::unordered_set<std::string> getCallStatements();
+
     std::unordered_set<std::string> getReadStatements();
+
     std::unordered_set<std::string> getPrintStatements();
+
     std::unordered_set<std::string> getAssignStatements();
+
     std::unordered_set<std::string> getIfStatements();
+
     std::unordered_set<std::string> getWhileStatements();
 
     // Empty storage
@@ -44,4 +55,5 @@ private:
     static std::unordered_set<std::string> ifStatementList;
     static std::unordered_set<std::string> whileStatementList;
 };
+
 #endif // SPA_STATEMENT_STORAGE_H

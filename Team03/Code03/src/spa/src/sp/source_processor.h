@@ -10,20 +10,21 @@
 #include "sp/extractor/design_extractor.h"
 
 class SourceProcessor {
- public:
-  SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
-                  DesignExtractor &design_extractor, StorablePkb &storable_pkb);
-  void Process(const std::string &filename);
+public:
+    SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
+                    DesignExtractor &design_extractor, StorablePkb &storable_pkb);
 
- private:
-  Lexer &lexer_;
-  Parser<TNode> &parser_;
-  DesignExtractor &design_extractor_;
-  StorablePkb &storable_pkb_;
+    void Process(const std::string &filename);
 
-  void StoreDesignExtractorResult(
-      const DesignExtractorResult &design_extractor_result,
-      StorablePkb &storable_pkb);
+private:
+    Lexer &lexer_;
+    Parser<TNode> &parser_;
+    DesignExtractor &design_extractor_;
+    StorablePkb &storable_pkb_;
+
+    void StoreDesignExtractorResult(
+            const DesignExtractorResult &design_extractor_result,
+            StorablePkb &storable_pkb);
 };
 
 #endif  // SPA_SOURCE_PROCESSOR_H

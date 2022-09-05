@@ -5,9 +5,9 @@
 #include "sp/extractor/node_extractor.h"
 
 class VariableEntityNodeExtractor : public NodeExtractor<VariableEntity> {
- public:
-  [[nodiscard]] std::optional<VariableEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+public:
+    [[nodiscard]] std::optional<VariableEntity> TryExtractFromNode(
+            const TNode &ast) const override;
 };
 
 #endif  // SPA_VARIABLE_ENTITY_NODE_EXTRACTOR_H

@@ -6,20 +6,24 @@
 #include "reference.h"
 
 class StatementReference : public Reference {
- public:
-  /// Default constructor creates a wildcard statement reference.
-  explicit StatementReference();
-  explicit StatementReference(int line_number);
-  explicit StatementReference(Synonym synonym);
+public:
+    /// Default constructor creates a wildcard statement reference.
+    explicit StatementReference();
 
-  [[nodiscard]] bool IsLineNumber() const override;
-  [[nodiscard]] int GetLineNumber() const override;
+    explicit StatementReference(int line_number);
 
-  [[nodiscard]] bool IsIdentifier() const override;
-  [[nodiscard]] std::string GetIdentifier() const override;
+    explicit StatementReference(Synonym synonym);
 
- private:
-  std::optional<int> line_number_;
+    [[nodiscard]] bool IsLineNumber() const override;
+
+    [[nodiscard]] int GetLineNumber() const override;
+
+    [[nodiscard]] bool IsIdentifier() const override;
+
+    [[nodiscard]] std::string GetIdentifier() const override;
+
+private:
+    std::optional<int> line_number_;
 };
 
 #endif  // SPA_STATEMENT_REFERENCE_H

@@ -5,10 +5,11 @@
 #include "sp/extractor/node_extractor.h"
 
 class AssignEntityNodeExtractor : public NodeExtractor<AssignEntity> {
- public:
-  AssignEntityNodeExtractor();
-  [[nodiscard]] std::optional<AssignEntity> TryExtractFromNode(
-      const TNode& ast) const override;
+public:
+    AssignEntityNodeExtractor();
+
+    [[nodiscard]] std::optional<AssignEntity> TryExtractFromNode(
+            const TNode &ast) const override;
 };
 
 #endif  // SPA_ASSIGN_ENTITY_NODE_EXTRACTOR_H

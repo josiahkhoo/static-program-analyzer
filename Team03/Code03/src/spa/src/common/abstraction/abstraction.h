@@ -3,7 +3,8 @@
 
 #include "common/pair.h"
 
-template <class T, class U>
-class Abstraction : Pair<T, U> {};
+template<class T, class U>
+class Abstraction : Pair<T, U> {
+};
 
 #endif  // SPA_ABSTRACTION_H

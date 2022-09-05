@@ -6,20 +6,24 @@
 #include "reference.h"
 
 class EntityReference : public Reference {
- public:
-  /// Default constructor creates a wildcard entity reference.
-  explicit EntityReference();
-  explicit EntityReference(std::string identifier);
-  explicit EntityReference(Synonym synonym);
+public:
+    /// Default constructor creates a wildcard entity reference.
+    explicit EntityReference();
 
-  [[nodiscard]] bool IsLineNumber() const override;
-  [[nodiscard]] int GetLineNumber() const override;
+    explicit EntityReference(std::string identifier);
 
-  [[nodiscard]] bool IsIdentifier() const override;
-  [[nodiscard]] std::string GetIdentifier() const override;
+    explicit EntityReference(Synonym synonym);
 
- private:
-  std::optional<std::string> identifier_;
+    [[nodiscard]] bool IsLineNumber() const override;
+
+    [[nodiscard]] int GetLineNumber() const override;
+
+    [[nodiscard]] bool IsIdentifier() const override;
+
+    [[nodiscard]] std::string GetIdentifier() const override;
+
+private:
+    std::optional<std::string> identifier_;
 };
 
 #endif  // SPA_ENTITY_REFERENCE_H

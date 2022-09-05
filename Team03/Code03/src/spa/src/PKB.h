@@ -23,7 +23,7 @@
 #include "pkb/entity_store/entity_manager.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
- public:
+public:
     PKB();
 
     /* ====================================
@@ -31,16 +31,24 @@ class PKB : public QueryablePkb, public StorablePkb {
      * ==================================== */
     // Procedures
     void store(std::vector<ProcedureEntity> ts);
+
     // Variables
     void store(std::vector<VariableEntity> ts);
+
     //Constants
     void store(std::vector<ConstantEntity> ts);
+
     // Statements
     void store(std::vector<CallEntity> ts);
+
     void store(std::vector<ReadEntity> ts);
+
     void store(std::vector<PrintEntity> ts);
+
     void store(std::vector<AssignEntity> ts);
+
     void store(std::vector<IfEntity> ts);
+
     void store(std::vector<WhileEntity> ts);
 
     std::unordered_set<std::string> QueryALl(EntityType type);

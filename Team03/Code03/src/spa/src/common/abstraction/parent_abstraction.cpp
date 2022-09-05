@@ -1,20 +1,20 @@
 #include "parent_abstraction.h"
 
 ParentAbstraction::ParentAbstraction(StatementEntity lhs, StatementEntity rhs)
-    : lhs_(lhs), rhs_(rhs) {}
+        : lhs_(lhs), rhs_(rhs) {}
 
 const StatementEntity &ParentAbstraction::GetLeftHandSide() const {
-  return lhs_;
+    return lhs_;
 }
 
 const StatementEntity &ParentAbstraction::GetRightHandSide() const {
-  return rhs_;
+    return rhs_;
 }
 
 bool ParentAbstraction::operator==(const ParentAbstraction &rhs) const {
-  return lhs_ == rhs.lhs_ && rhs_ == rhs.rhs_;
+    return lhs_ == rhs.lhs_ && rhs_ == rhs.rhs_;
 }
 
 bool ParentAbstraction::operator!=(const ParentAbstraction &rhs) const {
-  return !(rhs == *this);
+    return !(rhs == *this);
 }

@@ -5,8 +5,9 @@
 #include "common/reference/statement_reference.h"
 
 class ParentClause : public Clause {
-  const StatementReference &GetLeftHandSide() const;
-  const StatementReference &GetRightHandSide() const;
+    const StatementReference &GetLeftHandSide() const;
+
+    const StatementReference &GetRightHandSide() const;
 };
 
 #endif  // SPA_PARENT_CLAUSE_H

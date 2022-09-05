@@ -5,8 +5,8 @@
 #include "entity_extractor_result.h"
 
 class EntityExtractor {
- public:
-  virtual EntityExtractorResult Extract(const TNode &ast) const = 0;
+public:
+    virtual EntityExtractorResult Extract(const TNode &ast) const = 0;
 };
 
 #endif  // SPA_ENTITY_EXTRACTOR_H

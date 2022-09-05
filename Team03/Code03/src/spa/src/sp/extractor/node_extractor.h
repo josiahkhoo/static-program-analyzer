@@ -3,10 +3,10 @@
 
 #include "common/t_node.h"
 
-template <typename T>
+template<typename T>
 class NodeExtractor {
- public:
-  virtual std::optional<T> TryExtractFromNode(const TNode &ast) const = 0;
+public:
+    virtual std::optional<T> TryExtractFromNode(const TNode &ast) const = 0;
 };
 
 #endif  // SPA_NODE_EXTRACTOR_H

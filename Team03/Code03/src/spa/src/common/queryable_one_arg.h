@@ -3,10 +3,10 @@
 
 #include <vector>
 
-template <class T, class R>
+template<class T, class R>
 class QueryableWithOneArg {
- public:
-  virtual std::vector<R> query(T) = 0;
+public:
+    virtual std::vector<R> query(T) = 0;
 };
 
 #endif  // SPA_QUERYABLE_ONE_ARG_H

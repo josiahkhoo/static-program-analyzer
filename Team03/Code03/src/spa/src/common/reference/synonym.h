@@ -5,16 +5,20 @@
 #include "string"
 
 class Synonym {
- public:
-  Synonym(EntityType entity_type, std::string identifier);
-  [[nodiscard]] EntityType GetEntityType();
-  [[nodiscard]] std::string GetIdentifier();
-  bool operator==(const Synonym& rhs) const;
-  bool operator!=(const Synonym& rhs) const;
+public:
+    Synonym(EntityType entity_type, std::string identifier);
 
- private:
-  EntityType entity_type_;
-  std::string identifier_;
+    [[nodiscard]] EntityType GetEntityType();
+
+    [[nodiscard]] std::string GetIdentifier();
+
+    bool operator==(const Synonym &rhs) const;
+
+    bool operator!=(const Synonym &rhs) const;
+
+private:
+    EntityType entity_type_;
+    std::string identifier_;
 };
 
 #endif  // SPA_SYNONYM_H

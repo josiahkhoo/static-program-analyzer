@@ -10,15 +10,16 @@
 #include "entity_extractor_impl.h"
 
 class DesignExtractorImpl : public DesignExtractor {
- public:
-  DesignExtractorImpl(const EntityExtractor &entity_extractor,
-                      const AbstractionExtractor &abstraction_extractor);
-  [[nodiscard]] DesignExtractorResult Extract(TNode ast) const override;
+public:
+    DesignExtractorImpl(const EntityExtractor &entity_extractor,
+                        const AbstractionExtractor &abstraction_extractor);
 
- public:
- private:
-  const EntityExtractor &entity_extractor_;
-  const AbstractionExtractor &abstraction_extractor_;
+    [[nodiscard]] DesignExtractorResult Extract(TNode ast) const override;
+
+public:
+private:
+    const EntityExtractor &entity_extractor_;
+    const AbstractionExtractor &abstraction_extractor_;
 };
 
 #endif  // SPA_DESIGN_EXTRACTOR_IMPL_H
