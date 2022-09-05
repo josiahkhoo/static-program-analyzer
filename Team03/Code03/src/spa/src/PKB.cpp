@@ -87,5 +87,4 @@ std::unordered_set<std::string> PKB::QueryALl(EntityType type) {
         case WHILE:
             return entityManager.getWhileStatements();
     }
-    //todo
 }
