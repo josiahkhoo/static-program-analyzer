@@ -7,11 +7,12 @@
 
 class EntityReference : public Reference {
  public:
+  /// Default constructor creates a wildcard entity reference.
   explicit EntityReference();
-  [[nodiscard]] std::optional<std::string> GetIdentifier() const;
+  explicit EntityReference(std::string identifier);
+  explicit EntityReference(Synonym synonym);
   [[nodiscard]] bool IsIdentifier() const;
-
-  void SetIdentifier(const std::string& identifier);
+  [[nodiscard]] std::string GetIdentifier() const;
 
  private:
   std::optional<std::string> identifier_;

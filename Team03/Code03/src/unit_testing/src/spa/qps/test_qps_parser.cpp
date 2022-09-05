@@ -11,13 +11,12 @@ TEST_CASE("Test 'Assign Select' query", "[QPS Parser]") {
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
-  EntityReference e;
-  e.SetIdentifier("a");
-  Select expected_select = Select(e);
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select expected_select = Select(syn);
 
-  REQUIRE(res.GetEntities().front().GetIdentifier() == e.GetIdentifier());
-  REQUIRE(res.GetSelect().GetEntity().GetIdentifier() ==
-          expected_select.GetEntity().GetIdentifier());
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
 }
 
 TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
@@ -38,12 +37,16 @@ TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
-  EntityReference e;
-  e.SetIdentifier("a");
-  Select expected_select = Select(e);
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select expected_select = Select(syn);
 
-  REQUIRE(res.GetEntities().front().GetIdentifier() == e.GetIdentifier());
-  REQUIRE(res.GetSelect().GetEntity().GetIdentifier() ==
-          expected_select.GetEntity().GetIdentifier());
+  StatementReference statement_ref_1 = StatementReference(1);
+  StatementReference statement_ref_2 = StatementReference(syn);
+  FollowsClause f = FollowsClause(statement_ref_1, statement_ref_2);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
   REQUIRE(res.GetClause().size() == 1);
+  REQUIRE(res.GetClause()[0] == f);
 }

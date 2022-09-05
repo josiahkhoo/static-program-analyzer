@@ -46,10 +46,9 @@ TEST_CASE("Query Select", "[Evaluator]") {
   Evaluator eval = Evaluator();
 
   Planner p = Planner();
-  EntityReference e = EntityReference();
-  e.SetSynonym("a");
-  Select s = Select(e);
-  QueryString qs = QueryString(s, {}, {});
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select s = Select(syn);
+  QueryString qs = QueryString(s, {syn}, {});
   QNode* root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();
