@@ -63,25 +63,28 @@ public:
     std::unordered_set<std::string> getVariables();
 
     // get stored constants in ConstantStorage
-    std::unordered_set<int> getConstants();
+    std::unordered_set<std::string> getConstants();
+
+    // get stored statements in StatementStorage
+    std::unordered_set<std::string> getStatements();
 
     // get stored call statements in StatementStorage
-    std::unordered_set<int> getCallStatements();
+    std::unordered_set<std::string> getCallStatements();
 
     // get stored read statements in StatementStorage
-    std::unordered_set<int> getReadStatements();
+    std::unordered_set<std::string> getReadStatements();
 
     // get stored print statements in StatementStorage
-    std::unordered_set<int> getPrintStatements();
+    std::unordered_set<std::string> getPrintStatements();
 
     // get stored assign statements in StatementStorage
-    std::unordered_set<int> getAssignStatements();
+    std::unordered_set<std::string> getAssignStatements();
 
     // get stored if statements in StatementStorage
-    std::unordered_set<int> getIfStatements();
+    std::unordered_set<std::string> getIfStatements();
 
     // get stored while statements in StatementStorage
-    std::unordered_set<int> getWhileStatements();
+    std::unordered_set<std::string> getWhileStatements();
 
     /* ====================================
      * Clear All Entity Storages

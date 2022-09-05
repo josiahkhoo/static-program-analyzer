@@ -5,6 +5,8 @@
 #include "string"
 #include "unordered_set"
 
+#include "common/entity/entity_type.h"
+
 class QueryablePkb {
  public:
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAll(

@@ -51,31 +51,35 @@ std::unordered_set<std::string> EntityManager::getVariables() {
     return variableStore.getVariables();
 }
 
-std::unordered_set<int> EntityManager::getConstants() {
+std::unordered_set<std::string> EntityManager::getConstants() {
     return constantStore.getConstants();
 }
 
-std::unordered_set<int> EntityManager::getCallStatements() {
+std::unordered_set<std::string> EntityManager::getStatements() {
+    return statementStore.getStatements();
+}
+
+std::unordered_set<std::string> EntityManager::getCallStatements() {
     return statementStore.getCallStatements();
 }
 
-std::unordered_set<int> EntityManager::getReadStatements() {
+std::unordered_set<std::string> EntityManager::getReadStatements() {
     return statementStore.getReadStatements();
 }
 
-std::unordered_set<int> EntityManager::getPrintStatements() {
+std::unordered_set<std::string> EntityManager::getPrintStatements() {
     return statementStore.getPrintStatements();
 }
 
-std::unordered_set<int> EntityManager::getAssignStatements() {
+std::unordered_set<std::string> EntityManager::getAssignStatements() {
     return statementStore.getAssignStatements();
 }
 
-std::unordered_set<int> EntityManager::getIfStatements() {
+std::unordered_set<std::string> EntityManager::getIfStatements() {
     return statementStore.getIfStatements();
 }
 
-std::unordered_set<int> EntityManager::getWhileStatements() {
+std::unordered_set<std::string> EntityManager::getWhileStatements() {
     return statementStore.getWhileStatements();
 }
 

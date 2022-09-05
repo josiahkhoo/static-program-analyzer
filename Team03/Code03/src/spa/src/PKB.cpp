@@ -64,4 +64,28 @@ void PKB::store(std::vector<WhileEntity> ts) {
     }
 }
 
-std::unordered_set<std::string> queryAllProcedures() {}
+std::unordered_set<std::string> PKB::QueryALl(EntityType type) {
+    switch(type) {
+        case PROCEDURE:
+            return entityManager.getProcedures();
+        case CONSTANT:
+            return entityManager.getConstants();
+        case VARIABLE:
+            return entityManager.getVariables();
+        case STATEMENT:
+            return entityManager.getStatements();
+        case CALL:
+            return entityManager.getCallStatements();
+        case READ:
+            return entityManager.getReadStatements();
+        case PRINT:
+            return entityManager.getPrintStatements();
+        case ASSIGN:
+            return entityManager.getAssignStatements();
+        case IF:
+            return entityManager.getIfStatements();
+        case WHILE:
+            return entityManager.getWhileStatements();
+    }
+    //todo
+}

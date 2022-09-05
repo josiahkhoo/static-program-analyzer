@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
+#include <string>
 
 #include "common/entity/call_entity.h"
 #include "common/entity/read_entity.h"
@@ -23,22 +24,24 @@ public:
     void addIfStatement(IfEntity ifEntity);
     void addWhileStatement(WhileEntity whileEntity);
 
-    std::unordered_set<int> getCallStatements();
-    std::unordered_set<int> getReadStatements();
-    std::unordered_set<int> getPrintStatements();
-    std::unordered_set<int> getAssignStatements();
-    std::unordered_set<int> getIfStatements();
-    std::unordered_set<int> getWhileStatements();
+    std::unordered_set<std::string> getStatements();
+    std::unordered_set<std::string> getCallStatements();
+    std::unordered_set<std::string> getReadStatements();
+    std::unordered_set<std::string> getPrintStatements();
+    std::unordered_set<std::string> getAssignStatements();
+    std::unordered_set<std::string> getIfStatements();
+    std::unordered_set<std::string> getWhileStatements();
 
     // Empty storage
     void clear();
 
 private:
-    static std::unordered_set<int> callStatementList;
-    static std::unordered_set<int> readStatementList;
-    static std::unordered_set<int> printStatementList;
-    static std::unordered_set<int> assignStatementList;
-    static std::unordered_set<int> ifStatementList;
-    static std::unordered_set<int> whileStatementList;
+    static std::unordered_set<std::string> statementList;
+    static std::unordered_set<std::string> callStatementList;
+    static std::unordered_set<std::string> readStatementList;
+    static std::unordered_set<std::string> printStatementList;
+    static std::unordered_set<std::string> assignStatementList;
+    static std::unordered_set<std::string> ifStatementList;
+    static std::unordered_set<std::string> whileStatementList;
 };
 #endif // SPA_STATEMENT_STORAGE_H
