@@ -56,34 +56,34 @@ class EntityManager {
    * General Entity Getter Methods
    * ==================================== */
   // get stored procedures in ProcedureStorage
-  std::unordered_set<std::string> GetProcedures();
+  std::unordered_set<std::string> GetProcedures() const;
 
   // get stored variables in VariableStorage
-  std::unordered_set<std::string> GetVariables();
+  std::unordered_set<std::string> GetVariables() const;
 
   // get stored constants in ConstantStorage
-  std::unordered_set<std::string> GetConstants();
+  std::unordered_set<std::string> GetConstants() const;
 
   // get stored statements in StatementStorage
-  std::unordered_set<std::string> GetStatements();
+  std::unordered_set<std::string> GetStatements() const;
 
   // get stored call statements in StatementStorage
-  std::unordered_set<std::string> GetCallStatements();
+  std::unordered_set<std::string> GetCallStatements() const;
 
   // get stored read statements in StatementStorage
-  std::unordered_set<std::string> GetReadStatements();
+  std::unordered_set<std::string> GetReadStatements() const;
 
   // get stored print statements in StatementStorage
-  std::unordered_set<std::string> GetPrintStatements();
+  std::unordered_set<std::string> GetPrintStatements() const;
 
   // get stored assign statements in StatementStorage
-  std::unordered_set<std::string> GetAssignStatements();
+  std::unordered_set<std::string> GetAssignStatements() const;
 
   // get stored if statements in StatementStorage
-  std::unordered_set<std::string> GetIfStatements();
+  std::unordered_set<std::string> GetIfStatements() const;
 
   // get stored while statements in StatementStorage
-  std::unordered_set<std::string> GetWhileStatements();
+  std::unordered_set<std::string> GetWhileStatements() const;
 
   /* ====================================
    * Clear All Entity Storages
@@ -91,10 +91,10 @@ class EntityManager {
   void Clear();
 
  private:
-  static ProcedureStorage procedureStore;
-  static StatementStorage statementStore;
-  static VariableStorage variableStore;
-  static ConstantStorage constantStore;
+  static ProcedureStorage procedure_store_;
+  static StatementStorage statement_store_;
+  static VariableStorage variable_store_;
+  static ConstantStorage constant_store_;
 };
 
 #endif  // SPA_ENTITY_MANAGER_H
