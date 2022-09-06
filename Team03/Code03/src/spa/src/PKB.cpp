@@ -1,70 +1,148 @@
 #include "PKB.h"
 
-#include <stdio.h>
-
-#include <iostream>
-#include <string>
+#include <stdexcept>
 #include <vector>
 
 EntityManager PKB::entityManager;
+RelationshipManager PKB::relationshipManager;
 
 PKB::PKB() {}
 
 void PKB::store(std::vector<ProcedureEntity> ts) {
-  for (ProcedureEntity entity : ts) {
+  for (const ProcedureEntity& entity : ts) {
     entityManager.AddProcedure(entity);
   }
 }
 
 void PKB::store(std::vector<VariableEntity> ts) {
-  for (VariableEntity entity : ts) {
+  for (const VariableEntity& entity : ts) {
     entityManager.AddVariable(entity);
   }
 }
 
 void PKB::store(std::vector<ConstantEntity> ts) {
-  for (ConstantEntity entity : ts) {
+  for (const ConstantEntity& entity : ts) {
     entityManager.AddConstant(entity);
   }
 }
 
 void PKB::store(std::vector<CallEntity> ts) {
-  for (CallEntity entity : ts) {
+  for (const CallEntity& entity : ts) {
     entityManager.AddCallStatement(entity);
   }
 }
 
 void PKB::store(std::vector<ReadEntity> ts) {
-  for (ReadEntity entity : ts) {
+  for (const ReadEntity& entity : ts) {
     entityManager.AddReadStatement(entity);
   }
 }
 
 void PKB::store(std::vector<PrintEntity> ts) {
-  for (PrintEntity entity : ts) {
+  for (const PrintEntity& entity : ts) {
     entityManager.AddPrintStatement(entity);
   }
 }
 
 void PKB::store(std::vector<AssignEntity> ts) {
-  for (AssignEntity entity : ts) {
+  for (const AssignEntity& entity : ts) {
     entityManager.AddAssignStatement(entity);
   }
 }
 
 void PKB::store(std::vector<IfEntity> ts) {
-  for (IfEntity entity : ts) {
+  for (const IfEntity& entity : ts) {
     entityManager.AddIfStatement(entity);
   }
 }
 
 void PKB::store(std::vector<WhileEntity> ts) {
-  for (WhileEntity entity : ts) {
+  for (const WhileEntity& entity : ts) {
     entityManager.AddWhileStatement(entity);
   }
 }
 
-std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
+void PKB::store(std::vector<FollowsAbstraction> abstractions) {
+  for (const FollowsAbstraction& abstraction : abstractions) {
+    relationshipManager.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::store(std::vector<FollowsTAbstraction> abstractions) {
+  for (const FollowsTAbstraction& abstraction : abstractions) {
+    relationshipManager.AddAbstraction(abstraction);
+  }
+}
+
+std::unordered_set<std::string> PKB::QueryAllFollow(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryAllFollowBy(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsByStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryFollowBy(int statement_number,
+                                                   EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsByStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryFollowT(int statement_number,
+                                                  EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsTStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  };
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryFollowTBy(int statement_number,
+                                                    EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsTByStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
       return entityManager.GetProcedures();
@@ -87,4 +165,18 @@ std::unordered_set<std::string> PKB::QueryAll(EntityType type) {
     case WHILE:
       return entityManager.GetWhileStatements();
   }
+}
+
+std::unordered_set<std::string> PKB::QueryFollow(int statement_number,
+                                                 EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationshipManager.GetFollowsStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }

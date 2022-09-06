@@ -28,7 +28,7 @@ std::unordered_set<std::string> FollowsTClause::Fetch(
       return queryable_pkb.QueryFollowT(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
-    } else if (GetRightHandSide().IsWildCard()) {
+    } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Follow(_, a)
       return queryable_pkb.QueryAllFollowBy(
           GetRightHandSide().GetSynonym().GetEntityType());

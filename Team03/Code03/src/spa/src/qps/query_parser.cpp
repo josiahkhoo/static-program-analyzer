@@ -106,7 +106,9 @@ void QueryParser::ParseClause() {
       token_pos_++;
       Expect("that");
       // Check for each clause type
-      ParseFollow();
+      if (MatchString("Follows")) {
+        ParseFollow();
+      }
     } else {
       throw std::runtime_error("Unexpected token: " +
                                Peek(token_pos_).GetValue());
@@ -116,6 +118,9 @@ void QueryParser::ParseClause() {
 
 void QueryParser::ParseFollow() {
   Expect("Follows");
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseFollowT();
+  }
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
@@ -129,5 +134,23 @@ void QueryParser::ParseFollow() {
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<FollowsClause> folCl =
       std::make_shared<FollowsClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddClause(folCl);
+}
+
+void QueryParser::ParseFollowT() {
+  Expect(Token::ASTERISK);
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<FollowsTClause> folCl =
+      std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddClause(folCl);
 }
