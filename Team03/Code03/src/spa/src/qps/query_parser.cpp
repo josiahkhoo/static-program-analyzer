@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
 
@@ -17,6 +18,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
     ParseDeclaration();
     ParseSelect();
     ParseClause();
+    ParsePattern();
   } catch (const std::runtime_error &e_) {
     std::cout << e_.what();
   }
@@ -35,7 +37,11 @@ bool QueryParser::MatchKind(Token::Kind kind) {
 }
 
 bool QueryParser::MatchString(const std::string &s) {
-  return (Peek(token_pos_).GetValue() == s);
+  Token next = Peek(token_pos_);
+  if (next.IsNot(Token::IDENTIFIER)) {
+    return false;
+  }
+  return (next.GetValue() == s);
 }
 
 bool QueryParser::MatchStmtRef() {
@@ -78,6 +84,43 @@ StatementReference QueryParser::ExtractStmtRef() {
   return statement_reference;
 }
 
+EntityReference QueryParser::ExtractEntityRef() {
+  EntityReference entity_reference;
+
+  if (MatchKind(Token::UNDERSCORE)) {
+    token_pos_++;
+    entity_reference = EntityReference();
+  } else if (MatchKind(Token::INVERTED_COMMAS)) {
+    token_pos_++;
+    Token next = Peek(token_pos_);
+    entity_reference = EntityReference(next.GetValue());
+    token_pos_++;
+    Expect(Token::INVERTED_COMMAS);
+  } else {
+    throw std::runtime_error("Expected a entityRef");
+  }
+
+  return entity_reference;
+}
+
+Expression QueryParser::ExtractExpression() {
+  Expression exp;
+
+  if (MatchKind(Token::UNDERSCORE)) {
+    exp.hasFrontWildcard = true;
+    token_pos_++;
+  }
+  EntityReference matchRef = ExtractEntityRef();
+  exp.toMatch = matchRef.GetIdentifier();
+
+  if (MatchKind(Token::UNDERSCORE)) {
+    exp.hasBackWildcard = true;
+    token_pos_++;
+  }
+
+  return exp;
+}
+
 void QueryParser::ParseDeclaration() {
   Token next = Peek(token_pos_);
   Expect("assign");
@@ -101,26 +144,26 @@ void QueryParser::ParseSelect() {
 }
 
 void QueryParser::ParseClause() {
-  while (!MatchKind(Token::END)) {
-    if (MatchString("such")) {
-      token_pos_++;
-      Expect("that");
-      // Check for each clause type
-      if (MatchString("Follows")) {
-        ParseFollow();
-      }
-    } else {
-      throw std::runtime_error("Unexpected token: " +
-                               Peek(token_pos_).GetValue());
-    }
+  if (!MatchString("such")) {
+    return;
   }
+  token_pos_++;
+  Expect("that");
+  ParseFollow();
+  // Check for each clause type, append below new clauses
 }
 
 void QueryParser::ParseFollow() {
+  if (!MatchString("Follows")) {
+    return;
+  }
+
   Expect("Follows");
+
   if (MatchKind(Token::ASTERISK)) {
     return ParseFollowT();
   }
+
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
@@ -139,6 +182,7 @@ void QueryParser::ParseFollow() {
 
 void QueryParser::ParseFollowT() {
   Expect(Token::ASTERISK);
+
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
@@ -150,7 +194,34 @@ void QueryParser::ParseFollowT() {
   StatementReference stmtRef2 = ExtractStmtRef();
 
   Expect(Token::RIGHT_ROUND_BRACKET);
+
   std::shared_ptr<FollowsTClause> folCl =
       std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddClause(folCl);
+}
+
+void QueryParser::ParsePattern() {
+  if (!MatchString("pattern")) {
+    return;
+  }
+
+  Expect(Token::IDENTIFIER);
+
+  // Validates if assign-entity was captured
+  Token next = Peek(token_pos_);
+  Expect(Token::IDENTIFIER);
+  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  EntityReference entityRef = ExtractEntityRef();
+
+  Expect(Token::COMMA);
+
+  Expression exp = ExtractExpression();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+
+  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entityRef, exp);
+  query_string_builder_.AddPattern(ptn);
 }

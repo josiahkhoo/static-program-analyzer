@@ -28,8 +28,6 @@ class QueryParser : public Parser<QueryString> {
 
   void Expect(const std::string &s);
 
-  StatementReference ExtractStmtRef();
-
   void ParseDeclaration();
 
   void ParseSelect();
@@ -41,7 +39,8 @@ class QueryParser : public Parser<QueryString> {
   void ParseFollowT();
 
   void ParsePattern();
-  bool ValidateEnd();
+
+  StatementReference ExtractStmtRef();
   EntityReference ExtractEntityRef();
   Expression ExtractExpression();
 };
