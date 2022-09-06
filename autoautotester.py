@@ -23,7 +23,7 @@ test_array = (
     # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
-    # ("Sprint 1", "sprint_1"),
+    ("Sprint 1", "sprint_1"),
 )
 
 overall_passed_test_cases = 0
@@ -42,10 +42,14 @@ for test in test_array:
         command = command.replace("/", "\\")
         if not debug:
             command += "> nul"
+        else:
+            print(command)
         output_path = output_path.replace("/", "\\")
     else:
         if not debug:
             command += "> /dev/null"
+        else:
+            print(command)
     os.system(command)
     with open(output_path) as f:
         output = f.read()

@@ -13,7 +13,7 @@ class Entity : public HasNodePointer {
 
   bool operator!=(const Entity &rhs) const;
 
- private:
+ protected:
   const TNode &node_;
 };
 

@@ -43,15 +43,15 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
   const SubAbstractionExtractor<FollowsTAbstraction>
       &follows_t_abstraction_extractor_;
 
-  [[nodiscard]] std::unordered_map<TNode, StatementEntity *>
+  [[nodiscard]] std::unordered_map<TNode, StatementEntity>
   GetTNodeStatementEntityMap(
       const std::vector<StatementEntity> &statement_entities) const;
 
-  [[nodiscard]] std::unordered_map<TNode, VariableEntity *>
+  [[nodiscard]] std::unordered_map<TNode, VariableEntity>
   GetTNodeVariableEntityMap(
       const std::vector<VariableEntity> &variable_entities) const;
 
-  [[nodiscard]] std::unordered_map<TNode, ConstantEntity *>
+  [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
   GetTNodeConstantEntityMap(
       const std::vector<ConstantEntity> &constant_entities) const;
 };

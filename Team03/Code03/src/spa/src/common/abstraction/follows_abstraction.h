@@ -13,15 +13,12 @@ class FollowsAbstraction
 
   const StatementEntity &GetRightHandSide() const override;
 
- private:
-  StatementEntity lhs_;
-
- public:
   bool operator==(const FollowsAbstraction &rhs) const;
 
   bool operator!=(const FollowsAbstraction &rhs) const;
 
  private:
+  StatementEntity lhs_;
   StatementEntity rhs_;
 };
 
