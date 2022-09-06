@@ -21,7 +21,7 @@ Select a such that Follows(a, 2)
 5 - (SUCCESS) Assign entities - Follows(Synonym, Wildcard)
 assign a;
 Select a such that Follows(a, _)
-1, 2, 3, 5, 7, 9, 15, 18, 19
+1, 2, 3, 5, 9, 15, 18, 19
 5000
 6 - (SUCCESS) Assign entities - FollowsT(Statement number, Synonym)
 assign a;
@@ -41,5 +41,5 @@ Select a such that Follows*(a, 3)
 9 - (SUCCESS) Assign entities - FollowsT(Synonym, Wildcard)
 assign a;
 Select a such that Follows*(a, _)
-1, 2, 3, 5, 7, 9, 15, 18, 19
+1, 2, 3, 5, 9, 15, 18, 19
 5000
