@@ -21,7 +21,7 @@ void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
     follows_t_by_map_.emplace(rhs,
                               std::make_unique<FollowsTByRelationship>(rhs));
   }
-  follows_t_by_map_.find(lhs)->second->AddFollowsTStatementNumber(lhs);
+  follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
 }
 
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(

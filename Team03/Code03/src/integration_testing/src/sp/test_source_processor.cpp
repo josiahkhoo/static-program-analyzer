@@ -1,8 +1,11 @@
 #include <iostream>
 
+#include "PKB.h"
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "cstdlib"
+#include "qps/query_parser.h"
+#include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
@@ -24,34 +27,7 @@
 TEST_CASE("Source Processor", "[SourceProcessor]") {
   Lexer lexer;
 
-  // PKB dependencies:
-  // Temp:
-  class StorablePkbStub : public StorablePkb {
-   public:
-    void store(std::vector<AssignEntity> entities) override {}
-
-    void store(std::vector<CallEntity> entities) override {}
-
-    void store(std::vector<ConstantEntity> entities) override {}
-
-    void store(std::vector<IfEntity> entities) override {}
-
-    void store(std::vector<PrintEntity> entities) override {}
-
-    void store(std::vector<ProcedureEntity> entities) override {}
-
-    void store(std::vector<ReadEntity> entities) override {}
-
-    void store(std::vector<VariableEntity> entities) override {}
-
-    void store(std::vector<WhileEntity> entities) override {}
-
-    void store(std::vector<FollowsAbstraction> abstractions) override {}
-
-    void store(std::vector<FollowsTAbstraction> abstractions) override {}
-  };
-
-  StorablePkbStub storable_pkb_stub;
+  PKB pkb;
 
   // SP dependencies:
   SimpleParser simple_parser;
@@ -81,11 +57,21 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
   DesignExtractorImpl design_extractor =
       DesignExtractorImpl(entity_extractor, abstraction_extractor);
 
-  SourceProcessor source_processor_under_test = SourceProcessor(
-      lexer, simple_parser, design_extractor, storable_pkb_stub);
+  SourceProcessor source_processor_under_test =
+      SourceProcessor(lexer, simple_parser, design_extractor, pkb);
 
   SECTION("Parse valid source file") {
     std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
     source_processor_under_test.Process(filepath);
+    Planner planner_;
+    Evaluator evaluator_;
+
+    QueryParser query_parser_;
+    QueryProcessingSubsystem query_processing_subsystem_under_test =
+        QueryProcessingSubsystem(lexer, planner_, evaluator_, pkb);
+
+    std::string query = "assign a; Select a such that Follows(1, a)";
+    std::list<std::string> res = {};
+    query_processing_subsystem_under_test.Process(query, res);
   }
 }

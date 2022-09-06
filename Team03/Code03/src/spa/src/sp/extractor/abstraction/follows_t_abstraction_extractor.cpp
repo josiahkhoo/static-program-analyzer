@@ -11,14 +11,15 @@ std::vector<FollowsTAbstraction> FollowsTAbstractionExtractor::Extract(
     const std::vector<StatementEntity> &statement_entities,
     const std::vector<VariableEntity> &variable_entities,
     const std::vector<WhileEntity> &while_entities,
-    std::unordered_map<TNode, StatementEntity *> &t_node_stmt_ent_umap,
-    std::unordered_map<TNode, VariableEntity *> &t_node_var_ent_umap,
-    std::unordered_map<TNode, ConstantEntity *> &t_node_const_ent_umap) const {
+    std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
+    std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
+    std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap) const {
   std::vector<FollowsTAbstraction> follows_t_abstractions = {};
   for (const auto &procedure_entity : procedure_entities) {
-    RetrieveFromChildren(&follows_t_abstractions,
-                         procedure_entity.GetNodePointer()->GetChildren(),
-                         t_node_stmt_ent_umap);
+    RetrieveFromChildren(
+        &follows_t_abstractions,
+        procedure_entity.GetNodePointer()->GetChildren()[0]->GetChildren(),
+        t_node_stmt_ent_umap);
   }
   for (const auto &while_entity : while_entities) {
     // Hacky way of retrieving while statements children, by assuming that it
@@ -46,12 +47,12 @@ std::vector<FollowsTAbstraction> FollowsTAbstractionExtractor::Extract(
 void FollowsTAbstractionExtractor::RetrieveFromChildren(
     std::vector<FollowsTAbstraction> *follows_t_abstractions,
     const std::vector<std::shared_ptr<TNode>> &children,
-    std::unordered_map<TNode, StatementEntity *> &t_node_stmt_ent_umap) const {
+    std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap) const {
   for (int i = 0; i < (int)children.size() - 1; i++) {
     for (int j = i + 1; j < children.size(); j++) {
-      auto lhs = t_node_stmt_ent_umap[*children[i]];
-      auto rhs = t_node_stmt_ent_umap[*children[j]];
-      follows_t_abstractions->emplace_back(*lhs, *rhs);
+      auto lhs = t_node_stmt_ent_umap.find(*children[i])->second;
+      auto rhs = t_node_stmt_ent_umap.find(*children[j])->second;
+      follows_t_abstractions->emplace_back(lhs, rhs);
     }
   }
 }

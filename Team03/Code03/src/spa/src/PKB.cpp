@@ -79,9 +79,11 @@ std::unordered_set<std::string> PKB::QueryAllFollow(EntityType type) const {
       relationshipManager.GetFollowsStatements();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
@@ -90,9 +92,11 @@ std::unordered_set<std::string> PKB::QueryAllFollowBy(EntityType type) const {
       relationshipManager.GetFollowsByStatements();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
@@ -102,9 +106,11 @@ std::unordered_set<std::string> PKB::QueryFollowBy(int statement_number,
       relationshipManager.GetFollowsByStatements(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
@@ -114,9 +120,11 @@ std::unordered_set<std::string> PKB::QueryFollowT(int statement_number,
       relationshipManager.GetFollowsTStatements(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  };
   return result;
 }
 
@@ -126,9 +134,11 @@ std::unordered_set<std::string> PKB::QueryFollowTBy(int statement_number,
       relationshipManager.GetFollowsTByStatements(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
@@ -163,8 +173,10 @@ std::unordered_set<std::string> PKB::QueryFollow(int statement_number,
       relationshipManager.GetFollowsStatements(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
-  std::set_intersection(statements.begin(), statements.end(),
-                        typed_statements.begin(), typed_statements.end(),
-                        std::inserter(result, result.begin()));
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }

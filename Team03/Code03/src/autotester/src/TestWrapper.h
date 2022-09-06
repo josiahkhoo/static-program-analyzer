@@ -90,8 +90,7 @@ class TestWrapper : public AbstractWrapper {
   Evaluator evaluator_;
 
   QueryProcessingSubsystem query_processing_subsystem =
-      QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                               pkb_);
+      QueryProcessingSubsystem(lexer_, planner_, evaluator_, pkb_);
 };
 
 #endif

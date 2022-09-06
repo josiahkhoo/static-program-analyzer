@@ -19,11 +19,11 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<StatementEntity> &statement_entities,
     const std::vector<VariableEntity> &variable_entities,
     const std::vector<WhileEntity> &while_entities) const {
-  std::unordered_map<TNode, StatementEntity *> t_node_stmt_ent_umap =
+  std::unordered_map<TNode, StatementEntity> t_node_stmt_ent_umap =
       GetTNodeStatementEntityMap(statement_entities);
-  std::unordered_map<TNode, VariableEntity *> t_node_var_ent_umap =
+  std::unordered_map<TNode, VariableEntity> t_node_var_ent_umap =
       GetTNodeVariableEntityMap(variable_entities);
-  std::unordered_map<TNode, ConstantEntity *> t_node_const_ent_umap =
+  std::unordered_map<TNode, ConstantEntity> t_node_const_ent_umap =
       GetTNodeConstantEntityMap(constant_entities);
 
   std::vector<FollowsAbstraction> follows_abstractions =
@@ -43,30 +43,29 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
   return {follows_abstractions, follows_t_abstractions, {}, {}, {}, {}};
 }
 
-std::unordered_map<TNode, StatementEntity *>
+std::unordered_map<TNode, StatementEntity>
 AbstractionExtractorImpl::GetTNodeStatementEntityMap(
     const std::vector<StatementEntity> &statement_entities) const {
-  std::unordered_map<TNode, StatementEntity *> umap;
-  for (auto statement_entity : statement_entities)
-    umap.insert_or_assign(*statement_entity.GetNodePointer(),
-                          &statement_entity);
+  std::unordered_map<TNode, StatementEntity> umap;
+  for (const auto &statement_entity : statement_entities)
+    umap.emplace(*statement_entity.GetNodePointer(), statement_entity);
   return umap;
 }
 
-std::unordered_map<TNode, VariableEntity *>
+std::unordered_map<TNode, VariableEntity>
 AbstractionExtractorImpl::GetTNodeVariableEntityMap(
     const std::vector<VariableEntity> &variable_entities) const {
-  std::unordered_map<TNode, VariableEntity *> umap;
-  for (auto variable_entity : variable_entities)
-    umap.insert_or_assign(*variable_entity.GetNodePointer(), &variable_entity);
+  std::unordered_map<TNode, VariableEntity> umap;
+  for (const auto &variable_entity : variable_entities)
+    umap.emplace(*variable_entity.GetNodePointer(), variable_entity);
   return umap;
 }
 
-std::unordered_map<TNode, ConstantEntity *>
+std::unordered_map<TNode, ConstantEntity>
 AbstractionExtractorImpl::GetTNodeConstantEntityMap(
     const std::vector<ConstantEntity> &constant_entities) const {
-  std::unordered_map<TNode, ConstantEntity *> umap;
-  for (auto constant_entity : constant_entities)
-    umap.insert_or_assign(*constant_entity.GetNodePointer(), &constant_entity);
+  std::unordered_map<TNode, ConstantEntity> umap;
+  for (const auto &constant_entity : constant_entities)
+    umap.emplace(*constant_entity.GetNodePointer(), constant_entity);
   return umap;
 }
