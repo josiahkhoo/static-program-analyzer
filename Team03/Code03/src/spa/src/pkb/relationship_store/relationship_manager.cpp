@@ -1,14 +1,10 @@
 #include "relationship_manager.h"
 
-RelationshipManager::RelationshipManager() {};
+RelationshipManager::RelationshipManager(){};
 
-void RelationshipManager::AddFollowsAbstraction(FollowsAbstraction followsAbs) {
-	followsStore.AddFollowsRelationship();
+void RelationshipManager::AddAbstraction(FollowsAbstraction abstraction) {
+  followsStore.AddFollowsRelationship(abstraction);
 };
 
-void RelationshipManager::AddFollowsTAbstraction(FollowsTAbstraction followsTAbs);
-
-
-int main() {
-	cout << "relationshipsss" << endl;
-}
+void RelationshipManager::AddAbstraction(FollowsTAbstraction abstraction){
+    followsStore.AddFollowsRelationship()};

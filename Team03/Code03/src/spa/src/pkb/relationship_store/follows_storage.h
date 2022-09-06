@@ -9,7 +9,7 @@
 #include "common/entity/constant_entity.h"
 
 class FollowsStorage {
-public:
+ public:
   FollowsStorage();
 
   // TO CHANGE ConstantEntity TO A CUSTOM STRUCT
@@ -20,7 +20,7 @@ public:
   // Empty storage
   void Clear();
 
-private:
+ private:
   static std::unordered_set<std::string> constantList;
 };
 
