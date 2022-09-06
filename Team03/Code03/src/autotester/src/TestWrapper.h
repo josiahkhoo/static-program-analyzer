@@ -7,6 +7,7 @@
 
 // include your other headers here
 #include "AbstractWrapper.h"
+#include "PKB.h"
 #include "common/lexer.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
@@ -50,77 +51,7 @@ class TestWrapper : public AbstractWrapper {
 
   // PKB dependencies:
   // Temp:
-  class StorablePkbStub : public StorablePkb {
-   public:
-    void store(std::vector<AssignEntity> entities) override {}
-
-    void store(std::vector<CallEntity> entities) override {}
-
-    void store(std::vector<ConstantEntity> entities) override {}
-
-    void store(std::vector<IfEntity> entities) override {}
-
-    void store(std::vector<PrintEntity> entities) override {}
-
-    void store(std::vector<ProcedureEntity> entities) override {}
-
-    void store(std::vector<ReadEntity> entities) override {}
-
-    void store(std::vector<VariableEntity> entities) override {}
-
-    void store(std::vector<WhileEntity> entities) override {}
-
-    void store(std::vector<FollowsAbstraction> abstractions) override {}
-
-    void store(std::vector<FollowsTAbstraction> abstractions) override {}
-
-    void store(std::vector<ModifiesSAbstraction> abstractions) override {}
-
-    void store(std::vector<ParentTAbstraction> abstractions) override {}
-
-    void store(std::vector<UsesSAbstraction> abstractions) override {}
-  };
-
-  class QueryablePkbStub : public QueryablePkb {
-   public:
-    [[nodiscard]] std::unordered_set<std::string> QueryAll(
-        EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllFollow(
-        EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllFollowBy(
-        EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryFollow(
-        int statement_number, EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowBy(
-        int statement_number, EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowT(
-        int statement_number, EntityType type) const override {
-      return {"1"};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowTBy(
-        int statement_number, EntityType type) const override {
-      return {"1"};
-    }
-  };
-
-  StorablePkbStub storable_pkb_stub_;
-  QueryablePkbStub queryable_pkb_stub_;
+  PKB pkb_;
 
   // SP dependencies:
   SimpleParser simple_parser_;
@@ -150,8 +81,8 @@ class TestWrapper : public AbstractWrapper {
   DesignExtractorImpl design_extractor_ =
       DesignExtractorImpl(entity_extractor_, abstraction_extractor_);
 
-  SourceProcessor source_processor_ = SourceProcessor(
-      lexer_, simple_parser_, design_extractor_, storable_pkb_stub_);
+  SourceProcessor source_processor_ =
+      SourceProcessor(lexer_, simple_parser_, design_extractor_, pkb_);
 
   // QPS dependencies:
   QueryParser query_parser_;
@@ -160,7 +91,7 @@ class TestWrapper : public AbstractWrapper {
 
   QueryProcessingSubsystem query_processing_subsystem =
       QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                               queryable_pkb_stub_);
+                               pkb_);
 };
 
 #endif

@@ -49,12 +49,6 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
     void store(std::vector<FollowsAbstraction> abstractions) override {}
 
     void store(std::vector<FollowsTAbstraction> abstractions) override {}
-
-    void store(std::vector<ModifiesSAbstraction> abstractions) override {}
-
-    void store(std::vector<ParentTAbstraction> abstractions) override {}
-
-    void store(std::vector<UsesSAbstraction> abstractions) override {}
   };
 
   StorablePkbStub storable_pkb_stub;
