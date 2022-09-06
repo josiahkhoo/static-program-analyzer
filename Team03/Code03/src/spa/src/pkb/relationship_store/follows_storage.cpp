@@ -16,9 +16,14 @@ void FollowsStorage::AddFollowsRelationship(FollowsAbstraction followsAbs) {
   followsMap[followed_statement] = followed;
 }
 
-std::unordered_set<std::string> ConstantStorage::GetConstants() {
-  return constantList;
+std::unordered_map<int, FollowsRelationship*> FollowsStorage::GetFollows(); {
+  return followsMap;
 }
 
-// REMEMBER GARBAGE COLLECTION
-void ConstantStorage::Clear() { constantList.clear(); }
+void FollowsStorage::Clear() { 
+  for (auto const& pair : m) {
+    FollowsRelationship* relationship = pair.second;
+    delete relationship;
+  }
+  followsMap.clear(); 
+}
