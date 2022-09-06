@@ -15,6 +15,7 @@ std::vector<FollowsAbstraction> FollowsAbstractionExtractor::Extract(
     std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
     std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap) const {
   std::vector<FollowsAbstraction> follows_abstractions = {};
+
   for (const auto &procedure_entity : procedure_entities) {
     RetrieveFromChildren(
         &follows_abstractions,
