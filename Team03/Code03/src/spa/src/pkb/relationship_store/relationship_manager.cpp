@@ -3,7 +3,7 @@
 RelationshipManager::RelationshipManager() {};
 
 void RelationshipManager::AddFollowsAbstraction(FollowsAbstraction followsAbs) {
-	followsStore.AddFollowsRelationship();
+	followsStore.AddFollowsRelationship(followsAbs);
 };
 
 void RelationshipManager::AddFollowsTAbstraction(FollowsTAbstraction followsTAbs);

@@ -6,22 +6,22 @@
 #include <unordered_set>
 #include <utility>
 
-#include "common/entity/constant_entity.h"
+#include "common/abstraction/follows_abstraction.h"
+#include "follows_relationship.h"
 
 class FollowsStorage {
 public:
   FollowsStorage();
 
-  // TO CHANGE ConstantEntity TO A CUSTOM STRUCT
-  void AddFollowsRelationship(ConstantEntity constant);
+  void AddFollowsRelationship(FollowsAbstraction followsAbs);
 
-  std::unordered_set<std::string> GetConstants();
+  std::unordered_map<int, FollowsRelationship*> GetFollows();
 
   // Empty storage
   void Clear();
 
 private:
-  static std::unordered_set<std::string> constantList;
+  static std::unordered_map<int, FollowsRelationship*> followsMap;
 };
 
 #endif  // SPA_FOLLOWS_STORAGE_H
