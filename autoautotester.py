@@ -50,9 +50,9 @@ for test in test_array:
     with open(output_path) as f:
         output = f.read()
         text_chunks = Counter(output.split())
-        passed_test_cases = text_chunks['<passed>']
+        passed_test_cases = text_chunks['<passed/>']
         failed_test_cases = text_chunks['<failed>']
-        overall_passed_test_cases += overall_passed_test_cases
+        overall_passed_test_cases += passed_test_cases
         overall_failed_test_cases += failed_test_cases
         print(f"Passed: {passed_test_cases}, Failed: {failed_test_cases}")
 
