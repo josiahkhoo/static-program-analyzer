@@ -3,6 +3,7 @@
 
 #include "common/clause/follows_clause.h"
 #include "common/clause/follows_t_clause.h"
+#include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/entity.h"
 #include "query_string.h"
@@ -17,6 +18,8 @@ class QueryStringBuilder {
 
   void AddClause(std::shared_ptr<Clause> such_that);
 
+  void AddPattern(std::shared_ptr<Pattern> pattern);
+
   QueryString GetQueryString();
 
   [[nodiscard]] Synonym GetSynonym(const std::string &identifier) const;
@@ -24,6 +27,7 @@ class QueryStringBuilder {
  private:
   std::vector<Synonym> declared_synonyms_;
   std::vector<std::shared_ptr<Clause>> such_that_;
+  std::vector<std::shared_ptr<Pattern>> pattern_;
   std::optional<Select> select_;
 };
 

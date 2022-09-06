@@ -4,17 +4,22 @@
 #include "common/pair.h"
 #include "common/reference/entity_reference.h"
 
-class Pattern : public Pair<EntityReference, std::string> {
+struct Expression {
+  bool hasFrontWildcard = false;
+  std::string toMatch = "";
+  bool hasBackWildcard = false;
+};
+
+class Pattern {
  public:
-  explicit Pattern(EntityReference entity, std::string expression);
+  explicit Pattern(EntityReference entity, Expression expression);
 
   [[nodiscard]] const EntityReference &GetEntity() const;
-
-  [[nodiscard]] const std::string &GetExpression() const;
+  [[nodiscard]] const Expression &GetExpression() const;
 
  private:
   EntityReference entity_;
-  std::string expression_;
+  Expression expression_;
 };
 
 #endif  // SPA_PATTERN_H

@@ -2,9 +2,9 @@
 
 #include <utility>
 
-Pattern::Pattern(EntityReference entity, std::string expression)
+Pattern::Pattern(EntityReference entity, Expression expression)
     : entity_(std::move(entity)), expression_(std::move(expression)) {}
 
 const EntityReference &Pattern::GetEntity() const { return entity_; }
 
-const std::string &Pattern::GetExpression() const { return expression_; }
+const Expression &Pattern::GetExpression() const { return expression_; }

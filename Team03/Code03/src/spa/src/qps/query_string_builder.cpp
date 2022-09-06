@@ -29,3 +29,7 @@ Synonym QueryStringBuilder::GetSynonym(const std::string &identifier) const {
   }
   throw std::runtime_error("Cannot find synonym matching given identifier");
 }
+
+void QueryStringBuilder::AddPattern(std::shared_ptr<Pattern> pattern) {
+  pattern_.push_back(pattern);
+}

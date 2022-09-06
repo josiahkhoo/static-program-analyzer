@@ -5,11 +5,10 @@
 #include <unordered_set>
 
 #include "common/entity/entity.h"
-#include "common/query_operator.h"
 #include "common/queryable_pkb.h"
 #include "common/reference/reference.h"
 
-class Clause : public QueryOperator {
+class Clause{
  public:
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
 

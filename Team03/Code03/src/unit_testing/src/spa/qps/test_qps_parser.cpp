@@ -51,3 +51,49 @@ TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
   REQUIRE(res.GetClauses()[0]->GetLeftHandSide() == f.GetLeftHandSide());
   REQUIRE(res.GetClauses()[0]->GetRightHandSide() == f.GetRightHandSide());
 }
+
+TEST_CASE("Test 'Assign Select Pattern' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+}
+
+
+TEST_CASE("Test 'End'less query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a")};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("Test missing Select query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
