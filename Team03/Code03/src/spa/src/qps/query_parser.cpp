@@ -107,7 +107,7 @@ void QueryParser::ParseClause() {
       Expect("that");
       // Check for each clause type
       if (MatchString("Follows")) {
-        ParseFollow();
+        ParseFollows();
       }
     } else {
       throw std::runtime_error("Unexpected token: " +
@@ -116,10 +116,10 @@ void QueryParser::ParseClause() {
   }
 }
 
-void QueryParser::ParseFollow() {
+void QueryParser::ParseFollows() {
   Expect("Follows");
   if (MatchKind(Token::ASTERISK)) {
-    return ParseFollowT();
+    return ParseFollowsT();
   }
   Expect(Token::LEFT_ROUND_BRACKET);
 
@@ -137,7 +137,7 @@ void QueryParser::ParseFollow() {
   query_string_builder_.AddClause(folCl);
 }
 
-void QueryParser::ParseFollowT() {
+void QueryParser::ParseFollowsT() {
   Expect(Token::ASTERISK);
   Expect(Token::LEFT_ROUND_BRACKET);
 
