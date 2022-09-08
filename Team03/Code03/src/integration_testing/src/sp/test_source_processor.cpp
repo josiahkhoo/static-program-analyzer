@@ -51,8 +51,11 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
 
   FollowsAbstractionExtractor follows_abstraction_extractor;
   FollowsTAbstractionExtractor follows_t_abstraction_extractor;
+  ParentAbstractionExtractor parent_abstraction_extractor;
+  ParentTAbstractionExtractor parent_t_abstraction_extractor;
   AbstractionExtractorImpl abstraction_extractor = AbstractionExtractorImpl(
-      follows_abstraction_extractor, follows_t_abstraction_extractor);
+      follows_abstraction_extractor, follows_t_abstraction_extractor,
+      parent_abstraction_extractor, parent_t_abstraction_extractor);
 
   DesignExtractorImpl design_extractor =
       DesignExtractorImpl(entity_extractor, abstraction_extractor);

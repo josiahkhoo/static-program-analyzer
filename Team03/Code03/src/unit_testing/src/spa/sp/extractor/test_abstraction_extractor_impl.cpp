@@ -9,9 +9,14 @@ TEST_CASE("Abstraction Extractor", "[AbstractionExtractor]") {
   When(Method(follows_abstraction_extractor, Extract)).AlwaysReturn({});
   Mock<FollowsTAbstractionExtractor> follows_t_abstraction_extractor;
   When(Method(follows_t_abstraction_extractor, Extract)).AlwaysReturn({});
-  AbstractionExtractorImpl extractor_under_test =
-      AbstractionExtractorImpl(follows_abstraction_extractor.get(),
-                               follows_t_abstraction_extractor.get());
+  Mock<ParentAbstractionExtractor> parent_abstraction_extractor;
+  When(Method(parent_abstraction_extractor, Extract)).AlwaysReturn({});
+  Mock<ParentTAbstractionExtractor> parent_t_abstraction_extractor;
+  When(Method(parent_t_abstraction_extractor, Extract)).AlwaysReturn({});
+  AbstractionExtractorImpl extractor_under_test = AbstractionExtractorImpl(
+      follows_abstraction_extractor.get(),
+      follows_t_abstraction_extractor.get(), parent_abstraction_extractor.get(),
+      parent_t_abstraction_extractor.get());
   SECTION("Extracts respective entities") {
     std::vector<AssignEntity> assign_entities = {};
     std::vector<CallEntity> call_entities = {};
