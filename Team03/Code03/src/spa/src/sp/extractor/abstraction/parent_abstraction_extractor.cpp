@@ -26,6 +26,7 @@ std::vector<ParentAbstraction> ParentAbstractionExtractor::Extract(
       parent_abstractions.emplace_back(lhs, rhs);
     }
   }
+
   for (const auto &if_entity : if_entities) {
     // Hacky way of retrieving the then and else statements,
     // Assumes that If Entity has 3 children, {if, then, else}
