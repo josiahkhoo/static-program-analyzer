@@ -148,7 +148,7 @@ void QueryParser::ParseClause() {
   }
   token_pos_++;
   Expect("that");
-  ParseFollow();
+  ParseFollows();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
@@ -156,7 +156,7 @@ void QueryParser::ParseClause() {
   }
 }
 
-void QueryParser::ParseFollow() {
+void QueryParser::ParseFollows() {
   if (CheckEnd() || !MatchString("Follows")) {
     return;
   }
@@ -164,7 +164,7 @@ void QueryParser::ParseFollow() {
   Expect("Follows");
 
   if (MatchKind(Token::ASTERISK)) {
-    return ParseFollowT();
+    return ParseFollowsT();
   }
 
   Expect(Token::LEFT_ROUND_BRACKET);
@@ -183,7 +183,7 @@ void QueryParser::ParseFollow() {
   query_string_builder_.AddQueryOperation(folCl);
 }
 
-void QueryParser::ParseFollowT() {
+void QueryParser::ParseFollowsT() {
   Expect(Token::ASTERISK);
 
   Expect(Token::LEFT_ROUND_BRACKET);
