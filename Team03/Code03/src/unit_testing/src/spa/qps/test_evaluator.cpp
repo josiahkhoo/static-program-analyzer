@@ -48,7 +48,7 @@ TEST_CASE("Query Select", "[Evaluator]") {
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   Select s = Select(syn);
-  QueryString qs = QueryString(s, {syn}, {});
+  QueryString qs = QueryString(s, {syn}, {});;
   std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();

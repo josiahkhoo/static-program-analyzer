@@ -7,7 +7,7 @@ TEST_CASE("Test construct 1 node: Select", "[Planner]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   Select s = Select(syn);
-  QueryString qs = QueryString(s, {syn}, {}, {});
+  QueryString qs = QueryString(s, {syn}, {});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
   REQUIRE(root->IsLeaf());
@@ -22,7 +22,7 @@ TEST_CASE("Test construct 1 node: Select & Follows", "[Planner]") {
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
       std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
-  QueryString qs = QueryString(s, {syn}, {f}, {});
+  QueryString qs = QueryString(s, {syn}, {f});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
   REQUIRE(root->IsLeaf());
@@ -76,7 +76,7 @@ TEST_CASE("Test query 1 node: Select & Follows", "[Planner]") {
   std::shared_ptr<FollowsClause> f =
       std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
 
-  QueryString qs = QueryString(s, {syn}, {f}, {});
+  QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();

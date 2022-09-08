@@ -4,10 +4,10 @@
 
 #include "common/clause/clause.h"
 
-AbstractionNode::AbstractionNode(std::shared_ptr<Clause> clause)
-    : QNode(), clause_(std::move(clause)) {}
+AbstractionNode::AbstractionNode(std::shared_ptr<QueryOperation> q_operation)
+    : QNode(), q_operation_(std::move(q_operation)) {}
 
 std::unordered_set<std::string> AbstractionNode::Fetch(
     const QueryablePkb &pkb) {
-  return clause_->Fetch(pkb);
+  return q_operation_->Fetch(pkb);
 }

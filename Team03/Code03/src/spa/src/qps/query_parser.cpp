@@ -151,7 +151,7 @@ void QueryParser::ParseClause() {
   ParseFollow();
   // Check for each clause type, append below new clauses
 
-  if (query_string_builder_.IsClauseEmpty()) {
+  if (query_string_builder_.IsEmpty()) {
     throw std::runtime_error("Expected clause");
   }
 }
@@ -180,7 +180,7 @@ void QueryParser::ParseFollow() {
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<FollowsClause> folCl =
       std::make_shared<FollowsClause>(stmtRef1, stmtRef2);
-  query_string_builder_.AddClause(folCl);
+  query_string_builder_.AddQueryOperation(folCl);
 }
 
 void QueryParser::ParseFollowT() {
@@ -200,7 +200,7 @@ void QueryParser::ParseFollowT() {
 
   std::shared_ptr<FollowsTClause> folCl =
       std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
-  query_string_builder_.AddClause(folCl);
+  query_string_builder_.AddQueryOperation(folCl);
 }
 
 void QueryParser::ParsePattern() {
@@ -226,5 +226,5 @@ void QueryParser::ParsePattern() {
   Expect(Token::RIGHT_ROUND_BRACKET);
 
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entityRef, exp);
-  query_string_builder_.AddPattern(ptn);
+  query_string_builder_.AddQueryOperation(ptn);
 }

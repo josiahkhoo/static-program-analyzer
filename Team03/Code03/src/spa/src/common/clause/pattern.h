@@ -2,6 +2,7 @@
 #define SPA_PATTERN_H
 
 #include "common/pair.h"
+#include "common/query_operation.h"
 #include "common/reference/entity_reference.h"
 
 struct Expression {
@@ -10,12 +11,14 @@ struct Expression {
   bool hasBackWildcard = false;
 };
 
-class Pattern {
+class Pattern : public QueryOperation {
  public:
   explicit Pattern(EntityReference entity, Expression expression);
 
   [[nodiscard]] const EntityReference &GetEntity() const;
   [[nodiscard]] const Expression &GetExpression() const;
+  [[nodiscard]] std::unordered_set<std::string> Fetch(
+      const QueryablePkb &queryable_pkb) const override;
 
  private:
   EntityReference entity_;

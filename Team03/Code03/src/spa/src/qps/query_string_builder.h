@@ -12,24 +12,22 @@ class QueryStringBuilder {
  public:
   QueryStringBuilder();
 
-  void AddDeclaration(const Synonym &declared_synonym);
+  void AddDeclaration(const Synonym& declared_synonym);
 
   void AddSelect(Select select_clause);
 
-  void AddClause(const std::shared_ptr<Clause>& such_that);
-
-  void AddPattern(const std::shared_ptr<Pattern>& pattern);
+  void AddQueryOperation(
+      const std::shared_ptr<QueryOperation>& query_operation);
 
   QueryString GetQueryString();
 
-  [[nodiscard]] Synonym GetSynonym(const std::string &identifier) const;
+  [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
 
-  bool IsClauseEmpty();
+  bool IsEmpty();
 
  private:
   std::vector<Synonym> declared_synonyms_;
-  std::vector<std::shared_ptr<Clause>> clauses_;
-  std::vector<std::shared_ptr<Pattern>> patterns_;
+  std::vector<std::shared_ptr<QueryOperation>> query_operations_;
   std::optional<Select> select_;
 };
 

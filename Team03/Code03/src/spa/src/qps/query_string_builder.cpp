@@ -13,13 +13,14 @@ void QueryStringBuilder::AddSelect(Select select_clause) {
   select_ = std::move(select_clause);
 }
 
-void QueryStringBuilder::AddClause(const std::shared_ptr<Clause>& such_that) {
-  clauses_.reserve(1);
-  clauses_.emplace_back(such_that);
+void QueryStringBuilder::AddQueryOperation(
+    const std::shared_ptr<QueryOperation>& query_operation) {
+  query_operations_.reserve(1);
+  query_operations_.emplace_back(query_operation);
 }
 
 QueryString QueryStringBuilder::GetQueryString() {
-  return QueryString(select_.value(), declared_synonyms_, clauses_, patterns_);
+  return QueryString(select_.value(), declared_synonyms_, query_operations_);
 }
 
 Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
@@ -31,8 +32,4 @@ Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
   throw std::runtime_error("Cannot find synonym matching given identifier");
 }
 
-void QueryStringBuilder::AddPattern(const std::shared_ptr<Pattern>& pattern) {
-  patterns_.push_back(pattern);
-}
-
-bool QueryStringBuilder::IsClauseEmpty() { return clauses_.empty(); }
+bool QueryStringBuilder::IsEmpty() { return query_operations_.empty(); }

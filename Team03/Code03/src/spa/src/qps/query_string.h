@@ -12,22 +12,19 @@
 
 class QueryString {
  public:
-  explicit QueryString(Select select, std::vector<Synonym> declared_synonyms,
-                       std::vector<std::shared_ptr<Clause>> clauses,
-                       std::vector<std::shared_ptr<Pattern>> patterns);
+  explicit QueryString(
+      Select select, std::vector<Synonym> declared_synonyms,
+      std::vector<std::shared_ptr<QueryOperation>> query_operations);
 
   [[nodiscard]] Select GetSelect() const;
 
   [[nodiscard]] const std::vector<Synonym> &GetSynonyms() const;
 
-  [[nodiscard]] const std::vector<std::shared_ptr<Clause>> &GetClauses() const;
-
-  [[nodiscard]] const std::vector<std::shared_ptr<Pattern>> &GetPatterns()
+  [[nodiscard]] std::vector<std::shared_ptr<QueryOperation>> GetQueryOperation()
       const;
 
  private:
-  std::vector<std::shared_ptr<Clause>> clauses_;
-  std::vector<std::shared_ptr<Pattern>> patterns_;
+  std::vector<std::shared_ptr<QueryOperation>> query_operations_;
   std::vector<Synonym> declared_synonyms_;
   Select select_;
 };

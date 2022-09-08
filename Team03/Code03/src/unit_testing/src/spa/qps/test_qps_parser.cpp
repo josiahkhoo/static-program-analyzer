@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "catch.hpp"
 #include "qps/query_parser.h"
 
@@ -47,9 +49,11 @@ TEST_CASE("Test 'Assign Select Follow' query", "[QPS Parser]") {
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSelect().GetSynonym() == syn);
-  REQUIRE(res.GetClauses().size() == 1);
-  REQUIRE(res.GetClauses()[0]->GetLeftHandSide() == f.GetLeftHandSide());
-  REQUIRE(res.GetClauses()[0]->GetRightHandSide() == f.GetRightHandSide());
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetLeftHandSide() == f.GetLeftHandSide());
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetRightHandSide() == f.GetRightHandSide());
 }
 
 TEST_CASE("Test 'Assign Select Pattern' query", "[QPS Parser]") {
@@ -71,11 +75,16 @@ TEST_CASE("Test 'Assign Select Pattern' query", "[QPS Parser]") {
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
-
-  REQUIRE(res.GetPatterns().size() == 1);
-  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
-  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
-  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                    ->GetExpression()
+                    .hasFrontWildcard);
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .toMatch == "b");
+  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                    ->GetExpression()
+                    .hasBackWildcard);
 }
 
 TEST_CASE("Test Pattern front wildcard query", "[QPS Parser]") {
@@ -98,10 +107,16 @@ TEST_CASE("Test Pattern front wildcard query", "[QPS Parser]") {
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
-  REQUIRE(res.GetPatterns().size() == 1);
-  REQUIRE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
-  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
-  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .hasFrontWildcard);
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .toMatch == "b");
+  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                    ->GetExpression()
+                    .hasBackWildcard);
 }
 
 TEST_CASE("Test Pattern front & back wildcard query", "[QPS Parser]") {
@@ -125,20 +140,24 @@ TEST_CASE("Test Pattern front & back wildcard query", "[QPS Parser]") {
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
-  REQUIRE(res.GetPatterns().size() == 1);
-  REQUIRE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
-  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
-  REQUIRE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .hasFrontWildcard);
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .toMatch == "b");
+  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+              ->GetExpression()
+              .hasBackWildcard);
 }
-
 
 TEST_CASE("Test 'End-less' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a")};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "assign"), Token(Token::IDENTIFIER, "a"),
+      Token(Token::SEMICOLON), Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "a")};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -156,22 +175,23 @@ TEST_CASE("Test missing Select query", "[QPS Parser]") {
                                 Token(Token::END)};
   REQUIRE_THROWS(qp.Parse(tokens_));
 }
+
 TEST_CASE("Test invalid Follows syntax", "[QPS Parser]") {
-    QueryParser qp = QueryParser();
-    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                  Token(Token::IDENTIFIER, "a"),
-                                  Token(Token::SEMICOLON),
-                                  Token(Token::IDENTIFIER, "Select"),
-                                  Token(Token::IDENTIFIER, "a"),
-                                  Token(Token::IDENTIFIER, "such"),
-                                  Token(Token::IDENTIFIER, "that"),
-                                  Token(Token::IDENTIFIER, "Follows"),
-                                  Token(Token::NUMBER, "1"),
-                                  Token(Token::COMMA),
-                                  Token(Token::IDENTIFIER, "a"),
-                                  Token(Token::RIGHT_ROUND_BRACKET),
-                                  Token(Token::END)};
-    REQUIRE_THROWS(qp.Parse(tokens_));
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Follows"),
+                                Token(Token::NUMBER, "1"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
 }
 
 TEST_CASE("Test invalid Pattern syntax", "[QPS Parser]") {
@@ -194,7 +214,6 @@ TEST_CASE("Test invalid Pattern syntax", "[QPS Parser]") {
                                 Token(Token::END)};
   REQUIRE_THROWS(qp.Parse(tokens_));
 }
-
 
 TEST_CASE("Test invalid Such That syntax", "[QPS Parser]") {
   QueryParser qp = QueryParser();

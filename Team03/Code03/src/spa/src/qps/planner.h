@@ -8,11 +8,11 @@ class Planner {
  public:
   explicit Planner();
 
-  [[nodiscard]] std::shared_ptr<QNode> Plan(const QueryString &q_string) const;
+  [[nodiscard]] std::shared_ptr<QNode> Plan(QueryString q_string) const;
 
  private:
   std::shared_ptr<QNode> BuildQTree(
-      std::vector<std::shared_ptr<Clause>> &clauses) const;
+      std::vector<std::shared_ptr<QueryOperation>> &q_operations) const;
 };
 
 #endif  // SPA_PLANNER_H
