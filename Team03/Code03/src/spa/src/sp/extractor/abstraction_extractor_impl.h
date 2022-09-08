@@ -17,13 +17,19 @@
 #include "common/entity/while_entity.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 
 class AbstractionExtractorImpl : public AbstractionExtractor {
  public:
   AbstractionExtractorImpl(const SubAbstractionExtractor<FollowsAbstraction>
                                &follows_abstraction_extractor,
                            const SubAbstractionExtractor<FollowsTAbstraction>
-                               &follows_t_abstraction_extractor);
+                               &follows_t_abstraction_extractor,
+                           const SubAbstractionExtractor<ParentAbstraction>
+                               &parent_abstraction_extractor,
+                           const SubAbstractionExtractor<ParentTAbstraction>
+                               &parent_t_abstraction_extractor);
 
   [[nodiscard]] AbstractionExtractorResult Extract(
       const std::vector<AssignEntity> &assign_entities,
@@ -42,6 +48,10 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       &follows_abstraction_extractor_;
   const SubAbstractionExtractor<FollowsTAbstraction>
       &follows_t_abstraction_extractor_;
+  const SubAbstractionExtractor<ParentAbstraction>
+      &parent_abstraction_extractor_;
+  const SubAbstractionExtractor<ParentTAbstraction>
+      &parent_t_abstraction_extractor_;
 
   [[nodiscard]] std::unordered_map<TNode, StatementEntity>
   GetTNodeStatementEntityMap(
