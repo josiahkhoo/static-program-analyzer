@@ -5,7 +5,9 @@
 
 class HasNodePointer {
  public:
-  virtual const TNode *GetNodePointer() const = 0;
+  /// Retrieves a node pointer associated with the implemented class.
+  /// \return Node pointer.
+  [[nodiscard]] virtual const TNode *GetNodePointer() const = 0;
 };
 
 #endif  // SPA_HAS_NODE_POINTER_H

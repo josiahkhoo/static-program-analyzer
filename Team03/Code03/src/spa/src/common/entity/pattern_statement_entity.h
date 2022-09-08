@@ -3,6 +3,8 @@
 
 #include "statement_entity.h"
 
+/// A statement entity that supports the pattern operation needs to subclass the
+/// Pattern Statement Entity.
 class PatternStatementEntity : public StatementEntity {
  public:
   /// Constructs a pattern statement entity.
