@@ -65,32 +65,32 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         TNode(6, TNode::Read, 4, {std::make_shared<TNode>(variable_node3)});
 
     // IF_ELSE_THEN NODE 2
-    TNode variable_node4 = TNode(3, TNode::Variable, 6, "x");
+    TNode variable_node4 = TNode(7, TNode::Variable, 6, "x");
     TNode read_node4 =
-        TNode(4, TNode::Read, 6, {std::make_shared<TNode>(variable_node2)});
+        TNode(8, TNode::Read, 6, {std::make_shared<TNode>(variable_node2)});
 
-    TNode variable_node5 = TNode(5, TNode::Variable, 7, "x");
+    TNode variable_node5 = TNode(9, TNode::Variable, 7, "x");
     TNode read_node5 =
-        TNode(6, TNode::Read, 7, {std::make_shared<TNode>(variable_node3)});
-    TNode if_cond_node2 = TNode(7, TNode::Equal, 5, {});
+        TNode(10, TNode::Read, 7, {std::make_shared<TNode>(variable_node3)});
+    TNode if_cond_node2 = TNode(11, TNode::Equal, 5, {});
     TNode then_node2 =
-        TNode(8, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
+        TNode(12, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
     TNode else_node2 =
-        TNode(9, TNode::StatementList, {std::make_shared<TNode>(read_node5)});
-    TNode if_else_then_node2 = TNode(10, TNode::IfElseThen, 5,
+        TNode(13, TNode::StatementList, {std::make_shared<TNode>(read_node5)});
+    TNode if_else_then_node2 = TNode(14, TNode::IfElseThen, 5,
                                      {std::make_shared<TNode>(if_cond_node2),
                                       std::make_shared<TNode>(then_node2),
                                       std::make_shared<TNode>(else_node2)});
 
     // IF_ELSE_THEN NODE 1
-    TNode if_cond_node = TNode(7, TNode::Equal, 1, {});
-    TNode then_node = TNode(8, TNode::StatementList,
+    TNode if_cond_node = TNode(15, TNode::Equal, 1, {});
+    TNode then_node = TNode(16, TNode::StatementList,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2)});
-    TNode else_node = TNode(9, TNode::StatementList,
+    TNode else_node = TNode(17, TNode::StatementList,
                             {std::make_shared<TNode>(read_node3),
                              std::make_shared<TNode>(if_else_then_node2)});
-    TNode if_else_then_node = TNode(10, TNode::IfElseThen, 1,
+    TNode if_else_then_node = TNode(18, TNode::IfElseThen, 1,
                                     {std::make_shared<TNode>(if_cond_node),
                                      std::make_shared<TNode>(then_node),
                                      std::make_shared<TNode>(else_node)});
@@ -174,23 +174,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
     TNode cond_node = TNode(7, TNode::Equal, 1, {});
 
     // WHILE NODE 2
-    TNode variable_node4 = TNode(5, TNode::Variable, 6, "x");
+    TNode variable_node4 = TNode(8, TNode::Variable, 6, "x");
     TNode read_node4 =
-        TNode(6, TNode::Read, 6, {std::make_shared<TNode>(variable_node3)});
-    TNode cond_node2 = TNode(7, TNode::Equal, 5, {});
+        TNode(9, TNode::Read, 6, {std::make_shared<TNode>(variable_node3)});
+    TNode cond_node2 = TNode(10, TNode::Equal, 5, {});
     TNode loop_node2 =
-        TNode(8, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
-    TNode while_node2 = TNode(9, TNode::While, 5,
+        TNode(11, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
+    TNode while_node2 = TNode(12, TNode::While, 5,
                               {std::make_shared<TNode>(cond_node2),
                                std::make_shared<TNode>(loop_node2)});
 
     // WHILE NODE 1
-    TNode loop_node = TNode(8, TNode::StatementList,
+    TNode loop_node = TNode(13, TNode::StatementList,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2),
                              std::make_shared<TNode>(read_node3),
                              std::make_shared<TNode>(while_node2)});
-    TNode while_node = TNode(9, TNode::While, 1,
+    TNode while_node = TNode(14, TNode::While, 1,
                              {std::make_shared<TNode>(cond_node),
                               std::make_shared<TNode>(loop_node)});
 
@@ -262,30 +262,30 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
     TNode cond_node = TNode(7, TNode::Equal, 1, {});
 
     // IF NODE
-    TNode variable_node4 = TNode(3, TNode::Variable, 6, "x");
+    TNode variable_node4 = TNode(8, TNode::Variable, 6, "x");
     TNode read_node4 =
-        TNode(4, TNode::Read, 6, {std::make_shared<TNode>(variable_node2)});
+        TNode(9, TNode::Read, 6, {std::make_shared<TNode>(variable_node2)});
 
-    TNode variable_node5 = TNode(5, TNode::Variable, 7, "x");
+    TNode variable_node5 = TNode(10, TNode::Variable, 7, "x");
     TNode read_node5 =
-        TNode(6, TNode::Read, 7, {std::make_shared<TNode>(variable_node3)});
-    TNode if_cond_node = TNode(7, TNode::Equal, 5, {});
+        TNode(11, TNode::Read, 7, {std::make_shared<TNode>(variable_node3)});
+    TNode if_cond_node = TNode(12, TNode::Equal, 5, {});
     TNode then_node =
-        TNode(8, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
+        TNode(13, TNode::StatementList, {std::make_shared<TNode>(read_node4)});
     TNode else_node =
-        TNode(9, TNode::StatementList, {std::make_shared<TNode>(read_node5)});
-    TNode if_else_then_node = TNode(10, TNode::IfElseThen, 5,
+        TNode(14, TNode::StatementList, {std::make_shared<TNode>(read_node5)});
+    TNode if_else_then_node = TNode(15, TNode::IfElseThen, 5,
                                     {std::make_shared<TNode>(if_cond_node),
                                      std::make_shared<TNode>(then_node),
                                      std::make_shared<TNode>(else_node)});
 
     // WHILE NODE 1
-    TNode loop_node = TNode(8, TNode::StatementList,
+    TNode loop_node = TNode(16, TNode::StatementList,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2),
                              std::make_shared<TNode>(read_node3),
                              std::make_shared<TNode>(if_else_then_node)});
-    TNode while_node = TNode(9, TNode::While, 1,
+    TNode while_node = TNode(17, TNode::While, 1,
                              {std::make_shared<TNode>(cond_node),
                               std::make_shared<TNode>(loop_node)});
 
@@ -368,29 +368,29 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         TNode(6, TNode::Read, 4, {std::make_shared<TNode>(variable_node3)});
 
     // WHILE NODE
-    TNode variable_node4 = TNode(5, TNode::Variable, 6, "x");
-    TNode variable_node5 = TNode(5, TNode::Variable, 7, "x");
+    TNode variable_node4 = TNode(7, TNode::Variable, 6, "x");
+    TNode variable_node5 = TNode(8, TNode::Variable, 7, "x");
     TNode read_node4 =
-        TNode(6, TNode::Read, 6, {std::make_shared<TNode>(variable_node4)});
+        TNode(9, TNode::Read, 6, {std::make_shared<TNode>(variable_node4)});
     TNode read_node5 =
-        TNode(6, TNode::Read, 7, {std::make_shared<TNode>(variable_node5)});
-    TNode cond_node = TNode(7, TNode::Equal, 5, {});
-    TNode loop_node = TNode(8, TNode::StatementList,
+        TNode(10, TNode::Read, 7, {std::make_shared<TNode>(variable_node5)});
+    TNode cond_node = TNode(11, TNode::Equal, 5, {});
+    TNode loop_node = TNode(12, TNode::StatementList,
                             {std::make_shared<TNode>(read_node4),
                              std::make_shared<TNode>(read_node5)});
-    TNode while_node = TNode(9, TNode::While, 5,
+    TNode while_node = TNode(13, TNode::While, 5,
                              {std::make_shared<TNode>(cond_node),
                               std::make_shared<TNode>(loop_node)});
 
     // IF_ELSE_THEN NODE
-    TNode if_cond_node = TNode(7, TNode::Equal, 1, {});
-    TNode then_node = TNode(8, TNode::StatementList,
+    TNode if_cond_node = TNode(14, TNode::Equal, 1, {});
+    TNode then_node = TNode(15, TNode::StatementList,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2)});
-    TNode else_node = TNode(9, TNode::StatementList,
+    TNode else_node = TNode(16, TNode::StatementList,
                             {std::make_shared<TNode>(read_node3),
                              std::make_shared<TNode>(while_node)});
-    TNode if_else_then_node = TNode(10, TNode::IfElseThen, 1,
+    TNode if_else_then_node = TNode(17, TNode::IfElseThen, 1,
                                     {std::make_shared<TNode>(if_cond_node),
                                      std::make_shared<TNode>(then_node),
                                      std::make_shared<TNode>(else_node)});
