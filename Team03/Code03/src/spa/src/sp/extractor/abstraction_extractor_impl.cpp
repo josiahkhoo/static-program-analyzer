@@ -4,9 +4,15 @@ AbstractionExtractorImpl::AbstractionExtractorImpl(
     const SubAbstractionExtractor<FollowsAbstraction>
         &follows_abstraction_extractor,
     const SubAbstractionExtractor<FollowsTAbstraction>
-        &follows_t_abstraction_extractor)
+        &follows_t_abstraction_extractor,
+    const SubAbstractionExtractor<ParentAbstraction>
+        &parent_abstraction_extractor,
+    const SubAbstractionExtractor<ParentTAbstraction>
+        &parent_t_abstraction_extractor)
     : follows_abstraction_extractor_(follows_abstraction_extractor),
-      follows_t_abstraction_extractor_(follows_t_abstraction_extractor) {}
+      follows_t_abstraction_extractor_(follows_t_abstraction_extractor),
+      parent_abstraction_extractor_(parent_abstraction_extractor),
+      parent_t_abstraction_extractor_(parent_t_abstraction_extractor){}
 
 AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity> &assign_entities,
@@ -40,7 +46,22 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap);
 
-  return {follows_abstractions, follows_t_abstractions, {}, {}, {}, {}};
+  std::vector<ParentAbstraction> parent_abstractions =
+      parent_abstraction_extractor_.Extract(
+          assign_entities, call_entities, constant_entities, if_entities,
+          print_entities, procedure_entities, read_entities, statement_entities,
+          variable_entities, while_entities, t_node_stmt_ent_umap,
+          t_node_var_ent_umap, t_node_const_ent_umap);
+
+  std::vector<ParentTAbstraction> parent_t_abstractions =
+      parent_t_abstraction_extractor_.Extract(
+          assign_entities, call_entities, constant_entities, if_entities,
+          print_entities, procedure_entities, read_entities, statement_entities,
+          variable_entities, while_entities, t_node_stmt_ent_umap,
+          t_node_var_ent_umap, t_node_const_ent_umap);
+
+  return {follows_abstractions, follows_t_abstractions, {},
+          parent_abstractions, parent_t_abstractions, {}};
 }
 
 std::unordered_map<TNode, StatementEntity>
