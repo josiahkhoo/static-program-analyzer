@@ -5,11 +5,11 @@ PatternStatementEntity::PatternStatementEntity(const TNode& node,
     : StatementEntity(node, statement_number) {}
 
 std::string PatternStatementEntity::GetLeftHandSidePattern() const {
-  return node_.GetChildren()[0]->GetStringValue();
+  return GetPatternSourceNode().GetChildren()[0]->GetStringValue();
 }
 
 std::string PatternStatementEntity::GetRightHandSidePattern() const {
-  return RecursivelyFlatten(*node_.GetChildren()[1]);
+  return RecursivelyFlatten(*GetPatternSourceNode().GetChildren()[1]);
 }
 
 std::string PatternStatementEntity::RecursivelyFlatten(

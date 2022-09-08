@@ -21,6 +21,9 @@ class PatternStatementEntity : public StatementEntity {
   /// \return String representation.
   [[nodiscard]] std::string GetRightHandSidePattern() const;
 
+  /// Retrieves the source node used in pattern.
+  [[nodiscard]] virtual const TNode& GetPatternSourceNode() const = 0;
+
  private:
   std::string RecursivelyFlatten(const TNode& node) const;
 };
