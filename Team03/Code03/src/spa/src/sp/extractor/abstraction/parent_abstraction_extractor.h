@@ -22,7 +22,6 @@ class ParentAbstractionExtractor
       std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
       std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap)
       const override;
-
 };
 
 #endif  // SPA_PARENT_ABSTRACTION_EXTRACTOR_H

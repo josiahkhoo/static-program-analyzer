@@ -19,10 +19,12 @@ std::vector<ParentAbstraction> ParentAbstractionExtractor::Extract(
   for (const auto &while_entity : while_entities) {
     // Hacky way of retrieving while statements children, by assuming that it
     // has 2 children: {while_cond, stmt_list}
-    auto lhs = t_node_stmt_ent_umap.find(*while_entity.GetNodePointer())->second;
-    auto children = while_entity.GetNodePointer()->GetChildren()[1]->GetChildren();
-    for (int i = 0; i < (int)children.size() - 1; i++) {
-      auto rhs = t_node_stmt_ent_umap.find(*children[i])->second;
+    auto lhs =
+        t_node_stmt_ent_umap.find(*while_entity.GetNodePointer())->second;
+    auto children =
+        while_entity.GetNodePointer()->GetChildren()[1]->GetChildren();
+    for (auto &i : children) {
+      auto rhs = t_node_stmt_ent_umap.find(*i)->second;
       parent_abstractions.emplace_back(lhs, rhs);
     }
   }
@@ -30,17 +32,18 @@ std::vector<ParentAbstraction> ParentAbstractionExtractor::Extract(
   for (const auto &if_entity : if_entities) {
     // Hacky way of retrieving the then and else statements,
     // Assumes that If Entity has 3 children, {if, then, else}
+
     auto lhs = t_node_stmt_ent_umap.find(*if_entity.GetNodePointer())->second;
     std::vector<std::shared_ptr<TNode>> then_statements =
         if_entity.GetNodePointer()->GetChildren()[1]->GetChildren();
-    for (int i = 0; i < (int)then_statements.size() - 1; i++) {
-      auto rhs = t_node_stmt_ent_umap.find(*then_statements[i])->second;
+    for (auto &then_statement : then_statements) {
+      auto rhs = t_node_stmt_ent_umap.find(*then_statement)->second;
       parent_abstractions.emplace_back(lhs, rhs);
     }
     std::vector<std::shared_ptr<TNode>> else_statements =
         if_entity.GetNodePointer()->GetChildren()[2]->GetChildren();
-    for (int i = 0; i < (int)else_statements.size() - 1; i++) {
-      auto rhs = t_node_stmt_ent_umap.find(*else_statements[i])->second;
+    for (auto &else_statement : else_statements) {
+      auto rhs = t_node_stmt_ent_umap.find(*else_statement)->second;
       parent_abstractions.emplace_back(lhs, rhs);
     }
   }

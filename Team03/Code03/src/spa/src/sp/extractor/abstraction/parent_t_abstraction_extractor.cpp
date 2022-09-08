@@ -19,9 +19,12 @@ std::vector<ParentTAbstraction> ParentTAbstractionExtractor::Extract(
   for (const auto &while_entity : while_entities) {
     // Hacky way of retrieving while statements children, by assuming that it
     // has 2 children: {while_cond, stmt_list}
-    auto lhs = t_node_stmt_ent_umap.find(*while_entity.GetNodePointer())->second;
-    std::vector<std::shared_ptr<TNode>> children = while_entity.GetNodePointer()->GetChildren()[1]->GetChildren();
-    RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs, children);
+    auto lhs =
+        t_node_stmt_ent_umap.find(*while_entity.GetNodePointer())->second;
+    std::vector<std::shared_ptr<TNode>> children =
+        while_entity.GetNodePointer()->GetChildren()[1]->GetChildren();
+    RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+                              children);
   }
   for (const auto &if_entity : if_entities) {
     // Hacky way of retrieving the then and else statements,
@@ -32,7 +35,7 @@ std::vector<ParentTAbstraction> ParentTAbstractionExtractor::Extract(
     std::vector<std::shared_ptr<TNode>> else_statements =
         if_entity.GetNodePointer()->GetChildren()[2]->GetChildren();
     RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-         then_statements, else_statements);
+                           then_statements, else_statements);
   }
   return parent_t_abstractions;
 }
@@ -43,33 +46,36 @@ void ParentTAbstractionExtractor::RetrieveFromIfChildren(
     StatementEntity &lhs,
     const std::vector<std::shared_ptr<TNode>> &then_statements,
     const std::vector<std::shared_ptr<TNode>> &else_statements) const {
-  //Recursively traverse down checking whether there is 'while' or 'if'
-  for (int i = 0; i < (int)then_statements.size() - 1; i++) {
-    if (then_statements[i]->GetType() == TNode::While) {
-      RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-                                then_statements[i]->GetChildren()[1]->GetChildren());
-    }
-    if (then_statements[i]->GetType() == TNode::IfElseThen) {
-      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-                             else_statements[i]->GetChildren()[1]->GetChildren(),
-                             else_statements[i]->GetChildren()[2]->GetChildren());
-    }
-    auto rhs = t_node_stmt_ent_umap.find(*then_statements[i])->second;
+  // Recursively traverse down checking whether there is 'while' or 'if'
+  for (const auto &then_statement : then_statements) {
+    auto rhs = t_node_stmt_ent_umap.find(*then_statement)->second;
     parent_t_abstractions.emplace_back(lhs, rhs);
+    if (then_statement->GetType() == TNode::While) {
+      RetrieveFromWhileChildren(
+          t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+          then_statement->GetChildren()[1]->GetChildren());
+    }
+    if (then_statement->GetType() == TNode::IfElseThen) {
+      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+                             then_statement->GetChildren()[1]->GetChildren(),
+                             then_statement->GetChildren()[2]->GetChildren());
+    }
   }
 
-  for (int i = 0; i < (int)else_statements.size() - 1; i++) {
-    if (else_statements[i]->GetType() == TNode::While) {
-      RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-                                else_statements[i]->GetChildren()[1]->GetChildren());
-    }
-    if (else_statements[i]->GetType() == TNode::IfElseThen) {
-      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-                             else_statements[i]->GetChildren()[1]->GetChildren(),
-                             else_statements[i]->GetChildren()[2]->GetChildren());
-    }
-    auto rhs = t_node_stmt_ent_umap.find(*else_statements[i])->second;
+  for (const auto &else_statement : else_statements) {
+    auto rhs = t_node_stmt_ent_umap.find(*else_statement)->second;
     parent_t_abstractions.emplace_back(lhs, rhs);
+
+    if (else_statement->GetType() == TNode::While) {
+      RetrieveFromWhileChildren(
+          t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+          else_statement->GetChildren()[1]->GetChildren());
+    }
+    if (else_statement->GetType() == TNode::IfElseThen) {
+      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+                             else_statement->GetChildren()[1]->GetChildren(),
+                             else_statement->GetChildren()[2]->GetChildren());
+    }
   }
 }
 
@@ -78,18 +84,19 @@ void ParentTAbstractionExtractor::RetrieveFromWhileChildren(
     std::vector<ParentTAbstraction> &parent_t_abstractions,
     StatementEntity &lhs,
     const std::vector<std::shared_ptr<TNode>> &children) const {
-  //Recursively traverse down checking whether there is 'while' or 'if'
-  for (int i = 0; i < (int)children.size() - 1; i++) {
-    if (children[i]->GetType() == TNode::While) {
-      RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-          children[i]->GetChildren()[1]->GetChildren());
-    }
-    if (children[i]->GetType() == TNode::IfElseThen) {
-      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
-                                children[i]->GetChildren()[1]->GetChildren(),
-                                children[i]->GetChildren()[2]->GetChildren());
-    }
-    auto rhs = t_node_stmt_ent_umap.find(*children[i])->second;
+  // Recursively traverse down checking whether there is 'while' or 'if'
+  for (const auto &i : children) {
+    auto rhs = t_node_stmt_ent_umap.find(*i)->second;
     parent_t_abstractions.emplace_back(lhs, rhs);
+
+    if (i->GetType() == TNode::While) {
+      RetrieveFromWhileChildren(t_node_stmt_ent_umap, parent_t_abstractions,
+                                lhs, i->GetChildren()[1]->GetChildren());
+    }
+    if (i->GetType() == TNode::IfElseThen) {
+      RetrieveFromIfChildren(t_node_stmt_ent_umap, parent_t_abstractions, lhs,
+                             i->GetChildren()[1]->GetChildren(),
+                             i->GetChildren()[2]->GetChildren());
+    }
   }
 }
