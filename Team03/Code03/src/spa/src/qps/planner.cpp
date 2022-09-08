@@ -8,7 +8,8 @@ Planner::Planner() = default;
 
 std::shared_ptr<QNode> Planner::Plan(QueryString q_string) const {
   Select select_clause = q_string.GetSelect();
-  std::vector<std::shared_ptr<QueryOperation>> q_operations = q_string.GetQueryOperation();
+  std::vector<std::shared_ptr<QueryOperation>> q_operations =
+      q_string.GetQueryOperation();
 
   if (q_operations.empty()) {
     return std::make_shared<EntityNode>(select_clause);
