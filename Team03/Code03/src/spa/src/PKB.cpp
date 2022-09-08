@@ -177,3 +177,17 @@ std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
   }
   return result;
 }
+
+std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
+                                                  Expression exp) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
+                                                  Expression exp) const {
+  return {};
+}
