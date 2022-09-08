@@ -5,7 +5,7 @@
 
 Token::Token(Token::Kind kind) : kind_(kind) { assert(!CanHoldValue(kind)); }
 
-Token::Token(Token::Kind kind, std::string value) : kind_(kind) {
+Token::Token(Token::Kind kind, const std::string& value) : kind_(kind) {
   assert(CanHoldValue(kind));
   value_.emplace(value);
 }

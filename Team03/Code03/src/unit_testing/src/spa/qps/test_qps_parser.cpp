@@ -70,10 +70,69 @@ TEST_CASE("Test 'Assign Select Pattern' query", "[QPS Parser]") {
                                 Token(Token::RIGHT_ROUND_BRACKET),
                                 Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
+
+
+  REQUIRE(res.GetPatterns().size() == 1);
+  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
+  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
+  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
+}
+
+TEST_CASE("Test Pattern front wildcard query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  REQUIRE(res.GetPatterns().size() == 1);
+  REQUIRE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
+  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
+  REQUIRE_FALSE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
+}
+
+TEST_CASE("Test Pattern front & back wildcard query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  REQUIRE(res.GetPatterns().size() == 1);
+  REQUIRE(res.GetPatterns()[0]->GetExpression().hasFrontWildcard);
+  REQUIRE(res.GetPatterns()[0]->GetExpression().toMatch == "b");
+  REQUIRE(res.GetPatterns()[0]->GetExpression().hasBackWildcard);
 }
 
 
-TEST_CASE("Test 'End'less query", "[QPS Parser]") {
+TEST_CASE("Test 'End-less' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
@@ -94,6 +153,63 @@ TEST_CASE("Test missing Select query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+TEST_CASE("Test invalid Follows syntax", "[QPS Parser]") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "such"),
+                                  Token(Token::IDENTIFIER, "that"),
+                                  Token(Token::IDENTIFIER, "Follows"),
+                                  Token(Token::NUMBER, "1"),
+                                  Token(Token::COMMA),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    qp.Parse(tokens_);
+    REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Test invalid Pattern syntax", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+
+TEST_CASE("Test invalid Such That syntax", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::NUMBER, "1"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
                                 Token(Token::END)};
   REQUIRE_THROWS(qp.Parse(tokens_));
 }

@@ -16,13 +16,15 @@ class QueryParser : public Parser<QueryString> {
   std::vector<Token> tokens_;
   QueryStringBuilder query_string_builder_;
 
-  Token Peek(int pos);
+  Token Peek();
 
   bool MatchKind(Token::Kind kind);
 
   bool MatchString(const std::string &s);
 
   bool MatchStmtRef();
+
+  bool CheckEnd();
 
   void Expect(Token::Kind kind);
 

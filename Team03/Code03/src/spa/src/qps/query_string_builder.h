@@ -16,18 +16,20 @@ class QueryStringBuilder {
 
   void AddSelect(Select select_clause);
 
-  void AddClause(std::shared_ptr<Clause> such_that);
+  void AddClause(const std::shared_ptr<Clause>& such_that);
 
-  void AddPattern(std::shared_ptr<Pattern> pattern);
+  void AddPattern(const std::shared_ptr<Pattern>& pattern);
 
   QueryString GetQueryString();
 
   [[nodiscard]] Synonym GetSynonym(const std::string &identifier) const;
 
+  bool IsClauseEmpty();
+
  private:
   std::vector<Synonym> declared_synonyms_;
-  std::vector<std::shared_ptr<Clause>> such_that_;
-  std::vector<std::shared_ptr<Pattern>> pattern_;
+  std::vector<std::shared_ptr<Clause>> clauses_;
+  std::vector<std::shared_ptr<Pattern>> patterns_;
   std::optional<Select> select_;
 };
 

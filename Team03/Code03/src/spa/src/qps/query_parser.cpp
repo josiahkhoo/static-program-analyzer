@@ -13,36 +13,32 @@ QueryParser::QueryParser() {
 };
 
 QueryString QueryParser::Parse(std::vector<Token> tokens) {
-  try {
-    tokens_ = tokens;
-    ParseDeclaration();
-    ParseSelect();
-    ParseClause();
-    ParsePattern();
-  } catch (const std::runtime_error &e_) {
-    std::cout << e_.what();
-  }
+  tokens_ = tokens;
+  ParseDeclaration();
+  ParseSelect();
+  ParseClause();
+  ParsePattern();
   return query_string_builder_.GetQueryString();
 }
 
-Token QueryParser::Peek(int pos) {
-  if (pos >= tokens_.size()) {
+Token QueryParser::Peek() {
+  if (token_pos_ >= tokens_.size()) {
     throw std::runtime_error("No more tokens left to Peek");
   }
-  return tokens_[pos];
+  return tokens_[token_pos_];
 }
 
-bool QueryParser::MatchKind(Token::Kind kind) {
-  return Peek(token_pos_).Is(kind);
-}
+bool QueryParser::MatchKind(Token::Kind kind) { return Peek().Is(kind); }
 
 bool QueryParser::MatchString(const std::string &s) {
-  Token next = Peek(token_pos_);
+  Token next = Peek();
   if (next.IsNot(Token::IDENTIFIER)) {
     return false;
   }
   return (next.GetValue() == s);
 }
+
+bool QueryParser::CheckEnd() { return token_pos_ == tokens_.size(); }
 
 bool QueryParser::MatchStmtRef() {
   return MatchKind(Token::IDENTIFIER) || MatchKind(Token::UNDERSCORE) ||
@@ -70,13 +66,12 @@ StatementReference QueryParser::ExtractStmtRef() {
 
   if (MatchKind(Token::IDENTIFIER)) {
     // Checks current declared synonyms to do matching
-    Synonym synonym =
-        query_string_builder_.GetSynonym(Peek(token_pos_).GetValue());
+    Synonym synonym = query_string_builder_.GetSynonym(Peek().GetValue());
     statement_reference = StatementReference(synonym);
   } else if (MatchKind(Token::UNDERSCORE)) {
     statement_reference = StatementReference();
   } else if (MatchKind(Token::NUMBER)) {
-    statement_reference = StatementReference(stoi(Peek(token_pos_).GetValue()));
+    statement_reference = StatementReference(stoi(Peek().GetValue()));
   } else {
     throw std::runtime_error("Expected a stmtRef");
   }
@@ -92,7 +87,7 @@ EntityReference QueryParser::ExtractEntityRef() {
     entity_reference = EntityReference();
   } else if (MatchKind(Token::INVERTED_COMMAS)) {
     token_pos_++;
-    Token next = Peek(token_pos_);
+    Token next = Peek();
     entity_reference = EntityReference(next.GetValue());
     token_pos_++;
     Expect(Token::INVERTED_COMMAS);
@@ -110,6 +105,7 @@ Expression QueryParser::ExtractExpression() {
     exp.hasFrontWildcard = true;
     token_pos_++;
   }
+
   EntityReference matchRef = ExtractEntityRef();
   exp.toMatch = matchRef.GetIdentifier();
 
@@ -122,9 +118,9 @@ Expression QueryParser::ExtractExpression() {
 }
 
 void QueryParser::ParseDeclaration() {
-  Token next = Peek(token_pos_);
+  Token next = Peek();
   Expect("assign");
-  next = Peek(token_pos_);
+  next = Peek();
   Expect(Token::IDENTIFIER);
   Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
   Expect(Token::SEMICOLON);
@@ -132,9 +128,12 @@ void QueryParser::ParseDeclaration() {
 }
 
 void QueryParser::ParseSelect() {
-  Token next = Peek(token_pos_);
+  if (CheckEnd()) {
+    return;
+  }
+  Token next = Peek();
   Expect("Select");
-  next = Peek(token_pos_);
+  next = Peek();
   Expect(Token::IDENTIFIER);
 
   Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
@@ -144,17 +143,21 @@ void QueryParser::ParseSelect() {
 }
 
 void QueryParser::ParseClause() {
-  if (!MatchString("such")) {
+  if (CheckEnd() || !MatchString("such")) {
     return;
   }
   token_pos_++;
   Expect("that");
   ParseFollow();
   // Check for each clause type, append below new clauses
+
+  if (query_string_builder_.IsClauseEmpty()) {
+    throw std::runtime_error("Expected clause");
+  }
 }
 
 void QueryParser::ParseFollow() {
-  if (!MatchString("Follows")) {
+  if (CheckEnd() || !MatchString("Follows")) {
     return;
   }
 
@@ -201,14 +204,14 @@ void QueryParser::ParseFollowT() {
 }
 
 void QueryParser::ParsePattern() {
-  if (!MatchString("pattern")) {
+  if (CheckEnd() || !MatchString("pattern")) {
     return;
   }
 
   Expect(Token::IDENTIFIER);
 
   // Validates if assign-entity was captured
-  Token next = Peek(token_pos_);
+  Token next = Peek();
   Expect(Token::IDENTIFIER);
   Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
 
