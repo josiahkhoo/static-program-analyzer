@@ -36,32 +36,32 @@ TEST_CASE("Test query 1 node: Select & Follows", "[Planner]") {
       return {"1"};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllFollow(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
         EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllFollowBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsBy(
         EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryFollow(
+    [[nodiscard]] std::unordered_set<std::string> QueryFollows(
         int statement_number, EntityType type) const override {
       return {"1"};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowsBy(
         int statement_number, EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowT(
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowsT(
         int statement_number, EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryFollowTBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryFollowsTBy(
         int statement_number, EntityType type) const override {
       return {};
     }
