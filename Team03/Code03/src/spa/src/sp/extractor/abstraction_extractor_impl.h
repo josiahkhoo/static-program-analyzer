@@ -17,6 +17,8 @@
 #include "common/entity/while_entity.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 
 class AbstractionExtractorImpl : public AbstractionExtractor {
  public:
