@@ -171,7 +171,6 @@ TEST_CASE("Test invalid Follows syntax", "[QPS Parser]") {
                                   Token(Token::IDENTIFIER, "a"),
                                   Token(Token::RIGHT_ROUND_BRACKET),
                                   Token(Token::END)};
-    qp.Parse(tokens_);
     REQUIRE_THROWS(qp.Parse(tokens_));
 }
 
