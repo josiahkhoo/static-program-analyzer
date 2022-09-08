@@ -90,8 +90,7 @@ TEST_CASE("Test construct 1 node: Select & Pattern", "[Planner]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.toMatch = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
   QueryString qs = QueryString(s, {syn}, {ptn});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
