@@ -45,8 +45,7 @@ TEST_CASE("ParentAbstraction Extractor", "[ParentAbstractionExtractor]") {
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
 
     std::vector<ParentAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {}, {},
-        {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
+        {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
         stmt_umap, var_umap, const_umap);
 
     REQUIRE(abstractions.empty());
@@ -68,12 +67,12 @@ TEST_CASE("ParentAbstraction Extractor", "[ParentAbstractionExtractor]") {
     TNode then_node = TNode(8, TNode::StatementList,
                             {std::make_shared<TNode>(read_node1),
                              std::make_shared<TNode>(read_node2)});
-    TNode else_node = TNode(9, TNode::StatementList,
-                            {std::make_shared<TNode>(read_node3)});
-    TNode if_else_then_node = TNode(
-        10, TNode::IfElseThen, 1,
-        {std::make_shared<TNode>(if_cond_node), std::make_shared<TNode>(then_node),
-         std::make_shared<TNode>(else_node)});
+    TNode else_node =
+        TNode(9, TNode::StatementList, {std::make_shared<TNode>(read_node3)});
+    TNode if_else_then_node = TNode(10, TNode::IfElseThen, 1,
+                                    {std::make_shared<TNode>(if_cond_node),
+                                     std::make_shared<TNode>(then_node),
+                                     std::make_shared<TNode>(else_node)});
 
     VariableEntity v1 =
         VariableEntity(variable_node1, variable_node1.GetStringValue());
