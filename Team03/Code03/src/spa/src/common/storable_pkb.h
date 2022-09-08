@@ -18,27 +18,27 @@
 
 class StorablePkb {
  public:
-  virtual void store(std::vector<AssignEntity> entities) = 0;
+  virtual void Store(std::vector<AssignEntity> entities) = 0;
 
-  virtual void store(std::vector<CallEntity> entities) = 0;
+  virtual void Store(std::vector<CallEntity> entities) = 0;
 
-  virtual void store(std::vector<ConstantEntity> entities) = 0;
+  virtual void Store(std::vector<ConstantEntity> entities) = 0;
 
-  virtual void store(std::vector<IfEntity> entities) = 0;
+  virtual void Store(std::vector<IfEntity> entities) = 0;
 
-  virtual void store(std::vector<PrintEntity> entities) = 0;
+  virtual void Store(std::vector<PrintEntity> entities) = 0;
 
-  virtual void store(std::vector<ProcedureEntity> entities) = 0;
+  virtual void Store(std::vector<ProcedureEntity> entities) = 0;
 
-  virtual void store(std::vector<ReadEntity> entities) = 0;
+  virtual void Store(std::vector<ReadEntity> entities) = 0;
 
-  virtual void store(std::vector<VariableEntity> entities) = 0;
+  virtual void Store(std::vector<VariableEntity> entities) = 0;
 
-  virtual void store(std::vector<WhileEntity> entities) = 0;
+  virtual void Store(std::vector<WhileEntity> entities) = 0;
 
-  virtual void store(std::vector<FollowsAbstraction> abstractions) = 0;
+  virtual void Store(std::vector<FollowsAbstraction> abstractions) = 0;
 
-  virtual void store(std::vector<FollowsTAbstraction> abstractions) = 0;
+  virtual void Store(std::vector<FollowsTAbstraction> abstractions) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H

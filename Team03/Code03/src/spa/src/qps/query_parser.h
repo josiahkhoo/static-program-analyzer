@@ -36,7 +36,7 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseClause();
 
-  void ParseFollow();
+  void ParseFollows();
 
   void ParseFollowT();
 

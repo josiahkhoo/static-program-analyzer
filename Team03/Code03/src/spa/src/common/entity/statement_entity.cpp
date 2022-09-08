@@ -1,7 +1,7 @@
 #include "statement_entity.h"
 
-StatementEntity::StatementEntity(const TNode &node, int statement_number_)
-    : Entity(node), statement_number_(statement_number_) {}
+StatementEntity::StatementEntity(const TNode &node, int statement_number)
+    : Entity(node), statement_number_(statement_number) {}
 
 int StatementEntity::GetStatementNumber() const { return statement_number_; }
 

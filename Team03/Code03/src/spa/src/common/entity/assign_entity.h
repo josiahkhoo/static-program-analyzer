@@ -2,11 +2,12 @@
 #define SPA_ASSIGN_ENTITY_H
 
 #include "entity.h"
-#include "statement_entity.h"
+#include "pattern_statement_entity.h"
 
-class AssignEntity : public StatementEntity {
+class AssignEntity : public PatternStatementEntity {
  public:
-  explicit AssignEntity(const TNode &node, int line_number);
+  explicit AssignEntity(const TNode& node, int line_number);
+  [[nodiscard]] const TNode& GetPatternSourceNode() const override;
 };
 
 #endif  // SPA_ASSIGN_ENTITY_H
