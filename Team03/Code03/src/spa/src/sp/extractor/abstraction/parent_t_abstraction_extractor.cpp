@@ -50,7 +50,7 @@ void ParentTAbstractionExtractor::RetrieveFromIfChildren(
   for (const auto &then_statement : then_statements) {
     auto rhs = t_node_stmt_ent_umap.find(*then_statement)->second;
     parent_t_abstractions.emplace_back(lhs, rhs);
-    
+
     if (then_statement->GetType() == TNode::While) {
       RetrieveFromWhileChildren(
           t_node_stmt_ent_umap, parent_t_abstractions, lhs,
