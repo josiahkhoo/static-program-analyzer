@@ -1,5 +1,7 @@
 #include "pattern_statement_entity.h"
 
+#include <cassert>
+
 PatternStatementEntity::PatternStatementEntity(const TNode& node,
                                                int statement_number)
     : StatementEntity(node, statement_number) {}

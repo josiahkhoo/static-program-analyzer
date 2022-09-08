@@ -25,7 +25,7 @@ class PatternStatementEntity : public StatementEntity {
   [[nodiscard]] virtual const TNode& GetPatternSourceNode() const = 0;
 
  private:
-  std::string RecursivelyFlatten(const TNode& node) const;
+  [[nodiscard]] std::string RecursivelyFlatten(const TNode& node) const;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_COMMON_ENTITY_PATTERN_STATEMENT_ENTITY_H_
