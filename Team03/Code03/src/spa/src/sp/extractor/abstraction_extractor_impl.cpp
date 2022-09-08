@@ -12,7 +12,7 @@ AbstractionExtractorImpl::AbstractionExtractorImpl(
     : follows_abstraction_extractor_(follows_abstraction_extractor),
       follows_t_abstraction_extractor_(follows_t_abstraction_extractor),
       parent_abstraction_extractor_(parent_abstraction_extractor),
-      parent_t_abstraction_extractor_(parent_t_abstraction_extractor){}
+      parent_t_abstraction_extractor_(parent_t_abstraction_extractor) {}
 
 AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity> &assign_entities,
@@ -61,7 +61,7 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           t_node_var_ent_umap, t_node_const_ent_umap);
 
   return {follows_abstractions, follows_t_abstractions, {},
-          parent_abstractions, parent_t_abstractions, {}};
+          parent_abstractions,  parent_t_abstractions,  {}};
 }
 
 std::unordered_map<TNode, StatementEntity>
