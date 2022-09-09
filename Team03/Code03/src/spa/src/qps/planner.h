@@ -12,7 +12,7 @@ class Planner {
 
  private:
   std::shared_ptr<QNode> BuildQTree(
-      std::vector<std::shared_ptr<Clause>> &clauses) const;
+      std::vector<std::shared_ptr<QueryOperation>> &q_operations) const;
 };
 
 #endif  // SPA_PLANNER_H
