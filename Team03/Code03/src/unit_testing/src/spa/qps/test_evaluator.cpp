@@ -41,6 +41,36 @@ class QueryablePkbStub : public QueryablePkb {
     return {"7"};
   }
 
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParent(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParentBy(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParent(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentBy(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentT(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentTBy(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
   [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const override {
     return {"8"};
@@ -269,6 +299,36 @@ TEST_CASE("Query 'Select Pattern(String) AllFollows'", "[Evaluator]") {
       return {};
     }
 
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParent(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParentBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParent(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentBy(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentT(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentTBy(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
         Expression exp) const override {
       return {};
@@ -346,6 +406,36 @@ TEST_CASE("Query 'Select AllFollows Pattern(String)'", "[Evaluator]") {
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryFollowsTBy(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParent(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParentBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParent(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentBy(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentT(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryParentTBy(
         int statement_number, EntityType type) const override {
       return {};
     }
