@@ -117,12 +117,58 @@ Expression QueryParser::ExtractExpression() {
 
 void QueryParser::ParseDeclaration() {
   Token next = Peek();
-  Expect("assign");
+  EntityType entType = ExpectEntityType();
   next = Peek();
   Expect(Token::IDENTIFIER);
-  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Synonym synonym = Synonym(entType, next.GetValue());
   Expect(Token::SEMICOLON);
   query_string_builder_.AddDeclaration(synonym);
+}
+
+EntityType QueryParser::ExpectEntityType() {
+  if (MatchString("stmt")) {
+    token_pos_++;
+    return EntityType::STATEMENT;
+  }
+  else if (MatchString("read")) {
+    token_pos_++;
+    return EntityType::READ;
+  }
+  else if (MatchString("print")) {
+    token_pos_++;
+    return EntityType::PRINT;
+  }
+  else if (MatchString("call")) {
+    token_pos_++;
+    return EntityType::CALL;
+  }
+  else if (MatchString("while")) {
+    token_pos_++;
+    return EntityType::WHILE;
+  }
+  else if (MatchString("if")) {
+    token_pos_++;
+    return EntityType::IF;
+  }
+  else if (MatchString("assign")) {
+    token_pos_++;
+    return EntityType::ASSIGN;
+  }
+  else if (MatchString("variable")) {
+    token_pos_++;
+    return EntityType::VARIABLE;
+  }
+  else if (MatchString("constant")) {
+    token_pos_++;
+    return EntityType::CONSTANT;
+  }
+  else if (MatchString("procedure")) {
+    token_pos_++;
+    return EntityType::PROCEDURE;
+  }
+  else {
+    throw std::runtime_error("Expected entity type string");
+  }
 }
 
 void QueryParser::ParseSelect() {
@@ -134,7 +180,7 @@ void QueryParser::ParseSelect() {
   next = Peek();
   Expect(Token::IDENTIFIER);
 
-  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
   Select new_select = Select(synonym);
 
   query_string_builder_.AddSelect(new_select);
