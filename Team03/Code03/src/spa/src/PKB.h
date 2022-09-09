@@ -84,6 +84,12 @@ class PKB : public QueryablePkb, public StorablePkb {
                                                 EntityType type) const override;
   std::unordered_set<std::string> QueryFollowsTBy(
       int statement_number, EntityType type) const override;
+  std::unordered_set<std::string> QueryAllPattern(
+      Expression exp) const override;
+  std::unordered_set<std::string> QueryPattern(EntityType type,
+                                               Expression exp) const override;
+  std::unordered_set<std::string> QueryPattern(std::string lhs,
+                                               Expression exp) const override;
 
  private:
   EntityManager entity_manager_;

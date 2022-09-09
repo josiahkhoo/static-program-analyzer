@@ -43,7 +43,7 @@ class Token {
   explicit Token(Kind kind);
 
   // Constructs a token holding a value.
-  Token(Kind kind, std::string value);
+  Token(Kind kind, const std::string& value);
 
   // Checks if the token is a specified kind.
   bool Is(Kind kind);
