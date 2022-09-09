@@ -169,7 +169,7 @@ TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
   Select s = Select(syn);
   EntityReference entity_ref = EntityReference();
   Expression exp;
-  exp.toMatch = "b";
+  exp.to_match = "b";
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
@@ -190,7 +190,7 @@ TEST_CASE("Query 'Select Pattern String'", "[Evaluator]") {
   Select s = Select(syn);
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
-  exp.toMatch = "b";
+  exp.to_match = "b";
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});

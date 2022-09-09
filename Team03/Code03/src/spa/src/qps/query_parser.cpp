@@ -102,15 +102,15 @@ Expression QueryParser::ExtractExpression() {
   Expression exp;
 
   if (MatchKind(Token::UNDERSCORE)) {
-    exp.hasFrontWildcard = true;
+    exp.has_front_wildcard = true;
     token_pos_++;
   }
 
   EntityReference matchRef = ExtractEntityRef();
-  exp.toMatch = matchRef.GetIdentifier();
+  exp.to_match = matchRef.GetIdentifier();
 
   if (MatchKind(Token::UNDERSCORE)) {
-    exp.hasBackWildcard = true;
+    exp.has_back_wildcard = true;
     token_pos_++;
   }
 
@@ -217,7 +217,7 @@ void QueryParser::ParsePattern() {
 
   Expect(Token::LEFT_ROUND_BRACKET);
 
-  EntityReference entityRef = ExtractEntityRef();
+  EntityReference entity_ref = ExtractEntityRef();
 
   Expect(Token::COMMA);
 
@@ -225,6 +225,6 @@ void QueryParser::ParsePattern() {
 
   Expect(Token::RIGHT_ROUND_BRACKET);
 
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entityRef, exp);
+  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
   query_string_builder_.AddQueryOperation(ptn);
 }

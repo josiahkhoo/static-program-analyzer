@@ -78,13 +78,13 @@ TEST_CASE("Test 'Assign Select Pattern' query", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
                     ->GetExpression()
-                    .hasFrontWildcard);
+                    .has_front_wildcard);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .toMatch == "b");
+              .to_match == "b");
   REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
                     ->GetExpression()
-                    .hasBackWildcard);
+                    .has_back_wildcard);
 }
 
 TEST_CASE("Test Pattern front wildcard query", "[QPS Parser]") {
@@ -110,13 +110,13 @@ TEST_CASE("Test Pattern front wildcard query", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .hasFrontWildcard);
+              .has_front_wildcard);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .toMatch == "b");
+              .to_match == "b");
   REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
                     ->GetExpression()
-                    .hasBackWildcard);
+                    .has_back_wildcard);
 }
 
 TEST_CASE("Test Pattern front & back wildcard query", "[QPS Parser]") {
@@ -143,13 +143,13 @@ TEST_CASE("Test Pattern front & back wildcard query", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .hasFrontWildcard);
+              .has_front_wildcard);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .toMatch == "b");
+              .to_match == "b");
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .hasBackWildcard);
+              .has_back_wildcard);
 }
 
 TEST_CASE("Test 'End-less' query", "[QPS Parser]") {

@@ -89,7 +89,7 @@ TEST_CASE("Test construct 1 node: Select & Pattern", "[Planner]") {
   Select s = Select(syn);
   EntityReference entity_ref = EntityReference();
   Expression exp;
-  exp.toMatch = "b";
+  exp.to_match = "b";
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
   QueryString qs = QueryString(s, {syn}, {ptn});
 
@@ -172,7 +172,7 @@ TEST_CASE("Test query 1 node: Select & Pattern WILDCARD", "[Planner]") {
   Select s = Select(syn);
   EntityReference entity_ref = EntityReference();
   Expression exp;
-  exp.toMatch = "b";
+  exp.to_match = "b";
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
@@ -189,7 +189,7 @@ TEST_CASE("Test query 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   Select s = Select(syn);
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
-  exp.toMatch = "b";
+  exp.to_match = "b";
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
