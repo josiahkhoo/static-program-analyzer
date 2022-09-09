@@ -27,6 +27,25 @@ class QueryablePkb {
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryFollowTBy(
       int statement_number, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParent(
+      EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllParentBy(
+      EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParent(
+      int statement_number, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentBy(
+      int statement_number, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentT(
+      int statement_number, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryParentTBy(
+      int statement_number, EntityType type) const = 0;
+
 };
 
 #endif  // SPA_QUERYABLE_PKB_H

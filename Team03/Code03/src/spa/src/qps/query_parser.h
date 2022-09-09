@@ -39,6 +39,10 @@ class QueryParser : public Parser<QueryString> {
   void ParseFollow();
 
   void ParseFollowT();
+
+  void ParseParent();
+
+  void ParseParentT();
 };
 
 #endif  // SPA_QUERY_PARSER_H

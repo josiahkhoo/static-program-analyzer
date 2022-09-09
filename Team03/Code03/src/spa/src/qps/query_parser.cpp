@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "common/clause/parent_clause.h"
+#include "common/clause/parent_t_clause.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
 
@@ -109,6 +111,9 @@ void QueryParser::ParseClause() {
       if (MatchString("Follows")) {
         ParseFollow();
       }
+      else if (MatchString("Parent")) {
+          ParseParent();
+      }
     } else {
       throw std::runtime_error("Unexpected token: " +
                                Peek(token_pos_).GetValue());
@@ -153,4 +158,43 @@ void QueryParser::ParseFollowT() {
   std::shared_ptr<FollowsTClause> folCl =
       std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddClause(folCl);
+}
+
+void QueryParser::ParseParent() {
+  Expect("Parent");
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseParentT();
+  }
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentClause> parCl =
+      std::make_shared<ParentClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddClause(parCl);
+}
+
+void QueryParser::ParseParentT() {
+  Expect(Token::ASTERISK);
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentTClause> parCl =
+      std::make_shared<ParentTClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddClause(parCl);
 }

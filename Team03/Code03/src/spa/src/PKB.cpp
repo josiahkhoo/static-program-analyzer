@@ -180,3 +180,27 @@ std::unordered_set<std::string> PKB::QueryFollow(int statement_number,
   }
   return result;
 }
+
+std::unordered_set<std::string> QueryAllParent(EntityType type) {
+
+}
+
+std::unordered_set<std::string> QueryAllParentBy(EntityType type) {
+
+}
+
+std::unordered_set<std::string> QueryParent(int statement_number, EntityType type) {
+
+}
+
+std::unordered_set<std::string> QueryParentBy(int statement_number, EntityType type) {
+
+}
+
+std::unordered_set<std::string> QueryParentT(int statement_number, EntityType type) {
+
+}
+
+std::unordered_set<std::string> QueryParentTBy(int statement_number, EntityType type) {
+
+}
