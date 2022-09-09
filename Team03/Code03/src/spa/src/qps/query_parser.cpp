@@ -238,10 +238,16 @@ void QueryParser::ParseQueryOperation() {
 }
 
 void QueryParser::ParseParent() {
+  if (CheckEnd() || !MatchString("Parent")) {
+      return;
+  }
+  
   Expect("Parent");
+  
   if (MatchKind(Token::ASTERISK)) {
     return ParseParentT();
   }
+
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
@@ -260,6 +266,7 @@ void QueryParser::ParseParent() {
 
 void QueryParser::ParseParentT() {
   Expect(Token::ASTERISK);
+
   Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
