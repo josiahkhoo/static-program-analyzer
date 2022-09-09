@@ -22,6 +22,7 @@
 #include "common/storable_pkb.h"
 #include "pkb/entity_store/entity_manager.h"
 #include "pkb/relationship_store/relationship_manager.h"
+#include "pkb/pattern_store/pattern_manager.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
  public:
@@ -87,6 +88,7 @@ class PKB : public QueryablePkb, public StorablePkb {
  private:
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
+  PatternManager pattern_manager_;
 };
 
 #endif  // SPA_PKB_H

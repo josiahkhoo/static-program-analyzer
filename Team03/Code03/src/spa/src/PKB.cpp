@@ -44,6 +44,7 @@ void PKB::Store(std::vector<PrintEntity> ts) {
 void PKB::Store(std::vector<AssignEntity> ts) {
   for (const AssignEntity& entity : ts) {
     entity_manager_.AddAssignStatement(entity);
+    pattern_manager_.AddAssignPattern(entity);
   }
 }
 
