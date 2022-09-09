@@ -25,26 +25,26 @@ void SourceProcessor::Process(const std::string &filename) {
 void SourceProcessor::StoreDesignExtractorResult(
     const DesignExtractorResult &design_extractor_result,
     StorablePkb &storable_pkb) {
-  storable_pkb_.store(
+  storable_pkb_.Store(
       design_extractor_result.GetEntityExtractorResult().GetAssignEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetCallEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetConstantEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetIfEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetPrintEntities());
-  storable_pkb.store(design_extractor_result.GetEntityExtractorResult()
+  storable_pkb.Store(design_extractor_result.GetEntityExtractorResult()
                          .GetProcedureEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetReadEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetVariableEntities());
-  storable_pkb.store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetWhileEntities());
-  storable_pkb.store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsAbstractions());
-  storable_pkb.store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsTAbstractions());
 }

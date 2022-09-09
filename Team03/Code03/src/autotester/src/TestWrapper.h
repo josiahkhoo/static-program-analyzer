@@ -15,6 +15,8 @@
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_abstraction_extractor.h"
+#include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 #include "sp/extractor/entity/assign_entity_node_extractor.h"
@@ -75,8 +77,11 @@ class TestWrapper : public AbstractWrapper {
 
   FollowsAbstractionExtractor follows_abstraction_extractor_;
   FollowsTAbstractionExtractor follows_t_abstraction_extractor_;
+  ParentAbstractionExtractor parent_abstraction_extractor_;
+  ParentTAbstractionExtractor parent_t_abstraction_extractor_;
   AbstractionExtractorImpl abstraction_extractor_ = AbstractionExtractorImpl(
-      follows_abstraction_extractor_, follows_t_abstraction_extractor_);
+      follows_abstraction_extractor_, follows_t_abstraction_extractor_,
+      parent_abstraction_extractor_, parent_t_abstraction_extractor_);
 
   DesignExtractorImpl design_extractor_ =
       DesignExtractorImpl(entity_extractor_, abstraction_extractor_);

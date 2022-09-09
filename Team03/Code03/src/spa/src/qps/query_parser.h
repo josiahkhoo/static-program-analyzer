@@ -16,7 +16,7 @@ class QueryParser : public Parser<QueryString> {
   std::vector<Token> tokens_;
   QueryStringBuilder query_string_builder_;
 
-  Token Peek(int pos);
+  Token Peek();
 
   bool MatchKind(Token::Kind kind);
 
@@ -24,11 +24,11 @@ class QueryParser : public Parser<QueryString> {
 
   bool MatchStmtRef();
 
+  bool CheckEnd();
+
   void Expect(Token::Kind kind);
 
   void Expect(const std::string &s);
-
-  StatementReference ExtractStmtRef();
 
   void ParseDeclaration();
 
@@ -36,13 +36,21 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseClause();
 
-  void ParseFollow();
+  void ParseFollows();
 
-  void ParseFollowT();
+  void ParseFollowsT();
 
   void ParseParent();
 
   void ParseParentT();
+
+  void ParsePattern();
+
+  void ParseQueryOperation();
+
+  StatementReference ExtractStmtRef();
+  EntityReference ExtractEntityRef();
+  Expression ExtractExpression();
 };
 
 #endif  // SPA_QUERY_PARSER_H

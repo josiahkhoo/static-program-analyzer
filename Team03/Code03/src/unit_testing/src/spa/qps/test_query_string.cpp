@@ -20,7 +20,10 @@ TEST_CASE("Test with 'Assign a; Select a such that Follows(1, a)'",
       std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
   QueryString qs = QueryString(s, {syn}, {f});
 
-  REQUIRE_FALSE(qs.GetClauses()[0]->GetLeftHandSide().IsSynonym());
-  REQUIRE(qs.GetClauses()[0]->GetRightHandSide().GetSynonym() ==
-          f->GetRightHandSide().GetSynonym());
+  REQUIRE_FALSE(std::dynamic_pointer_cast<Clause>(qs.GetQueryOperation()[0])
+                    ->GetLeftHandSide()
+                    .IsSynonym());
+  REQUIRE(std::dynamic_pointer_cast<Clause>(qs.GetQueryOperation()[0])
+              ->GetRightHandSide()
+              .GetSynonym() == f->GetRightHandSide().GetSynonym());
 }

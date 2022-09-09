@@ -13,24 +13,24 @@ std::unordered_set<std::string> FollowsTClause::Fetch(
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. Follow(a, 1)
-      return queryable_pkb.QueryFollowTBy(
+      return queryable_pkb.QueryFollowsTBy(
           GetRightHandSide().GetLineNumber(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Follow(a, _)
-      return queryable_pkb.QueryAllFollow(
+      return queryable_pkb.QueryAllFollows(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
   }
   if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Follow(1, a)
-      return queryable_pkb.QueryFollowT(
+      return queryable_pkb.QueryFollowsT(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Follow(_, a)
-      return queryable_pkb.QueryAllFollowBy(
+      return queryable_pkb.QueryAllFollowsBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }

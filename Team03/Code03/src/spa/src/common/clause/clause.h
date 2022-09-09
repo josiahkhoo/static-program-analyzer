@@ -5,18 +5,14 @@
 #include <unordered_set>
 
 #include "common/entity/entity.h"
-#include "common/query_operator.h"
-#include "common/queryable_pkb.h"
+#include "common/query_operation.h"
 #include "common/reference/reference.h"
 
-class Clause : public QueryOperator {
+class Clause : public QueryOperation {
  public:
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
 
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;
-
-  [[nodiscard]] virtual std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const = 0;
 };
 
 #endif  // SPA_CLAUSE_H
