@@ -4,9 +4,9 @@
 #include <string>
 
 struct Expression {
-  bool hasFrontWildcard = false;
-  std::string toMatch;
-  bool hasBackWildcard = false;
+  bool has_front_wildcard = false;
+  std::string to_match;
+  bool has_back_wildcard = false;
 };
 
 #endif  // SPA_EXPRESSION_H
