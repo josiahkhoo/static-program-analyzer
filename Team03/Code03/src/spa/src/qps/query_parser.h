@@ -42,6 +42,8 @@ class QueryParser : public Parser<QueryString> {
 
   void ParsePattern();
 
+  void ParseQueryOperation();
+
   StatementReference ExtractStmtRef();
   EntityReference ExtractEntityRef();
   Expression ExtractExpression();

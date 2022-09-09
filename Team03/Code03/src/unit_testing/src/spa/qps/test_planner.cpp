@@ -3,60 +3,7 @@
 #include "common/reference/expression.h"
 #include "qps/planner.h"
 
-class QueryablePkbStub : public QueryablePkb {
- public:
-  [[nodiscard]] std::unordered_set<std::string> QueryAll(
-      EntityType type) const override {
-    return {"1"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
-      EntityType type) const override {
-    return {"2"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsBy(
-      EntityType type) const override {
-    return {"3"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryFollows(
-      int statement_number, EntityType type) const override {
-    return {"4"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryFollowsBy(
-      int statement_number, EntityType type) const override {
-    return {"5"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryFollowsT(
-      int statement_number, EntityType type) const override {
-    return {"6"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryFollowsTBy(
-      int statement_number, EntityType type) const override {
-    return {"7"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
-      Expression exp) const override {
-    return {"8"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryPattern(
-      EntityType type, Expression exp) const override {
-    return {"9"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryPattern(
-      std::string lhs, Expression exp) const override {
-    return {"10"};
-  }
-};
-
-TEST_CASE("Test construct 1 node: Select", "[Planner]") {
+TEST_CASE("Construct 1 node: Select", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -67,7 +14,7 @@ TEST_CASE("Test construct 1 node: Select", "[Planner]") {
   REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test construct 1 node: Select & Follows", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & Follows", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -82,7 +29,7 @@ TEST_CASE("Test construct 1 node: Select & Follows", "[Planner]") {
   REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test construct 1 node: Select & Pattern", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & Pattern", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -97,24 +44,7 @@ TEST_CASE("Test construct 1 node: Select & Pattern", "[Planner]") {
   REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test query 1 node: Select & Follows", "[Planner]") {
-  Planner p = Planner();
-
-  Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
-  StatementReference statement_ref_1 = StatementReference(1);
-  StatementReference statement_ref_2 = StatementReference(syn);
-  std::shared_ptr<FollowsClause> f =
-      std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
-
-  QueryString qs = QueryString(s, {syn}, {f});
-  std::shared_ptr<QNode> root = p.Plan(qs);
-
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "4");
-}
-
-TEST_CASE("Test query 1 node: Select & FollowsBy", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & FollowsBy", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -127,11 +57,10 @@ TEST_CASE("Test query 1 node: Select & FollowsBy", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "5");
+  REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test query 1 node: Select & FollowsT", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & FollowsT", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -144,11 +73,10 @@ TEST_CASE("Test query 1 node: Select & FollowsT", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "6");
+  REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test query 1 node: Select & FollowsTBy", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & FollowsTBy", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -161,11 +89,10 @@ TEST_CASE("Test query 1 node: Select & FollowsTBy", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "7");
+  REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test query 1 node: Select & Pattern WILDCARD", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & Pattern WILDCARD", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -178,11 +105,10 @@ TEST_CASE("Test query 1 node: Select & Pattern WILDCARD", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "8");
+  REQUIRE(root->IsLeaf());
 }
 
-TEST_CASE("Test query 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
+TEST_CASE("Construct 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
@@ -195,6 +121,51 @@ TEST_CASE("Test query 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
-  QueryablePkbStub pkb = QueryablePkbStub();
-  REQUIRE(*(root->Fetch(pkb).begin()) == "10");
+  REQUIRE(root->IsLeaf());
+}
+
+TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select s = Select(syn);
+  EntityReference entity_ref = EntityReference("id");
+  Expression exp;
+  exp.to_match = "b";
+  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+
+  StatementReference statement_ref_1 = StatementReference(1);
+  StatementReference statement_ref_2 = StatementReference(syn);
+  std::shared_ptr<FollowsClause> f =
+      std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
+
+  QueryString qs = QueryString(s, {syn}, {ptn, f});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  REQUIRE_FALSE(root->IsLeaf());
+  REQUIRE(root->GetLeftNode()->IsLeaf());
+  REQUIRE(root->GetRightNode() == nullptr);
+}
+
+TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select s = Select(syn);
+  EntityReference entity_ref = EntityReference("id");
+  Expression exp;
+  exp.to_match = "b";
+  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+
+  StatementReference statement_ref_1 = StatementReference(1);
+  StatementReference statement_ref_2 = StatementReference(syn);
+  std::shared_ptr<FollowsClause> f =
+      std::make_shared<FollowsClause>(statement_ref_1, statement_ref_2);
+
+  QueryString qs = QueryString(s, {syn}, {f, ptn});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  REQUIRE_FALSE(root->IsLeaf());
+  REQUIRE(root->GetLeftNode()->IsLeaf());
+  REQUIRE(root->GetRightNode() == nullptr);
 }

@@ -1,6 +1,5 @@
 #include "query_parser.h"
 
-#include <iostream>
 #include <stdexcept>
 
 #include "common/clause/pattern.h"
@@ -16,8 +15,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
   tokens_ = tokens;
   ParseDeclaration();
   ParseSelect();
-  ParseClause();
-  ParsePattern();
+  ParseQueryOperation();
   return query_string_builder_.GetQueryString();
 }
 
@@ -227,4 +225,11 @@ void QueryParser::ParsePattern() {
 
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
   query_string_builder_.AddQueryOperation(ptn);
+}
+
+void QueryParser::ParseQueryOperation() {
+  while (token_pos_ < tokens_.size() - 1) {
+    ParseClause();
+    ParsePattern();
+  }
 }
