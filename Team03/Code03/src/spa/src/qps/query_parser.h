@@ -32,6 +32,8 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseDeclaration();
 
+  EntityType ExpectEntityType();
+
   void ParseSelect();
 
   void ParseClause();

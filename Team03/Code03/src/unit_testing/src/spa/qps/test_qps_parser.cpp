@@ -3,6 +3,102 @@
 #include "catch.hpp"
 #include "qps/query_parser.h"
 
+TEST_CASE("'Statement Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "stmt"), Token(Token::IDENTIFIER, "s"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "s"),    Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::STATEMENT, "s");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Read Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "read"), Token(Token::IDENTIFIER, "r"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "r"),    Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::READ, "r");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Print Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "print"), Token(Token::IDENTIFIER, "p"),
+      Token(Token::SEMICOLON),           Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "p"),     Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::PRINT, "p");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Call Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "call"), Token(Token::IDENTIFIER, "c"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "c"),    Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::CALL, "c");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'While Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "while"), Token(Token::IDENTIFIER, "w"),
+      Token(Token::SEMICOLON),           Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "w"),     Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::WHILE, "w");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'If Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "if"), Token(Token::IDENTIFIER, "i"),
+      Token(Token::SEMICOLON),        Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "i"),  Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::IF, "i");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
 TEST_CASE("'Assign Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
@@ -14,6 +110,60 @@ TEST_CASE("'Assign Select' query", "[QPS Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Variable Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::VARIABLE, "v");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Constant Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "constant"),
+                                Token(Token::IDENTIFIER, "c"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "c"),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::CONSTANT, "c");
+  Select expected_select = Select(syn);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+}
+
+TEST_CASE("'Procedure Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
+                                Token(Token::IDENTIFIER, "p"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "p"),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::PROCEDURE, "p");
   Select expected_select = Select(syn);
 
   REQUIRE(res.GetSynonyms().size() == 1);
