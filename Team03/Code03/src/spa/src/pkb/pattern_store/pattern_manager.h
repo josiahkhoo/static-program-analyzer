@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "common/entity/assign_entity.h"
 #include "assign_pattern_storage.h"
+#include "common/entity/assign_entity.h"
 
 class PatternManager {
  public:
@@ -14,6 +14,7 @@ class PatternManager {
   void AddAssignPattern(AssignEntity statement);
 
   void Clear();
+
  private:
   static AssignPatternStorage assign_pattern_storage_;
 };

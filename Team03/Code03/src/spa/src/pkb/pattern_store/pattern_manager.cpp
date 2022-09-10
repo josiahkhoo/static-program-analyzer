@@ -8,6 +8,4 @@ void PatternManager::AddAssignPattern(AssignEntity statement) {
   assign_pattern_storage_.AddAssignPattern(statement);
 }
 
-void PatternManager::Clear() {
-  assign_pattern_storage_.Clear();
-}
+void PatternManager::Clear() { assign_pattern_storage_.Clear(); }

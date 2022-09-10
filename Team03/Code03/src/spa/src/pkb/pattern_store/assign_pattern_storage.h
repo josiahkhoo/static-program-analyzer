@@ -15,7 +15,8 @@ class AssignPatternStorage {
   void Clear();
 
  private:
-  static std::unordered_map<int, std::pair<std::string, std::string>> patterns_map_;
+  static std::unordered_map<int, std::pair<std::string, std::string>>
+      patterns_map_;
 };
 
 #endif  // SPA_ASSIGN_PATTERN_STORAGE_H

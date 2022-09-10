@@ -21,8 +21,8 @@
 #include "common/queryable_pkb.h"
 #include "common/storable_pkb.h"
 #include "pkb/entity_store/entity_manager.h"
-#include "pkb/relationship_store/relationship_manager.h"
 #include "pkb/pattern_store/pattern_manager.h"
+#include "pkb/relationship_store/relationship_manager.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
  public:
@@ -47,7 +47,9 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   void Store(std::vector<PrintEntity> ts) override;
 
-  void Store(std::vector<AssignEntity> ts) override; // Store both assign entity and pattern to statement storage and pattern storage respectively
+  void Store(std::vector<AssignEntity> ts)
+      override;  // Store both assign entity and pattern to statement storage
+                 // and pattern storage respectively
 
   void Store(std::vector<IfEntity> ts) override;
 
