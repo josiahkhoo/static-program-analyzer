@@ -2,7 +2,7 @@ import argparse
 import os
 
 # Parser
-from collections import Counter
+import re
 
 parser = argparse.ArgumentParser(description="Runs autotester")
 parser.add_argument("--autotester_path", help="Autotester path", required=True)
@@ -20,16 +20,22 @@ debug: str = args.debug
 # Scripts
 # Comment out tests that you don't want to test
 test_array = (
+    # Milestone 1 tests
+    ("Follows / FollowsT", "follows_follows_t"),
     # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
     # ("Patterns Only", "patterns_only"),
-    # ("Sprint 2", "sprint_2"),
-    # ("Sprint 1", "sprint_1"),
+    # ("Parent / ParentT", "parent_parent_t"),
+    # ("Uses Procedure", "uses_p"),
+    # ("Uses Statement", "uses_s"),
+    # ("Modifies Procedure", "modifies_p"),
+    # ("Modifies Statement", "modifies_s")
 )
 
 overall_passed_test_cases = 0
 overall_failed_test_cases = 0
+overall_exception_test_cases = 0
 
 for test in test_array:
     test_name = test[0]
@@ -54,16 +60,46 @@ for test in test_array:
     os.system(command)
     with open(output_path) as f:
         output = f.read()
-        text_chunks = Counter(output.split())
-        passed_test_cases = text_chunks.get('<passed/>', 0)
-        failed_test_cases = text_chunks.get('<failed>', 0) + text_chunks.get('<exception/>', 0)
-        overall_passed_test_cases += passed_test_cases
-        overall_failed_test_cases += failed_test_cases
-        print(f"Passed: {passed_test_cases}, Failed: {failed_test_cases}")
+        passed_test_cases = []
+        exception_test_cases = []
+        failed_test_cases = []
+        for query in output.split("<query>")[1:]:
+            query_id = None
+            if match := re.search('.*>(.*)</id>.*', query, re.IGNORECASE):
+                query_id = match.group(1)
+
+            comment = None
+            if match := re.search('.*comment="(.*)">.*', query, re.IGNORECASE):
+                comment = match.group(1)
+
+            if "<passed/>" in query:
+                passed_test_cases.append([query_id, comment])
+
+            if "<exception/>" in query:
+                exception_test_cases.append([query_id, comment])
+
+            if "<failed>" in query:
+                failed_test_cases.append([query_id, comment])
+
+        overall_passed_test_cases += len(passed_test_cases)
+        overall_failed_test_cases += len(failed_test_cases) + len(exception_test_cases)
+        overall_exception_test_cases += len(exception_test_cases)
+        print(
+            f"Passed: {len(passed_test_cases)}, Failed: {len(failed_test_cases) + len(exception_test_cases)}, "
+            f"Exceptions (subset of failures): {len(exception_test_cases)}")
+        if failed_test_cases:
+            print("Failed cases:")
+            for failed_id, failed_comment in failed_test_cases:
+                print(f"{failed_id} - {failed_comment}")
+        if exception_test_cases:
+            print("Exception cases:")
+            for exception_id, exception_comment in exception_test_cases:
+                print(f"{exception_id} - {exception_comment}")
 
 print("=== Test Summary ===")
 print(f"Total Passed: {overall_passed_test_cases}")
 print(f"Total Failed: {overall_failed_test_cases}")
+print(f"Total Exceptions (subset of failures): {overall_exception_test_cases}")
 
 if overall_failed_test_cases > 0:
     exit(1)
