@@ -129,44 +129,34 @@ EntityType QueryParser::ExpectEntityType() {
   if (MatchString("stmt")) {
     token_pos_++;
     return EntityType::STATEMENT;
-  }
-  else if (MatchString("read")) {
+  } else if (MatchString("read")) {
     token_pos_++;
     return EntityType::READ;
-  }
-  else if (MatchString("print")) {
+  } else if (MatchString("print")) {
     token_pos_++;
     return EntityType::PRINT;
-  }
-  else if (MatchString("call")) {
+  } else if (MatchString("call")) {
     token_pos_++;
     return EntityType::CALL;
-  }
-  else if (MatchString("while")) {
+  } else if (MatchString("while")) {
     token_pos_++;
     return EntityType::WHILE;
-  }
-  else if (MatchString("if")) {
+  } else if (MatchString("if")) {
     token_pos_++;
     return EntityType::IF;
-  }
-  else if (MatchString("assign")) {
+  } else if (MatchString("assign")) {
     token_pos_++;
     return EntityType::ASSIGN;
-  }
-  else if (MatchString("variable")) {
+  } else if (MatchString("variable")) {
     token_pos_++;
     return EntityType::VARIABLE;
-  }
-  else if (MatchString("constant")) {
+  } else if (MatchString("constant")) {
     token_pos_++;
     return EntityType::CONSTANT;
-  }
-  else if (MatchString("procedure")) {
+  } else if (MatchString("procedure")) {
     token_pos_++;
     return EntityType::PROCEDURE;
-  }
-  else {
+  } else {
     throw std::runtime_error("Expected entity type string");
   }
 }

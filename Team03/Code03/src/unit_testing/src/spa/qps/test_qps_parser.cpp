@@ -5,12 +5,10 @@
 
 TEST_CASE("'Statement Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "stmt"),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "stmt"), Token(Token::IDENTIFIER, "s"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "s"),    Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::STATEMENT, "s");
@@ -23,12 +21,10 @@ TEST_CASE("'Statement Select' query", "[QPS Parser]") {
 
 TEST_CASE("'Read Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "read"),
-                                Token(Token::IDENTIFIER, "r"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "r"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "read"), Token(Token::IDENTIFIER, "r"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "r"),    Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::READ, "r");
@@ -41,12 +37,10 @@ TEST_CASE("'Read Select' query", "[QPS Parser]") {
 
 TEST_CASE("'Print Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "print"),
-                                Token(Token::IDENTIFIER, "p"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "p"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "print"), Token(Token::IDENTIFIER, "p"),
+      Token(Token::SEMICOLON),           Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "p"),     Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::PRINT, "p");
@@ -59,12 +53,10 @@ TEST_CASE("'Print Select' query", "[QPS Parser]") {
 
 TEST_CASE("'Call Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "call"),
-                                Token(Token::IDENTIFIER, "c"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "c"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "call"), Token(Token::IDENTIFIER, "c"),
+      Token(Token::SEMICOLON),          Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "c"),    Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::CALL, "c");
@@ -77,12 +69,10 @@ TEST_CASE("'Call Select' query", "[QPS Parser]") {
 
 TEST_CASE("'While Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "while"),
-                                Token(Token::IDENTIFIER, "w"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "w"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "while"), Token(Token::IDENTIFIER, "w"),
+      Token(Token::SEMICOLON),           Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "w"),     Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::WHILE, "w");
@@ -95,12 +85,10 @@ TEST_CASE("'While Select' query", "[QPS Parser]") {
 
 TEST_CASE("'If Select' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
-                                Token(Token::IDENTIFIER, "i"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "i"),
-                                Token(Token::END)};
+  std::vector<Token> tokens_ = {
+      Token(Token::IDENTIFIER, "if"), Token(Token::IDENTIFIER, "i"),
+      Token(Token::SEMICOLON),        Token(Token::IDENTIFIER, "Select"),
+      Token(Token::IDENTIFIER, "i"),  Token(Token::END)};
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::IF, "i");
