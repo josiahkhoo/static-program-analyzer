@@ -23,7 +23,9 @@ test_array = (
     # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
-    ("Sprint 1", "sprint_1"),
+    # ("Patterns Only", "patterns_only"),
+    # ("Sprint 2", "sprint_2"),
+    # ("Sprint 1", "sprint_1"),
 )
 
 overall_passed_test_cases = 0
@@ -34,7 +36,6 @@ for test in test_array:
     test_dir = test[1]
     source_path = f"{test_dir_arg}/{test_dir}/test_{test_dir}_source.txt"
     queries_path = f"{test_dir_arg}/{test_dir}/test_{test_dir}_queries.txt"
-    print(source_path, queries_path)
     output_path = f"{test_dir_arg}/out.xml"
     print(f"--- Running {test_name} Test ---")
     command = f"{autotester_path} {source_path} {queries_path} {output_path}"
@@ -54,8 +55,8 @@ for test in test_array:
     with open(output_path) as f:
         output = f.read()
         text_chunks = Counter(output.split())
-        passed_test_cases = text_chunks['<passed/>']
-        failed_test_cases = text_chunks['<failed>']
+        passed_test_cases = text_chunks.get('<passed/>', 0)
+        failed_test_cases = text_chunks.get('<failed>', 0) + text_chunks.get('<exception/>', 0)
         overall_passed_test_cases += passed_test_cases
         overall_failed_test_cases += failed_test_cases
         print(f"Passed: {passed_test_cases}, Failed: {failed_test_cases}")
