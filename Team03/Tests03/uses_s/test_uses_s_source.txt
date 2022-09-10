@@ -21,7 +21,7 @@ procedure p {
       i = i - 1; }
     x = x + 1;
     z = x + z;
-    print z; }
+    read z; }
   else {
     z = 1; }
   z = z + x + i; }

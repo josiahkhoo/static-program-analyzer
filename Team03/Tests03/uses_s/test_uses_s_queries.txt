@@ -1,17 +1,17 @@
-1 - (SUCCESS) Retrieve all statements which uses a variable
+1 - (SUCCESS) Retrieve all statements which uses a variable (everything except 24 - read)
 variable v; statement s;
 Select s such that Uses (s, v)
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26
 5000
-2 - (SUCCESS) Retrieve all statements which uses variable y
+2 - (SUCCESS) Retrieve all statements which uses variable y - including upper callers
 statement s;
 Select s such that Uses (s, "y")
-15
+12, 13, 14, 15
 5000
-3 - (SUCCESS) Retrieve all statements which uses wildcard
+3 - (SUCCESS) Retrieve all statements which uses wildcard (everything except 24 - read)
 statement s;
 Select s such that Uses (s, _)
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26
 5000
 4 - (SUCCESS) Retrieve all variables used in statement 15 assign
 variable v;
@@ -42,4 +42,9 @@ Select p such that Uses (12, p)
 variable v;
 Select v such that Uses (12, v)
 x, i, z, y
+5000
+10 - (SUCCESS) Retrieve all variables used in statement 20 read - should return nothing
+variable v;
+Select v such that Uses (20, v)
+
 5000
