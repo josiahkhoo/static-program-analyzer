@@ -1,0 +1,35 @@
+1 - (SUCCESS) Retrieve all procedures which modifies a variable
+variable v; procedure p;
+Select p such that Modifies (p, v)
+Example, p, q, k
+5000
+2 - (SUCCESS) Retrieve all procedures which modifies variable y (including indirect calls)
+procedure p;
+Select p such that Modifies (p, "y")
+Example, k
+5000
+3 - (SUCCESS) Retrieve all procedures which modifies wildcard
+procedure p;
+Select p such that Modifies (p, _)
+Example, p, q, k
+5000
+4 - (SUCCESS) Retrieve all variables modified in k procedure (including indirect calls)
+variable v;
+Select v such that Modifies ("k", v)
+x, z, i, y
+5000
+5 - (SUCCESS) Retrieve all procedures IF Example procedure modifies x (conditional)
+procedure p;
+Select p such that Modifies ("Example", "x")
+Example, p, q, s, k
+5000
+6 - (SUCCESS) Retrieve all procedures if s procedure modifies something
+procedure p;
+Select p such that Modifies ("k", _)
+
+5000
+7 - (SUCCESS) Retrieve all variables modified in procedure p
+variable v;
+Select v such that Modifies ("p", v)
+x, i, z
+5000
