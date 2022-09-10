@@ -239,11 +239,11 @@ void QueryParser::ParseQueryOperation() {
 
 void QueryParser::ParseParent() {
   if (CheckEnd() || !MatchString("Parent")) {
-      return;
+    return;
   }
-  
+
   Expect("Parent");
-  
+
   if (MatchKind(Token::ASTERISK)) {
     return ParseParentT();
   }
