@@ -1,0 +1,50 @@
+1 - (SUCCESS) Retrieve all statements which modifies a variable
+variable v; statement s;
+Select s such that Modifies (s, v)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27
+5000
+2 - (SUCCESS) Retrieve all statements which modifies variable y
+statement s;
+Select s such that Modifies (s, "y")
+27, 4, 6, 8
+5000
+3 - (SUCCESS) Retrieve all statements which modifies wildcard
+statement s;
+Select s such that Modifies (s, _)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27
+5000
+4 - (SUCCESS) Retrieve all variables modified in statement 15 assign
+variable v;
+Select v such that Modifies (15, v)
+x
+5000
+5 - (SUCCESS) Retrieve all variables modified in statement 26 print - should return nothing
+variable v;
+Select v such that Modifies (26, v)
+
+5000
+6 - (SUCCESS) Retrieve all variables modified in statement 20 read
+variable v;
+Select v such that Modifies (20, v)
+z
+5000
+7 - (SUCCESS) Retrieve all variables modified in statement 13 if - should return from every branch in if
+variable v;
+Select v such that Modifies (23, v)
+x, i, z
+5000
+7 - (SUCCESS) Retrieve all variables modified in statement 4 while - should return from every branch in while (incl. nest)
+variable v;
+Select v such that Modifies (4, v)
+x, z, y, i
+5000
+8 - (SUCCESS) Retrieve all procedures modified in statement 12 call - should return nothing
+procedure p;
+Select p such that Modifies (12, p)
+
+5000
+9 - (SUCCESS) Retrieve all variables modified in statement 12 call - should return all indirect
+variable v;
+Select v such that Modifies (12, v)
+x, i, z
+5000
