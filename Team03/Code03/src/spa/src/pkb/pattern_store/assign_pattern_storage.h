@@ -7,10 +7,20 @@
 #include <utility>
 
 #include "common/entity/assign_entity.h"
+#include "common/reference/expression.h"
 
 class AssignPatternStorage {
  public:
   void AddAssignPattern(AssignEntity assignEntity);
+
+  std::unordered_set<std::string> GetAllPattern(std::string pattern,
+                                                bool front_wildcard,
+                                                bool back_wildcard) const;
+
+  std::unordered_set<std::string> GetPattern(std::string lhs,
+                                             std::string pattern,
+                                             bool front_wildcard,
+                                             bool back_wildcard) const;
 
   void Clear();
 
