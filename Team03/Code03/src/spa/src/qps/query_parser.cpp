@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "common/clause/parent_clause.h"
+#include "common/clause/parent_t_clause.h"
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
@@ -183,6 +185,7 @@ void QueryParser::ParseClause() {
   token_pos_++;
   Expect("that");
   ParseFollows();
+  ParseParent();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
@@ -268,4 +271,50 @@ void QueryParser::ParseQueryOperation() {
     ParseClause();
     ParsePattern();
   }
+}
+
+void QueryParser::ParseParent() {
+  if (CheckEnd() || !MatchString("Parent")) {
+    return;
+  }
+
+  Expect("Parent");
+
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseParentT();
+  }
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentClause> parCl =
+      std::make_shared<ParentClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddQueryOperation(parCl);
+}
+
+void QueryParser::ParseParentT() {
+  Expect(Token::ASTERISK);
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentTClause> parCl =
+      std::make_shared<ParentTClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddQueryOperation(parCl);
 }

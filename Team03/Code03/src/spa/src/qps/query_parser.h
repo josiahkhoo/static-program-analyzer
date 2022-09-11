@@ -42,6 +42,10 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseFollowsT();
 
+  void ParseParent();
+
+  void ParseParentT();
+
   void ParsePattern();
 
   void ParseQueryOperation();
