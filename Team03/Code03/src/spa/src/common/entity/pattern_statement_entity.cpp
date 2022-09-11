@@ -17,9 +17,9 @@ std::string PatternStatementEntity::GetRightHandSidePattern() const {
 std::string PatternStatementEntity::RecursivelyFlatten(
     const TNode& node) const {
   if (node.IsType(TNode::Constant)) {
-    return std::to_string(node.GetIntValue());
+    return "(" + std::to_string(node.GetIntValue()) + ")";
   } else if (node.IsType(TNode::Variable)) {
-    return node.GetStringValue();
+    return "(" + node.GetStringValue() + ")";
   }
 
   assert(node.IsTimesDivideQuotientOperator() || node.IsPlusMinusOperator());
