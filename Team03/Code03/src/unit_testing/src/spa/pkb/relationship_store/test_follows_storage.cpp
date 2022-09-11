@@ -17,8 +17,10 @@ TEST_CASE("Follows Storage Management", "[FollowsStorage]") {
   TNode mock_assign_node_two =
       TNode(4, TNode::Assign, 4, std::vector<std::shared_ptr<TNode>>());
   AssignEntity mock_rhs_two = AssignEntity(mock_call_node_two, 4);
-  FollowsAbstraction mock_follows_abstraction_one = FollowsAbstraction(mock_lhs_one, mock_rhs_one);
-  FollowsAbstraction mock_follows_abstraction_two = FollowsAbstraction(mock_lhs_two, mock_rhs_two);
+  FollowsAbstraction mock_follows_abstraction_one =
+      FollowsAbstraction(mock_lhs_one, mock_rhs_one);
+  FollowsAbstraction mock_follows_abstraction_two =
+      FollowsAbstraction(mock_lhs_two, mock_rhs_two);
   FollowsStorage follows_storage;
   follows_storage.AddRelationship(mock_follows_abstraction_one);
   follows_storage.AddRelationship(mock_follows_abstraction_two);
@@ -50,12 +52,18 @@ TEST_CASE("FollowsT Storage Management", "[FollowsStorage]") {
   TNode mock_assign_node_two =
       TNode(4, TNode::Assign, 4, std::vector<std::shared_ptr<TNode>>());
   AssignEntity mock_line_four = AssignEntity(mock_call_node_two, 4);
-  FollowsTAbstraction mock_follows_t_abstraction_one = FollowsTAbstraction(mock_line_one, mock_line_two);
-  FollowsTAbstraction mock_follows_t_abstraction_two = FollowsTAbstraction(mock_line_one, mock_line_three);
-  FollowsTAbstraction mock_follows_t_abstraction_three = FollowsTAbstraction(mock_line_one, mock_line_four);
-  FollowsTAbstraction mock_follows_t_abstraction_four = FollowsTAbstraction(mock_line_two, mock_line_three);
-  FollowsTAbstraction mock_follows_t_abstraction_five = FollowsTAbstraction(mock_line_two, mock_line_four);
-  FollowsTAbstraction mock_follows_t_abstraction_six = FollowsTAbstraction(mock_line_three, mock_line_four);
+  FollowsTAbstraction mock_follows_t_abstraction_one =
+      FollowsTAbstraction(mock_line_one, mock_line_two);
+  FollowsTAbstraction mock_follows_t_abstraction_two =
+      FollowsTAbstraction(mock_line_one, mock_line_three);
+  FollowsTAbstraction mock_follows_t_abstraction_three =
+      FollowsTAbstraction(mock_line_one, mock_line_four);
+  FollowsTAbstraction mock_follows_t_abstraction_four =
+      FollowsTAbstraction(mock_line_two, mock_line_three);
+  FollowsTAbstraction mock_follows_t_abstraction_five =
+      FollowsTAbstraction(mock_line_two, mock_line_four);
+  FollowsTAbstraction mock_follows_t_abstraction_six =
+      FollowsTAbstraction(mock_line_three, mock_line_four);
   FollowsStorage follows_storage;
   follows_storage.AddRelationship(mock_follows_t_abstraction_one);
   follows_storage.AddRelationship(mock_follows_t_abstraction_two);
