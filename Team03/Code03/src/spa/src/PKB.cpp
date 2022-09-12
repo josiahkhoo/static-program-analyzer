@@ -208,7 +208,7 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
-  return {};
+  return pattern_manager_.GetAllPattern(exp);
 }
 
 std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
@@ -218,5 +218,5 @@ std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
 
 std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
                                                   Expression exp) const {
-  return {};
+  return pattern_manager_.GetPattern(lhs, exp);
 }

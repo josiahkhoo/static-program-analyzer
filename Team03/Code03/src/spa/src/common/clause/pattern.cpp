@@ -11,8 +11,7 @@ Pattern::Pattern(EntityReference entity, Expression expression)
 std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
   if (GetEntity().IsSynonym()) {
-    return queryable_pkb.QueryPattern(GetEntity().GetSynonym().GetEntityType(),
-                                      expression_);
+    return queryable_pkb.QueryAllPattern(expression_);
   } else if (GetEntity().IsIdentifier()) {
     return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
   } else if (GetEntity().IsWildCard()) {
