@@ -21,8 +21,8 @@ debug: str = args.debug
 # Comment out tests that you don't want to test
 test_array = (
     # Milestone 1 tests
+    ("Entities Only", "entities_only"),
     ("Follows / FollowsT", "follows_follows_t"),
-    # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
     # ("Patterns Only", "patterns_only"),
