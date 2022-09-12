@@ -1,5 +1,7 @@
 #include "assign_pattern_storage.h"
 
+#include <stdexcept>
+
 std::unordered_map<int, std::pair<std::string, std::string>>
     AssignPatternStorage::patterns_map_;
 
