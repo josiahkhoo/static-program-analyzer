@@ -17,7 +17,7 @@ TEST_CASE("Assign Entity", "[AssignEntity]") {
     AssignEntity assign_entity = AssignEntity(assign, statement_number);
 
     REQUIRE(assign_entity.GetLeftHandSidePattern() == "x");
-    REQUIRE(assign_entity.GetRightHandSidePattern() == "(1+y)");
+    REQUIRE(assign_entity.GetRightHandSidePattern() == "((1)+(y))");
   }
 
   SECTION("x = 1 - y * z") {
@@ -38,7 +38,7 @@ TEST_CASE("Assign Entity", "[AssignEntity]") {
     AssignEntity assign_entity = AssignEntity(assign, statement_number);
 
     REQUIRE(assign_entity.GetLeftHandSidePattern() == "x");
-    REQUIRE(assign_entity.GetRightHandSidePattern() == "(1-(y*z))");
+    REQUIRE(assign_entity.GetRightHandSidePattern() == "((1)-((y)*(z)))");
   }
 
   SECTION("x = 1 * y % z") {
@@ -59,6 +59,6 @@ TEST_CASE("Assign Entity", "[AssignEntity]") {
     AssignEntity assign_entity = AssignEntity(assign, statement_number);
 
     REQUIRE(assign_entity.GetLeftHandSidePattern() == "x");
-    REQUIRE(assign_entity.GetRightHandSidePattern() == "(1*(y%z))");
+    REQUIRE(assign_entity.GetRightHandSidePattern() == "((1)*((y)%(z)))");
   }
 }

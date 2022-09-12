@@ -179,6 +179,34 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
   return result;
 }
 
+std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryParent(int statement_number,
+                                                 EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
+                                                   EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
+                                                  EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
+                                                    EntityType type) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
   return {};
 }

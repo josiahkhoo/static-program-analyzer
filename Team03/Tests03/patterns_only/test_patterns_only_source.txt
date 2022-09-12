@@ -1,0 +1,3 @@
+Procedure Test {
+    x = v + x * y + z * t;
+}

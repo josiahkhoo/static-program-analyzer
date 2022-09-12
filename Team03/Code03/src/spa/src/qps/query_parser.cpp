@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "common/clause/parent_clause.h"
+#include "common/clause/parent_t_clause.h"
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
@@ -117,12 +119,48 @@ Expression QueryParser::ExtractExpression() {
 
 void QueryParser::ParseDeclaration() {
   Token next = Peek();
-  Expect("assign");
+  EntityType entType = ExpectEntityType();
   next = Peek();
   Expect(Token::IDENTIFIER);
-  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Synonym synonym = Synonym(entType, next.GetValue());
   Expect(Token::SEMICOLON);
   query_string_builder_.AddDeclaration(synonym);
+}
+
+EntityType QueryParser::ExpectEntityType() {
+  if (MatchString("stmt")) {
+    token_pos_++;
+    return EntityType::STATEMENT;
+  } else if (MatchString("read")) {
+    token_pos_++;
+    return EntityType::READ;
+  } else if (MatchString("print")) {
+    token_pos_++;
+    return EntityType::PRINT;
+  } else if (MatchString("call")) {
+    token_pos_++;
+    return EntityType::CALL;
+  } else if (MatchString("while")) {
+    token_pos_++;
+    return EntityType::WHILE;
+  } else if (MatchString("if")) {
+    token_pos_++;
+    return EntityType::IF;
+  } else if (MatchString("assign")) {
+    token_pos_++;
+    return EntityType::ASSIGN;
+  } else if (MatchString("variable")) {
+    token_pos_++;
+    return EntityType::VARIABLE;
+  } else if (MatchString("constant")) {
+    token_pos_++;
+    return EntityType::CONSTANT;
+  } else if (MatchString("procedure")) {
+    token_pos_++;
+    return EntityType::PROCEDURE;
+  } else {
+    throw std::runtime_error("Expected entity type string");
+  }
 }
 
 void QueryParser::ParseSelect() {
@@ -134,7 +172,7 @@ void QueryParser::ParseSelect() {
   next = Peek();
   Expect(Token::IDENTIFIER);
 
-  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
   Select new_select = Select(synonym);
 
   query_string_builder_.AddSelect(new_select);
@@ -147,6 +185,7 @@ void QueryParser::ParseClause() {
   token_pos_++;
   Expect("that");
   ParseFollows();
+  ParseParent();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
@@ -232,4 +271,50 @@ void QueryParser::ParseQueryOperation() {
     ParseClause();
     ParsePattern();
   }
+}
+
+void QueryParser::ParseParent() {
+  if (CheckEnd() || !MatchString("Parent")) {
+    return;
+  }
+
+  Expect("Parent");
+
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseParentT();
+  }
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentClause> parCl =
+      std::make_shared<ParentClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddQueryOperation(parCl);
+}
+
+void QueryParser::ParseParentT() {
+  Expect(Token::ASTERISK);
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt1
+  StatementReference stmtRef1 = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get stmt2
+  StatementReference stmtRef2 = ExtractStmtRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ParentTClause> parCl =
+      std::make_shared<ParentTClause>(stmtRef1, stmtRef2);
+  query_string_builder_.AddQueryOperation(parCl);
 }
