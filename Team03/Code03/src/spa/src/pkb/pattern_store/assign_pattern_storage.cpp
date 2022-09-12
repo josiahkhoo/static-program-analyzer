@@ -36,15 +36,13 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
         res.emplace(std::to_string(i.first));
       }
     }
-  }
-  if (front_wildcard && back_wildcard) {
+  } else if (front_wildcard && back_wildcard) {
     for (auto i : patterns_map_) {
       if (i.second.second.find(pattern) != std::string::npos) {
         res.emplace(std::to_string(i.first));
       }
     }
-  }
-  if (!front_wildcard && back_wildcard) {
+  } else if (!front_wildcard && back_wildcard) {
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_start_pos = 0;
@@ -63,8 +61,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
         }
       }
     }
-  }
-  if (front_wildcard && !back_wildcard) {
+  } else if (front_wildcard && !back_wildcard) {
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_end_pos = 0;
@@ -87,6 +84,8 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
         }
       }
     }
+  } else {
+    throw std::invalid_argument("Missing wildcard booleans");
   }
   return res;
 }
@@ -122,16 +121,14 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         res.emplace(std::to_string(i.first));
       }
     }
-  }
-  if (front_wildcard && back_wildcard) {
+  } else if (front_wildcard && back_wildcard) {
     for (auto i : patterns_map_) {
       if ((i.second.first.compare(lhs) == 0) &&
           (i.second.second.find(pattern) != std::string::npos)) {
         res.emplace(std::to_string(i.first));
       }
     }
-  }
-  if (!front_wildcard && back_wildcard) {
+  } else if (!front_wildcard && back_wildcard) {
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_start_pos = 0;
@@ -151,8 +148,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         }
       }
     }
-  }
-  if (front_wildcard && !back_wildcard) {
+  } else if (front_wildcard && !back_wildcard) {
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_end_pos = 0;
@@ -176,6 +172,8 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         }
       }
     }
+  } else {
+    throw std::invalid_argument("Missing wildcard booleans");
   }
   return res;
 }
