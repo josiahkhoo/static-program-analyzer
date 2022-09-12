@@ -1,7 +1,5 @@
 #include "pattern_manager.h"
 
-PatternManager::PatternManager() {}
-
 void PatternManager::AddAssignPattern(AssignEntity statement) {
   int statement_number = statement.GetStatementNumber();
   std::string lhs = statement.GetLeftHandSidePattern();

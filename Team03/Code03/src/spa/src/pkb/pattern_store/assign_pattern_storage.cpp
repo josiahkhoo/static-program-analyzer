@@ -2,9 +2,6 @@
 
 #include <stdexcept>
 
-std::unordered_map<int, std::pair<std::string, std::string>>
-    AssignPatternStorage::patterns_map_;
-
 void AssignPatternStorage::AddAssignPattern(int statement_number,
                                             std::string lhs, std::string rhs) {
   patterns_map_.emplace(statement_number,
