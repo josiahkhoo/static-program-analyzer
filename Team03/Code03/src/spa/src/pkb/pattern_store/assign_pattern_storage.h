@@ -11,7 +11,7 @@
 
 class AssignPatternStorage {
  public:
-  void AddAssignPattern(AssignEntity assignEntity);
+  void AddAssignPattern(int statement_number, std::string lhs, std::string rhs);
 
   std::unordered_set<std::string> GetAllPattern(std::string pattern,
                                                 bool front_wildcard,

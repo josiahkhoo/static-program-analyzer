@@ -5,7 +5,10 @@ AssignPatternStorage PatternManager::assign_pattern_storage_;
 PatternManager::PatternManager() {}
 
 void PatternManager::AddAssignPattern(AssignEntity statement) {
-  assign_pattern_storage_.AddAssignPattern(statement);
+  int statement_number = statement.GetStatementNumber();
+  std::string lhs = statement.GetLeftHandSidePattern();
+  std::string rhs = statement.GetRightHandSidePattern();
+  assign_pattern_storage_.AddAssignPattern(statement_number, lhs, rhs);
 }
 
 std::unordered_set<std::string> PatternManager::GetAllPattern(
