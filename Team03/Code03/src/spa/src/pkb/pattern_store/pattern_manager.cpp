@@ -1,8 +1,5 @@
 #include "pattern_manager.h"
 
-AssignPatternStorage PatternManager::assign_pattern_storage_;
-QueryPatternProcessor PatternManager::query_pattern_processor_;
-
 PatternManager::PatternManager() {}
 
 void PatternManager::AddAssignPattern(AssignEntity statement) {

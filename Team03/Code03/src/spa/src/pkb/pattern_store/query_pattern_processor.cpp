@@ -1,6 +1,6 @@
 #include "query_pattern_processor.h"
 
-std::string QueryPatternProcessor::ProcessAssignPattern(std::string exp) {
+std::string QueryPatternProcessor::ProcessAssignPattern(std::string exp) const {
   char high_operators[] = {'*', '/', '%'};
   char low_operators[] = {'+', '-'};
   char operators[] = {'+', '-', '*', '/', '%'};
@@ -40,7 +40,7 @@ std::string QueryPatternProcessor::ProcessAssignPattern(std::string exp) {
 }
 
 bool QueryPatternProcessor::CheckContains(std::string exp, char *arr,
-                                          unsigned int n) {
+                                          unsigned int n) const {
   for (int i = 0; i < n; i++) {
     if (exp.find(arr[i]) != std::string::npos) {
       return true;

@@ -5,10 +5,10 @@
 
 class QueryPatternProcessor {
  public:
-  std::string ProcessAssignPattern(std::string exp);
+  std::string ProcessAssignPattern(std::string exp) const;
 
  private:
-  bool CheckContains(std::string exp, char *arr, unsigned int n);
+  bool CheckContains(std::string exp, char *arr, unsigned int n) const;
 };
 
 #endif  // SPA_QUERY_PATTERN_PROCESSOR_H

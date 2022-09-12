@@ -11,8 +11,6 @@
 
 class PatternManager {
  public:
-  PatternManager();
-
   void AddAssignPattern(AssignEntity statement);
 
   std::unordered_set<std::string> GetAllPattern(Expression exp) const;
@@ -23,8 +21,8 @@ class PatternManager {
   void Clear();
 
  private:
-  static AssignPatternStorage assign_pattern_storage_;
-  static QueryPatternProcessor query_pattern_processor_;
+  AssignPatternStorage assign_pattern_storage_;
+  QueryPatternProcessor query_pattern_processor_;
 };
 
 #endif  // SPA_PATTERN_MANAGER_H
