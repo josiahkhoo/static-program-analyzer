@@ -21,6 +21,7 @@
 #include "common/queryable_pkb.h"
 #include "common/storable_pkb.h"
 #include "pkb/entity_store/entity_manager.h"
+#include "pkb/pattern_store/pattern_manager.h"
 #include "pkb/relationship_store/relationship_manager.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
@@ -46,45 +47,51 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   void Store(std::vector<PrintEntity> ts) override;
 
-  void Store(std::vector<AssignEntity> ts) override;
+  void Store(std::vector<AssignEntity> ts)
+      override;  // Store both assign entity and pattern to statement storage
+                 // and pattern storage respectively
 
   void Store(std::vector<IfEntity> ts) override;
 
   void Store(std::vector<WhileEntity> ts) override;
 
-  std::unordered_set<std::string> QueryAll(EntityType type) const override;
-
   /* ====================================
-   * Abstractions Store Methods
+   * Relationship Store Methods
    * ==================================== */
   // Follows
   void Store(std::vector<FollowsAbstraction> abstractions) override;
 
+  // FollowsT
   void Store(std::vector<FollowsTAbstraction> abstractions) override;
 
   // Parent
   void Store(std::vector<ParentAbstraction> abstractions) override;
 
+  // ParentT
   void Store(std::vector<ParentTAbstraction> abstractions) override;
 
   /* ====================================
-   * Abstractions Query Methods
+   * Entity Query Methods
    * ==================================== */
-  // Follows
-  std::unordered_set<std::string> QueryFollows(int statement_number,
-                                               EntityType type) const override;
+
+  std::unordered_set<std::string> QueryAll(EntityType type) const override;
+
+  /* ====================================
+   * Relationship Query Methods
+   * ==================================== */
+
   std::unordered_set<std::string> QueryAllFollows(
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllFollowsBy(
       EntityType type) const override;
+  std::unordered_set<std::string> QueryFollows(int statement_number,
+                                               EntityType type) const override;
   std::unordered_set<std::string> QueryFollowsBy(
       int statement_number, EntityType type) const override;
   std::unordered_set<std::string> QueryFollowsT(int statement_number,
                                                 EntityType type) const override;
   std::unordered_set<std::string> QueryFollowsTBy(
       int statement_number, EntityType type) const override;
-
-  // Parent
   std::unordered_set<std::string> QueryAllParent(
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllParentBy(
@@ -107,6 +114,7 @@ class PKB : public QueryablePkb, public StorablePkb {
  private:
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
+  PatternManager pattern_manager_;
 };
 
 #endif  // SPA_PKB_H
