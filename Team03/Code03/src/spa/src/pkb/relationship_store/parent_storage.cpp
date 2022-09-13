@@ -1,27 +1,27 @@
-#include "follows_storage.h"
+#include "parent_storage.h"
 
-void FollowsStorage::AddRelationship(FollowsAbstraction abstraction) {
-  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
-
-  follows_map_.emplace(lhs, rhs);
-  follows_by_map_.emplace(rhs, lhs);
+void FollowsStorage::AddRelationship(ParentAbstraction abstraction) {
+  //  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
+  //  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+  //
+  //  follows_map_.emplace(lhs, rhs);
+  //  follows_by_map_.emplace(rhs, lhs);
 }
 
-void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
-  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
-
-  if (follows_t_map_.find(lhs) == follows_t_map_.end()) {
-    follows_t_map_.emplace(lhs, std::make_unique<FollowsTRelationship>(lhs));
-  }
-  follows_t_map_.find(lhs)->second->AddFollowsTByStatementNumber(rhs);
-
-  if (follows_t_by_map_.find(rhs) == follows_t_by_map_.end()) {
-    follows_t_by_map_.emplace(rhs,
-                              std::make_unique<FollowsTByRelationship>(rhs));
-  }
-  follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
+void FollowsStorage::AddRelationship(ParentTAbstraction abstraction) {
+  //  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
+  //  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+  //
+  //  if (follows_t_map_.find(lhs) == follows_t_map_.end()) {
+  //    follows_t_map_.emplace(lhs, std::make_unique<FollowsTRelationship>(lhs));
+  //  }
+  //  follows_t_map_.find(lhs)->second->AddFollowsTByStatementNumber(rhs);
+  //
+  //  if (follows_t_by_map_.find(rhs) == follows_t_by_map_.end()) {
+  //    follows_t_by_map_.emplace(rhs,
+  //                              std::make_unique<FollowsTByRelationship>(rhs));
+  //  }
+  //  follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
 }
 
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(

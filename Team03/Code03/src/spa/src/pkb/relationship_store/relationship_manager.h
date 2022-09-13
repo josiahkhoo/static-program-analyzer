@@ -9,6 +9,7 @@
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
 #include "follows_storage.h"
+#include "parent_storage.h"
 
 class RelationshipManager {
  public:
@@ -21,9 +22,10 @@ class RelationshipManager {
   // store followsT to FollowsStorage
   void AddAbstraction(FollowsTAbstraction abstraction);
 
+  // store parent to ParentStorage
   void AddAbstraction(ParentAbstraction abstraction);
 
-  // store followsT to FollowsStorage
+  // store parentT to ParentStorage
   void AddAbstraction(ParentTAbstraction abstraction);
 
   std::unordered_set<std::string> GetFollowsStatements() const;
@@ -44,6 +46,7 @@ class RelationshipManager {
 
  private:
   FollowsStorage follows_store;
+  ParentStorage parent_store;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H

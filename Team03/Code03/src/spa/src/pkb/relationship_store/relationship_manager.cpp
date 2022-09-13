@@ -9,11 +9,11 @@ void RelationshipManager::AddAbstraction(FollowsTAbstraction abstraction) {
 }
 
 void RelationshipManager::AddAbstraction(ParentAbstraction abstraction) {
-  follows_store.AddRelationship(abstraction);
+  parent_store.AddRelationship(abstraction);
 };
 
 void RelationshipManager::AddAbstraction(ParentTAbstraction abstraction) {
-  follows_store.AddRelationship(abstraction);
+  parent_store.AddRelationship(abstraction);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetFollowsStatements()

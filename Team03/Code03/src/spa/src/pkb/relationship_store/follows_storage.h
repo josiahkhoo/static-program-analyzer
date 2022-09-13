@@ -19,10 +19,6 @@ class FollowsStorage {
 
   void AddRelationship(FollowsTAbstraction abstraction);
 
-  void AddRelationship(ParentAbstraction abstraction);
-
-  void AddRelationship(ParentTAbstraction abstraction);
-
   std::unordered_set<std::string> GetFollowsStatements() const;
 
   std::unordered_set<std::string> GetFollowsStatements(
