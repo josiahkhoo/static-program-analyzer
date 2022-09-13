@@ -100,3 +100,12 @@ bool TNode::operator==(const TNode &rhs) const {
 }
 
 bool TNode::operator!=(const TNode &rhs) const { return !(rhs == *this); }
+
+std::shared_ptr<TNode> TNode::GetParent() const {
+  assert(parent_.has_value());
+  return parent_.value();
+}
+
+void TNode::SetParent(std::shared_ptr<TNode> parent) {
+  parent_ = std::move(parent);
+}

@@ -2,8 +2,6 @@
 
 #include <utility>
 
-#include "common/clause/clause.h"
-
 AbstractionNode::AbstractionNode(std::shared_ptr<QueryOperation> q_operation)
     : QNode(), q_operation_(std::move(q_operation)) {}
 

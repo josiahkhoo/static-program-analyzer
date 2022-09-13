@@ -22,8 +22,6 @@ class QueryParser : public Parser<QueryString> {
 
   bool MatchString(const std::string &s);
 
-  bool MatchStmtRef();
-
   bool CheckEnd();
 
   void Expect(Token::Kind kind);

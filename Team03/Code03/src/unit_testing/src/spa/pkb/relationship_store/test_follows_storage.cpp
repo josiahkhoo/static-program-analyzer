@@ -1,7 +1,6 @@
 #include "catch.hpp"
 #include "common/entity/assign_entity.h"
 #include "common/entity/call_entity.h"
-#include "pkb/entity_store/constant_storage.h"
 #include "pkb/relationship_store/follows_storage.h"
 
 TEST_CASE("Follows Storage Management", "[FollowsStorage]") {

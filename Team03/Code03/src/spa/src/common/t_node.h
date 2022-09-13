@@ -50,6 +50,10 @@ class TNode {
 
   TNode(int id, TNode::Type type, int statement_number, std::string string_val);
 
+  [[nodiscard]] std::shared_ptr<TNode> GetParent() const;
+
+  void SetParent(std::shared_ptr<TNode> parent);
+
   [[nodiscard]] int GetStatementNumber() const;
 
   [[nodiscard]] std::vector<std::shared_ptr<TNode>> GetChildren() const;
@@ -86,6 +90,7 @@ class TNode {
   Type type_;
   std::optional<int> statement_number_;
   int unique_id_;
+  std::optional<std::shared_ptr<TNode>> parent_;
   std::vector<std::shared_ptr<TNode>> children_;
   std::optional<int> maybe_int_;
   std::optional<std::string> maybe_string_;
