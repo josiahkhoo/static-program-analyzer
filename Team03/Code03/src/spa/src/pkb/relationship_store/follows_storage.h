@@ -8,6 +8,8 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/parent_abstraction.h"
+#include "common/abstraction/parent_t_abstraction.h"
 #include "follows_t_by_relationship.h"
 #include "follows_t_relationship.h"
 
@@ -16,6 +18,10 @@ class FollowsStorage {
   void AddRelationship(FollowsAbstraction abstraction);
 
   void AddRelationship(FollowsTAbstraction abstraction);
+
+  void AddRelationship(ParentAbstraction abstraction);
+
+  void AddRelationship(ParentTAbstraction abstraction);
 
   std::unordered_set<std::string> GetFollowsStatements() const;
 

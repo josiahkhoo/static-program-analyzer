@@ -6,6 +6,8 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/parent_abstraction.h"
+#include "common/abstraction/parent_t_abstraction.h"
 #include "follows_storage.h"
 
 class RelationshipManager {
@@ -18,6 +20,11 @@ class RelationshipManager {
 
   // store followsT to FollowsStorage
   void AddAbstraction(FollowsTAbstraction abstraction);
+
+  void AddAbstraction(ParentAbstraction abstraction);
+
+  // store followsT to FollowsStorage
+  void AddAbstraction(ParentTAbstraction abstraction);
 
   std::unordered_set<std::string> GetFollowsStatements() const;
 

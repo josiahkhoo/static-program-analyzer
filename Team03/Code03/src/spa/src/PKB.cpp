@@ -71,6 +71,18 @@ void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
   }
 }
 
+void PKB::Store(std::vector<ParentAbstraction> abstractions) {
+  for (const ParentAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
+  for (const ParentTAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetFollowsStatements();

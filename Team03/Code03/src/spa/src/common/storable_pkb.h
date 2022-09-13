@@ -39,6 +39,10 @@ class StorablePkb {
   virtual void Store(std::vector<FollowsAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<FollowsTAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<ParentAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<ParentTAbstraction> abstractions) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H

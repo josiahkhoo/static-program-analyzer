@@ -63,6 +63,12 @@ class PKB : public QueryablePkb, public StorablePkb {
   // FollowsT
   void Store(std::vector<FollowsTAbstraction> abstractions) override;
 
+  // Parent
+  void Store(std::vector<ParentAbstraction> abstractions) override;
+
+  //ParentT
+  void Store(std::vector<ParentTAbstraction> abstractions) override;
+
   std::unordered_set<std::string> QueryFollows(int statement_number,
                                                EntityType type) const override;
   std::unordered_set<std::string> QueryAllFollows(
