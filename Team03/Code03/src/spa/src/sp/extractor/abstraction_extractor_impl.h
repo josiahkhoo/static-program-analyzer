@@ -29,7 +29,9 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
                            const SubAbstractionExtractor<ParentAbstraction>
                                &parent_abstraction_extractor,
                            const SubAbstractionExtractor<ParentTAbstraction>
-                               &parent_t_abstraction_extractor);
+                               &parent_t_abstraction_extractor,
+                           const SubAbstractionExtractor<UsesSAbstraction>
+                               &uses_s_abstraction_extractor);
 
   [[nodiscard]] AbstractionExtractorResult Extract(
       const std::vector<AssignEntity> &assign_entities,
@@ -43,6 +45,18 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       const std::vector<VariableEntity> &variable_entities,
       const std::vector<WhileEntity> &while_entities) const override;
 
+  [[nodiscard]] std::
+      unordered_map<TNode, StatementEntity> static GetTNodeStatementEntityMap(
+          const std::vector<StatementEntity> &statement_entities);
+
+  [[nodiscard]] std::
+      unordered_map<TNode, VariableEntity> static GetTNodeVariableEntityMap(
+          const std::vector<VariableEntity> &variable_entities);
+
+  [[nodiscard]] std::
+      unordered_map<TNode, ConstantEntity> static GetTNodeConstantEntityMap(
+          const std::vector<ConstantEntity> &constant_entities);
+
  private:
   const SubAbstractionExtractor<FollowsAbstraction>
       &follows_abstraction_extractor_;
@@ -52,18 +66,8 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       &parent_abstraction_extractor_;
   const SubAbstractionExtractor<ParentTAbstraction>
       &parent_t_abstraction_extractor_;
-
-  [[nodiscard]] std::unordered_map<TNode, StatementEntity>
-  GetTNodeStatementEntityMap(
-      const std::vector<StatementEntity> &statement_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, VariableEntity>
-  GetTNodeVariableEntityMap(
-      const std::vector<VariableEntity> &variable_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
-  GetTNodeConstantEntityMap(
-      const std::vector<ConstantEntity> &constant_entities) const;
+  const SubAbstractionExtractor<UsesSAbstraction>
+      &uses_s_abstraction_extractor_;
 };
 
 #endif  // SPA_ABSTRACTION_EXTRACTOR_IMPL_H

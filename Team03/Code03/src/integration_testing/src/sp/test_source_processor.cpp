@@ -8,6 +8,7 @@
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/uses_s_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 #include "sp/extractor/entity/assign_entity_node_extractor.h"
@@ -53,9 +54,11 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
   FollowsTAbstractionExtractor follows_t_abstraction_extractor;
   ParentAbstractionExtractor parent_abstraction_extractor;
   ParentTAbstractionExtractor parent_t_abstraction_extractor;
+  UsesSAbstractionExtractor uses_s_abstraction_extractor;
   AbstractionExtractorImpl abstraction_extractor = AbstractionExtractorImpl(
       follows_abstraction_extractor, follows_t_abstraction_extractor,
-      parent_abstraction_extractor, parent_t_abstraction_extractor);
+      parent_abstraction_extractor, parent_t_abstraction_extractor,
+      uses_s_abstraction_extractor);
 
   DesignExtractorImpl design_extractor =
       DesignExtractorImpl(entity_extractor, abstraction_extractor);
