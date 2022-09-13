@@ -14,7 +14,7 @@
 class RelationshipManager {
  public:
   /* ====================================
-   * General Entity Adder Methods
+   * General Relationship Adder Methods
    * ==================================== */
   // store follows to FollowsStorage
   void AddAbstraction(FollowsAbstraction abstraction);
@@ -28,6 +28,9 @@ class RelationshipManager {
   // store parentT to ParentStorage
   void AddAbstraction(ParentTAbstraction abstraction);
 
+  /* ====================================
+   * General Relationship Getter Methods
+   * ==================================== */
   std::unordered_set<std::string> GetFollowsStatements() const;
 
   std::unordered_set<std::string> GetFollowsStatements(
@@ -42,6 +45,22 @@ class RelationshipManager {
   std::unordered_set<std::string> GetFollowsByStatements() const;
 
   std::unordered_set<std::string> GetFollowsTByStatements(
+      int statement_number) const;
+
+  std::unordered_set<std::string> GetParentStatements() const;
+
+  std::unordered_set<std::string> GetParentStatements(
+      int statement_number) const;
+
+  std::unordered_set<std::string> GetParentTStatements(
+      int statement_number) const;
+
+  std::unordered_set<std::string> GetParentByStatements(
+      int statement_number) const;
+
+  std::unordered_set<std::string> GetParentByStatements() const;
+
+  std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
  private:

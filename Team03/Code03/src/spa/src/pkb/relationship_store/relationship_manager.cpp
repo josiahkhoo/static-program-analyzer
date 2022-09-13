@@ -45,3 +45,33 @@ std::unordered_set<std::string> RelationshipManager::GetFollowsTByStatements(
     int statement_number) const {
   return follows_store.GetFollowsTByStatements(statement_number);
 }
+
+std::unordered_set<std::string> RelationshipManager::GetParentStatements()
+    const {
+  return parent_store.GetParentStatements();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetParentStatements(
+    int statement_number) const {
+  return parent_store.GetParentStatements(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetParentTStatements(
+    int statement_number) const {
+  return parent_store.GetParentTStatements(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetParentByStatements(
+    int statement_number) const {
+  return parent_store.GetParentByStatements(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetParentByStatements()
+    const {
+  return parent_store.GetParentByStatements();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetParentTByStatements(
+    int statement_number) const {
+  return parent_store.GetParentTByStatements(statement_number);
+}

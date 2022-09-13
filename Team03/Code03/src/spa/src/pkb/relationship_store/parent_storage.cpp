@@ -1,46 +1,48 @@
 #include "parent_storage.h"
 
-void FollowsStorage::AddRelationship(ParentAbstraction abstraction) {
-  //  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  //  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
-  //
-  //  follows_map_.emplace(lhs, rhs);
-  //  follows_by_map_.emplace(rhs, lhs);
+#include "parent_t_by_relationship.h"
+#include "parent_t_relationship.h"
+
+void ParentStorage::AddRelationship(ParentAbstraction abstraction) {
+  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
+  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+
+  parent_map_.emplace(lhs, rhs);
+  parent_by_map_.emplace(rhs, lhs);
 }
 
-void FollowsStorage::AddRelationship(ParentTAbstraction abstraction) {
-  //  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  //  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
-  //
-  //  if (follows_t_map_.find(lhs) == follows_t_map_.end()) {
-  //    follows_t_map_.emplace(lhs, std::make_unique<FollowsTRelationship>(lhs));
-  //  }
-  //  follows_t_map_.find(lhs)->second->AddFollowsTByStatementNumber(rhs);
-  //
-  //  if (follows_t_by_map_.find(rhs) == follows_t_by_map_.end()) {
-  //    follows_t_by_map_.emplace(rhs,
-  //                              std::make_unique<FollowsTByRelationship>(rhs));
-  //  }
-  //  follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
+void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
+  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
+  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+
+  if (parent_t_map_.find(lhs) == parent_t_map_.end()) {
+    parent_t_map_.emplace(lhs, std::make_unique<ParentTRelationship>(lhs));
+  }
+  parent_t_map_.find(lhs)->second->AddParentTByStatementNumber(rhs);
+
+  if (parent_t_by_map_.find(rhs) == parent_t_by_map_.end()) {
+    parent_t_by_map_.emplace(rhs, std::make_unique<ParentTByRelationship>(rhs));
+  }
+  parent_t_by_map_.find(rhs)->second->AddParentTStatementNumber(lhs);
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(
+std::unordered_set<std::string> ParentStorage::GetParentStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
-  if (follows_map_.find(statement_number) == follows_map_.end()) {
+  if (parent_map_.find(statement_number) == parent_map_.end()) {
     return res;
   }
-  res.emplace(std::to_string(follows_map_.find(statement_number)->second));
+  res.emplace(std::to_string(parent_map_.find(statement_number)->second));
   return res;
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
+std::unordered_set<std::string> ParentStorage::GetParentTStatements(
     int statement_number) const {
-  if (follows_t_map_.find(statement_number) == follows_t_map_.end()) {
+  if (parent_t_map_.find(statement_number) == parent_t_map_.end()) {
     return {};
   }
-  std::unordered_set<int> res = follows_t_map_.find(statement_number)
-                                    ->second->GetFollowsTByStatementNumbers();
+  std::unordered_set<int> res = parent_t_map_.find(statement_number)
+                                    ->second->GetParentTByStatementNumbers();
   std::unordered_set<std::string> s;
   for (int i : res) {
     s.emplace(std::to_string(i));
@@ -48,31 +50,31 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
   return s;
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements(
+std::unordered_set<std::string> ParentStorage::GetParentByStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
-  if (follows_by_map_.find(statement_number) == follows_by_map_.end()) {
+  if (parent_by_map_.find(statement_number) == parent_by_map_.end()) {
     return res;
   }
-  res.emplace(std::to_string(follows_by_map_.find(statement_number)->second));
+  res.emplace(std::to_string(parent_by_map_.find(statement_number)->second));
   return res;
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements() const {
+std::unordered_set<std::string> ParentStorage::GetParentByStatements() const {
   std::unordered_set<std::string> res;
-  for (auto entry : follows_by_map_) {
+  for (auto entry : parent_by_map_) {
     res.emplace(std::to_string(entry.first));
   }
   return res;
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsTByStatements(
+std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
     int statement_number) const {
-  if (follows_t_by_map_.find(statement_number) == follows_t_by_map_.end()) {
+  if (parent_t_by_map_.find(statement_number) == parent_t_by_map_.end()) {
     return {};
   }
-  std::unordered_set<int> res = follows_t_by_map_.find(statement_number)
-                                    ->second->GetFollowsTStatementNumber();
+  std::unordered_set<int> res = parent_t_by_map_.find(statement_number)
+                                    ->second->GetParentTStatementNumber();
   std::unordered_set<std::string> s;
   for (int i : res) {
     s.emplace(std::to_string(i));
@@ -80,9 +82,9 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsTByStatements(
   return s;
 }
 
-std::unordered_set<std::string> FollowsStorage::GetFollowsStatements() const {
+std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
   std::unordered_set<std::string> res;
-  for (auto entry : follows_map_) {
+  for (auto entry : parent_map_) {
     res.emplace(std::to_string(entry.first));
   }
   return res;
