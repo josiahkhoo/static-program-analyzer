@@ -28,39 +28,43 @@ class SimpleParser : public Parser<TNode> {
 
   void Expect(const std::string &s);
 
-  TNode ParseProcedure();
+  std::shared_ptr<TNode> ParseProcedure();
 
-  TNode ParseStatementList();
+  std::shared_ptr<TNode> ParseStatementList();
 
-  TNode ParseStatement();
+  std::shared_ptr<TNode> ParseStatement();
 
-  TNode ParseAssign();
+  std::shared_ptr<TNode> ParseAssign();
 
-  TNode ParseRead();
+  std::shared_ptr<TNode> ParseRead();
 
-  TNode ParsePrint();
+  std::shared_ptr<TNode> ParsePrint();
 
-  TNode ParseCall();
+  std::shared_ptr<TNode> ParseCall();
 
-  TNode ParseWhile();
+  std::shared_ptr<TNode> ParseWhile();
 
-  TNode ParseIf();
+  std::shared_ptr<TNode> ParseIf();
 
-  TNode ParseCondExpr();
+  std::shared_ptr<TNode> ParseCondExpr();
 
-  TNode ParseRelExpr();
+  std::shared_ptr<TNode> ParseRelExpr();
 
-  TNode ParseRelFactor();
+  std::shared_ptr<TNode> ParseRelFactor();
 
-  TNode ParseExpr();
+  std::shared_ptr<TNode> ParseExpr();
 
-  TNode ParseTerm();
+  std::shared_ptr<TNode> ParseTerm();
 
-  TNode ParseFactor();
+  std::shared_ptr<TNode> ParseFactor();
 
-  TNode ParseVarName();
+  std::shared_ptr<TNode> ParseVarName();
 
-  TNode ParseConstValue();
+  std::shared_ptr<TNode> ParseConstValue();
+
+  void AssignParentToChildren(
+      std::shared_ptr<TNode> t_node,
+      const std::vector<std::shared_ptr<TNode>> &children);
 };
 
 #endif  // SPA_SIMPLE_PARSER_H
