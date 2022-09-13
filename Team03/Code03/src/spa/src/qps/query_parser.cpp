@@ -101,14 +101,24 @@ EntityReference QueryParser::ExtractEntityRef() {
 Expression QueryParser::ExtractExpression() {
   Expression exp;
 
+  // Wildcard front
   if (MatchKind(Token::UNDERSCORE)) {
     exp.has_front_wildcard = true;
     token_pos_++;
   }
-
-  EntityReference matchRef = ExtractEntityRef();
-  exp.to_match = matchRef.GetIdentifier();
-
+  // Pattern to match
+  if (MatchKind(Token::INVERTED_COMMAS)) {
+    token_pos_++;
+    std::string pattern;
+    while (Peek().IsNot(Token::INVERTED_COMMAS)) {
+      Token next = Peek();
+      token_pos_++;
+      pattern.append(next.GetValue());
+    }
+    exp.to_match = pattern;
+    Expect(Token::INVERTED_COMMAS);
+  }
+  // Wildcard back
   if (MatchKind(Token::UNDERSCORE)) {
     exp.has_back_wildcard = true;
     token_pos_++;

@@ -1,8 +1,5 @@
-#define DEBUG 0
-
 #include "lexer.h"
 
-#include <iostream>
 #include <istream>
 #include <regex>
 
@@ -78,10 +75,6 @@ std::vector<Token> Lexer::LexLine(std::string &line) const {
           tokens.push_back(found_token);
         }
         // else skip whitespaces
-
-        if (DEBUG)
-          std::cout << tokens.back().PrettyPrintKind() << ", "
-                    << matched_regex.str() << "\n";
 
         line = line.substr(static_cast<int>(matched_regex.str().size()));
         break;

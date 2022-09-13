@@ -76,3 +76,32 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
     REQUIRE(tokens[i].Is(k[i]));
   }
 }
+
+TEST_CASE("Extract query pattern tokens", "[Lexer]") {
+  std::istringstream str_stream(
+      "Select a pattern a(_,_\"x + 1\"_");
+  Lexer lex;
+  std::vector<Token> tokens = lex.Lex(str_stream);
+
+  REQUIRE(tokens.size() == 15);
+
+  std::vector<Token::Kind> k = {Token::IDENTIFIER,
+                                Token::IDENTIFIER,
+                                Token::IDENTIFIER,
+                                Token::IDENTIFIER,
+                                Token::LEFT_ROUND_BRACKET,
+                                Token::UNDERSCORE,
+                                Token::COMMA,
+                                Token::UNDERSCORE,
+                                Token::INVERTED_COMMAS,
+                                Token::IDENTIFIER,
+                                Token::PLUS,
+                                Token::NUMBER,
+                                Token::INVERTED_COMMAS,
+                                Token::UNDERSCORE,
+                                Token::END};
+
+  for (int i = 0; i < tokens.size(); i++) {
+    REQUIRE(tokens[i].Is(k[i]));
+  }
+}
