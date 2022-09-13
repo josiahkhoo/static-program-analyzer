@@ -72,6 +72,18 @@ void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
   }
 }
 
+void PKB::Store(std::vector<ParentAbstraction> abstractions) {
+  for (const ParentAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
+  for (const ParentTAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
@@ -180,31 +192,85 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
 }
 
 std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentByStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryParent(int statement_number,
                                                  EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
                                                    EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentByStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
                                                   EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentTStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  };
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
                                                     EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetParentTByStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {

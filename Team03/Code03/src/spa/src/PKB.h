@@ -64,6 +64,12 @@ class PKB : public QueryablePkb, public StorablePkb {
   // FollowsT
   void Store(std::vector<FollowsTAbstraction> abstractions) override;
 
+  // Parent
+  void Store(std::vector<ParentAbstraction> abstractions) override;
+
+  // ParentT
+  void Store(std::vector<ParentTAbstraction> abstractions) override;
+
   /* ====================================
    * Entity Query Methods
    * ==================================== */

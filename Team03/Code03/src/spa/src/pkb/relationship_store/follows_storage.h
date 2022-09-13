@@ -8,6 +8,8 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/parent_abstraction.h"
+#include "common/abstraction/parent_t_abstraction.h"
 #include "follows_t_by_relationship.h"
 #include "follows_t_relationship.h"
 

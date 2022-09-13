@@ -53,14 +53,13 @@ class Token {
 
   [[nodiscard]] std::string GetValue() const;
 
-  [[nodiscard]] std::string PrettyPrintKind() const;
-
  private:
   Kind kind_;
   std::optional<std::string> value_;
 
   // Checks if token can hold a value.
   static bool CanHoldValue(Kind kind);
+  static std::string GetTypeValue(Kind kind);
 };
 
 #endif  // SPA_TOKEN_H
