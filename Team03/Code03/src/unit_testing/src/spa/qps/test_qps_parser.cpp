@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "catch.hpp"
 #include "common/clause/parent_clause.h"
 #include "common/clause/parent_t_clause.h"
@@ -310,125 +308,155 @@ TEST_CASE("'Assign Select Pattern' query", "[QPS Parser]") {
                     .has_back_wildcard);
 }
 
-TEST_CASE("'Assign Select Pattern short expression' query", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::IDENTIFIER, "pattern"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::COMMA),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::PLUS),
-                                Token(Token::IDENTIFIER, "b"),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  QueryString res = qp.Parse(tokens_);
+TEST_CASE("Pattern Wildcards", "[QPS Parser]") {
+  SECTION("Only wildcard") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "pattern"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::COMMA),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    QueryString res = qp.Parse(tokens_);
 
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .to_match == "a+b");
+    REQUIRE(res.GetQueryOperation().size() == 1);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .has_front_wildcard);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .to_match.empty());
+    REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                      ->GetExpression()
+                      .has_back_wildcard);
+  }
+  SECTION("Front & back wildcard") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "pattern"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::COMMA),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::IDENTIFIER, "b"),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    QueryString res = qp.Parse(tokens_);
+
+    REQUIRE(res.GetQueryOperation().size() == 1);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .has_front_wildcard);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .to_match == "b");
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .has_back_wildcard);
+  }
+  SECTION("Front only wildcard") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "pattern"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::COMMA),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::IDENTIFIER, "b"),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    QueryString res = qp.Parse(tokens_);
+
+    REQUIRE(res.GetQueryOperation().size() == 1);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .has_front_wildcard);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .to_match == "b");
+    REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                      ->GetExpression()
+                      .has_back_wildcard);
+  }
 }
 
-TEST_CASE("'Assign Select Pattern long expression' query", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::IDENTIFIER, "pattern"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::COMMA),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::PLUS),
-                                Token(Token::IDENTIFIER, "b"),
-                                Token(Token::MINUS),
-                                Token(Token::IDENTIFIER, "c"),
-                                Token(Token::PERCENT),
-                                Token(Token::IDENTIFIER, "d"),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  QueryString res = qp.Parse(tokens_);
+TEST_CASE("Pattern patterns (string)", "[QPS Parser]") {
+  SECTION("Short string") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "pattern"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::COMMA),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::PLUS),
+                                  Token(Token::IDENTIFIER, "b"),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    QueryString res = qp.Parse(tokens_);
 
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .to_match == "a+b-c%d");
-}
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .to_match == "a+b");
+  }
+  SECTION("Long string") {
+    QueryParser qp = QueryParser();
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::IDENTIFIER, "Select"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::IDENTIFIER, "pattern"),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::UNDERSCORE),
+                                  Token(Token::COMMA),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::IDENTIFIER, "a"),
+                                  Token(Token::PLUS),
+                                  Token(Token::IDENTIFIER, "b"),
+                                  Token(Token::MINUS),
+                                  Token(Token::IDENTIFIER, "c"),
+                                  Token(Token::PERCENT),
+                                  Token(Token::IDENTIFIER, "d"),
+                                  Token(Token::INVERTED_COMMAS),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::END)};
+    QueryString res = qp.Parse(tokens_);
 
-TEST_CASE("Pattern front wildcard query", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::IDENTIFIER, "pattern"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::COMMA),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::IDENTIFIER, "b"),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  QueryString res = qp.Parse(tokens_);
-
-  REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .to_match == "b");
-  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                    ->GetExpression()
-                    .has_back_wildcard);
-}
-
-TEST_CASE("Pattern front & back wildcard query", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::IDENTIFIER, "pattern"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::COMMA),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::IDENTIFIER, "b"),
-                                Token(Token::INVERTED_COMMAS),
-                                Token(Token::UNDERSCORE),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  QueryString res = qp.Parse(tokens_);
-
-  REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_back_wildcard);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .to_match == "a+b-c%d");
+  }
 }
 
 TEST_CASE("`Assign Pattern Follow`", "[QPS Parser]") {
