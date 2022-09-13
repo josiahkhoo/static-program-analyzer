@@ -78,8 +78,7 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
 }
 
 TEST_CASE("Extract query pattern tokens", "[Lexer]") {
-  std::istringstream str_stream(
-      "Select a pattern a(_,_\"x + 1\"_");
+  std::istringstream str_stream("Select a pattern a(_,_\"x + 1\"_");
   Lexer lex;
   std::vector<Token> tokens = lex.Lex(str_stream);
 
