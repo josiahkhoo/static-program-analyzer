@@ -44,6 +44,7 @@ void PKB::Store(std::vector<PrintEntity> ts) {
 void PKB::Store(std::vector<AssignEntity> ts) {
   for (const AssignEntity& entity : ts) {
     entity_manager_.AddAssignStatement(entity);
+    pattern_manager_.AddAssignPattern(entity);
   }
 }
 
@@ -71,6 +72,31 @@ void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
   }
 }
 
+std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
+  switch (type) {
+    case PROCEDURE:
+      return entity_manager_.GetProcedures();
+    case CONSTANT:
+      return entity_manager_.GetConstants();
+    case VARIABLE:
+      return entity_manager_.GetVariables();
+    case STATEMENT:
+      return entity_manager_.GetStatements();
+    case CALL:
+      return entity_manager_.GetCallStatements();
+    case READ:
+      return entity_manager_.GetReadStatements();
+    case PRINT:
+      return entity_manager_.GetPrintStatements();
+    case ASSIGN:
+      return entity_manager_.GetAssignStatements();
+    case IF:
+      return entity_manager_.GetIfStatements();
+    case WHILE:
+      return entity_manager_.GetWhileStatements();
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetFollowsStatements();
@@ -87,6 +113,20 @@ std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
 std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetFollowsByStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
+                                                  EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetFollowsStatements(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -139,45 +179,6 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
-  switch (type) {
-    case PROCEDURE:
-      return entity_manager_.GetProcedures();
-    case CONSTANT:
-      return entity_manager_.GetConstants();
-    case VARIABLE:
-      return entity_manager_.GetVariables();
-    case STATEMENT:
-      return entity_manager_.GetStatements();
-    case CALL:
-      return entity_manager_.GetCallStatements();
-    case READ:
-      return entity_manager_.GetReadStatements();
-    case PRINT:
-      return entity_manager_.GetPrintStatements();
-    case ASSIGN:
-      return entity_manager_.GetAssignStatements();
-    case IF:
-      return entity_manager_.GetIfStatements();
-    case WHILE:
-      return entity_manager_.GetWhileStatements();
-  }
-}
-
-std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
-                                                  EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetFollowsStatements(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
-}
-
 std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
   return {};
 }
@@ -207,7 +208,7 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
-  return {};
+  return pattern_manager_.GetAllPattern(exp);
 }
 
 std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
@@ -217,5 +218,5 @@ std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
 
 std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
                                                   Expression exp) const {
-  return {};
+  return pattern_manager_.GetPattern(lhs, exp);
 }
