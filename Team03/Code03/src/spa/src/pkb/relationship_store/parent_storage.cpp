@@ -91,11 +91,11 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
 }
 
 void ParentStorage::Clear() {
-//  parent_map_.clear();
-//  parent_by_map_.clear();
-//
-//  for (auto const& iter : parent_t_map_) {
-//    auto& parent_t = iter.second;
-//    parent_t.reset();
-//  }
+  //  parent_map_.clear();
+  //  parent_by_map_.clear();
+  //
+  //  for (auto const& iter : parent_t_map_) {
+  //    auto& parent_t = iter.second;
+  //    parent_t.reset();
+  //  }
 }
