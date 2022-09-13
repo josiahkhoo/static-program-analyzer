@@ -11,7 +11,7 @@
 QueryParser::QueryParser() {
   tokens_ = {};
   query_string_builder_ = QueryStringBuilder();
-};
+}
 
 QueryString QueryParser::Parse(std::vector<Token> tokens) {
   tokens_ = tokens;
@@ -39,11 +39,6 @@ bool QueryParser::MatchString(const std::string &s) {
 }
 
 bool QueryParser::CheckEnd() { return token_pos_ == tokens_.size(); }
-
-bool QueryParser::MatchStmtRef() {
-  return MatchKind(Token::IDENTIFIER) || MatchKind(Token::UNDERSCORE) ||
-         MatchKind(Token::NUMBER);
-}
 
 void QueryParser::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
