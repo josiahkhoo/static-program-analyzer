@@ -1,6 +1,7 @@
-#include "uses_s_abstraction_extractor.h"
+#include "uses_abstraction_extractor_impl.h"
 
-std::vector<UsesSAbstraction> UsesSAbstractionExtractor::Extract(
+std::pair<std::vector<UsesSAbstraction>, std::vector<UsesPAbstraction>>
+UsesAbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity>& assign_entities,
     const std::vector<CallEntity>& call_entities,
     const std::vector<ConstantEntity>& constant_entities,
@@ -13,12 +14,16 @@ std::vector<UsesSAbstraction> UsesSAbstractionExtractor::Extract(
     const std::vector<WhileEntity>& while_entities,
     std::unordered_map<TNode, StatementEntity>& t_node_stmt_ent_umap,
     std::unordered_map<TNode, VariableEntity>& t_node_var_ent_umap,
-    std::unordered_map<TNode, ConstantEntity>& t_node_const_ent_umap) const {
+    std::unordered_map<TNode, ConstantEntity>& t_node_const_ent_umap,
+    std::unordered_map<TNode, ProcedureEntity>& t_node_proc_ent_umap) const {
   std::vector<UsesSAbstraction> uses_s_abstractions;
+  std::vector<UsesPAbstraction> uses_p_abstractions;
   for (const auto& variable_entity : variable_entities) {
     auto* curr_node_ptr = const_cast<TNode*>(variable_entity.GetNodePointer());
     while (curr_node_ptr != nullptr) {
       if (curr_node_ptr->IsType(TNode::Procedure)) {
+        uses_p_abstractions.emplace_back(
+            t_node_proc_ent_umap.find(*curr_node_ptr)->second, variable_entity);
         break;
       } else if (curr_node_ptr->GetParent()->IsType(TNode::Assign) &&
                  *curr_node_ptr->GetParent()->GetChildren()[0] ==
@@ -38,6 +43,5 @@ std::vector<UsesSAbstraction> UsesSAbstractionExtractor::Extract(
       curr_node_ptr = curr_node_ptr->GetParent().get();
     }
   }
-
-  return uses_s_abstractions;
+  return {uses_s_abstractions, uses_p_abstractions};
 }

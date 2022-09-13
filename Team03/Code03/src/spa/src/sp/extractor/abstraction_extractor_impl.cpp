@@ -1,5 +1,7 @@
 #include "abstraction_extractor_impl.h"
 
+#include "common/abstraction/uses_p_abstraction.h"
+
 AbstractionExtractorImpl::AbstractionExtractorImpl(
     const SubAbstractionExtractor<FollowsAbstraction>
         &follows_abstraction_extractor,
@@ -9,13 +11,12 @@ AbstractionExtractorImpl::AbstractionExtractorImpl(
         &parent_abstraction_extractor,
     const SubAbstractionExtractor<ParentTAbstraction>
         &parent_t_abstraction_extractor,
-    const SubAbstractionExtractor<UsesSAbstraction>
-        &uses_s_abstraction_extractor)
+    const UsesAbstractionExtractor &uses_abstraction_extractor)
     : follows_abstraction_extractor_(follows_abstraction_extractor),
       follows_t_abstraction_extractor_(follows_t_abstraction_extractor),
       parent_abstraction_extractor_(parent_abstraction_extractor),
       parent_t_abstraction_extractor_(parent_t_abstraction_extractor),
-      uses_s_abstraction_extractor_(uses_s_abstraction_extractor) {}
+      uses_abstraction_extractor_(uses_abstraction_extractor) {}
 
 AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity> &assign_entities,
@@ -34,6 +35,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
       GetTNodeVariableEntityMap(variable_entities);
   std::unordered_map<TNode, ConstantEntity> t_node_const_ent_umap =
       GetTNodeConstantEntityMap(constant_entities);
+  std::unordered_map<TNode, ProcedureEntity> t_node_procedure_ent_umap =
+      GetTNodeProcedureEntityMap(procedure_entities);
 
   std::vector<FollowsAbstraction> follows_abstractions =
       follows_abstraction_extractor_.Extract(
@@ -63,12 +66,13 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap);
 
-  std::vector<UsesSAbstraction> uses_s_abstractions =
-      uses_s_abstraction_extractor_.Extract(
+  auto [uses_s_abstractions, uses_p_abstractions] =
+      uses_abstraction_extractor_.Extract(
           assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap);
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
 
   return {follows_abstractions, follows_t_abstractions, {},
           parent_abstractions,  parent_t_abstractions,  uses_s_abstractions};
@@ -98,5 +102,14 @@ AbstractionExtractorImpl::GetTNodeConstantEntityMap(
   std::unordered_map<TNode, ConstantEntity> umap;
   for (const auto &constant_entity : constant_entities)
     umap.emplace(*constant_entity.GetNodePointer(), constant_entity);
+  return umap;
+}
+
+std::unordered_map<TNode, ProcedureEntity>
+AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+    const std::vector<ProcedureEntity> &procedure_entities) {
+  std::unordered_map<TNode, ProcedureEntity> umap;
+  for (const auto &procedure_entity : procedure_entities)
+    umap.emplace(*procedure_entity.GetNodePointer(), procedure_entity);
   return umap;
 }
