@@ -123,6 +123,10 @@ std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
   return result;
 }
 
+std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -184,6 +188,10 @@ std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
 }
 
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
   return {};
 }
 
