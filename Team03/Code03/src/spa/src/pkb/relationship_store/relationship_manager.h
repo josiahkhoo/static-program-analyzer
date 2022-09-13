@@ -63,9 +63,14 @@ class RelationshipManager {
   std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
+  /* ====================================
+   * Clear All Relationship Storages
+   * ==================================== */
+  void Clear();
+
  private:
-  FollowsStorage follows_store;
-  ParentStorage parent_store;
+  FollowsStorage follows_store_;
+  ParentStorage parent_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H

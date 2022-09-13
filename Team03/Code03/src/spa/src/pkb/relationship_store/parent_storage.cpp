@@ -26,7 +26,7 @@ void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
   parent_t_by_map_.find(rhs)->second->AddParentTStatementNumber(lhs);
 }
 
-std::unordered_set<std::string> ParentStorage::GetParentStatements(
+std::unordered_set<std::string> ParentStorage::GetParentByStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
   if (parent_map_.find(statement_number) == parent_map_.end()) {
@@ -36,7 +36,7 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements(
   return res;
 }
 
-std::unordered_set<std::string> ParentStorage::GetParentTStatements(
+std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
     int statement_number) const {
   if (parent_t_map_.find(statement_number) == parent_t_map_.end()) {
     return {};
@@ -50,7 +50,7 @@ std::unordered_set<std::string> ParentStorage::GetParentTStatements(
   return s;
 }
 
-std::unordered_set<std::string> ParentStorage::GetParentByStatements(
+std::unordered_set<std::string> ParentStorage::GetParentStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
   if (parent_by_map_.find(statement_number) == parent_by_map_.end()) {
@@ -68,7 +68,7 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements() const {
   return res;
 }
 
-std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
+std::unordered_set<std::string> ParentStorage::GetParentTStatements(
     int statement_number) const {
   if (parent_t_by_map_.find(statement_number) == parent_t_by_map_.end()) {
     return {};
@@ -88,4 +88,14 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
     res.emplace(std::to_string(entry.first));
   }
   return res;
+}
+
+void ParentStorage::Clear() {
+//  parent_map_.clear();
+//  parent_by_map_.clear();
+//
+//  for (auto const& iter : parent_t_map_) {
+//    auto& parent_t = iter.second;
+//    parent_t.reset();
+//  }
 }
