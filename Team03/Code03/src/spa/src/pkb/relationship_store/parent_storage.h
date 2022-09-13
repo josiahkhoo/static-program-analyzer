@@ -8,6 +8,8 @@
 
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "parent_t_by_relationship.h"
+#include "parent_t_relationship.h"
 
 class ParentStorage {
  public:

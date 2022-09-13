@@ -199,7 +199,8 @@ std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
     if (typed_statements.find(statement) != typed_statements.end()) {
       result.emplace(statement);
     }
-  };
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
