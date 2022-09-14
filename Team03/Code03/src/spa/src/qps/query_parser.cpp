@@ -123,13 +123,15 @@ Expression QueryParser::ExtractExpression() {
 }
 
 void QueryParser::ParseDeclaration() {
-  Token next = Peek();
-  EntityType entType = ExpectEntityType();
-  next = Peek();
-  Expect(Token::IDENTIFIER);
-  Synonym synonym = Synonym(entType, next.GetValue());
-  Expect(Token::SEMICOLON);
-  query_string_builder_.AddDeclaration(synonym);
+  while (!CheckEnd() && !MatchString("Select")) {
+    Token next = Peek();
+    EntityType entType = ExpectEntityType();
+    next = Peek();
+    Expect(Token::IDENTIFIER);
+    Synonym synonym = Synonym(entType, next.GetValue());
+    Expect(Token::SEMICOLON);
+    query_string_builder_.AddDeclaration(synonym);
+  }
 }
 
 EntityType QueryParser::ExpectEntityType() {
