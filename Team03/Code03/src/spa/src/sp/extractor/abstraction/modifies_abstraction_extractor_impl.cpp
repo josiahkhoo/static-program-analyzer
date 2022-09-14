@@ -30,6 +30,16 @@ ModifiesAbstractionExtractorImpl::Extract(
                      *curr_node_ptr) {
         // Break if variable is on RHS of assign
         break;
+      } else if (curr_node_ptr->GetParent()->IsType(TNode::While) &&
+                 *curr_node_ptr->GetParent()->GetChildren()[0] ==
+                     *curr_node_ptr) {
+        // Break if variable is on LHS of while
+        break;
+      } else if (curr_node_ptr->GetParent()->IsType(TNode::IfElseThen) &&
+                 *curr_node_ptr->GetParent()->GetChildren()[0] ==
+                     *curr_node_ptr) {
+        // Break if variable is on LHS of if
+        break;
       } else if (curr_node_ptr->IsType(TNode::Print)) {
         // Break if curr node is a print node
         break;

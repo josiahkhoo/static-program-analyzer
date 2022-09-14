@@ -150,45 +150,39 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
             var_umap, const_umap, proc_umap);
 
-    REQUIRE(modifies_s_abstractions.size() == 7);
+    REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(
         (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[0].GetRightHandSide().GetName() == "v"));
+             2 &&
+         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-             2 &&
+             1 &&
          modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
+             3 &&
+         modifies_s_abstractions[2].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-             3 &&
+             1 &&
          modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[4].GetRightHandSide().GetName() == "y"));
+             4 &&
+         modifies_s_abstractions[4].GetRightHandSide().GetName() == "z"));
     REQUIRE(
         (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
-             4 &&
-         modifies_s_abstractions[5].GetRightHandSide().GetName() == "z"));
-    REQUIRE(
-        (modifies_s_abstractions[6].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[6].GetRightHandSide().GetName() == "z"));
+         modifies_s_abstractions[5].GetRightHandSide().GetName() == "z"));
 
-    REQUIRE(modifies_p_abstractions.size() == 4);
+    REQUIRE(modifies_p_abstractions.size() == 3);
     REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[0].GetRightHandSide().GetName() == "v"));
+             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[1].GetRightHandSide().GetName() == "x"));
+             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
     REQUIRE((modifies_p_abstractions[2].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[2].GetRightHandSide().GetName() == "y"));
-    REQUIRE((modifies_p_abstractions[3].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[3].GetRightHandSide().GetName() == "z"));
+             modifies_p_abstractions[2].GetRightHandSide().GetName() == "z"));
   }
 
   SECTION("Extract from While") {
@@ -220,25 +214,19 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
             var_umap, const_umap, proc_umap);
 
-    REQUIRE(modifies_s_abstractions.size() == 3);
+    REQUIRE(modifies_s_abstractions.size() == 2);
     REQUIRE(
         (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[0].GetRightHandSide().GetName() == "v"));
+             2 &&
+         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-             2 &&
-         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
-    REQUIRE(
-        (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
+         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
 
-    REQUIRE(modifies_p_abstractions.size() == 2);
+    REQUIRE(modifies_p_abstractions.size() == 1);
     REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[0].GetRightHandSide().GetName() == "v"));
-    REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[1].GetRightHandSide().GetName() == "x"));
+             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
   }
 
   SECTION("Extract from nested If-While") {
@@ -272,63 +260,37 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
             var_umap, const_umap, proc_umap);
 
-    REQUIRE(modifies_s_abstractions.size() == 11);
+    REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(
         (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[0].GetRightHandSide().GetName() == "m"));
+             3 &&
+         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
              2 &&
-         modifies_s_abstractions[1].GetRightHandSide().GetName() == "n"));
+         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[2].GetRightHandSide().GetName() == "n"));
+         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-             3 &&
-         modifies_s_abstractions[3].GetRightHandSide().GetName() == "x"));
+             5 &&
+         modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
-             2 &&
-         modifies_s_abstractions[4].GetRightHandSide().GetName() == "x"));
+             4 &&
+         modifies_s_abstractions[4].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[5].GetRightHandSide().GetName() == "x"));
-    REQUIRE(
-        (modifies_s_abstractions[6].GetLeftHandSide().GetStatementNumber() ==
-             4 &&
-         modifies_s_abstractions[6].GetRightHandSide().GetName() == "o"));
-    REQUIRE(
-        (modifies_s_abstractions[7].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[7].GetRightHandSide().GetName() == "o"));
-    REQUIRE(
-        (modifies_s_abstractions[8].GetLeftHandSide().GetStatementNumber() ==
-             5 &&
-         modifies_s_abstractions[8].GetRightHandSide().GetName() == "y"));
-    REQUIRE(
-        (modifies_s_abstractions[9].GetLeftHandSide().GetStatementNumber() ==
-             4 &&
-         modifies_s_abstractions[9].GetRightHandSide().GetName() == "y"));
-    REQUIRE(
-        (modifies_s_abstractions[10].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[10].GetRightHandSide().GetName() == "y"));
+         modifies_s_abstractions[5].GetRightHandSide().GetName() == "y"));
 
-    REQUIRE(modifies_p_abstractions.size() == 5);
+    REQUIRE(modifies_p_abstractions.size() == 2);
     REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[0].GetRightHandSide().GetName() == "m"));
+             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[1].GetRightHandSide().GetName() == "n"));
-    REQUIRE((modifies_p_abstractions[2].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[2].GetRightHandSide().GetName() == "x"));
-    REQUIRE((modifies_p_abstractions[3].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[3].GetRightHandSide().GetName() == "o"));
-    REQUIRE((modifies_p_abstractions[4].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[4].GetRightHandSide().GetName() == "y"));
+             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
   }
 
   SECTION("Extract from nested While-If") {
@@ -362,52 +324,36 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
             var_umap, const_umap, proc_umap);
 
-    REQUIRE(modifies_s_abstractions.size() == 9);
+    REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(
         (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[0].GetRightHandSide().GetName() == "m"));
+             3 &&
+         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
              2 &&
-         modifies_s_abstractions[1].GetRightHandSide().GetName() == "n"));
+         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[2].GetRightHandSide().GetName() == "n"));
+         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
     REQUIRE(
         (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-             3 &&
-         modifies_s_abstractions[3].GetRightHandSide().GetName() == "x"));
+             4 &&
+         modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
              2 &&
-         modifies_s_abstractions[4].GetRightHandSide().GetName() == "x"));
+         modifies_s_abstractions[4].GetRightHandSide().GetName() == "y"));
     REQUIRE(
         (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
              1 &&
-         modifies_s_abstractions[5].GetRightHandSide().GetName() == "x"));
-    REQUIRE(
-        (modifies_s_abstractions[6].GetLeftHandSide().GetStatementNumber() ==
-             4 &&
-         modifies_s_abstractions[6].GetRightHandSide().GetName() == "y"));
-    REQUIRE(
-        (modifies_s_abstractions[7].GetLeftHandSide().GetStatementNumber() ==
-             2 &&
-         modifies_s_abstractions[7].GetRightHandSide().GetName() == "y"));
-    REQUIRE(
-        (modifies_s_abstractions[8].GetLeftHandSide().GetStatementNumber() ==
-             1 &&
-         modifies_s_abstractions[8].GetRightHandSide().GetName() == "y"));
+         modifies_s_abstractions[5].GetRightHandSide().GetName() == "y"));
 
-    REQUIRE(modifies_p_abstractions.size() == 4);
+    REQUIRE(modifies_p_abstractions.size() == 2);
     REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[0].GetRightHandSide().GetName() == "m"));
+             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
     REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[1].GetRightHandSide().GetName() == "n"));
-    REQUIRE((modifies_p_abstractions[2].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[2].GetRightHandSide().GetName() == "x"));
-    REQUIRE((modifies_p_abstractions[3].GetLeftHandSide().GetName() == "p" &&
-             modifies_p_abstractions[3].GetRightHandSide().GetName() == "y"));
+             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
   }
 };
