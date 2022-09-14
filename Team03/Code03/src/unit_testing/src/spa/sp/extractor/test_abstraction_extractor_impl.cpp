@@ -2,6 +2,7 @@
 #include "fakeit.hpp"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/parent_abstraction_extractor.h"
 #include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
@@ -20,11 +21,14 @@ TEST_CASE("Abstraction Extractor", "[AbstractionExtractor]") {
   When(Method(parent_t_abstraction_extractor, Extract)).AlwaysReturn({});
   Mock<UsesAbstractionExtractor> uses_abstraction_extractor;
   When(Method(uses_abstraction_extractor, Extract)).AlwaysReturn({{}, {}});
+  Mock<ModifiesAbstractionExtractor> modifies_abstraction_extractor;
+  When(Method(modifies_abstraction_extractor, Extract)).AlwaysReturn({{}, {}});
 
   AbstractionExtractorImpl extractor_under_test = AbstractionExtractorImpl(
       follows_abstraction_extractor.get(),
       follows_t_abstraction_extractor.get(), parent_abstraction_extractor.get(),
-      parent_t_abstraction_extractor.get(), uses_abstraction_extractor.get());
+      parent_t_abstraction_extractor.get(), uses_abstraction_extractor.get(),
+      modifies_abstraction_extractor.get());
 
   SECTION("Extracts respective entities") {
     std::vector<AssignEntity> assign_entities = {};
