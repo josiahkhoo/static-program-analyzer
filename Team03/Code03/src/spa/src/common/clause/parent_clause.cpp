@@ -34,6 +34,9 @@ std::unordered_set<std::string> ParentClause::Fetch(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }
+  if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
+    return queryable_pkb.QueryAllParentsRelations();
+  }
   return {};
 }
 
