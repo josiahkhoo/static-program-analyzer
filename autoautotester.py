@@ -30,7 +30,8 @@ test_array = (
     # ("Uses Procedure", "uses_p"),
     # ("Uses Statement", "uses_s"),
     # ("Modifies Procedure", "modifies_p"),
-    # ("Modifies Statement", "modifies_s")
+    # ("Modifies Statement", "modifies_s"),
+    # ("Clause and Pattern", "clause_and_pattern")
 )
 
 overall_passed_test_cases = 0
@@ -97,13 +98,14 @@ for test in test_array:
             f"Passed: {len(passed_test_cases)}, Failed: {len(failed_test_cases) + len(exception_test_cases)}, "
             f"Exceptions (subset of failures): {len(exception_test_cases)}")
         if failed_test_cases:
-            print("Failed cases:")
+            print("\nFailed cases:")
             for failed_id, failed_comment in failed_test_cases:
                 print(f"{failed_id} - {failed_comment}")
         if exception_test_cases:
-            print("Exception cases:")
+            print("\nException cases:")
             for exception_id, exception_comment in exception_test_cases:
                 print(f"{exception_id} - {exception_comment}")
+    print("")
 
 print("=== Test Summary ===")
 print(f"Total Passed: {overall_passed_test_cases}")

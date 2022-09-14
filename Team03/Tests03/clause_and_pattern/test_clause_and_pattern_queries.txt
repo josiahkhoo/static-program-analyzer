@@ -1,0 +1,15 @@
+1 - (SUCCESS) Join operation with single declaration, follows and pattern matches one
+assign a;
+Select a such that Follows(18, a) pattern a("z", "x + z")
+19
+5000
+2 - (SUCCESS) Join operation with single declaration, follows and pattern doesn't match
+assign a;
+Select a such that Follows(18, a) pattern a("x", "x + z")
+
+5000
+3 - (SUCCESS) Join operation with single declaration, follows* and pattern matches multiple
+assign a;
+Select a pattern a(_, "x"_)
+18, 19
+5000
