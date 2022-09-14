@@ -84,6 +84,30 @@ void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
   }
 }
 
+void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
+  for (const UsesSAbstraction& abstraction : abstractions) {
+    // relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
+  for (const UsesPAbstraction& abstraction : abstractions) {
+    // relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
+  for (const ModifiesSAbstraction& abstraction : abstractions) {
+    // relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
+void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
+  for (const ModifiesPAbstraction& abstraction : abstractions) {
+    // relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
