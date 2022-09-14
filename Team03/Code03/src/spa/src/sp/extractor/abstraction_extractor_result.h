@@ -3,9 +3,11 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
 
 class AbstractionExtractorResult {
@@ -13,17 +15,16 @@ class AbstractionExtractorResult {
   AbstractionExtractorResult(
       std::vector<FollowsAbstraction> follows_abstractions,
       std::vector<FollowsTAbstraction> follows_t_abstractions,
-      std::vector<ModifiesSAbstraction> modifies_s_abstractions,
       std::vector<ParentAbstraction> parent_abstractions,
       std::vector<ParentTAbstraction> parent_t_abstractions,
-      std::vector<UsesSAbstraction> uses_s_abstractions);
+      std::vector<UsesSAbstraction> uses_s_abstractions,
+      std::vector<UsesPAbstraction> uses_p_abstractions,
+      std::vector<ModifiesSAbstraction> modifies_s_abstractions,
+      std::vector<ModifiesPAbstraction> modifies_p_abstractions);
 
   [[nodiscard]] std::vector<FollowsAbstraction> GetFollowsAbstractions() const;
 
   [[nodiscard]] std::vector<FollowsTAbstraction> GetFollowsTAbstractions()
-      const;
-
-  [[nodiscard]] std::vector<ModifiesSAbstraction> GetModifiesSAbstractions()
       const;
 
   [[nodiscard]] std::vector<ParentAbstraction> GetParentAbstractions() const;
@@ -32,6 +33,14 @@ class AbstractionExtractorResult {
 
   [[nodiscard]] std::vector<UsesSAbstraction> GetUsesSAbstractions() const;
 
+  [[nodiscard]] std::vector<UsesPAbstraction> GetUsesPAbstractions() const;
+
+  [[nodiscard]] std::vector<ModifiesSAbstraction> GetModifiesSAbstractions()
+      const;
+
+  [[nodiscard]] std::vector<ModifiesPAbstraction> GetModifiesPAbstractions()
+      const;
+
   bool operator==(const AbstractionExtractorResult &rhs) const;
 
   bool operator!=(const AbstractionExtractorResult &rhs) const;
@@ -39,10 +48,12 @@ class AbstractionExtractorResult {
  private:
   std::vector<FollowsAbstraction> follows_abstractions_;
   std::vector<FollowsTAbstraction> follows_t_abstractions_;
-  std::vector<ModifiesSAbstraction> modifies_s_abstractions_;
   std::vector<ParentAbstraction> parent_abstractions_;
   std::vector<ParentTAbstraction> parent_t_abstractions_;
   std::vector<UsesSAbstraction> uses_s_abstractions_;
+  std::vector<UsesPAbstraction> uses_p_abstractions_;
+  std::vector<ModifiesSAbstraction> modifies_s_abstractions_;
+  std::vector<ModifiesPAbstraction> modifies_p_abstractions_;
 };
 
 #endif  // SPA_ABSTRACTION_EXTRACTOR_RESULT_H
