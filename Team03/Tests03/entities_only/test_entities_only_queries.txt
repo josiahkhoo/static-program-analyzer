@@ -43,4 +43,9 @@ constant c;
 Select c
 0, 1, 2, 3, 5
 5000
+10 - (SUCCESS) Declare entities using keywords
+while while; if if; print print; procedure procedure; call call; assign assign; constant constant; variable variable; while Select;
+Select variable
+i, x, y, z
+5000
 
