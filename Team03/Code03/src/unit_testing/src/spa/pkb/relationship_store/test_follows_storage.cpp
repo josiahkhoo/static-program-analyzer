@@ -1,7 +1,6 @@
 #include "catch.hpp"
 #include "common/entity/assign_entity.h"
 #include "common/entity/call_entity.h"
-#include "pkb/entity_store/constant_storage.h"
 #include "pkb/relationship_store/follows_storage.h"
 
 TEST_CASE("Follows Storage Management", "[FollowsStorage]") {
@@ -33,8 +32,8 @@ TEST_CASE("Follows Storage Management", "[FollowsStorage]") {
   std::unordered_set<std::string> all_follows_by_list =
       follows_storage.GetFollowsByStatements();
 
-  REQUIRE(follows_list.find("2") != follows_list.end());
-  REQUIRE(follows_by_list.find("1") != follows_list.end());
+  REQUIRE(*(follows_list.find("2")) == "2");
+  REQUIRE(*(follows_by_list.find("1")) == "1");
   REQUIRE(all_follows_list.size() > 1);
   REQUIRE(all_follows_list.size() == all_follows_by_list.size());
 }

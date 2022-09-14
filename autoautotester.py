@@ -21,11 +21,11 @@ debug: str = args.debug
 # Comment out tests that you don't want to test
 test_array = (
     # Milestone 1 tests
+    ("Entities Only", "entities_only"),
     ("Follows / FollowsT", "follows_follows_t"),
-    # ("Entities Only", "entities_only"),
     # ("Semantic Errors", "semantic_errors"),
     # ("Syntax Errors", "syntax_errors"),
-    # ("Patterns Only", "patterns_only"),
+    ("Patterns Only", "patterns_only"),
     # ("Parent / ParentT", "parent_parent_t"),
     # ("Uses Procedure", "uses_p"),
     # ("Uses Statement", "uses_s"),
@@ -72,6 +72,14 @@ for test in test_array:
             if match := re.search('.*comment="(.*)">.*', query, re.IGNORECASE):
                 comment = match.group(1)
 
+            stuans = None
+            if match := re.search('.*<stuans>(.*)</stuans>.*', query, re.IGNORECASE):
+                stuans = match.group(1)
+
+            correct = None
+            if match := re.search('.*<correct>(.*)</correct>.*', query, re.IGNORECASE):
+                correct = match.group(1)
+
             if "<passed/>" in query:
                 passed_test_cases.append([query_id, comment])
 
@@ -79,7 +87,8 @@ for test in test_array:
                 exception_test_cases.append([query_id, comment])
 
             if "<failed>" in query:
-                failed_test_cases.append([query_id, comment])
+                failed_test_cases.append(
+                    [query_id, f"{comment} | Expected: '{correct}' | Returned: '{stuans}'"])
 
         overall_passed_test_cases += len(passed_test_cases)
         overall_failed_test_cases += len(failed_test_cases) + len(exception_test_cases)

@@ -15,21 +15,22 @@
 #include "common/entity/statement_entity.h"
 #include "common/entity/variable_entity.h"
 #include "common/entity/while_entity.h"
-#include "sp/extractor/abstraction/follows_abstraction_extractor.h"
-#include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
-#include "sp/extractor/abstraction/parent_abstraction_extractor.h"
-#include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/uses_abstraction_extractor.h"
+#include "sp/extractor/bi_sub_abstraction_extractor.h"
+#include "sp/extractor/sub_abstraction_extractor.h"
 
 class AbstractionExtractorImpl : public AbstractionExtractor {
  public:
-  AbstractionExtractorImpl(const SubAbstractionExtractor<FollowsAbstraction>
-                               &follows_abstraction_extractor,
-                           const SubAbstractionExtractor<FollowsTAbstraction>
-                               &follows_t_abstraction_extractor,
-                           const SubAbstractionExtractor<ParentAbstraction>
-                               &parent_abstraction_extractor,
-                           const SubAbstractionExtractor<ParentTAbstraction>
-                               &parent_t_abstraction_extractor);
+  AbstractionExtractorImpl(
+      const SubAbstractionExtractor<FollowsAbstraction>
+          &follows_abstraction_extractor,
+      const SubAbstractionExtractor<FollowsTAbstraction>
+          &follows_t_abstraction_extractor,
+      const SubAbstractionExtractor<ParentAbstraction>
+          &parent_abstraction_extractor,
+      const SubAbstractionExtractor<ParentTAbstraction>
+          &parent_t_abstraction_extractor,
+      const UsesAbstractionExtractor &uses_abstraction_extractor);
 
   [[nodiscard]] AbstractionExtractorResult Extract(
       const std::vector<AssignEntity> &assign_entities,
@@ -43,6 +44,22 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       const std::vector<VariableEntity> &variable_entities,
       const std::vector<WhileEntity> &while_entities) const override;
 
+  [[nodiscard]] std::
+      unordered_map<TNode, StatementEntity> static GetTNodeStatementEntityMap(
+          const std::vector<StatementEntity> &statement_entities);
+
+  [[nodiscard]] std::
+      unordered_map<TNode, VariableEntity> static GetTNodeVariableEntityMap(
+          const std::vector<VariableEntity> &variable_entities);
+
+  [[nodiscard]] std::
+      unordered_map<TNode, ConstantEntity> static GetTNodeConstantEntityMap(
+          const std::vector<ConstantEntity> &constant_entities);
+
+  [[nodiscard]] std::
+      unordered_map<TNode, ProcedureEntity> static GetTNodeProcedureEntityMap(
+          const std::vector<ProcedureEntity> &procedure_entities);
+
  private:
   const SubAbstractionExtractor<FollowsAbstraction>
       &follows_abstraction_extractor_;
@@ -52,18 +69,7 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       &parent_abstraction_extractor_;
   const SubAbstractionExtractor<ParentTAbstraction>
       &parent_t_abstraction_extractor_;
-
-  [[nodiscard]] std::unordered_map<TNode, StatementEntity>
-  GetTNodeStatementEntityMap(
-      const std::vector<StatementEntity> &statement_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, VariableEntity>
-  GetTNodeVariableEntityMap(
-      const std::vector<VariableEntity> &variable_entities) const;
-
-  [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
-  GetTNodeConstantEntityMap(
-      const std::vector<ConstantEntity> &constant_entities) const;
+  const UsesAbstractionExtractor &uses_abstraction_extractor_;
 };
 
 #endif  // SPA_ABSTRACTION_EXTRACTOR_IMPL_H

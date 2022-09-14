@@ -33,6 +33,9 @@ std::unordered_set<std::string> FollowsClause::Fetch(
       return queryable_pkb.QueryAllFollowsBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
+    if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
+      return queryable_pkb.QueryAllFollowsRelations();
+    }
   }
   return {};
 }
