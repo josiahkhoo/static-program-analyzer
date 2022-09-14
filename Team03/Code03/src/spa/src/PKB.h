@@ -70,6 +70,18 @@ class PKB : public QueryablePkb, public StorablePkb {
   // ParentT
   void Store(std::vector<ParentTAbstraction> abstractions) override;
 
+  // UsesS
+  void Store(std::vector<UsesSAbstraction> abstractions) override;
+
+  // UsesP
+  void Store(std::vector<UsesPAbstraction> abstractions) override;
+
+  // ModifiesS
+  void Store(std::vector<ModifiesSAbstraction> abstractions) override;
+
+  // ModifiesP
+  void Store(std::vector<ModifiesPAbstraction> abstractions) override;
+
   /* ====================================
    * Entity Query Methods
    * ==================================== */
