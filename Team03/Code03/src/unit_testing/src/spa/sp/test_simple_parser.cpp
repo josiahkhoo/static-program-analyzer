@@ -25,7 +25,7 @@ bool deepEqual(TNode node1, TNode node2) {
 }
 
 TEST_CASE("Simple Parser", "[Simple Parser]") {
-  SimpleParser simple_parser_ = SimpleParser();
+  SimpleParser simple_parser = SimpleParser();
   SECTION("Test print statement") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
                                   Token(Token::IDENTIFIER, "main"),
@@ -35,7 +35,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -69,7 +69,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         Token(Token::LEFT_CURLY_BRACKET),      Token(Token::IDENTIFIER, "read"),
         Token(Token::IDENTIFIER, "x"),         Token(Token::SEMICOLON),
         Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -105,7 +105,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         Token(Token::IDENTIFIER, "x"),         Token(Token::SEMICOLON),
         Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
 
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode call_node = TNode(1, TNode::Call, 1, "x");
 
@@ -145,7 +145,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode print_variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -203,7 +203,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode rhs_var_node = TNode(1, TNode::Variable, 1, "x");
     std::shared_ptr<TNode> lhs_plus_var_node_ptr_ =
@@ -260,7 +260,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
 
@@ -342,7 +342,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser_.Parse(tokens_);
+    TNode res = simple_parser.Parse(tokens_);
 
     // THEN STATEMENT LIST
     TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
@@ -413,4 +413,277 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     REQUIRE_FALSE(deepEqual(res, invalid_node));
     REQUIRE(deepEqual(res, program_node));
   }
+
+  SECTION("Test multiple procedures with print and read statement") {
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
+                                  Token(Token::IDENTIFIER, "main"),
+                                  Token(Token::LEFT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "print"),
+                                  Token(Token::IDENTIFIER, "x"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::RIGHT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "procedure"),
+                                  Token(Token::IDENTIFIER, "second"),
+                                  Token(Token::LEFT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "read"),
+                                  Token(Token::IDENTIFIER, "y"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::RIGHT_CURLY_BRACKET),
+                                  Token(Token::END)};
+    TNode res = simple_parser.Parse(tokens_);
+
+    TNode variable_x_node = TNode(1, TNode::Variable,
+                                  1, "x");
+
+    std::shared_ptr<TNode> shared_print_node_ptr =
+        std::make_shared<TNode>(variable_x_node);
+    TNode print_node = TNode(2, TNode::Print,
+                             1, {shared_print_node_ptr});
+
+    std::shared_ptr<TNode> shared_stmt_list_node_ptr =
+        std::make_shared<TNode>(print_node);
+    TNode stmt_list_node = TNode(3, TNode::StatementList,
+                                 {shared_stmt_list_node_ptr});
+
+    std::shared_ptr<TNode> shared_procedure_node_ptr =
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node = TNode(4, TNode::Procedure, "main",
+                                 {shared_procedure_node_ptr});
+
+    //NEXT PROCEDURE
+    TNode variable_y_node = TNode(5, TNode::Variable,
+                                  2, "y");
+
+    std::shared_ptr<TNode> shared_print_node_ptr_2 =
+        std::make_shared<TNode>(variable_y_node);
+    TNode print_node_2 = TNode(6, TNode::Read,
+                               2, {shared_print_node_ptr_2});
+
+    std::shared_ptr<TNode> shared_stmt_list_node_ptr_2 =
+        std::make_shared<TNode>(print_node_2);
+    TNode stmt_list_node_2 = TNode(7, TNode::StatementList,
+                                   {shared_stmt_list_node_ptr_2});
+
+    std::shared_ptr<TNode> shared_procedure_node_ptr_2 =
+        std::make_shared<TNode>(stmt_list_node_2);
+    TNode procedure_node_2 = TNode(8, TNode::Procedure, "second",
+                                   {shared_procedure_node_ptr_2});
+
+    std::shared_ptr<TNode> shared_program_node_ptr =
+        std::make_shared<TNode>(procedure_node);
+    std::shared_ptr<TNode> shared_program_node_ptr_2 =
+        std::make_shared<TNode>(procedure_node_2);
+    TNode program_node = TNode(9, TNode::Program,
+                               {shared_program_node_ptr,
+                                shared_program_node_ptr_2});
+
+    TNode invalid_node = TNode(10, TNode::Invalid,
+                               std::vector<std::shared_ptr<TNode>>());
+
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
+  }
+
+  SECTION("Test while condition ((x == 0) && (y >= 0)) with print x") {
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
+                                  Token(Token::IDENTIFIER, "main"),
+                                  Token(Token::LEFT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "while"),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::IDENTIFIER, "x"),
+                                  Token(Token::DOUBLE_EQUAL),
+                                  Token(Token::NUMBER, "0"),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::AND),
+                                  Token(Token::LEFT_ROUND_BRACKET),
+                                  Token(Token::IDENTIFIER, "y"),
+                                  Token(Token::GREATER_THAN_OR_EQUAL),
+                                  Token(Token::NUMBER, "0"),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::RIGHT_ROUND_BRACKET),
+                                  Token(Token::LEFT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "print"),
+                                  Token(Token::IDENTIFIER, "x"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::RIGHT_CURLY_BRACKET),
+                                  Token(Token::RIGHT_CURLY_BRACKET),
+                                  Token(Token::END)};
+
+    TNode res = simple_parser.Parse(tokens_);
+
+    TNode variable_x_node = TNode(1, TNode::Variable,
+                                  2, "x");
+
+    std::shared_ptr<TNode> variable_x_node_ptr =
+        std::make_shared<TNode>(variable_x_node);
+    TNode print_node = TNode(2, TNode::Print, 2,
+                             {variable_x_node_ptr});
+
+    std::shared_ptr<TNode> print_node_ptr =
+        std::make_shared<TNode>(print_node);
+    TNode while_stmt_list_node =
+        TNode(3, TNode::StatementList, {print_node_ptr});
+
+    // WHILE X CONDITION NODE
+    TNode cond_variable_x_node = TNode(4, TNode::Variable,
+                                       1, "x");
+
+    TNode cond_const_node = TNode(5, TNode::Constant, 1, 0);
+
+    std::shared_ptr<TNode> cond_variable_node_ptr =
+        std::make_shared<TNode>(cond_variable_x_node);
+
+    std::shared_ptr<TNode> cond_const_node_ptr =
+        std::make_shared<TNode>(cond_const_node);
+
+    TNode x_not_eq_node = TNode(6, TNode::Equal, 1,
+                                {cond_variable_node_ptr, cond_const_node_ptr});
+
+    // WHILE Y CONDITION NODE
+    TNode cond_variable_y_node = TNode(7, TNode::Variable,
+                                       1, "y");
+
+    TNode cond_y_const_node = TNode(8, TNode::Constant, 1, 0);
+
+    std::shared_ptr<TNode> cond_variable_y_node_ptr =
+        std::make_shared<TNode>(cond_variable_y_node);
+
+    std::shared_ptr<TNode> cond_y_const_node_ptr =
+        std::make_shared<TNode>(cond_y_const_node);
+
+    TNode y_not_eq_node = TNode(9, TNode::GreaterThanEqual, 1,
+                                {cond_variable_y_node_ptr, cond_y_const_node_ptr});
+
+    //AND NODE
+    std::shared_ptr<TNode> while_cond_x_node_ptr =
+        std::make_shared<TNode>(x_not_eq_node);
+    std::shared_ptr<TNode> while_cond_y_node_ptr =
+        std::make_shared<TNode>(y_not_eq_node);
+    TNode and_node = TNode(10, TNode::And, 1,
+                           {while_cond_x_node_ptr, while_cond_y_node_ptr});
+    // WHILE NODE
+    std::shared_ptr<TNode> while_stmt_list_ptr =
+        std::make_shared<TNode>(while_stmt_list_node);
+    std::shared_ptr<TNode> while_and_ptr =
+        std::make_shared<TNode>(and_node);
+    TNode while_node = TNode(11, TNode::While, 1,
+                             {while_and_ptr, while_stmt_list_ptr});
+
+    std::shared_ptr<TNode> shared_stmt_list_node_ptr =
+        std::make_shared<TNode>(while_node);
+    TNode stmt_list_node = TNode(12, TNode::StatementList,
+                                 {shared_stmt_list_node_ptr});
+
+    std::shared_ptr<TNode> shared_procedure_node_ptr =
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node = TNode(13, TNode::Procedure, "main",
+                                 {shared_procedure_node_ptr});
+
+    std::shared_ptr<TNode> shared_program_node_ptr =
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node(14, TNode::Program,
+                       {shared_program_node_ptr});
+
+    TNode invalid_node(15, TNode::Invalid,
+                       std::vector<std::shared_ptr<TNode>>());
+
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
+  }
+
+  SECTION("Test assign statement z = x * x + y * y") {
+    std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
+                                  Token(Token::IDENTIFIER, "main"),
+                                  Token(Token::LEFT_CURLY_BRACKET),
+                                  Token(Token::IDENTIFIER, "z"),
+                                  Token(Token::EQUAL),
+                                  Token(Token::IDENTIFIER, "x"),
+                                  Token(Token::ASTERISK),
+                                  Token(Token::IDENTIFIER, "x"),
+                                  Token(Token::PLUS),
+                                  Token(Token::IDENTIFIER, "y"),
+                                  Token(Token::ASTERISK),
+                                  Token(Token::IDENTIFIER, "y"),
+                                  Token(Token::SEMICOLON),
+                                  Token(Token::RIGHT_CURLY_BRACKET),
+                                  Token(Token::END)};
+
+    TNode res = simple_parser.Parse(tokens_);
+
+    // x times x node
+    TNode first_x_node = TNode(1, TNode::Variable,
+                               1, "x");
+    TNode second_x_node = TNode(2, TNode::Variable,
+                                1, "x");
+
+    std::shared_ptr<TNode> first_x_node_ptr =
+        std::make_shared<TNode>(first_x_node);
+    std::shared_ptr<TNode> second_x_node_ptr =
+        std::make_shared<TNode>(second_x_node);
+
+    TNode x_times_node = TNode(3, TNode::Multiply, 1,
+                               {first_x_node_ptr, second_x_node_ptr});
+
+    // y times y node
+    TNode first_y_node = TNode(4, TNode::Variable,
+                               1, "y");
+    TNode second_y_node = TNode(5, TNode::Variable,
+                                1, "y");
+
+    std::shared_ptr<TNode> first_y_node_ptr =
+        std::make_shared<TNode>(first_y_node);
+    std::shared_ptr<TNode> second_y_node_ptr =
+        std::make_shared<TNode>(second_y_node);
+
+    TNode y_times_node = TNode(6, TNode::Multiply, 1,
+                               {first_y_node_ptr, second_y_node_ptr});
+
+    //PLUS NODE
+    std::shared_ptr<TNode> x_times_node_ptr =
+        std::make_shared<TNode>(x_times_node);
+    std::shared_ptr<TNode> y_times_node_ptr =
+        std::make_shared<TNode>(y_times_node);
+
+    TNode plus_node = TNode(7, TNode::Plus, 1,
+                            {x_times_node_ptr, y_times_node_ptr});
+
+    //Variable z node
+    TNode z_node = TNode(8, TNode::Variable,
+                         1, "z");
+
+    //PLUS NODE
+    std::shared_ptr<TNode> plus_node_ptr =
+        std::make_shared<TNode>(plus_node);
+
+    std::shared_ptr<TNode> z_node_ptr =
+        std::make_shared<TNode>(z_node);
+
+
+    TNode assign_node = TNode(9, TNode::Assign, 1,
+                              {z_node_ptr, plus_node_ptr});
+
+    std::shared_ptr<TNode> shared_stmt_list_node_ptr =
+        std::make_shared<TNode>(assign_node);
+    TNode stmt_list_node = TNode(10, TNode::StatementList,
+                                 {shared_stmt_list_node_ptr});
+
+    std::shared_ptr<TNode> shared_procedure_node_ptr =
+        std::make_shared<TNode>(stmt_list_node);
+    TNode procedure_node = TNode(11, TNode::Procedure, "main",
+                                 {shared_procedure_node_ptr});
+
+    std::shared_ptr<TNode> shared_program_node_ptr =
+        std::make_shared<TNode>(procedure_node);
+    TNode program_node = TNode(12, TNode::Program,
+                               {shared_program_node_ptr});
+
+    TNode invalid_node =
+        TNode(13, TNode::Invalid,
+              std::vector<std::shared_ptr<TNode>>());
+
+    REQUIRE_FALSE(deepEqual(res, invalid_node));
+    REQUIRE(deepEqual(res, program_node));
+  }
+
 }
