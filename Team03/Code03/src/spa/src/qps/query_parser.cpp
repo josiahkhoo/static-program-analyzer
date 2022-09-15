@@ -277,11 +277,11 @@ bool QueryParser::ParsePattern() {
 
 void QueryParser::ParseQueryOperation() {
   while (token_pos_ < tokens_.size() - 1) {
-      bool found_clause = ParseClause();
-      bool found_pattern = ParsePattern();
-      if (!(found_clause || found_pattern)) {
-        break;
-      }
+    bool found_clause = ParseClause();
+    bool found_pattern = ParsePattern();
+    if (!(found_clause || found_pattern)) {
+      break;
+    }
   }
 }
 
