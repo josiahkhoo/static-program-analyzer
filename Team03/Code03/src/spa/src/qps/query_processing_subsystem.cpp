@@ -18,7 +18,7 @@ void QueryProcessingSubsystem::Process(std::string query,
     std::unordered_set<std::string> q_res =
         evaluator_.Execute(queryable_pkb_, q_plan);
     results.insert(results.end(), q_res.begin(), q_res.end());
-  } catch (const std::exception& ex) {
+  } catch (const std::exception &ex) {
     results.emplace_back(ex.what());
   }
 }
