@@ -45,6 +45,6 @@ Select a pattern a ( _ , _"v + x * y + z * t"_)
 5000
 10 - (SUCCESS) Stmt #1 contains x as a sub-expression on the RHS of variable
 assign a; variable v;
-Select v pattern a(v, _"x"_)
+Select a pattern a(v, _"x"_)
 1
 5000
