@@ -7,6 +7,7 @@
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
+#include "qps/exceptions/SyntaxException.h"
 
 QueryParser::QueryParser() {
   tokens_ = {};
@@ -24,7 +25,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
 
 Token QueryParser::Peek() {
   if (token_pos_ >= tokens_.size()) {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("No more tokens");
   }
   return tokens_[token_pos_];
 }
@@ -45,7 +46,7 @@ void QueryParser::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
     token_pos_++;
   } else {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("Expected different token");
   }
 }
 
@@ -53,7 +54,7 @@ void QueryParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("Expected different string");
   }
 }
 
@@ -69,7 +70,7 @@ StatementReference QueryParser::ExtractStmtRef() {
   } else if (MatchKind(Token::NUMBER)) {
     statement_reference = StatementReference(stoi(Peek().GetValue()));
   } else {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("Expected different stmtRef");
   }
   token_pos_++;
   return statement_reference;
@@ -88,7 +89,7 @@ EntityReference QueryParser::ExtractEntityRef() {
     token_pos_++;
     Expect(Token::INVERTED_COMMAS);
   } else {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("Expected different entRef");
   }
 
   return entity_reference;
@@ -165,7 +166,7 @@ EntityType QueryParser::ExpectEntityType() {
     token_pos_++;
     return EntityType::PROCEDURE;
   } else {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("Expected different declaration");
   }
 }
 
@@ -184,9 +185,9 @@ void QueryParser::ParseSelect() {
   query_string_builder_.AddSelect(new_select);
 }
 
-void QueryParser::ParseClause() {
+bool QueryParser::ParseClause() {
   if (CheckEnd() || !MatchString("such")) {
-    return;
+    return false;
   }
   token_pos_++;
   Expect("that");
@@ -195,8 +196,9 @@ void QueryParser::ParseClause() {
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
-    throw std::runtime_error("SyntaxError");
+    throw SyntaxException("No declaration declared");
   }
+  return true;
 }
 
 void QueryParser::ParseFollows() {
@@ -246,9 +248,9 @@ void QueryParser::ParseFollowsT() {
   query_string_builder_.AddQueryOperation(folCl);
 }
 
-void QueryParser::ParsePattern() {
+bool QueryParser::ParsePattern() {
   if (CheckEnd() || !MatchString("pattern")) {
-    return;
+    return false;
   }
 
   Expect(Token::IDENTIFIER);
@@ -270,12 +272,16 @@ void QueryParser::ParsePattern() {
 
   std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
   query_string_builder_.AddQueryOperation(ptn);
+  return true;
 }
 
 void QueryParser::ParseQueryOperation() {
   while (token_pos_ < tokens_.size() - 1) {
-    ParseClause();
-    ParsePattern();
+      bool found_clause = ParseClause();
+      bool found_pattern = ParsePattern();
+      if (!(found_clause || found_pattern)) {
+        break;
+      }
   }
 }
 
@@ -326,7 +332,7 @@ void QueryParser::ParseParentT() {
 }
 
 void QueryParser::ParseCleanUpSyntax() {
-  if (!CheckEnd()) {
-    throw std::runtime_error("SyntaxError");
+  if (!CheckEnd() && Peek().IsNot(Token::END)) {
+    throw SyntaxException("Unexpected additional token(s)");
   }
 }

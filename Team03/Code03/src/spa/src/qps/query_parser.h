@@ -34,7 +34,7 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseSelect();
 
-  void ParseClause();
+  bool ParseClause();
 
   void ParseFollows();
 
@@ -44,7 +44,7 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseParentT();
 
-  void ParsePattern();
+  bool ParsePattern();
 
   void ParseQueryOperation();
 
