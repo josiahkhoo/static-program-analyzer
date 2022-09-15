@@ -37,7 +37,8 @@ TEST_CASE("Construct 1 node: Select & Pattern", "[Planner]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
   QueryString qs = QueryString(s, {syn}, {ptn});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -100,7 +101,8 @@ TEST_CASE("Construct 1 node: Select & Pattern WILDCARD", "[Planner]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -116,7 +118,8 @@ TEST_CASE("Construct 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -132,7 +135,8 @@ TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -155,7 +159,8 @@ TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);

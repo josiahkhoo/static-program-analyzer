@@ -1,6 +1,9 @@
 #include "q_node.h"
 
-QNode::QNode() : left_node_(nullptr), right_node_(nullptr){};
+#include <utility>
+
+QNode::QNode(std::string syn)
+    : syn_(std::move(syn)), left_node_(nullptr), right_node_(nullptr){};
 
 void QNode::SetLeftNode(std::shared_ptr<QNode> left_node) {
   left_node_ = std::move(left_node);

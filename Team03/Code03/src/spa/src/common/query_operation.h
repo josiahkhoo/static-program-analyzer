@@ -10,6 +10,7 @@ class QueryOperation {
  public:
   [[nodiscard]] virtual std::unordered_set<std::string> Fetch(
       const QueryablePkb &queryable_pkb) const = 0;
+  [[nodiscard]] virtual std::string GetSyn() const = 0 ;
 };
 
 #endif  // SPA_QUERY_OPERATION_H

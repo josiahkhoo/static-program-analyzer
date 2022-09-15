@@ -5,8 +5,9 @@
 
 #include "common/queryable_pkb.h"
 
-Pattern::Pattern(EntityReference entity, Expression expression)
+Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
     : entity_(std::move(entity)) {
+  syn_ = syn.GetIdentifier();
   // Full Wildcard
   Expression exp = std::move(expression);
   if (exp.to_match.empty()) {
@@ -29,3 +30,5 @@ std::unordered_set<std::string> Pattern::Fetch(
 const EntityReference &Pattern::GetEntity() const { return entity_; }
 
 const Expression &Pattern::GetExpression() const { return expression_; }
+
+std::string Pattern::GetSyn() const { return syn_; }

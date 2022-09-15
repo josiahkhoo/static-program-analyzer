@@ -11,7 +11,7 @@
 
 class QNode {
  public:
-  explicit QNode();
+  explicit QNode(std::string syn);
 
   void SetLeftNode(std::shared_ptr<QNode> left_node);
 
@@ -26,6 +26,7 @@ class QNode {
   virtual std::unordered_set<std::string> Fetch(const QueryablePkb &pkb);
 
  private:
+  std::string syn_;
   std::shared_ptr<QNode> left_node_;
   std::shared_ptr<QNode> right_node_;
 };
