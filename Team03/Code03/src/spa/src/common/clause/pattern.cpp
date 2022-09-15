@@ -6,24 +6,21 @@
 #include "common/queryable_pkb.h"
 
 Pattern::Pattern(EntityReference entity, Expression expression)
-    : entity_(std::move(entity)), expression_(std::move(expression)) {}
+    : entity_(std::move(entity)) {
+  // Full Wildcard
+  Expression exp = std::move(expression);
+  if (exp.to_match.empty()) {
+    exp.has_back_wildcard = true;
+  }
+  expression_ = exp;
+}
 
 std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
-  Expression q_exp = expression_;
-  // Full Wildcard
-  if (expression_.to_match.empty()) {
-    Expression wild_expression;
-    wild_expression.has_front_wildcard = true;
-    wild_expression.has_back_wildcard = true;
-    q_exp = wild_expression;
-  }
-  if (GetEntity().IsSynonym()) {
-    return queryable_pkb.QueryAllPattern(q_exp);
+  if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
+    return queryable_pkb.QueryAllPattern(expression_);
   } else if (GetEntity().IsIdentifier()) {
-    return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), q_exp);
-  } else if (GetEntity().IsWildCard()) {
-    return queryable_pkb.QueryAllPattern(q_exp);
+    return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
   } else {
     return {};
   }

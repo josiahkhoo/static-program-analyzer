@@ -270,7 +270,8 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
   REQUIRE(result.empty());
 }
 
-TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'", "[Evaluator]") {
+TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
+          "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
     [[nodiscard]] std::unordered_set<std::string> QueryAll(
@@ -394,7 +395,8 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'", "[Evaluator]") 
   REQUIRE(*it == "2");
 }
 
-TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'", "[Evaluator]") {
+TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
+          "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
     [[nodiscard]] std::unordered_set<std::string> QueryAll(
@@ -518,7 +520,6 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'", "[Evaluator]") 
   std::advance(it, 1);
   REQUIRE(*it == "4");
 }
-
 
 TEST_CASE("Union check'", "[Evaluator]") {
   Evaluator eval = Evaluator();
