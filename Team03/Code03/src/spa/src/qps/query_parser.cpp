@@ -18,12 +18,13 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
   ParseDeclaration();
   ParseSelect();
   ParseQueryOperation();
+  ParseCleanUpSyntax();
   return query_string_builder_.GetQueryString();
 }
 
 Token QueryParser::Peek() {
   if (token_pos_ >= tokens_.size()) {
-    throw std::runtime_error("No more tokens left to Peek");
+    throw std::runtime_error("SyntaxError");
   }
   return tokens_[token_pos_];
 }
@@ -44,7 +45,7 @@ void QueryParser::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
     token_pos_++;
   } else {
-    throw std::runtime_error("Expected a different token kind");
+    throw std::runtime_error("SyntaxError");
   }
 }
 
@@ -52,7 +53,7 @@ void QueryParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {
-    throw std::runtime_error("Expected a different token string");
+    throw std::runtime_error("SyntaxError");
   }
 }
 
@@ -68,7 +69,7 @@ StatementReference QueryParser::ExtractStmtRef() {
   } else if (MatchKind(Token::NUMBER)) {
     statement_reference = StatementReference(stoi(Peek().GetValue()));
   } else {
-    throw std::runtime_error("Expected a stmtRef");
+    throw std::runtime_error("SyntaxError");
   }
   token_pos_++;
   return statement_reference;
@@ -87,7 +88,7 @@ EntityReference QueryParser::ExtractEntityRef() {
     token_pos_++;
     Expect(Token::INVERTED_COMMAS);
   } else {
-    throw std::runtime_error("Expected a entityRef");
+    throw std::runtime_error("SyntaxError");
   }
 
   return entity_reference;
@@ -164,7 +165,7 @@ EntityType QueryParser::ExpectEntityType() {
     token_pos_++;
     return EntityType::PROCEDURE;
   } else {
-    throw std::runtime_error("Expected entity type string");
+    throw std::runtime_error("SyntaxError");
   }
 }
 
@@ -194,7 +195,7 @@ void QueryParser::ParseClause() {
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
-    throw std::runtime_error("Expected clause");
+    throw std::runtime_error("SyntaxError");
   }
 }
 
@@ -322,4 +323,10 @@ void QueryParser::ParseParentT() {
   std::shared_ptr<ParentTClause> parCl =
       std::make_shared<ParentTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddQueryOperation(parCl);
+}
+
+void QueryParser::ParseCleanUpSyntax() {
+  if (!CheckEnd()) {
+    throw std::runtime_error("SyntaxError");
+  }
 }
