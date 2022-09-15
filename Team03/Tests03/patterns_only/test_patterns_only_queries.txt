@@ -48,3 +48,13 @@ assign a; variable v;
 Select a pattern a(v, _"x"_)
 1
 5000
+11 - (SUCCESS) Stmt #1 contains anything as a sub-expression on the RHS of variable
+assign a; variable v;
+Select a pattern a(v, _)
+1, 2
+5000
+12 - (SUCCESS) Stmt #1 contains anything as a sub-expression on the RHS of variable
+assign a;
+Select a pattern a(_, _)
+1, 2
+5000
