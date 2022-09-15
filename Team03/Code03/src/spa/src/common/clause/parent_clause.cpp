@@ -6,38 +6,43 @@
 ParentClause::ParentClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
-std::unordered_set<std::string> ParentClause::Fetch(
+std::map<std::string, std::unordered_set<std::string>> ParentClause::Fetch(
     const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
+
+  std::string key = Clause::GetSyn();
+  std::unordered_set<std::string> results;
+  std::map<std::string, std::unordered_set<std::string>> map_of_results;
+
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. Parent(a, 1)
-      return queryable_pkb.QueryParentBy(
+      results = queryable_pkb.QueryParentBy(
           GetRightHandSide().GetLineNumber(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Parent(a, _)
-      return queryable_pkb.QueryAllParent(
+      results = queryable_pkb.QueryAllParent(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
-  }
-  if (GetRightHandSide().IsSynonym()) {
+  } else if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Parent(1, a)
-      return queryable_pkb.QueryParent(
+      results = queryable_pkb.QueryParent(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Parent(_, a)
-      return queryable_pkb.QueryAllParentBy(
+      results = queryable_pkb.QueryAllParentBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
+  } else if (GetLeftHandSide().IsWildCard() &&
+             GetRightHandSide().IsWildCard()) {
+    results = queryable_pkb.QueryAllParentsRelations();
   }
-  if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
-    return queryable_pkb.QueryAllParentsRelations();
-  }
-  return {};
+  map_of_results.insert({key, results});
+  return map_of_results;
 }
 
 const Reference &ParentClause::GetLeftHandSide() const { return lhs_; }

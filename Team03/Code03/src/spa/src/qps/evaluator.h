@@ -1,6 +1,8 @@
 #ifndef SPA_EVALUATOR_H
 #define SPA_EVALUATOR_H
 
+#include <map>
+
 #include "qps/qnodes/q_node.h"
 #include "query_string.h"
 
@@ -9,7 +11,13 @@ class Evaluator {
   explicit Evaluator();
 
   [[nodiscard]] std::unordered_set<std::string> Execute(
-      const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree) const;
+      const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
+      const Select& slt) const;
+
+ private:
+  [[nodiscard]] std::map<std::string, std::unordered_set<std::string>>
+  ExecuteHelper(const QueryablePkb& pkb,
+                const std::shared_ptr<QNode>& q_tree) const;
 };
 
 #endif  // SPA_EVALUATOR_H

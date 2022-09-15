@@ -10,7 +10,7 @@ class Pattern : public QueryOperation {
  public:
   explicit Pattern(Synonym syn, EntityReference entity, Expression expression);
 
-  [[nodiscard]] std::unordered_set<std::string> Fetch(
+  [[nodiscard]] std::map<std::string, std::unordered_set<std::string>> Fetch(
       const QueryablePkb &queryable_pkb) const override;
 
   [[nodiscard]] const EntityReference &GetEntity() const;

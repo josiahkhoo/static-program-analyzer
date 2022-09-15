@@ -22,7 +22,7 @@ void QueryProcessingSubsystem::Process(std::string query,
     return;  // Exit application
   }
   std::shared_ptr<QNode> q_plan = planner_.Plan(q_string);
-  std::unordered_set<std::string> q_res =
-      evaluator_.Execute(queryable_pkb_, q_plan);
+  std::unordered_set<std::string> q_res = evaluator_.Execute(
+      queryable_pkb_, q_plan, q_string.GetSelect());
   results.insert(results.end(), q_res.begin(), q_res.end());
 }

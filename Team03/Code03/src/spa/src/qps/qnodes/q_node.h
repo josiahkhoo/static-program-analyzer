@@ -1,6 +1,7 @@
 #ifndef SPA_Q_NODE_H
 #define SPA_Q_NODE_H
 
+#include <map>
 #include <memory>
 #include <optional>
 #include <string>
@@ -23,7 +24,8 @@ class QNode {
 
   [[nodiscard]] bool IsLeaf() const;
 
-  virtual std::unordered_set<std::string> Fetch(const QueryablePkb &pkb);
+  virtual std::map<std::string, std::unordered_set<std::string>> Fetch(
+      const QueryablePkb &pkb);
 
  private:
   std::string syn_;
