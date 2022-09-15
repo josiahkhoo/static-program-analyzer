@@ -15,6 +15,13 @@ std::unordered_set<std::string> Pattern::Fetch(
   } else if (GetEntity().IsIdentifier()) {
     return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
   } else if (GetEntity().IsWildCard()) {
+    // 2x Wildcard
+    if (expression_.to_match.empty()) {
+      Expression wild_expression;
+      wild_expression.has_front_wildcard = true;
+      wild_expression.has_back_wildcard = true;
+      return queryable_pkb.QueryAllPattern(wild_expression);
+    }
     return queryable_pkb.QueryAllPattern(expression_);
   } else {
     return {};

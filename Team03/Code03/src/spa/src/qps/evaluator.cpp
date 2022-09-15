@@ -1,7 +1,6 @@
 #include "evaluator.h"
 
 #include <algorithm>
-#include <iterator>
 
 std::unordered_set<std::string> set_intersection(
     const std::unordered_set<std::string>& set_1,
@@ -9,25 +8,38 @@ std::unordered_set<std::string> set_intersection(
   if (set_1.empty() || set_2.empty()) {
     return {};
   }
+  if (set_2.size() < set_1.size()) {
+    return set_intersection(set_2, set_1);
+  }
   std::unordered_set<std::string> intersect_set;
-  std::set_intersection(set_1.begin(), set_1.end(), set_2.begin(), set_2.end(),
-                        std::inserter(intersect_set, intersect_set.end()));
+  auto set2_itr = set_2.end();
+  for(auto & set1_val : set_1)
+  {
+    if (set_2.find(set1_val) != set2_itr){
+      intersect_set.insert(set1_val);
+    }
+  }
   return intersect_set;
 }
 
 std::unordered_set<std::string> set_union(
     std::unordered_set<std::string> set_1,
     std::unordered_set<std::string> set_2) {
+  if (set_1.empty()) {
+    return set_2;
+  } else if (set_2.empty()) {
+    return set_1;
+  }
   std::unordered_set<std::string> merged_set;
-  std::set_union(set_1.begin(), set_1.end(), set_2.begin(), set_2.end(),
-                 std::inserter(merged_set, merged_set.end()));
+  merged_set.insert(set_1.begin(), set_1.end());
+  merged_set.insert(set_2.begin(), set_2.end());
   return merged_set;
 }
 
 Evaluator::Evaluator() = default;
 
 std::unordered_set<std::string> Evaluator::Execute(
-    const QueryablePkb& pkb, std::shared_ptr<QNode> q_tree) const {
+    const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree) const {
   if (q_tree == nullptr) {
     return {};
   } else if (q_tree->IsLeaf()) {
