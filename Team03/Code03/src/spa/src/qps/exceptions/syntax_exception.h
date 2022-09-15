@@ -5,13 +5,13 @@
 #include <iostream>
 #include <utility>
 
-class SyntaxException : public std::exception {
+class syntax_exception : public std::exception {
  private:
   const std::string what_ = "SyntaxError";
   std::string message;
 
  public:
-  explicit SyntaxException(std::string msg);
+  explicit syntax_exception(std::string msg);
   [[nodiscard]] const char* what() const override;
   [[nodiscard]] std::string GetMessage() const;
 };

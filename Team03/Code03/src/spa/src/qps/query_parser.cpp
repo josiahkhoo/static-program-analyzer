@@ -7,7 +7,7 @@
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
-#include "qps/exceptions/SyntaxException.h"
+#include "qps/exceptions/syntax_exception.h"
 
 QueryParser::QueryParser() {
   tokens_ = {};
@@ -25,7 +25,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
 
 Token QueryParser::Peek() {
   if (token_pos_ >= tokens_.size()) {
-    throw SyntaxException("No more tokens");
+    throw syntax_exception("No more tokens");
   }
   return tokens_[token_pos_];
 }
@@ -46,7 +46,7 @@ void QueryParser::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
     token_pos_++;
   } else {
-    throw SyntaxException("Expected different token");
+    throw syntax_exception("Expected different token");
   }
 }
 
@@ -54,7 +54,7 @@ void QueryParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {
-    throw SyntaxException("Expected different string");
+    throw syntax_exception("Expected different string");
   }
 }
 
@@ -70,7 +70,7 @@ StatementReference QueryParser::ExtractStmtRef() {
   } else if (MatchKind(Token::NUMBER)) {
     statement_reference = StatementReference(stoi(Peek().GetValue()));
   } else {
-    throw SyntaxException("Expected different stmtRef");
+    throw syntax_exception("Expected different stmtRef");
   }
   token_pos_++;
   return statement_reference;
@@ -89,7 +89,7 @@ EntityReference QueryParser::ExtractEntityRef() {
     token_pos_++;
     Expect(Token::INVERTED_COMMAS);
   } else {
-    throw SyntaxException("Expected different entRef");
+    throw syntax_exception("Expected different entRef");
   }
 
   return entity_reference;
@@ -166,7 +166,7 @@ EntityType QueryParser::ExpectEntityType() {
     token_pos_++;
     return EntityType::PROCEDURE;
   } else {
-    throw SyntaxException("Expected different declaration");
+    throw syntax_exception("Expected different declaration");
   }
 }
 
@@ -196,7 +196,7 @@ bool QueryParser::ParseClause() {
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsEmpty()) {
-    throw SyntaxException("No declaration declared");
+    throw syntax_exception("No declaration declared");
   }
   return true;
 }
@@ -333,6 +333,6 @@ void QueryParser::ParseParentT() {
 
 void QueryParser::ParseCleanUpSyntax() {
   if (!CheckEnd() && Peek().IsNot(Token::END)) {
-    throw SyntaxException("Unexpected additional token(s)");
+    throw syntax_exception("Unexpected additional token(s)");
   }
 }
