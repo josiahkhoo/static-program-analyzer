@@ -8,3 +8,8 @@ variable v;
 select v
 SyntaxError
 5000
+3 - (SYNTAX ERROR) Incomplete such capitalised
+variable v;
+select v such
+SyntaxError
+5000

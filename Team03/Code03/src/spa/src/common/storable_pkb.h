@@ -3,9 +3,11 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
 #include "common/entity/assign_entity.h"
 #include "common/entity/call_entity.h"
@@ -43,6 +45,14 @@ class StorablePkb {
   virtual void Store(std::vector<ParentAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<ParentTAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<UsesSAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<UsesPAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<ModifiesSAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<ModifiesPAbstraction> abstractions) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H

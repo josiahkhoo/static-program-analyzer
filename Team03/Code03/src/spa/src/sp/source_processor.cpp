@@ -43,8 +43,21 @@ void SourceProcessor::StoreDesignExtractorResult(
       design_extractor_result.GetEntityExtractorResult().GetVariableEntities());
   storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetWhileEntities());
+
   storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsAbstractions());
   storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsTAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetParentAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetParentTAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetUsesSAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetUsesPAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetModifiesSAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetModifiesPAbstractions());
 }

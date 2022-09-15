@@ -1,5 +1,6 @@
 #include "abstraction_extractor_impl.h"
 
+#include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 
 AbstractionExtractorImpl::AbstractionExtractorImpl(
@@ -11,12 +12,14 @@ AbstractionExtractorImpl::AbstractionExtractorImpl(
         &parent_abstraction_extractor,
     const SubAbstractionExtractor<ParentTAbstraction>
         &parent_t_abstraction_extractor,
-    const UsesAbstractionExtractor &uses_abstraction_extractor)
+    const UsesAbstractionExtractor &uses_abstraction_extractor,
+    const ModifiesAbstractionExtractor &modifies_abstraction_extractor)
     : follows_abstraction_extractor_(follows_abstraction_extractor),
       follows_t_abstraction_extractor_(follows_t_abstraction_extractor),
       parent_abstraction_extractor_(parent_abstraction_extractor),
       parent_t_abstraction_extractor_(parent_t_abstraction_extractor),
-      uses_abstraction_extractor_(uses_abstraction_extractor) {}
+      uses_abstraction_extractor_(uses_abstraction_extractor),
+      modifies_abstraction_extractor_(modifies_abstraction_extractor) {}
 
 AbstractionExtractorResult AbstractionExtractorImpl::Extract(
     const std::vector<AssignEntity> &assign_entities,
@@ -74,8 +77,17 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           t_node_var_ent_umap, t_node_const_ent_umap,
           t_node_procedure_ent_umap);
 
-  return {follows_abstractions, follows_t_abstractions, {},
-          parent_abstractions,  parent_t_abstractions,  uses_s_abstractions};
+  auto [modifies_s_abstractions, modifies_p_abstractions] =
+      modifies_abstraction_extractor_.Extract(
+          assign_entities, call_entities, constant_entities, if_entities,
+          print_entities, procedure_entities, read_entities, statement_entities,
+          variable_entities, while_entities, t_node_stmt_ent_umap,
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
+
+  return {follows_abstractions,    follows_t_abstractions, parent_abstractions,
+          parent_t_abstractions,   uses_s_abstractions,    uses_p_abstractions,
+          modifies_s_abstractions, modifies_p_abstractions};
 }
 
 std::unordered_map<TNode, StatementEntity>
