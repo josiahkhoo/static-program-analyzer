@@ -1,5 +1,0 @@
-1 - comment
-assign a;
-Select a such that Follows*(14, a) pattern a(_, "x"_)
-18,19
-5000
