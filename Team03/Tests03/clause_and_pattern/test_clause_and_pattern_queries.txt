@@ -18,3 +18,13 @@ assign a;
 Select a pattern a(_, "x"_) such that Follows*(14, a)
 18, 19
 5000
+5 - (SUCCESS) Disjoint operation with multiple declaration, pattern and follows doesn't match
+stmt s; assign a;
+Select s such that Follows(s, a) pattern a("x", "x-1")
+
+5000
+6 - (SUCCESS) Disjoint operation with multiple declaration, pattern and follows matches multiple
+stmt s; assign a;
+Select s such that Follows(s, a) pattern a("z", _"x"_)
+6, 18
+5000
