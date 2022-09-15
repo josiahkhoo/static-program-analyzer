@@ -129,8 +129,15 @@ void QueryParser::ParseDeclaration() {
     next = Peek();
     Expect(Token::IDENTIFIER);
     Synonym synonym = Synonym(entType, next.GetValue());
-    Expect(Token::SEMICOLON);
     query_string_builder_.AddDeclaration(synonym);
+    while (MatchKind(Token::COMMA)) {
+      token_pos_++;
+      next = Peek();
+      Expect(Token::IDENTIFIER);
+      synonym = Synonym(entType, next.GetValue());
+      query_string_builder_.AddDeclaration(synonym);
+    }
+    Expect(Token::SEMICOLON);
   }
 }
 
