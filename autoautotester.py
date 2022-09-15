@@ -24,7 +24,7 @@ test_array = (
     ("Entities Only", "entities_only"),
     ("Follows / FollowsT", "follows_follows_t"),
     # ("Semantic Errors", "semantic_errors"),
-    # ("Syntax Errors", "syntax_errors"),
+    ("Syntax Errors", "syntax_errors"),
     ("Patterns Only", "patterns_only"),
     # ("Parent / ParentT", "parent_parent_t"),
     # ("Uses Procedure", "uses_p"),
