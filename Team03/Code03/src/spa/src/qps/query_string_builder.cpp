@@ -32,4 +32,10 @@ Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
   throw std::runtime_error("Cannot find synonym matching given identifier");
 }
 
-bool QueryStringBuilder::IsEmpty() { return query_operations_.empty(); }
+bool QueryStringBuilder::IsOperationsEmpty() {
+  return query_operations_.empty();
+}
+
+bool QueryStringBuilder::IsDeclarationsEmpty() {
+  return declared_synonyms_.empty();
+}

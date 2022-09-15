@@ -1,5 +1,7 @@
 #include "query_processing_subsystem.h"
 
+#include "qps/exceptions/syntax_exception.h"
+
 QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer &lexer, const Planner &planner, const Evaluator &evaluator,
     const QueryablePkb &queryable_pkb)
@@ -18,7 +20,9 @@ void QueryProcessingSubsystem::Process(std::string query,
     std::unordered_set<std::string> q_res =
         evaluator_.Execute(queryable_pkb_, q_plan);
     results.insert(results.end(), q_res.begin(), q_res.end());
-  } catch (const std::exception &ex) {
+  } catch (const SyntaxException &ex) {
     results.emplace_back(ex.what());
+    // Uncomment to find exception description
+    // results.emplace_back(ex.GetMessage());
   }
 }
