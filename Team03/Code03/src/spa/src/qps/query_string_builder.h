@@ -23,7 +23,9 @@ class QueryStringBuilder {
 
   [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
 
-  bool IsEmpty();
+  bool IsOperationsEmpty();
+
+  bool IsDeclarationsEmpty();
 
  private:
   std::vector<Synonym> declared_synonyms_;

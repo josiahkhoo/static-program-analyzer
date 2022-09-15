@@ -12,6 +12,8 @@
 
 class QueryString {
  public:
+  QueryString();
+
   explicit QueryString(
       Select select, std::vector<Synonym> declared_synonyms,
       std::vector<std::shared_ptr<QueryOperation>> query_operations);
@@ -26,7 +28,7 @@ class QueryString {
  private:
   std::vector<std::shared_ptr<QueryOperation>> query_operations_;
   std::vector<Synonym> declared_synonyms_;
-  Select select_;
+  std::optional<Select> select_;
 };
 
 #endif  // SPA_QUERY_STRING_H

@@ -31,6 +31,7 @@ test_array = (
     # ("Uses Statement", "uses_s"),
     # ("Modifies Procedure", "modifies_p"),
     # ("Modifies Statement", "modifies_s")
+    ("Clause and Pattern", "clause_and_pattern")
 )
 
 overall_passed_test_cases = 0

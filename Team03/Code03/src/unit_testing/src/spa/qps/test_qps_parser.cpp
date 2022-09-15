@@ -452,9 +452,9 @@ TEST_CASE("Pattern Wildcards", "[QPS Parser]") {
     REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match.empty());
-    REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                      ->GetExpression()
-                      .has_back_wildcard);
+    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+                ->GetExpression()
+                .has_back_wildcard);
   }
   SECTION("Front & back wildcard") {
     QueryParser qp = QueryParser();
