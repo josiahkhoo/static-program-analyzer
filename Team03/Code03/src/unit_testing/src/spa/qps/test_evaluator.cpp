@@ -390,9 +390,8 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
 
   auto it = result.begin();
   REQUIRE_FALSE(result.empty());
-  REQUIRE(*it == "4");
-  std::advance(it, 1);
-  REQUIRE(*it == "2");
+  REQUIRE(result.find("4")->size() == 1);
+  REQUIRE(result.find("2")->size() == 1);
 }
 
 TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
@@ -516,9 +515,8 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
   REQUIRE_FALSE(result.empty());
   auto it = result.begin();
   REQUIRE_FALSE(result.empty());
-  REQUIRE(*it == "2");
-  std::advance(it, 1);
-  REQUIRE(*it == "4");
+  REQUIRE(result.find("4")->size() == 1);
+  REQUIRE(result.find("2")->size() == 1);
 }
 
 TEST_CASE("Union check'", "[Evaluator]") {
