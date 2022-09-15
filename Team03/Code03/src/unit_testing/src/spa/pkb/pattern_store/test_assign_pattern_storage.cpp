@@ -53,6 +53,10 @@ TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
       storage.GetAllPattern("(((x)*(y))+(z))", true, false);
   std::unordered_set<std::string> test8 = {"2"};
   REQUIRE(res8 == test8);
+
+  std::unordered_set<std::string> res9 = storage.GetAllPattern("", true, true);
+  std::unordered_set<std::string> test9 = {"1", "2", "3", "4", "5"};
+  REQUIRE(res9 == test9);
 }
 
 TEST_CASE("Get Pattern Search", "[AssignPatternStorage]") {

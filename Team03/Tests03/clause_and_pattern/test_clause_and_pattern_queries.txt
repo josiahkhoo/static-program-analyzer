@@ -10,6 +10,11 @@ Select a such that Follows(18, a) pattern a("x", "x + z")
 5000
 3 - (SUCCESS) Join operation with single declaration, follows* and pattern matches multiple
 assign a;
-Select a pattern a(_, "x"_)
+Select a such that Follows*(14, a) pattern a(_, "x"_)
+18, 19
+5000
+4 - (SUCCESS) Join operation with single declaration, pattern and follows* matches multiple
+assign a;
+Select a pattern a(_, "x"_) such that Follows*(14, a)
 18, 19
 5000

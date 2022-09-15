@@ -2,6 +2,8 @@
 
 #include <utility>
 
+QueryString::QueryString() = default;
+
 QueryString::QueryString(
     Select select, std::vector<Synonym> synonyms,
     std::vector<std::shared_ptr<QueryOperation>> query_operations)
@@ -9,7 +11,7 @@ QueryString::QueryString(
       declared_synonyms_(std::move(synonyms)),
       query_operations_(std::move(query_operations)) {}
 
-Select QueryString::GetSelect() const { return select_; }
+Select QueryString::GetSelect() const { return select_.value(); }
 
 const std::vector<Synonym> &QueryString::GetSynonyms() const {
   return declared_synonyms_;

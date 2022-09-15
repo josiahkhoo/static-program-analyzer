@@ -1,5 +1,7 @@
 #include "query_processing_subsystem.h"
 
+#include "qps/exceptions/syntax_exception.h"
+
 QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer &lexer, const Planner &planner, const Evaluator &evaluator,
     const QueryablePkb &queryable_pkb)
@@ -12,7 +14,13 @@ void QueryProcessingSubsystem::Process(std::string query,
                                        std::list<std::string> &results) {
   std::vector<Token> tokens = lexer_.LexLine(query);
   QueryParser parser;
-  QueryString q_string = parser.Parse(tokens);
+  QueryString q_string;
+  try {
+    q_string = parser.Parse(tokens);
+  } catch (const SyntaxException &ex) {
+    results.emplace_back(ex.what());
+    return;  // Exit application
+  }
   std::shared_ptr<QNode> q_plan = planner_.Plan(q_string);
   std::unordered_set<std::string> q_res =
       evaluator_.Execute(queryable_pkb_, q_plan);
