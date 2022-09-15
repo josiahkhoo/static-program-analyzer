@@ -12,7 +12,7 @@ class syntax_exception : public std::exception {
 
  public:
   explicit syntax_exception(std::string msg);
-  [[nodiscard]] const char* what() const override;
+  [[nodiscard]] const char *what() const noexcept override;
   [[nodiscard]] std::string GetMessage() const;
 };
 
