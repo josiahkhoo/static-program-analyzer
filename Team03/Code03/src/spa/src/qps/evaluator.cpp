@@ -13,9 +13,8 @@ std::unordered_set<std::string> set_intersection(
   }
   std::unordered_set<std::string> intersect_set;
   auto set2_itr = set_2.end();
-  for(auto & set1_val : set_1)
-  {
-    if (set_2.find(set1_val) != set2_itr){
+  for (auto& set1_val : set_1) {
+    if (set_2.find(set1_val) != set2_itr) {
       intersect_set.insert(set1_val);
     }
   }
@@ -30,10 +29,10 @@ std::unordered_set<std::string> set_union(
   } else if (set_2.empty()) {
     return set_1;
   }
-  std::unordered_set<std::string> merged_set;
-  merged_set.insert(set_1.begin(), set_1.end());
-  merged_set.insert(set_2.begin(), set_2.end());
-  return merged_set;
+  std::unordered_set<std::string> union_set;
+  union_set.insert(set_1.begin(), set_1.end());
+  union_set.insert(set_2.begin(), set_2.end());
+  return union_set;
 }
 
 Evaluator::Evaluator() = default;
