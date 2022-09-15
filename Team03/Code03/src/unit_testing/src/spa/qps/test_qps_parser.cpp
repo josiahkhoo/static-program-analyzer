@@ -235,6 +235,34 @@ TEST_CASE("Every entity type", "[QPS Parser]") {
   REQUIRE(res.GetSelect().GetSynonym() == syn);
 }
 
+TEST_CASE("'Assign Variable Statement Select' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "stmt"),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn_assign = Synonym(EntityType::ASSIGN, "a");
+  Synonym syn_var = Synonym(EntityType::VARIABLE, "v");
+  Synonym syn_stmt = Synonym(EntityType::STATEMENT, "s");
+  Select expected_select = Select(syn_assign);
+
+  REQUIRE(res.GetSynonyms().size() == 3);
+  REQUIRE(res.GetSynonyms()[0] == syn_assign);
+  REQUIRE(res.GetSynonyms()[1] == syn_var);
+  REQUIRE(res.GetSynonyms()[2] == syn_stmt);
+  REQUIRE(res.GetSelect().GetSynonym() == syn_assign);
+}
+
 TEST_CASE("'Assign Select Follow' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),

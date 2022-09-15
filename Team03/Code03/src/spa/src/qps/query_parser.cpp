@@ -133,7 +133,7 @@ Expression QueryParser::ExtractExpression() {
 }
 
 void QueryParser::ParseDeclaration() {
-  while (IsNextEntityType()) {
+  while (!CheckEnd() && !MatchString("Select")) {
     Token next = Peek();
     EntityType entType = ExpectEntityType();
     next = Peek();
