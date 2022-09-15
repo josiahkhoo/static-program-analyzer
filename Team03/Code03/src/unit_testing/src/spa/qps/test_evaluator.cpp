@@ -1,8 +1,7 @@
-#include <iostream>
-
 #include "catch.hpp"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
+#include "qps/qnodes/entity_node.h"
 
 class QueryablePkbStub : public QueryablePkb {
  public:
@@ -93,7 +92,7 @@ class QueryablePkbStub : public QueryablePkb {
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllParentsRelations()
       const override {
-    return {"11"};
+    return {"12"};
   }
 };
 
@@ -271,7 +270,7 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
   REQUIRE(result.empty());
 }
 
-TEST_CASE("Query 'Select Pattern(String) AllFollows'", "[Evaluator]") {
+TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'", "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
     [[nodiscard]] std::unordered_set<std::string> QueryAll(
@@ -281,7 +280,7 @@ TEST_CASE("Query 'Select Pattern(String) AllFollows'", "[Evaluator]") {
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
         EntityType type) const override {
-      return {"1", "2"};
+      return {"1", "2", "4"};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsBy(
@@ -351,7 +350,7 @@ TEST_CASE("Query 'Select Pattern(String) AllFollows'", "[Evaluator]") {
 
     [[nodiscard]] std::unordered_set<std::string> QueryPattern(
         std::string lhs, Expression exp) const override {
-      return {"2"};
+      return {"4", "2"};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsRelations()
@@ -388,11 +387,14 @@ TEST_CASE("Query 'Select Pattern(String) AllFollows'", "[Evaluator]") {
       pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root);
 
+  auto it = result.begin();
   REQUIRE_FALSE(result.empty());
-  REQUIRE(*(result.begin()) == "2");
+  REQUIRE(*it == "4");
+  std::advance(it, 1);
+  REQUIRE(*it == "2");
 }
 
-TEST_CASE("Query 'Select AllFollows Pattern(String)'", "[Evaluator]") {
+TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'", "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
     [[nodiscard]] std::unordered_set<std::string> QueryAll(
@@ -402,7 +404,7 @@ TEST_CASE("Query 'Select AllFollows Pattern(String)'", "[Evaluator]") {
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
         EntityType type) const override {
-      return {"1", "2"};
+      return {"1", "2", "4"};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsBy(
@@ -472,7 +474,7 @@ TEST_CASE("Query 'Select AllFollows Pattern(String)'", "[Evaluator]") {
 
     [[nodiscard]] std::unordered_set<std::string> QueryPattern(
         std::string lhs, Expression exp) const override {
-      return {"2"};
+      return {"2", "4"};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsRelations()
@@ -510,5 +512,30 @@ TEST_CASE("Query 'Select AllFollows Pattern(String)'", "[Evaluator]") {
   std::unordered_set<std::string> result = eval.Execute(pkb, root);
 
   REQUIRE_FALSE(result.empty());
-  REQUIRE(*(result.begin()) == "2");
+  auto it = result.begin();
+  REQUIRE_FALSE(result.empty());
+  REQUIRE(*it == "2");
+  std::advance(it, 1);
+  REQUIRE(*it == "4");
+}
+
+
+TEST_CASE("Union check'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+
+  Planner p = Planner();
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  Select s = Select(syn);
+  QueryString qs = QueryString(s, {syn}, {});
+  std::shared_ptr<QNode> root_1 = p.Plan(qs);
+  std::shared_ptr<QNode> root_2 = p.Plan(qs);
+  std::shared_ptr<QNode> root_3 = p.Plan(qs);
+
+  root_3->SetLeftNode(root_1);
+  root_3->SetRightNode(root_2);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> result = eval.Execute(pkb, root_3);
+  std::unordered_set<std::string> expected = {"1", "1", "1"};
+  REQUIRE(result == expected);
 }
