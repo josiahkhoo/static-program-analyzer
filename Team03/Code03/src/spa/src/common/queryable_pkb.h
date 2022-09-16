@@ -74,6 +74,27 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryUsesPBy(
       std::string identifier, EntityType type) const = 0;
 
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllModifies(
+      EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllModifiesBy(
+      EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllModifiesRelations()
+      const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesS(
+      int statement_number, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesSBy(
+      std::string identifier, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesP(
+      std::string identifier, EntityType type) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesPBy(
+      std::string identifier, EntityType type) const = 0;
+
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const = 0;
 
