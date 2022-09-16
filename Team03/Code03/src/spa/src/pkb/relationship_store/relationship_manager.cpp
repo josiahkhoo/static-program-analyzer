@@ -90,20 +90,20 @@ std::unordered_set<std::string> RelationshipManager::GetUsesP() const {
 
 std::unordered_set<std::string> RelationshipManager::GetUsesP(
     std::string uses_name) const {
-    return uses_store_.GetUsesP(uses_name);
+  return uses_store_.GetUsesP(uses_name);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesPBy() const {
-    return uses_store_.GetUsesPBy();
+  return uses_store_.GetUsesPBy();
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesPBy(
     std::string variable_name) const {
-    return uses_store_.GetUsesPBy(variable_name);
+  return uses_store_.GetUsesPBy(variable_name);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesS() const {
-    return uses_store_.GetUsesS();
+  return uses_store_.GetUsesS();
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesS(
