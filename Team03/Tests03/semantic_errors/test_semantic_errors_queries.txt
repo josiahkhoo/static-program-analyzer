@@ -8,9 +8,9 @@ variable v;
 Select v such that Modifies(_, v)
 SemanticError
 5000
-3 - (SEMANTIC ERROR) Pattern cannot both be wildcard
+3 - (SEMANTIC ERROR) Syn-assign must actually be assign
 stmt s;
-Select s pattern s(_, _)
+Select s pattern s(_,_)
 SemanticError
 5000
 4 - (SEMANTIC ERROR) Parent if arg 1 synonym must be statement synonym
