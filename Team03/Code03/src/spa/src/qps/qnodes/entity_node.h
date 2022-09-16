@@ -11,7 +11,7 @@ class EntityNode : public QNode {
  public:
   explicit EntityNode(Select select);
 
-  std::unordered_set<std::string> Fetch(const QueryablePkb &pkb) override;
+  std::map<std::string, std::unordered_set<std::string>> Fetch(const QueryablePkb &pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H

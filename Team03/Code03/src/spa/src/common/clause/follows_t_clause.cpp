@@ -6,38 +6,42 @@
 FollowsTClause::FollowsTClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
-std::unordered_set<std::string> FollowsTClause::Fetch(
+std::map<std::string, std::unordered_set<std::string>> FollowsTClause::Fetch(
     const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
+
+  std::string key = Clause::GetSyn();
+  std::unordered_set<std::string> results;
+  std::map<std::string, std::unordered_set<std::string>> map_of_results;
+
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. Follow(a, 1)
-      return queryable_pkb.QueryFollowsTBy(
+      results = queryable_pkb.QueryFollowsTBy(
           GetRightHandSide().GetLineNumber(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Follow(a, _)
-      return queryable_pkb.QueryAllFollows(
+      results = queryable_pkb.QueryAllFollows(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
-  }
-  if (GetRightHandSide().IsSynonym()) {
+  } else if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Follow(1, a)
-      return queryable_pkb.QueryFollowsT(
+      results = queryable_pkb.QueryFollowsT(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Follow(_, a)
-      return queryable_pkb.QueryAllFollowsBy(
+      results = queryable_pkb.QueryAllFollowsBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
+  } else if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
+    results = queryable_pkb.QueryAllFollowsRelations();
   }
-  if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
-    return queryable_pkb.QueryAllFollowsRelations();
-  }
-  return {};
+  map_of_results.insert({key, results});
+  return map_of_results;
 }
 
 const Reference &FollowsTClause::GetLeftHandSide() const { return lhs_; }

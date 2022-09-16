@@ -8,16 +8,19 @@
 
 class Pattern : public QueryOperation {
  public:
-  explicit Pattern(EntityReference entity, Expression expression);
+  explicit Pattern(Synonym syn, EntityReference entity, Expression expression);
 
-  [[nodiscard]] std::unordered_set<std::string> Fetch(
+  [[nodiscard]] std::map<std::string, std::unordered_set<std::string>> Fetch(
       const QueryablePkb &queryable_pkb) const override;
 
   [[nodiscard]] const EntityReference &GetEntity() const;
 
   [[nodiscard]] const Expression &GetExpression() const;
 
+  [[nodiscard]] std::string GetSyn() const override;
+
  private:
+  std::string syn_;
   EntityReference entity_;
   Expression expression_;
 };

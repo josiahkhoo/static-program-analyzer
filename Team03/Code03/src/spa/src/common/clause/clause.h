@@ -13,6 +13,8 @@ class Clause : public QueryOperation {
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
 
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;
+
+  [[nodiscard]] std::string GetSyn() const override;
 };
 
 #endif  // SPA_CLAUSE_H

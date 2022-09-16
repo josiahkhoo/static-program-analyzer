@@ -23,6 +23,5 @@ StatementReference::StatementReference(int line_number)
 bool StatementReference::IsIdentifier() const { return false; }
 
 std::string StatementReference::GetIdentifier() const {
-  assert(IsIdentifier());
-  return "";
+  return this->GetSynonym().GetIdentifier();
 }
