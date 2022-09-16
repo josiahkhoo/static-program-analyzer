@@ -3,6 +3,7 @@
 
 #include "common/clause/select.h"
 #include "q_node.h"
+#include "q_result.h"
 
 class EntityNode : public QNode {
  private:
@@ -11,7 +12,7 @@ class EntityNode : public QNode {
  public:
   explicit EntityNode(Select select);
 
-  std::map<std::string, std::unordered_set<std::string>> Fetch(const QueryablePkb &pkb) override;
+  QResult Fetch(const QueryablePkb &pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H

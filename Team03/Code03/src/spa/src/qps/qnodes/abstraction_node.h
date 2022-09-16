@@ -8,7 +8,7 @@ class AbstractionNode : public QNode {
  public:
   explicit AbstractionNode(std::shared_ptr<QueryOperation> q_operation);
 
-  std::map<std::string, std::unordered_set<std::string>> Fetch(const QueryablePkb &pkb) override;
+  QResult Fetch(const QueryablePkb &pkb) override;
 
  private:
   std::shared_ptr<QueryOperation> q_operation_;

@@ -15,9 +15,8 @@ class Evaluator {
       const Select& slt) const;
 
  private:
-  [[nodiscard]] std::map<std::string, std::unordered_set<std::string>>
-  ExecuteHelper(const QueryablePkb& pkb,
-                const std::shared_ptr<QNode>& q_tree) const;
+  [[nodiscard]] QResult ExecuteHelper(
+      const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree) const;
 };
 
 #endif  // SPA_EVALUATOR_H

@@ -2,13 +2,17 @@
 
 #include <utility>
 
-EntityNode::EntityNode(Select select)
-    : QNode(select.GetSynonym().GetIdentifier()), select_(std::move(select)) {}
+#include "q_result.h"
 
-std::map<std::string, std::unordered_set<std::string>> EntityNode::Fetch(
-    const QueryablePkb &pkb) {
-  std::map<std::string, std::unordered_set<std::string>> map_of_results;
-  map_of_results.insert({select_.GetSynonym().GetIdentifier(),
-                         pkb.QueryAll(select_.GetSynonym().GetEntityType())});
-  return map_of_results;
+EntityNode::EntityNode(Select select) : QNode(), select_(std::move(select)) {}
+
+QResult EntityNode::Fetch(const QueryablePkb& pkb) {
+  auto result = pkb.QueryAll(select_.GetSynonym().GetEntityType());
+  std::vector<std::vector<std::string>> rows;
+  // Reserve size to prevent vector from expanding each time
+  rows.reserve(result.size());
+  for (const auto& item : result) {
+    rows.push_back({item});
+  }
+  return {rows, {select_.GetSynonym()}};
 }

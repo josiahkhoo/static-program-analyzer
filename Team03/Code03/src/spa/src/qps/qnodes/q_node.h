@@ -1,7 +1,6 @@
 #ifndef SPA_Q_NODE_H
 #define SPA_Q_NODE_H
 
-#include <map>
 #include <memory>
 #include <optional>
 #include <string>
@@ -9,10 +8,11 @@
 
 #include "common/entity/entity.h"
 #include "common/queryable_pkb.h"
+#include "q_result.h"
 
 class QNode {
  public:
-  explicit QNode(std::string syn);
+  explicit QNode();
 
   void SetLeftNode(std::shared_ptr<QNode> left_node);
 
@@ -24,11 +24,9 @@ class QNode {
 
   [[nodiscard]] bool IsLeaf() const;
 
-  virtual std::map<std::string, std::unordered_set<std::string>> Fetch(
-      const QueryablePkb &pkb);
+  virtual QResult Fetch(const QueryablePkb &pkb);
 
  private:
-  std::string syn_;
   std::shared_ptr<QNode> left_node_;
   std::shared_ptr<QNode> right_node_;
 };

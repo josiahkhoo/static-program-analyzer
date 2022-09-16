@@ -6,8 +6,7 @@
 #include "common/queryable_pkb.h"
 
 Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
-    : entity_(std::move(entity)) {
-  syn_ = syn.GetIdentifier();
+    : syn_(std::move(syn)), entity_(std::move(entity)) {
   // Full Wildcard
   Expression exp = std::move(expression);
   if (exp.to_match.empty()) {
@@ -16,24 +15,34 @@ Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
   expression_ = exp;
 }
 
-std::map<std::string, std::unordered_set<std::string>> Pattern::Fetch(
+std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
-  std::string key = GetSyn();
-  std::unordered_set<std::string> results;
-  std::map<std::string, std::unordered_set<std::string>> map_of_results;
-
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
-    results = queryable_pkb.QueryAllPattern(expression_);
+    return queryable_pkb.QueryAllPattern(expression_);
   } else if (GetEntity().IsIdentifier()) {
-    results =
-        queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
+    return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
   }
-  map_of_results.insert({key, results});
-  return map_of_results;
+  assert(false);
 }
 
 const EntityReference &Pattern::GetEntity() const { return entity_; }
 
 const Expression &Pattern::GetExpression() const { return expression_; }
 
-std::string Pattern::GetSyn() const { return syn_; }
+Synonym Pattern::GetSynonym() const {
+  assert(GetType() == QueryOperation::SINGLE_SYNONYM);
+  return syn_;
+}
+
+std::pair<Synonym, Synonym> Pattern::GetSynonymPair() const {
+  assert(GetType() == QueryOperation::DOUBLE_SYNONYM);
+  return {syn_, EntityReference().GetSynonym()};
+}
+
+QueryOperation::Type Pattern::GetType() const {
+  // A pattern can only be a single synonym or double synonym
+  if (EntityReference().IsSynonym()) {
+    return QueryOperation::DOUBLE_SYNONYM;
+  }
+  return QueryOperation::SINGLE_SYNONYM;
+}

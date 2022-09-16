@@ -8,7 +8,7 @@ class ParentClause : public Clause {
  public:
   ParentClause(StatementReference lhs, StatementReference rhs);
 
-  [[nodiscard]] std::map<std::string, std::unordered_set<std::string>> Fetch(
+  [[nodiscard]] std::unordered_set<std::string> Fetch(
       const QueryablePkb &queryable_pkb) const override;
 
   [[nodiscard]] const Reference &GetLeftHandSide() const override;

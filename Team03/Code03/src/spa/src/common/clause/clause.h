@@ -14,7 +14,11 @@ class Clause : public QueryOperation {
 
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;
 
-  [[nodiscard]] std::string GetSyn() const override;
+  [[nodiscard]] Synonym GetSynonym() const override;
+
+  [[nodiscard]] std::pair<Synonym, Synonym> GetSynonymPair() const override;
+
+  [[nodiscard]] Type GetType() const override;
 };
 
 #endif  // SPA_CLAUSE_H

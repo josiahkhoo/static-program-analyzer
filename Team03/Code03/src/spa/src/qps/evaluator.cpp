@@ -71,34 +71,32 @@ std::map<std::string, std::unordered_set<std::string>> map_intersection(
 
 Evaluator::Evaluator() = default;
 
-std::map<std::string, std::unordered_set<std::string>> Evaluator::ExecuteHelper(
-    const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree) const {
-  std::map<std::string, std::unordered_set<std::string>> map_of_results;
-
+QResult Evaluator::ExecuteHelper(const QueryablePkb& pkb,
+                                 const std::shared_ptr<QNode>& q_tree) const {
   if (q_tree == nullptr) {
-    return map_of_results;
+    return {{}, {}};
   } else if (q_tree->IsLeaf()) {
     return q_tree->Fetch(pkb);
   }
 
   // Postorder traversal
-  std::map<std::string, std::unordered_set<std::string>> left_result =
-      ExecuteHelper(pkb, q_tree->GetLeftNode());
-  std::map<std::string, std::unordered_set<std::string>> right_result =
-      ExecuteHelper(pkb, q_tree->GetRightNode());
-  std::map<std::string, std::unordered_set<std::string>> curr_result =
-      q_tree->Fetch(pkb);
+  QResult left_result = ExecuteHelper(pkb, q_tree->GetLeftNode());
+  QResult right_result = ExecuteHelper(pkb, q_tree->GetRightNode());
+  QResult curr_result = q_tree->Fetch(pkb);
 
-  std::map<std::string, std::unordered_set<std::string>> result;
-  result = map_union(right_result, left_result);
-  result = map_intersection(result, curr_result);
-  return result;
+  return left_result.Join(right_result).Join(curr_result);
 }
 
 std::unordered_set<std::string> Evaluator::Execute(
     const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
     const Select& slt) const {
-  std::map<std::string, std::unordered_set<std::string>> res =
-      ExecuteHelper(pkb, q_tree);
-  return res.find(slt.GetSynonym().GetIdentifier())->second;
+  QResult res = ExecuteHelper(pkb, q_tree);
+  std::vector<std::vector<std::string>> rows = res.GetRows({slt.GetSynonym()});
+  // Return single item rows for now
+  std::unordered_set<std::string> single_item_set;
+  single_item_set.reserve(rows.size());
+  for (auto row : rows) {
+    single_item_set.emplace(row[0]);
+  }
+  return single_item_set;
 }

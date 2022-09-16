@@ -6,12 +6,17 @@
 #include <unordered_set>
 
 #include "common/queryable_pkb.h"
+#include "common/reference/synonym.h"
 
 class QueryOperation {
  public:
-  [[nodiscard]] virtual std::map<std::string, std::unordered_set<std::string>>
-  Fetch(const QueryablePkb &queryable_pkb) const = 0;
-  [[nodiscard]] virtual std::string GetSyn() const = 0;
+  enum Type { NO_SYNONYM, SINGLE_SYNONYM, DOUBLE_SYNONYM };
+
+  [[nodiscard]] virtual std::unordered_set<std::string> Fetch(
+      const QueryablePkb &queryable_pkb) const = 0;
+  [[nodiscard]] virtual Type GetType() const = 0;
+  [[nodiscard]] virtual Synonym GetSynonym() const = 0;
+  [[nodiscard]] virtual std::pair<Synonym, Synonym> GetSynonymPair() const = 0;
 };
 
 #endif  // SPA_QUERY_OPERATION_H
