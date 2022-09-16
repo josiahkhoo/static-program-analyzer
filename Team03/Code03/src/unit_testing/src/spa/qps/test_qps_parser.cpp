@@ -1,6 +1,8 @@
 #include "catch.hpp"
 #include "common/clause/parent_clause.h"
 #include "common/clause/parent_t_clause.h"
+#include "common/clause/uses_p_clause.h"
+#include "common/clause/uses_s_clause.h"
 #include "qps/query_parser.h"
 
 TEST_CASE("Declaration flags", "[QPS Parser]") {
@@ -394,6 +396,77 @@ TEST_CASE("'Assign Select ParentT' query", "[QPS Parser]") {
               ->GetLeftHandSide() == p.GetLeftHandSide());
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetRightHandSide() == p.GetRightHandSide());
+}
+
+TEST_CASE("'Variable Select UsesS' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Uses"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::VARIABLE, "v");
+  Select expected_select = Select(syn);
+
+  StatementReference statement_ref = StatementReference();
+  EntityReference entity_ref = EntityReference(syn);
+  UsesSClause u = UsesSClause(statement_ref, entity_ref);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetLeftHandSide() == u.GetLeftHandSide());
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetRightHandSide() == u.GetRightHandSide());
+}
+
+TEST_CASE("'Variable Select UsesP' query", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Uses"),
+                                Token(Token::ASTERISK),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  Synonym syn = Synonym(EntityType::VARIABLE, "v");
+  Select expected_select = Select(syn);
+
+  EntityReference entity_ref_1 = EntityReference();
+  EntityReference entity_ref_2 = EntityReference(syn);
+  UsesPClause u = UsesPClause(entity_ref_1, entity_ref_2);
+
+  REQUIRE(res.GetSynonyms().size() == 1);
+  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect().GetSynonym() == syn);
+  REQUIRE(res.GetQueryOperation().size() == 1);
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetLeftHandSide() == u.GetLeftHandSide());
+  REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
+              ->GetRightHandSide() == u.GetRightHandSide());
 }
 
 TEST_CASE("'Assign Select Pattern' query", "[QPS Parser]") {

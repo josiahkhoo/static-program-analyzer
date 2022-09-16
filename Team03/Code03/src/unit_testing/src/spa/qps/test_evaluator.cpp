@@ -70,6 +70,36 @@ class QueryablePkbStub : public QueryablePkb {
     return {};
   }
 
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryUsesPBy(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
   [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const override {
     return {"8"};
@@ -93,6 +123,11 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] std::unordered_set<std::string> QueryAllParentsRelations()
       const override {
     return {"12"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesRelations()
+      const override {
+    return {"13"};
   }
 };
 
@@ -339,6 +374,36 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesPBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
         Expression exp) const override {
       return {};
@@ -362,6 +427,11 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
     [[nodiscard]] std::unordered_set<std::string> QueryAllParentsRelations()
         const override {
       return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesRelations()
+        const override {
+      return {"13"};
     }
   };
 
@@ -463,6 +533,36 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryUsesPBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
         Expression exp) const override {
       return {};
@@ -486,6 +586,11 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
     [[nodiscard]] std::unordered_set<std::string> QueryAllParentsRelations()
         const override {
       return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesRelations()
+        const override {
+      return {"13"};
     }
   };
 
