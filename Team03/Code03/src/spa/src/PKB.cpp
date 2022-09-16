@@ -350,22 +350,22 @@ std::unordered_set<std::string> PKB::QueryAllModifiesRelations() const {
 }
 
 std::unordered_set<std::string> PKB::QueryModifiesS(int statement_number,
-                                                EntityType type) const {
+                                                    EntityType type) const {
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
-                                                  EntityType type) const {
+                                                      EntityType type) const {
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
-                                                EntityType type) const {
+                                                    EntityType type) const {
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
-                                                  EntityType type) const {
+                                                      EntityType type) const {
   return {};
 }
 
