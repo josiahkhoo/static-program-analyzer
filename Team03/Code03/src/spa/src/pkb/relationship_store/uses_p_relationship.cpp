@@ -10,3 +10,5 @@ void UsesPRelationship::AddVariable(VariableEntity variable) {
 std::unordered_set<std::string> UsesPRelationship::GetVariables() const {
   return variable_list_;
 }
+
+void UsesPRelationship::Clear() { variable_list_.clear(); }

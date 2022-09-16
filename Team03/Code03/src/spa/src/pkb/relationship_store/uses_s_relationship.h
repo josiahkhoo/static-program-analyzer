@@ -1,13 +1,13 @@
-#ifndef SPA_USES_P_RELATIONSHIP_H
-#define SPA_USES_P_RELATIONSHIP_H
+#ifndef SPA_USES_S_RELATIONSHIP_H
+#define SPA_USES_S_RELATIONSHIP_H
 
 #include <unordered_set>
 
 #include "common/entity/variable_entity.h"
 
-class UsesPRelationship {
+class UsesSRelationship {
  public:
-  explicit UsesPRelationship(std::string procedure_name);
+  explicit UsesSRelationship(std::string statement_number);
 
   void AddVariable(VariableEntity variable);
 
@@ -17,8 +17,8 @@ class UsesPRelationship {
   void Clear();
 
  private:
-  std::string procedure_name_;
+  std::string statement_number_;
   std::unordered_set<std::string> variable_list_;
 };
 
-#endif  // SPA_USES_P_RELATIONSHIP_H
+#endif  // SPA_USES_S_RELATIONSHIP_H
