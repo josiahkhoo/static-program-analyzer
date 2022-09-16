@@ -1,12 +1,12 @@
-#ifndef SPA_USES_RELATIONSHIP_H
-#define SPA_USES_RELATIONSHIP_H
+#ifndef SPA_USES_P_RELATIONSHIP_H
+#define SPA_USES_P_RELATIONSHIP_H
 
 #include <string>
 #include <unordered_set>
 
-class UsesRelationship {
+class UsesPRelationship {
  public:
-  explicit UsesRelationship(std::string uses_name);
+  explicit UsesPRelationship(std::string procedure_name);
 
   void AddVariable(std::string variable_name);
 
@@ -16,8 +16,8 @@ class UsesRelationship {
   void Clear();
 
  private:
-  std::string uses_name_;
+  std::string procedure_name_;
   std::unordered_set<std::string> variable_list_;
 };
 
-#endif  // SPA_USES_RELATIONSHIP_H
+#endif  // SPA_USES_P_RELATIONSHIP_H

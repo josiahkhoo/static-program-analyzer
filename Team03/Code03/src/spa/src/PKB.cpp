@@ -340,8 +340,8 @@ std::unordered_set<std::string> PKB::GetUsesS() const {
   return relationship_manager_.GetUsesS();
 }
 
-std::unordered_set<std::string> PKB::GetUsesS(std::string uses_name) const {
-  return relationship_manager_.GetUsesS(uses_name);
+std::unordered_set<std::string> PKB::GetUsesS(int statement_number) const {
+  return relationship_manager_.GetUsesS(statement_number);
 }
 
 std::unordered_set<std::string> PKB::GetUsesSBy() const {

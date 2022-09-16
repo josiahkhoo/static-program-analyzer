@@ -100,7 +100,7 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-      std::string uses_name) const override {
+      std::string procedure_name) const override {
     return {"14"};
   }
 
@@ -118,7 +118,7 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-      std::string uses_name) const override {
+      int statement_number) const override {
     return {"18"};
   }
 
@@ -405,7 +405,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-        std::string uses_name) const override {
+        std::string procedure_name) const override {
       return {};
     }
 
@@ -423,7 +423,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-        std::string uses_name) const override {
+        int statement_number) const override {
       return {};
     }
 
@@ -565,7 +565,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-        std::string uses_name) const override {
+        std::string procedure_name) const override {
       return {};
     }
 
@@ -583,7 +583,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-        std::string uses_name) const override {
+        int statement_number) const override {
       return {};
     }
 

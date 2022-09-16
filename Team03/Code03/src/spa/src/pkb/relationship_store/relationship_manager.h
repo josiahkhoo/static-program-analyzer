@@ -72,7 +72,7 @@ class RelationshipManager {
 
   std::unordered_set<std::string> GetUsesP() const;
 
-  std::unordered_set<std::string> GetUsesP(std::string uses_name) const;
+  std::unordered_set<std::string> GetUsesP(std::string procedure_name) const;
 
   std::unordered_set<std::string> GetUsesPBy() const;
 
@@ -80,7 +80,7 @@ class RelationshipManager {
 
   std::unordered_set<std::string> GetUsesS() const;
 
-  std::unordered_set<std::string> GetUsesS(std::string uses_name) const;
+  std::unordered_set<std::string> GetUsesS(int statement_number) const;
 
   std::unordered_set<std::string> GetUsesSBy() const;
 

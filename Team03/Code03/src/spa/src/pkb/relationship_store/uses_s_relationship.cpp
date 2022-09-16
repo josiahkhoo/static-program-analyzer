@@ -1,10 +1,10 @@
 #include "uses_s_relationship.h"
 
-UsesSRelationship::UsesSRelationship(std::string statement_number)
+UsesSRelationship::UsesSRelationship(int statement_number)
     : statement_number_(statement_number) {}
 
-void UsesSRelationship::AddVariable(VariableEntity variable) {
-  variable_list_.emplace(variable.GetName());
+void UsesSRelationship::AddVariable(std::string variable_name) {
+  variable_list_.emplace(variable_name);
 }
 
 std::unordered_set<std::string> UsesSRelationship::GetVariables() const {

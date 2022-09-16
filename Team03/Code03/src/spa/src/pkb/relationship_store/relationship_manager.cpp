@@ -89,8 +89,8 @@ std::unordered_set<std::string> RelationshipManager::GetUsesP() const {
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesP(
-    std::string uses_name) const {
-  return uses_store_.GetUsesP(uses_name);
+    std::string procedure_name) const {
+  return uses_store_.GetUsesP(procedure_name);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesPBy() const {
@@ -107,8 +107,8 @@ std::unordered_set<std::string> RelationshipManager::GetUsesS() const {
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesS(
-    std::string uses_name) const {
-  return uses_store_.GetUsesS(uses_name);
+    int statement_number) const {
+  return uses_store_.GetUsesS(statement_number);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetUsesSBy() const {

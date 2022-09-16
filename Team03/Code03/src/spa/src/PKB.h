@@ -126,13 +126,12 @@ class PKB : public QueryablePkb, public StorablePkb {
                                                Expression exp) const override;
   std::unordered_set<std::string> GetUsesP() const override;
   std::unordered_set<std::string> GetUsesP(
-      std::string uses_name) const override;
+      std::string procedure_name) const override;
   std::unordered_set<std::string> GetUsesPBy() const override;
   std::unordered_set<std::string> GetUsesPBy(
       std::string variable_name) const override;
   std::unordered_set<std::string> GetUsesS() const override;
-  std::unordered_set<std::string> GetUsesS(
-      std::string uses_name) const override;
+  std::unordered_set<std::string> GetUsesS(int statement_number) const override;
   std::unordered_set<std::string> GetUsesSBy() const override;
   std::unordered_set<std::string> GetUsesSBy(
       std::string variable_name) const override;

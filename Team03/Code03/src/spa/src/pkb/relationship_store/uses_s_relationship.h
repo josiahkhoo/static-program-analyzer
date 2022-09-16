@@ -7,9 +7,9 @@
 
 class UsesSRelationship {
  public:
-  explicit UsesSRelationship(std::string statement_number);
+  explicit UsesSRelationship(int statement_number);
 
-  void AddVariable(VariableEntity variable);
+  void AddVariable(std::string variable_name);
 
   std::unordered_set<std::string> GetVariables() const;
 
@@ -17,7 +17,7 @@ class UsesSRelationship {
   void Clear();
 
  private:
-  std::string statement_number_;
+  int statement_number_;
   std::unordered_set<std::string> variable_list_;
 };
 
