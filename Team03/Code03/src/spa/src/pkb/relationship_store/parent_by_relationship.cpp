@@ -8,7 +8,6 @@ void ParentByRelationship::AddParentStatementNumber(
   parent_statement_numbers_.emplace(parent_statement_number);
 }
 
-std::unordered_set<int> ParentByRelationship::GetParentStatementNumber()
-    const {
+std::unordered_set<int> ParentByRelationship::GetParentStatementNumber() const {
   return parent_statement_numbers_;
 };

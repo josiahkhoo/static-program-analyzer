@@ -38,8 +38,8 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements(
   if (parent_map_.find(statement_number) == parent_map_.end()) {
     return {};
   }
-  std::unordered_set<int> res = parent_map_.find(statement_number)
-                                    ->second->GetParentByStatementNumbers();
+  std::unordered_set<int> res =
+      parent_map_.find(statement_number)->second->GetParentByStatementNumbers();
   std::unordered_set<std::string> s;
   for (int i : res) {
     s.emplace(std::to_string(i));
@@ -66,8 +66,8 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements(
   if (parent_by_map_.find(statement_number) == parent_by_map_.end()) {
     return {};
   }
-  std::unordered_set<int> res = parent_by_map_.find(statement_number)
-                                    ->second->GetParentStatementNumber();
+  std::unordered_set<int> res =
+      parent_by_map_.find(statement_number)->second->GetParentStatementNumber();
   std::unordered_set<std::string> s;
   for (int i : res) {
     s.emplace(std::to_string(i));
