@@ -46,8 +46,8 @@ std::unordered_set<std::string> UsesStorage::GetUsesP(
   if (uses_p_map_.find(uses_name) == uses_p_map_.end()) {
     return {};
   }
-  std::unordered_set<std::string> res = uses_p_map_.find(uses_name)
-                                    ->second->GetVariables();
+  std::unordered_set<std::string> res =
+      uses_p_map_.find(uses_name)->second->GetVariables();
   return res;
 }
 
@@ -66,8 +66,8 @@ std::unordered_set<std::string> UsesStorage::GetUsesPBy(
   if (uses_p_by_map_.find(variable_name) == uses_p_by_map_.end()) {
     return {};
   }
-  std::unordered_set<std::string> res = uses_p_by_map_.find(variable_name)
-                                            ->second->GetUses();
+  std::unordered_set<std::string> res =
+      uses_p_by_map_.find(variable_name)->second->GetUses();
   return res;
 }
 
@@ -86,8 +86,8 @@ std::unordered_set<std::string> UsesStorage::GetUsesS(
   if (uses_s_map_.find(uses_name) == uses_s_map_.end()) {
     return {};
   }
-  std::unordered_set<std::string> res = uses_s_map_.find(uses_name)
-                                            ->second->GetVariables();
+  std::unordered_set<std::string> res =
+      uses_s_map_.find(uses_name)->second->GetVariables();
   return res;
 }
 
@@ -106,7 +106,7 @@ std::unordered_set<std::string> UsesStorage::GetUsesSBy(
   if (uses_s_by_map_.find(variable_name) == uses_s_by_map_.end()) {
     return {};
   }
-  std::unordered_set<std::string> res = uses_s_by_map_.find(variable_name)
-                                            ->second->GetUses();
+  std::unordered_set<std::string> res =
+      uses_s_by_map_.find(variable_name)->second->GetUses();
   return res;
 }
