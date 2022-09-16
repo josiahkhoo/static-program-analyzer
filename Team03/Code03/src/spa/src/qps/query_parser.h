@@ -48,6 +48,10 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseUsesP();
 
+  void ParseModifiesS();
+
+  void ParseModifiesP();
+
   bool ParsePattern();
 
   void ParseQueryOperation();

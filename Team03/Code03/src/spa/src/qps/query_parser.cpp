@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "common/clause/modifies_p_clause.h"
+#include "common/clause/modifies_s_clause.h"
 #include "common/clause/parent_clause.h"
 #include "common/clause/parent_t_clause.h"
 #include "common/clause/pattern.h"
@@ -227,6 +229,7 @@ bool QueryParser::ParseClause() {
   ParseFollows();
   ParseParent();
   ParseUsesS();
+  ParseModifiesS();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsOperationsEmpty()) {
@@ -409,6 +412,52 @@ void QueryParser::ParseUsesP() {
   std::shared_ptr<UsesPClause> usesCl =
       std::make_shared<UsesPClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(usesCl);
+}
+
+void QueryParser::ParseModifiesS() {
+  if (CheckEnd() || !MatchString("Modifies")) {
+    return;
+  }
+
+  Expect("Modifies");
+
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseModifiesP();
+  }
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get stmt
+  StatementReference stmtRef = ExtractStmtRef();
+
+  Expect(Token::COMMA);
+
+  // Get ent
+  EntityReference entRef = ExtractEntityRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ModifiesSClause> modCl =
+      std::make_shared<ModifiesSClause>(stmtRef, entRef);
+  query_string_builder_.AddQueryOperation(modCl);
+}
+
+void QueryParser::ParseModifiesP() {
+  Expect(Token::ASTERISK);
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  // Get ent1
+  EntityReference entRef1 = ExtractEntityRef();
+
+  Expect(Token::COMMA);
+
+  // Get ent2
+  EntityReference entRef2 = ExtractEntityRef();
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<ModifiesPClause> modCl =
+      std::make_shared<ModifiesPClause>(entRef1, entRef2);
+  query_string_builder_.AddQueryOperation(modCl);
 }
 
 void QueryParser::ParseCleanUpSyntax() {
