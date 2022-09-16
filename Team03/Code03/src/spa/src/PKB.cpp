@@ -86,13 +86,13 @@ void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
 
 void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
   for (const UsesSAbstraction& abstraction : abstractions) {
-     relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
 void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
   for (const UsesPAbstraction& abstraction : abstractions) {
-     relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
@@ -323,8 +323,7 @@ std::unordered_set<std::string> PKB::GetUsesP() const {
   return relationship_manager_.GetUsesP();
 }
 
-std::unordered_set<std::string> PKB::GetUsesP(
-    std::string uses_name) const {
+std::unordered_set<std::string> PKB::GetUsesP(std::string uses_name) const {
   return relationship_manager_.GetUsesP(uses_name);
 }
 
@@ -341,8 +340,7 @@ std::unordered_set<std::string> PKB::GetUsesS() const {
   return relationship_manager_.GetUsesS();
 }
 
-std::unordered_set<std::string> PKB::GetUsesS(
-    std::string uses_name) const {
+std::unordered_set<std::string> PKB::GetUsesS(std::string uses_name) const {
   return relationship_manager_.GetUsesS(uses_name);
 }
 
