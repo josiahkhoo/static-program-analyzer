@@ -9,8 +9,11 @@ std::string QueryPatternProcessor::ProcessAssignPattern(std::string exp) const {
   unsigned int low_operators_n = sizeof(low_operators) / sizeof(char);
   unsigned int operators_n = sizeof(operators) / sizeof(char);
 
+  if (exp.empty()) {
+    return exp;
+  }
   // Base case: Check if exp does not contain any operators
-  if (!CheckContains(exp, operators, operators_n)) {
+  else if (!CheckContains(exp, operators, operators_n)) {
     return "(" + exp + ")";
   }
   // Sub case: Check if exp does not contain any low_operators

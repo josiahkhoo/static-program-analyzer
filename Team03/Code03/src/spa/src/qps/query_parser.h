@@ -56,6 +56,7 @@ class QueryParser : public Parser<QueryString> {
   EntityReference ExtractEntityRef();
   Expression ExtractExpression();
   void ParseCleanUpSyntax();
+  bool IsNextEntityType();
 };
 
 #endif  // SPA_QUERY_PARSER_H

@@ -27,7 +27,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
 
 Token QueryParser::Peek() {
   if (token_pos_ >= tokens_.size()) {
-    throw syntax_exception("No more tokens");
+    throw SyntaxException("No more tokens");
   }
   return tokens_[token_pos_];
 }
@@ -48,7 +48,7 @@ void QueryParser::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
     token_pos_++;
   } else {
-    throw syntax_exception("Expected different token");
+    throw SyntaxException("Expected different token");
   }
 }
 
@@ -56,7 +56,7 @@ void QueryParser::Expect(const std::string &s) {
   if (MatchString(s)) {
     token_pos_++;
   } else {
-    throw syntax_exception("Expected different string");
+    throw SyntaxException("Expected different string");
   }
 }
 
@@ -72,7 +72,7 @@ StatementReference QueryParser::ExtractStmtRef() {
   } else if (MatchKind(Token::NUMBER)) {
     statement_reference = StatementReference(stoi(Peek().GetValue()));
   } else {
-    throw syntax_exception("Expected different stmtRef");
+    throw SyntaxException("Expected different stmtRef");
   }
   token_pos_++;
   return statement_reference;
@@ -81,17 +81,25 @@ StatementReference QueryParser::ExtractStmtRef() {
 EntityReference QueryParser::ExtractEntityRef() {
   EntityReference entity_reference;
 
+  // Wildcard
   if (MatchKind(Token::UNDERSCORE)) {
     token_pos_++;
     entity_reference = EntityReference();
-  } else if (MatchKind(Token::INVERTED_COMMAS)) {
+  }
+  // Identifier
+  else if (MatchKind(Token::INVERTED_COMMAS)) {
     token_pos_++;
-    Token next = Peek();
-    entity_reference = EntityReference(next.GetValue());
+    entity_reference = EntityReference(Peek().GetValue());
     token_pos_++;
     Expect(Token::INVERTED_COMMAS);
+  }
+  // Synonym
+  else if (MatchKind(Token::IDENTIFIER)) {
+    entity_reference =
+        EntityReference(query_string_builder_.GetSynonym(Peek().GetValue()));
+    token_pos_++;
   } else {
-    throw syntax_exception("Expected different entRef");
+    throw SyntaxException("Expected different entRef");
   }
 
   return entity_reference;
@@ -143,6 +151,20 @@ void QueryParser::ParseDeclaration() {
     }
     Expect(Token::SEMICOLON);
   }
+
+  if (query_string_builder_.IsDeclarationsEmpty()) {
+    throw SyntaxException("No declaration declared");
+  }
+}
+
+bool QueryParser::IsNextEntityType() {
+  try {
+    ExpectEntityType();
+    token_pos_--;
+    return true;
+  } catch (const SyntaxException &ex) {
+    return false;
+  }
 }
 
 EntityType QueryParser::ExpectEntityType() {
@@ -177,7 +199,7 @@ EntityType QueryParser::ExpectEntityType() {
     token_pos_++;
     return EntityType::PROCEDURE;
   } else {
-    throw syntax_exception("Expected different declaration");
+    throw SyntaxException("Expected different declaration");
   }
 }
 
@@ -207,8 +229,8 @@ bool QueryParser::ParseClause() {
   ParseUsesS();
   // Check for each clause type, append below new clauses
 
-  if (query_string_builder_.IsEmpty()) {
-    throw syntax_exception("No declaration declared");
+  if (query_string_builder_.IsOperationsEmpty()) {
+    throw SyntaxException("No operations or declarations declared");
   }
   return true;
 }
@@ -391,6 +413,6 @@ void QueryParser::ParseUsesP() {
 
 void QueryParser::ParseCleanUpSyntax() {
   if (!CheckEnd() && Peek().IsNot(Token::END)) {
-    throw syntax_exception("Unexpected additional token(s)");
+    throw SyntaxException("Unexpected additional token(s)");
   }
 }
