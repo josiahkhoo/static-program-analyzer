@@ -1,19 +1,19 @@
-#include "uses_s_clause.h"
+#include "uses_p_clause.h"
 
 #include <cassert>
 #include <utility>
 
-UsesSClause::UsesSClause(StatementReference lhs, EntityReference rhs)
+UsesPClause::UsesPClause(EntityReference lhs, EntityReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
-std::unordered_set<std::string> UsesSClause::Fetch(
+std::unordered_set<std::string> UsesPClause::Fetch(
     const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsIdentifier()) {
       // E.g. Uses(a, "x")
-      return queryable_pkb.QueryUsesSBy(
+      return queryable_pkb.QueryUsesPBy(
           GetRightHandSide().GetIdentifier(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
@@ -23,10 +23,10 @@ std::unordered_set<std::string> UsesSClause::Fetch(
     }
   }
   if (GetRightHandSide().IsSynonym()) {
-    if (GetLeftHandSide().IsLineNumber()) {
-      // E.g. Uses(1, a)
-      return queryable_pkb.QueryUsesS(
-          GetLeftHandSide().GetLineNumber(),
+    if (GetLeftHandSide().IsIdentifier()) {
+      // E.g. Uses("x", a)
+      return queryable_pkb.QueryUsesP(
+          GetLeftHandSide().GetIdentifier(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Uses(_, a)
@@ -40,6 +40,6 @@ std::unordered_set<std::string> UsesSClause::Fetch(
   return {};
 }
 
-const Reference &UsesSClause::GetLeftHandSide() const { return lhs_; }
+const Reference &UsesPClause::GetLeftHandSide() const { return lhs_; }
 
-const Reference &UsesSClause::GetRightHandSide() const { return rhs_; }
+const Reference &UsesPClause::GetRightHandSide() const { return rhs_; }

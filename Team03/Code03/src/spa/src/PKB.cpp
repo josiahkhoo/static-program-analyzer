@@ -305,6 +305,38 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
   return result;
 }
 
+std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
+                                                  EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
+                                                  EntityType type) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }
