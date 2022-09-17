@@ -29,6 +29,7 @@ std::unordered_set<std::string> Pattern::Fetch(
 std::unordered_set<std::string> Pattern::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
   assert(false);
+  return {};
 }
 
 std::unordered_set<std::string> Pattern::FetchPossibleLhs(
