@@ -1,5 +1,6 @@
 #include "planner.h"
 
+#include <cassert>
 #include <unordered_map>
 
 #include "qps/qnodes/abstraction_node.h"

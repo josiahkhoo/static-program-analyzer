@@ -1,5 +1,7 @@
 #include "clause.h"
 
+#include <cassert>
+
 Synonym Clause::GetSynonym() const {
   assert(GetType() == SINGLE_SYNONYM);
   if (GetLeftHandSide().IsSynonym()) {

@@ -1,5 +1,6 @@
 #include "abstraction_node.h"
 
+#include <cassert>
 #include <utility>
 
 AbstractionNode::AbstractionNode(std::shared_ptr<QueryOperation> q_operation)

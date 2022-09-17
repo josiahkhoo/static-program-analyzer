@@ -1,5 +1,7 @@
 #include "boolean_node.h"
 
+#include <cassert>
+
 QResult BooleanNode::Fetch(const QueryablePkb& pkb) {
   // If left hand side returns something, return right hand side
   assert(GetLeftNode() != nullptr && GetRightNode() != nullptr);
