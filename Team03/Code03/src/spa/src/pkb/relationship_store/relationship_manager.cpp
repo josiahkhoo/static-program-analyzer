@@ -24,6 +24,14 @@ void RelationshipManager::AddAbstraction(UsesSAbstraction abstraction) {
   uses_store_.AddRelationship(abstraction);
 }
 
+void RelationshipManager::AddAbstraction(ModifiesPAbstraction abstraction) {
+  modifies_store_.AddRelationship(abstraction);
+}
+
+void RelationshipManager::AddAbstraction(ModifiesSAbstraction abstraction) {
+  modifies_store_.AddRelationship(abstraction);
+}
+
 std::unordered_set<std::string> RelationshipManager::GetFollowsStatements()
     const {
   return follows_store_.GetFollowsStatements();
@@ -120,7 +128,44 @@ std::unordered_set<std::string> RelationshipManager::GetUsesSBy(
   return uses_store_.GetUsesSBy(variable_name);
 }
 
+std::unordered_set<std::string> RelationshipManager::GetModifiesP() const {
+  return modifies_store_.GetModifyingProcedures();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesP(
+    std::string procedure_name) const {
+  return modifies_store_.GetVariablesModifiedByProcedure(procedure_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesPBy() const {
+  return modifies_store_.GetVariablesModifiedByProcedures();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesPBy(
+    std::string variable_name) const {
+  return modifies_store_.GetProceduresModifyingVariable(variable_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesS() const {
+  return modifies_store_.GetModifyingStatements();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesS(
+    int statement_number) const {
+  return modifies_store_.GetVariablesModifiedByStatement(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesSBy() const {
+  return modifies_store_.GetVariablesModifiedByStatements();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetModifiesSBy(
+    std::string variable_name) const {
+  return modifies_store_.GetStatementsModifyingVariable(variable_name);
+}
+
 void RelationshipManager::Clear() {
   //  follows_store_.Clear();
   parent_store_.Clear();
+  modifies_store_.Clear();
 }

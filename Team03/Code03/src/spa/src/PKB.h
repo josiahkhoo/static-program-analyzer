@@ -120,8 +120,6 @@ class PKB : public QueryablePkb, public StorablePkb {
       int statement_number, EntityType type) const override;
   std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const override;
-  std::unordered_set<std::string> QueryPattern(EntityType type,
-                                               Expression exp) const override;
   std::unordered_set<std::string> QueryPattern(std::string lhs,
                                                Expression exp) const override;
   std::unordered_set<std::string> GetUsesP() const override;
@@ -134,6 +132,18 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::unordered_set<std::string> GetUsesS(int statement_number) const override;
   std::unordered_set<std::string> GetUsesSBy() const override;
   std::unordered_set<std::string> GetUsesSBy(
+      std::string variable_name) const override;
+  std::unordered_set<std::string> GetModifiesP() const override;
+  std::unordered_set<std::string> GetModifiesP(
+      std::string procedure_name) const override;
+  std::unordered_set<std::string> GetModifiesPBy() const override;
+  std::unordered_set<std::string> GetModifiesPBy(
+      std::string variable_name) const override;
+  std::unordered_set<std::string> GetModifiesS() const override;
+  std::unordered_set<std::string> GetModifiesS(
+      int statement_number) const override;
+  std::unordered_set<std::string> GetModifiesSBy() const override;
+  std::unordered_set<std::string> GetModifiesSBy(
       std::string variable_name) const override;
 
  private:

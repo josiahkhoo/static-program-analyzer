@@ -309,11 +309,6 @@ std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }
 
-std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
-                                                  Expression exp) const {
-  return {};
-}
-
 std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
                                                   Expression exp) const {
   return pattern_manager_.GetPattern(lhs, exp);
@@ -351,4 +346,38 @@ std::unordered_set<std::string> PKB::GetUsesSBy() const {
 std::unordered_set<std::string> PKB::GetUsesSBy(
     std::string variable_name) const {
   return relationship_manager_.GetUsesSBy(variable_name);
+}
+
+std::unordered_set<std::string> PKB::GetModifiesP() const {
+  return relationship_manager_.GetModifiesP();
+}
+
+std::unordered_set<std::string> PKB::GetModifiesP(std::string uses_name) const {
+  return relationship_manager_.GetModifiesP(uses_name);
+}
+
+std::unordered_set<std::string> PKB::GetModifiesPBy() const {
+  return relationship_manager_.GetModifiesPBy();
+}
+
+std::unordered_set<std::string> PKB::GetModifiesPBy(
+    std::string variable_name) const {
+  return relationship_manager_.GetModifiesPBy(variable_name);
+}
+
+std::unordered_set<std::string> PKB::GetModifiesS() const {
+  return relationship_manager_.GetModifiesS();
+}
+
+std::unordered_set<std::string> PKB::GetModifiesS(int statement_number) const {
+  return relationship_manager_.GetModifiesS(statement_number);
+}
+
+std::unordered_set<std::string> PKB::GetModifiesSBy() const {
+  return relationship_manager_.GetModifiesSBy();
+}
+
+std::unordered_set<std::string> PKB::GetModifiesSBy(
+    std::string variable_name) const {
+  return relationship_manager_.GetModifiesSBy(variable_name);
 }

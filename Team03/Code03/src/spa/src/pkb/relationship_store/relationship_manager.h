@@ -6,9 +6,14 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/modifies_p_abstraction.h"
+#include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "common/abstraction/uses_p_abstraction.h"
+#include "common/abstraction/uses_s_abstraction.h"
 #include "follows_storage.h"
+#include "modifies_storage.h"
 #include "parent_storage.h"
 #include "uses_storage.h"
 
@@ -34,6 +39,12 @@ class RelationshipManager {
 
   // store usesS to ParentStorage
   void AddAbstraction(UsesSAbstraction abstraction);
+
+  // store modifiesP to ModifiesStorage
+  void AddAbstraction(ModifiesPAbstraction abstraction);
+
+  // store modifiesS to ModifiesStorage
+  void AddAbstraction(ModifiesSAbstraction abstraction);
 
   /* ====================================
    * General Relationship Getter Methods
@@ -86,6 +97,25 @@ class RelationshipManager {
 
   std::unordered_set<std::string> GetUsesSBy(std::string variable_name) const;
 
+  std::unordered_set<std::string> GetModifiesP() const;
+
+  std::unordered_set<std::string> GetModifiesP(
+      std::string procedure_name) const;
+
+  std::unordered_set<std::string> GetModifiesPBy() const;
+
+  std::unordered_set<std::string> GetModifiesPBy(
+      std::string variable_name) const;
+
+  std::unordered_set<std::string> GetModifiesS() const;
+
+  std::unordered_set<std::string> GetModifiesS(int statement_number) const;
+
+  std::unordered_set<std::string> GetModifiesSBy() const;
+
+  std::unordered_set<std::string> GetModifiesSBy(
+      std::string variable_name) const;
+
   /* ====================================
    * Clear All Relationship Storages
    * ==================================== */
@@ -95,6 +125,7 @@ class RelationshipManager {
   FollowsStorage follows_store_;
   ParentStorage parent_store_;
   UsesStorage uses_store_;
+  ModifiesStorage modifies_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H

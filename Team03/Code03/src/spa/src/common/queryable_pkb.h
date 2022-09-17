@@ -57,9 +57,6 @@ class QueryablePkb {
       Expression exp) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryPattern(
-      EntityType type, Expression exp) const = 0;
-
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryPattern(
       std::string lhs, Expression exp) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> GetUsesP() const = 0;
@@ -80,6 +77,30 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> GetUsesSBy() const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> GetUsesSBy(
+      std::string variable_name) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesP()
+      const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesP(
+      std::string procedure_name) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesPBy()
+      const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesPBy(
+      std::string variable_name) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesS()
+      const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesS(
+      int statement_number) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesSBy()
+      const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetModifiesSBy(
       std::string variable_name) const = 0;
 };
 
