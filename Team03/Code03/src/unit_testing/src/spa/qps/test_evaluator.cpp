@@ -748,6 +748,7 @@ TEST_CASE("Union check'", "[Evaluator]") {
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> result = eval.Execute(pkb, root_3);
-  std::unordered_set<std::string> expected = {"1", "1", "1"};
+  std::unordered_set<std::string> expected = {"QueryAll", "QueryAll",
+                                              "QueryAll"};
   REQUIRE(result == expected);
 }
