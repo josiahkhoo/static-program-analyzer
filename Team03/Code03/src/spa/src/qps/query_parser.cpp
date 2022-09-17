@@ -11,6 +11,7 @@
 #include "common/clause/uses_p_clause.h"
 #include "common/clause/uses_s_clause.h"
 #include "common/entity/assign_entity.h"
+#include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
 QueryParser::QueryParser() {
@@ -254,10 +255,24 @@ void QueryParser::ParseFollows() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
+  if (stmtRef1.IsSynonym() &&
+      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
+
+  if (stmtRef2.IsSynonym() &&
+      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<FollowsClause> folCl =
@@ -273,10 +288,24 @@ void QueryParser::ParseFollowsT() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
+  if (stmtRef1.IsSynonym() &&
+      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
+
+  if (stmtRef2.IsSynonym() &&
+      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
 
@@ -300,6 +329,11 @@ bool QueryParser::ParsePattern() {
   Expect(Token::LEFT_ROUND_BRACKET);
 
   EntityReference entity_ref = ExtractEntityRef();
+
+  if (entity_ref.IsSynonym() &&
+      entity_ref.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
 
   Expect(Token::COMMA);
 
@@ -338,10 +372,24 @@ void QueryParser::ParseParent() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
+  if (stmtRef1.IsSynonym() &&
+      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
+
+  if (stmtRef2.IsSynonym() &&
+      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentClause> parCl =
@@ -359,8 +407,22 @@ void QueryParser::ParseParentT() {
 
   Expect(Token::COMMA);
 
+  if (stmtRef1.IsSynonym() &&
+      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
+
+  if (stmtRef2.IsSynonym() &&
+      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
+       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentTClause> parCl =
@@ -384,10 +446,25 @@ void QueryParser::ParseUsesS() {
   // Get stmt
   StatementReference stmtRef = ExtractStmtRef();
 
+  if (stmtRef.IsSynonym() &&
+      !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::PRINT ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::CALL)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   Expect(Token::COMMA);
 
   // Get ent
   EntityReference entRef = ExtractEntityRef();
+
+  if (entRef.IsSynonym() &&
+      entRef.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesSClause> usesCl =
@@ -403,10 +480,19 @@ void QueryParser::ParseUsesP() {
   // Get ent1
   EntityReference entRef1 = ExtractEntityRef();
 
+  if (!(entRef1.IsWildCard() || entRef1.IsIdentifier())) {
+    throw SemanticException("Expected identifier entity reference");
+  }
+
   Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
+
+  if (entRef2.IsSynonym() &&
+      entRef2.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesPClause> usesCl =
@@ -430,10 +516,25 @@ void QueryParser::ParseModifiesS() {
   // Get stmt
   StatementReference stmtRef = ExtractStmtRef();
 
+  if (stmtRef.IsSynonym() &&
+      !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::READ ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::CALL)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+
   Expect(Token::COMMA);
 
   // Get ent
   EntityReference entRef = ExtractEntityRef();
+
+  if (entRef.IsSynonym() &&
+      entRef.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesSClause> modCl =
@@ -449,10 +550,19 @@ void QueryParser::ParseModifiesP() {
   // Get ent1
   EntityReference entRef1 = ExtractEntityRef();
 
+  if (!(entRef1.IsWildCard() || entRef1.IsIdentifier())) {
+    throw SemanticException("Expected identifier entity reference");
+  }
+
   Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
+
+  if (entRef2.IsSynonym() &&
+      entRef2.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesPClause> modCl =
