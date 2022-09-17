@@ -58,3 +58,8 @@ assign a;
 Select a pattern a(_, _)
 1, 2
 5000
+13 - (SUCCESS) Select all variables that appear on the LHS of some assignment
+assign a; variable v;
+Select v pattern a(v, _)
+a, x
+5000

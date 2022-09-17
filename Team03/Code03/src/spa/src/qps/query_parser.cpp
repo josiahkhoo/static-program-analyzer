@@ -307,7 +307,8 @@ bool QueryParser::ParsePattern() {
 
   Expect(Token::RIGHT_ROUND_BRACKET);
 
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(synonym, entity_ref, exp);
   query_string_builder_.AddQueryOperation(ptn);
   return true;
 }

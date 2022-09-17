@@ -30,7 +30,7 @@ test_array = (
     # ("Uses Procedure", "uses_p"),
     # ("Uses Statement", "uses_s"),
     # ("Modifies Procedure", "modifies_p"),
-    # ("Modifies Statement", "modifies_s")
+    # ("Modifies Statement", "modifies_s"),
     ("Clause and Pattern", "clause_and_pattern")
 )
 

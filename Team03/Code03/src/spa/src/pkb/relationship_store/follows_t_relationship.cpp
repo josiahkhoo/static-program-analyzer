@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 6/9/22.
-//
-
 #include "follows_t_relationship.h"
 
 FollowsTRelationship::FollowsTRelationship(int follows_statement_number)

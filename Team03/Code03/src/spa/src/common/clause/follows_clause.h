@@ -11,6 +11,12 @@ class FollowsClause : public Clause {
   [[nodiscard]] std::unordered_set<std::string> Fetch(
       const QueryablePkb &queryable_pkb) const override;
 
+  [[nodiscard]] std::unordered_set<std::string> FetchPossibleRhs(
+      std::string lhs, const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] std::unordered_set<std::string> FetchPossibleLhs(
+      std::string rhs, const QueryablePkb &queryable_pkb) const override;
+
   [[nodiscard]] const Reference &GetLeftHandSide() const override;
 
   [[nodiscard]] const Reference &GetRightHandSide() const override;

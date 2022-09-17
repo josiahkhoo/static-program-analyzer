@@ -13,31 +13,43 @@ std::unordered_set<std::string> ModifiesSClause::Fetch(
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsIdentifier()) {
       // E.g. Modifies(a, "x")
-      return queryable_pkb.QueryUsesSBy(
+      return queryable_pkb.QueryModifiesSBy(
           GetRightHandSide().GetIdentifier(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Modifies(a, _)
-      return queryable_pkb.QueryAllUses(
+      return queryable_pkb.QueryAllModifies(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
   }
   if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Modifies(1, a)
-      return queryable_pkb.QueryUsesS(
+      return queryable_pkb.QueryModifiesS(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Modifies(_, a)
-      return queryable_pkb.QueryAllUsesBy(
+      return queryable_pkb.QueryAllModifiesBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }
   if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
-    return queryable_pkb.QueryAllUsesRelations();
+    return queryable_pkb.QueryAllModifiesRelations();
   }
   return {};
+}
+
+[[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryModifiesS(
+      std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryModifiesSBy(
+      rhs, GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 const Reference &ModifiesSClause::GetLeftHandSide() const { return lhs_; }
