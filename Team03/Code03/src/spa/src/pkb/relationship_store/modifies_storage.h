@@ -23,21 +23,29 @@ class ModifiesStorage {
 
   std::unordered_set<std::string> GetVariablesModifiedByStatements() const;
 
-  std::unordered_set<std::string> GetVariablesModifiedByProcedure(std::string procedure_name) const;
+  std::unordered_set<std::string> GetVariablesModifiedByProcedure(
+      std::string procedure_name) const;
 
-  std::unordered_set<std::string> GetProceduresModifyingVariable(std::string variable_name) const;
+  std::unordered_set<std::string> GetProceduresModifyingVariable(
+      std::string variable_name) const;
 
-  std::unordered_set<std::string> GetVariablesModifiedByStatement(int statement_number) const;
+  std::unordered_set<std::string> GetVariablesModifiedByStatement(
+      int statement_number) const;
 
-  std::unordered_set<std::string> GetStatementsModifyingVariable(std::string variable_name) const;
+  std::unordered_set<std::string> GetStatementsModifyingVariable(
+      std::string variable_name) const;
 
   void Clear();
 
  private:
-  std::unordered_map<int, std::unordered_set<std::string>> stmt_to_var_modifies_map_;
-  std::unordered_map<std::string, std::unordered_set<std::string>> proc_to_var_modifies_map_;
-  std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_modifies_map_;
-  std::unordered_map<std::string, std::unordered_set<std::string>> var_to_proc_modifies_map_;
+  std::unordered_map<int, std::unordered_set<std::string>>
+      stmt_to_var_modifies_map_;
+  std::unordered_map<std::string, std::unordered_set<std::string>>
+      proc_to_var_modifies_map_;
+  std::unordered_map<std::string, std::unordered_set<int>>
+      var_to_stmt_modifies_map_;
+  std::unordered_map<std::string, std::unordered_set<std::string>>
+      var_to_proc_modifies_map_;
 };
 
 #endif  // SPA_MODIFIES_STORAGE_H
