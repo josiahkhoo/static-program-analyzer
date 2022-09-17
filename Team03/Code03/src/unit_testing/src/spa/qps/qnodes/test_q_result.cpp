@@ -153,4 +153,16 @@ TEST_CASE("Query Result", "[QResult]") {
 
     REQUIRE(res == expected);
   }
+
+  SECTION("Intersect two QResults") {
+    Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
+    Synonym syn2 = Synonym(EntityType::VARIABLE, "v");
+    QResult res1 = QResult({{"3", "x"}, {"4", "y"}}, {syn1, syn2});
+    QResult res2 = QResult({{"2", "z"}, {"3", "x"}}, {syn1, syn2});
+
+    QResult res = res1.Join(res2);
+    QResult expected = QResult({{"3", "x"}}, {syn1, syn2});
+
+    REQUIRE(res == expected);
+  }
 }
