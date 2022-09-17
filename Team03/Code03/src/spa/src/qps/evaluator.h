@@ -13,7 +13,6 @@ class Evaluator {
   [[nodiscard]] std::unordered_set<std::string> Execute(
       const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
       const Select& slt) const;
-
 };
 
 #endif  // SPA_EVALUATOR_H
