@@ -103,6 +103,26 @@ class QueryablePkb {
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryPattern(
       std::string lhs, Expression exp) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesP() const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesP(
+      std::string procedure_name) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesPBy() const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesPBy(
+      std::string variable_name) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesS() const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesS(
+      int statement_number) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesSBy() const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> GetUsesSBy(
+      std::string variable_name) const = 0;
 };
 
 #endif  // SPA_QUERYABLE_PKB_H
