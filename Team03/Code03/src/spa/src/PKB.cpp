@@ -305,6 +305,70 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
   return result;
 }
 
+std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
+                                                  EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
+                                                  EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllModifiesRelations() const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryModifiesS(int statement_number,
+                                                    EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
+                                                      EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
+                                                    EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
+                                                      EntityType type) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }

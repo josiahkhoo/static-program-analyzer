@@ -1,13 +1,12 @@
-#ifndef SPA_USES_S_CLAUSE_H
-#define SPA_USES_S_CLAUSE_H
+#ifndef SPA_MODIFIES_P_CLAUSE_H
+#define SPA_MODIFIES_P_CLAUSE_H
 
 #include "clause.h"
 #include "common/reference/entity_reference.h"
-#include "common/reference/statement_reference.h"
 
-class UsesSClause : public Clause {
+class ModifiesPClause : public Clause {
  public:
-  UsesSClause(StatementReference lhs, EntityReference rhs);
+  ModifiesPClause(EntityReference lhs, EntityReference rhs);
 
   [[nodiscard]] std::unordered_set<std::string> Fetch(
       const QueryablePkb &queryable_pkb) const override;
@@ -23,8 +22,8 @@ class UsesSClause : public Clause {
   [[nodiscard]] const Reference &GetRightHandSide() const override;
 
  private:
-  StatementReference lhs_;
+  EntityReference lhs_;
   EntityReference rhs_;
 };
 
-#endif  // SPA_USES_S_CLAUSE_H
+#endif  // SPA_MODIFIES_P_CLAUSE_H
