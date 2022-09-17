@@ -5,6 +5,8 @@
 #include "q_node.h"
 #include "q_result.h"
 
+/// An entity node is responsible for directly calling the PKB for all possible
+/// values of a specific synonym individually.
 class EntityNode : public QNode {
  private:
   Synonym synonym_;

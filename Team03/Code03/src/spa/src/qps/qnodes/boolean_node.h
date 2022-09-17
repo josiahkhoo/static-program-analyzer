@@ -3,6 +3,7 @@
 
 #include "q_node.h"
 
+/// A BooleanNode returns the RHS results if the LHS is a non empty set.
 class BooleanNode : public QNode {
  public:
   QResult Fetch(const QueryablePkb& pkb) override;

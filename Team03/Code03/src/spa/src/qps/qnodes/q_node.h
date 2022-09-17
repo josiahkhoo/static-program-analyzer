@@ -10,6 +10,7 @@
 #include "common/queryable_pkb.h"
 #include "q_result.h"
 
+/// Base QNode that by default returns an empty QResult.
 class QNode {
  public:
   explicit QNode();

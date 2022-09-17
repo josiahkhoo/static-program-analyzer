@@ -3,6 +3,9 @@
 
 #include "q_node.h"
 
+/// The Join Node is responsible for joining the results of two nodes together
+/// via common synonyms. During the join, it also makes sure that entities are
+/// not repeated across declarations.
 class JoinNode : public QNode {
  public:
   QResult Fetch(const QueryablePkb& pkb) override;

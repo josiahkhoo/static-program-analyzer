@@ -169,21 +169,6 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
   return head;
 }
 
-std::shared_ptr<QNode> Planner::BuildQTree(
-    std::vector<std::shared_ptr<QueryOperation>> &q_operations) const {
-  if (q_operations.empty()) {
-    return nullptr;
-  }
-  // Pop
-  std::shared_ptr<QueryOperation> data = q_operations.front();
-  q_operations.erase(q_operations.begin());
-
-  std::shared_ptr<QNode> root = std::make_shared<AbstractionNode>(data);
-  root->SetLeftNode(BuildQTree(q_operations));
-  root->SetRightNode(BuildQTree(q_operations));
-  return root;
-}
-
 std::shared_ptr<QNode> Planner::BuildIntersectTree(
     const std::vector<std::shared_ptr<QueryOperation>> &operations) const {
   assert(!operations.empty());
