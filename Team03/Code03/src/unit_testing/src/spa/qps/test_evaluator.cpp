@@ -100,6 +100,36 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryUsesPBy"};
   }
 
+  [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
+      EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
+      int statement_number, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
+      std::string identifier, EntityType type) const override {
+    return {};
+  }
+
   [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const override {
     return {"QueryAllPattern"};
@@ -164,6 +194,11 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
       std::string variable_name) const override {
     return {"GetUsesSByVar"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesRelations()
+      const override {
+    return {"14"};
   }
 };
 
@@ -440,6 +475,36 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
         Expression exp) const override {
       return {};
@@ -504,6 +569,11 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
     [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
         std::string variable_name) const override {
       return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesRelations()
+        const override {
+      return {"14"};
     }
   };
 
@@ -635,6 +705,36 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
+        EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
+        int statement_number, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
+        std::string identifier, EntityType type) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
         Expression exp) const override {
       return {};
@@ -699,6 +799,11 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
     [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
         std::string variable_name) const override {
       return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesRelations()
+        const override {
+      return {"14"};
     }
   };
 
