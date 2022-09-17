@@ -10,6 +10,7 @@
 #include "common/abstraction/parent_t_abstraction.h"
 #include "follows_storage.h"
 #include "parent_storage.h"
+#include "uses_storage.h"
 
 class RelationshipManager {
  public:
@@ -27,6 +28,12 @@ class RelationshipManager {
 
   // store parentT to ParentStorage
   void AddAbstraction(ParentTAbstraction abstraction);
+
+  // store usesP to ParentStorage
+  void AddAbstraction(UsesPAbstraction abstraction);
+
+  // store usesS to ParentStorage
+  void AddAbstraction(UsesSAbstraction abstraction);
 
   /* ====================================
    * General Relationship Getter Methods
@@ -63,6 +70,22 @@ class RelationshipManager {
   std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
+  std::unordered_set<std::string> GetUsesP() const;
+
+  std::unordered_set<std::string> GetUsesP(std::string procedure_name) const;
+
+  std::unordered_set<std::string> GetUsesPBy() const;
+
+  std::unordered_set<std::string> GetUsesPBy(std::string variable_name) const;
+
+  std::unordered_set<std::string> GetUsesS() const;
+
+  std::unordered_set<std::string> GetUsesS(int statement_number) const;
+
+  std::unordered_set<std::string> GetUsesSBy() const;
+
+  std::unordered_set<std::string> GetUsesSBy(std::string variable_name) const;
+
   /* ====================================
    * Clear All Relationship Storages
    * ==================================== */
@@ -71,6 +94,7 @@ class RelationshipManager {
  private:
   FollowsStorage follows_store_;
   ParentStorage parent_store_;
+  UsesStorage uses_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
