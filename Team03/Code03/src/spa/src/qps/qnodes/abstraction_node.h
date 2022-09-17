@@ -12,6 +12,8 @@ class AbstractionNode : public QNode {
 
  private:
   std::shared_ptr<QueryOperation> q_operation_;
+
+  QResult FetchWithChildren(const QueryablePkb &pkb);
 };
 
 #endif  // SPA_ABSTRACTION_NODE_H

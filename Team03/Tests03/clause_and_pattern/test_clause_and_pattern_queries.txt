@@ -26,5 +26,5 @@ Select s such that Follows(s, a) pattern a("x", "x-1")
 6 - (SUCCESS) Disjoint operation with multiple declaration, pattern and follows matches multiple
 stmt s; assign a;
 Select s such that Follows(s, a) pattern a("z", _"x"_)
-6, 18
+6, 13, 18
 5000

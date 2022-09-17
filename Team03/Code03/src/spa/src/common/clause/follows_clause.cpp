@@ -39,6 +39,18 @@ std::unordered_set<std::string> FollowsClause::Fetch(
   }
 }
 
+[[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryFollows(
+      std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryFollowsBy(
+      std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
 const Reference &FollowsClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &FollowsClause::GetRightHandSide() const { return rhs_; }

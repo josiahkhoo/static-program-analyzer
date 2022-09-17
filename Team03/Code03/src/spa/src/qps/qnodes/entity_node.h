@@ -7,10 +7,10 @@
 
 class EntityNode : public QNode {
  private:
-  Select select_;
+  Synonym synonym_;
 
  public:
-  explicit EntityNode(Select select);
+  explicit EntityNode(Synonym synonym);
 
   QResult Fetch(const QueryablePkb &pkb) override;
 };

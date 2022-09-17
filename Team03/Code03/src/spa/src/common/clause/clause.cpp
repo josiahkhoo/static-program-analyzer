@@ -26,3 +26,13 @@ std::pair<Synonym, Synonym> Clause::GetSynonymPair() const {
   assert(GetType() == DOUBLE_SYNONYM);
   return {GetLeftHandSide().GetSynonym(), GetRightHandSide().GetSynonym()};
 }
+
+QueryOperation::IterateSide Clause::GetIterateSide(
+    std::vector<std::vector<std::string>> lhs,
+    std::vector<std::vector<std::string>> rhs) const {
+  if (lhs.size() > rhs.size()) {
+    // Iterate over smaller side (i.e. RHS)
+    return RHS;
+  }
+  return LHS;
+}

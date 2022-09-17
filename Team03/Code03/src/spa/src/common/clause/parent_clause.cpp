@@ -40,6 +40,18 @@ std::unordered_set<std::string> ParentClause::Fetch(
   assert(false);
 }
 
+[[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryParent(
+      std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryParentBy(
+      std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
 const Reference &ParentClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &ParentClause::GetRightHandSide() const { return rhs_; }

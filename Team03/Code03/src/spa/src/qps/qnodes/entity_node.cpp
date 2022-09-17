@@ -4,15 +4,16 @@
 
 #include "q_result.h"
 
-EntityNode::EntityNode(Select select) : QNode(), select_(std::move(select)) {}
+EntityNode::EntityNode(Synonym synonym)
+    : QNode(), synonym_(std::move(synonym)) {}
 
 QResult EntityNode::Fetch(const QueryablePkb& pkb) {
-  auto result = pkb.QueryAll(select_.GetSynonym().GetEntityType());
+  auto result = pkb.QueryAll(synonym_.GetEntityType());
   std::vector<std::vector<std::string>> rows;
   // Reserve size to prevent vector from expanding each time
   rows.reserve(result.size());
   for (const auto& item : result) {
     rows.push_back({item});
   }
-  return {rows, {select_.GetSynonym()}};
+  return {rows, {synonym_}};
 }

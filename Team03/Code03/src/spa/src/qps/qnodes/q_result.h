@@ -14,6 +14,7 @@ class QResult {
           std::vector<Synonym> synonyms);
   [[nodiscard]] std::vector<std::vector<std::string>> GetRows() const;
   [[nodiscard]] std::vector<Synonym> GetSynonyms() const;
+
   /// Get rows operation.
   /// \param synonyms Only retrieve rows from specified synonyms.
   /// \return Unique rows.
@@ -21,9 +22,19 @@ class QResult {
       const std::vector<Synonym>& synonyms) const;
 
   /// Joins a separate result with the current result and returns a new result.
-  /// \param other_result Other result to Join with.
+  /// Things join considers:
+  /// <br/>1. Whether or not different synonyms have the same type (exclusive)
+  /// <br/>2. Whether or not there are common synonyms (inclusive merge)
+  /// \param other_result Other result to join with.
   /// \return New result set.
   [[nodiscard]] QResult Join(const QResult& other_result) const;
+
+  /// Intersects a separate result with the current result and returns a new
+  /// result.
+  /// !Warning: Only works if they have the same synonyms.
+  /// \param other_result Other result to intersect with.
+  /// \return New result set.
+  [[nodiscard]] QResult Intersect(const QResult& other_result) const;
 
  private:
   std::vector<std::vector<std::string>> rows_;

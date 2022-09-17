@@ -7,18 +7,7 @@ Evaluator::Evaluator() = default;
 
 QResult Evaluator::ExecuteHelper(const QueryablePkb& pkb,
                                  const std::shared_ptr<QNode>& q_tree) const {
-  if (q_tree == nullptr) {
-    return {{}, {}};
-  } else if (q_tree->IsLeaf()) {
-    return q_tree->Fetch(pkb);
-  }
-
-  // Postorder traversal
-  QResult left_result = ExecuteHelper(pkb, q_tree->GetLeftNode());
-  QResult right_result = ExecuteHelper(pkb, q_tree->GetRightNode());
-  QResult curr_result = q_tree->Fetch(pkb);
-
-  return left_result.Join(right_result).Join(curr_result);
+  return q_tree->Fetch(pkb);
 }
 
 std::unordered_set<std::string> Evaluator::Execute(
