@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 17/9/22.
-//
-
 #include "q_result.h"
 
 #include <cassert>

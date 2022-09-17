@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 17/9/22.
-//
-
 #include "intersect_node.h"
 
 QResult IntersectNode::Fetch(const QueryablePkb& pkb) {

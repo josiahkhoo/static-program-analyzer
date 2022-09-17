@@ -1,7 +1,3 @@
-//
-// Created by Josiah Khoo on 6/9/22.
-//
-
 #ifndef SPA_FOLLOWS_T_RELATIONSHIP_H
 #define SPA_FOLLOWS_T_RELATIONSHIP_H
 
