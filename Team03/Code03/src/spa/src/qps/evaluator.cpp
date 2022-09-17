@@ -5,15 +5,10 @@
 
 Evaluator::Evaluator() = default;
 
-QResult Evaluator::ExecuteHelper(const QueryablePkb& pkb,
-                                 const std::shared_ptr<QNode>& q_tree) const {
-  return q_tree->Fetch(pkb);
-}
-
 std::unordered_set<std::string> Evaluator::Execute(
     const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
     const Select& slt) const {
-  QResult res = ExecuteHelper(pkb, q_tree);
+  QResult res = q_tree->Fetch(pkb);
   std::vector<std::vector<std::string>> rows = res.GetRows({slt.GetSynonym()});
   // Return single item rows for now
   std::unordered_set<std::string> single_item_set;

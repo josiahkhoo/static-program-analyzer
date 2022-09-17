@@ -35,6 +35,8 @@ class QResult {
   /// \param other_result Other result to intersect with.
   /// \return New result set.
   [[nodiscard]] QResult Intersect(const QResult& other_result) const;
+  bool operator==(const QResult& rhs) const;
+  bool operator!=(const QResult& rhs) const;
 
  private:
   std::vector<std::vector<std::string>> rows_;

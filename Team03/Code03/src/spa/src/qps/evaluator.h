@@ -14,9 +14,6 @@ class Evaluator {
       const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
       const Select& slt) const;
 
- private:
-  [[nodiscard]] QResult ExecuteHelper(
-      const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree) const;
 };
 
 #endif  // SPA_EVALUATOR_H

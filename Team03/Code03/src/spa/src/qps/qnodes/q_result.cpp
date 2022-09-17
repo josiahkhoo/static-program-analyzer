@@ -42,11 +42,16 @@ QResult QResult::Join(const QResult& other_result) const {
     new_syns.emplace_back(syn);
   }
   for (int i = 0; i < other_result.GetSynonyms().size(); i++) {
+    bool match = false;
     for (auto [_, idx] : common_indexes) {
       if (idx == i) {
         // Skip if idx matches (which means included already)
+        match = true;
         continue;
       }
+    }
+    if (match) {
+      continue;
     }
     new_syns.emplace_back(other_result.GetSynonyms().at(i));
   }
@@ -72,17 +77,25 @@ QResult QResult::Join(const QResult& other_result) const {
       std::vector<EntityType> entity_types = {
           PROCEDURE, STATEMENT, READ, PRINT,    ASSIGN,
           CALL,      WHILE,     IF,   VARIABLE, CONSTANT};
+      std::unordered_set<EntityType> statement_types = {READ, PRINT, ASSIGN,
+                                                        CALL, WHILE, IF};
       for (auto type : entity_types) {
         std::unordered_set<std::string> row_set;
         std::unordered_set<std::string> different_syns;
         for (int i = 0; i < GetSynonyms().size(); i++) {
-          if (GetSynonyms().at(i).GetEntityType() == type) {
+          EntityType type1 = GetSynonyms().at(i).GetEntityType();
+          if (type1 == type ||
+              (type1 == STATEMENT &&
+               statement_types.find(type) != statement_types.end())) {
             row_set.insert(row1[i]);
             different_syns.insert(GetSynonyms().at(i).GetIdentifier());
           }
         }
         for (int i = 0; i < other_result.GetSynonyms().size(); i++) {
-          if (other_result.GetSynonyms().at(i).GetEntityType() == type) {
+          EntityType type2 = other_result.GetSynonyms().at(i).GetEntityType();
+          if (type2 == type ||
+              (type2 == STATEMENT &&
+               statement_types.find(type) != statement_types.end())) {
             // On common indexes, skip this check
             if (different_syns.find(
                     other_result.GetSynonyms().at(i).GetIdentifier()) !=
@@ -117,11 +130,16 @@ QResult QResult::Join(const QResult& other_result) const {
         new_row.emplace_back(entry);
       }
       for (int i = 0; i < row2.size(); i++) {
+        bool match_idx = false;
         for (auto [_, idx] : common_indexes) {
           if (idx == i) {
             // Skip if idx matches (which means included already)
+            match_idx = true;
             continue;
           }
+        }
+        if (match_idx) {
+          continue;
         }
         new_row.emplace_back(row2.at(i));
       }
@@ -178,3 +196,9 @@ QResult QResult::Intersect(const QResult& other_result) const {
   }
   return {intersections, GetSynonyms()};
 }
+
+bool QResult::operator==(const QResult& rhs) const {
+  return rows_ == rhs.rows_ && synonyms_ == rhs.synonyms_;
+}
+
+bool QResult::operator!=(const QResult& rhs) const { return !(rhs == *this); }
