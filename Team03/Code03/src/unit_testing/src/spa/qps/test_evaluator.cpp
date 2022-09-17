@@ -94,6 +94,42 @@ class QueryablePkbStub : public QueryablePkb {
       const override {
     return {"12"};
   }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
+    return {"13"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesP(
+      std::string procedure_name) const override {
+    return {"14"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
+    return {"15"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
+      std::string variable_name) const override {
+    return {"16"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
+    return {"17"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesS(
+      int statement_number) const override {
+    return {"18"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
+    return {"19"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
+      std::string variable_name) const override {
+    return {"20"};
+  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
@@ -366,6 +402,42 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
         const override {
       return {};
     }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesP(
+        std::string procedure_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
+        std::string variable_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesS(
+        int statement_number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
+        std::string variable_name) const override {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -489,6 +561,42 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllParentsRelations()
         const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesP(
+        std::string procedure_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
+        std::string variable_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesS(
+        int statement_number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
+        std::string variable_name) const override {
       return {};
     }
   };
