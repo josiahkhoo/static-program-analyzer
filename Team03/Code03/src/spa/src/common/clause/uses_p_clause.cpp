@@ -40,6 +40,18 @@ std::unordered_set<std::string> UsesPClause::Fetch(
   return {};
 }
 
+[[nodiscard]] std::unordered_set<std::string> UsesPClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryUsesP(
+      lhs, GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> UsesPClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryUsesPBy(
+      rhs, GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
 const Reference &UsesPClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &UsesPClause::GetRightHandSide() const { return rhs_; }

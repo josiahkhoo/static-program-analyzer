@@ -20,7 +20,8 @@ procedure p {
       call q;
       i = i - 1; }
     x = x + 1;
-    z = x + z; }
+    z = x + z;
+    print z; }
   else {
     z = 1; }
   z = z + x + i; }
@@ -30,3 +31,6 @@ procedure q {
     z = x + 1; }
   else {
     x = z + x; } }
+
+procedure s {
+  print x; }

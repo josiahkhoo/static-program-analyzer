@@ -3,15 +3,18 @@
 
 #include "common/clause/select.h"
 #include "q_node.h"
+#include "q_result.h"
 
+/// An entity node is responsible for directly calling the PKB for all possible
+/// values of a specific synonym individually.
 class EntityNode : public QNode {
  private:
-  Select select_;
+  Synonym synonym_;
 
  public:
-  explicit EntityNode(Select select);
+  explicit EntityNode(Synonym synonym);
 
-  std::unordered_set<std::string> Fetch(const QueryablePkb &pkb) override;
+  QResult Fetch(const QueryablePkb &pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H
