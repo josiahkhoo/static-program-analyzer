@@ -34,3 +34,6 @@ procedure q {
 
 procedure s {
   print x; }
+
+procedure k {
+  read x; }

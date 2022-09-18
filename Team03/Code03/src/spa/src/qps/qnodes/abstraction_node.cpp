@@ -18,7 +18,14 @@ QResult AbstractionNode::Fetch(const QueryablePkb& pkb) {
   for (const auto& item : result) {
     rows.push_back({item});
   }
-  return {rows, {q_operation_->GetSynonym()}};
+  if (q_operation_->GetType() == QueryOperation::SINGLE_SYNONYM) {
+    return {rows, {q_operation_->GetSynonym()}};
+  } else {
+    // Only ends up here if a no synonym operator is executed and either a empty
+    // or non-empty set is returned
+    // TODO: Modify this when QueryAll<*>Relations returns a boolean instead.
+    return {rows, {}};
+  }
 }
 
 QResult AbstractionNode::FetchWithChildren(const QueryablePkb& pkb) {
