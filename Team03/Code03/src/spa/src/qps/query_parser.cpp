@@ -284,7 +284,8 @@ void QueryParser::ParseFollowsT() {
   query_string_builder_.AddQueryOperation(folCl);
 }
 
-void QueryParser::CheckFollowsParentRef(const StatementReference &stmtRef) const {
+void QueryParser::CheckFollowsParentRef(
+    const StatementReference &stmtRef) const {
   if (stmtRef.IsSynonym() &&
       (stmtRef.IsEntityType(VARIABLE) || stmtRef.IsEntityType(CONSTANT) ||
        stmtRef.IsEntityType(PROCEDURE))) {
@@ -326,7 +327,7 @@ bool QueryParser::ParsePattern() {
   return true;
 }
 
-void QueryParser::CheckPatternSyn(const Synonym& synonym) const {
+void QueryParser::CheckPatternSyn(const Synonym &synonym) const {
   if (!synonym.IsEntityType(ASSIGN)) {
     throw SemanticException("Syn-assign not supported");
   }
