@@ -165,42 +165,6 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryAllUsesRelations"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
-    return {"GetUsesP"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-      std::string procedure_name) const override {
-    return {"GetUsesPProd"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
-    return {"GetUsesPBy"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
-      std::string variable_name) const override {
-    return {"GetUsesPByVar"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
-    return {"GetUsesS"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-      int statement_number) const override {
-    return {"GetUsesSStmt"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
-    return {"GetUsesSBy"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
-      std::string variable_name) const override {
-    return {"GetUsesSByVar"};
-  }
-
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesRelations()
       const override {
     return {"14"};
@@ -529,11 +493,6 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryPattern(
-        EntityType type, Expression exp) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
         std::string lhs, Expression exp) const override {
       return {"4", "2"};
     }
@@ -550,42 +509,6 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllUsesRelations()
         const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-        std::string procedure_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
-        std::string variable_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-        int statement_number) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
-        std::string variable_name) const override {
       return {};
     }
 
@@ -770,11 +693,6 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryPattern(
-        EntityType type, Expression exp) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
         std::string lhs, Expression exp) const override {
       return {"2", "4"};
     }
@@ -791,42 +709,6 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryAllUsesRelations()
         const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesP() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesP(
-        std::string procedure_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesPBy(
-        std::string variable_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesS() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesS(
-        int statement_number) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy() const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> GetUsesSBy(
-        std::string variable_name) const override {
       return {};
     }
 

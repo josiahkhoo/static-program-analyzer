@@ -97,23 +97,24 @@ class RelationshipManager {
 
   std::unordered_set<std::string> GetUsesSBy(std::string variable_name) const;
 
-  std::unordered_set<std::string> GetModifiesP() const;
+  std::unordered_set<std::string> GetModifyingProcedures() const;
 
-  std::unordered_set<std::string> GetModifiesP(
+  std::unordered_set<std::string> GetVariablesModifiedByProcedure(
       std::string procedure_name) const;
 
-  std::unordered_set<std::string> GetModifiesPBy() const;
+  std::unordered_set<std::string> GetVariablesModifiedByProcedures() const;
 
-  std::unordered_set<std::string> GetModifiesPBy(
+  std::unordered_set<std::string> GetProceduresModifyingVariable(
       std::string variable_name) const;
 
-  std::unordered_set<std::string> GetModifiesS() const;
+  std::unordered_set<std::string> GetModifyingStatements() const;
 
-  std::unordered_set<std::string> GetModifiesS(int statement_number) const;
+  std::unordered_set<std::string> GetVariablesModifiedByStatement(
+      int statement_number) const;
 
-  std::unordered_set<std::string> GetModifiesSBy() const;
+  std::unordered_set<std::string> GetVariablesModifiedByStatements() const;
 
-  std::unordered_set<std::string> GetModifiesSBy(
+  std::unordered_set<std::string> GetStatementsModifyingVariable(
       std::string variable_name) const;
 
   /* ====================================

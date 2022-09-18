@@ -415,36 +415,93 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
   return result;
 }
 
+/// QueryAllModifies
+/// \param type todo: remove
+/// \return All Variables that are modified by Procedures and Statements
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetVariablesModifiedByProcedures();
+  std::unordered_set<std::string> vars_s =
+      relationship_manager_.GetVariablesModifiedByStatements();
+  for (const std::string& var : vars_s) {
+    if (result.find(var) == result.end()) {
+      result.emplace(var);
+    }
+  }
+  return result;
 }
 
+/// QueryAllModifiesBy
+/// \param type
+/// \return All Statements that modifies some Variable
 std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetModifyingStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
+/// QueryAllModifiesRelations
+/// \return todo: find out return what
 std::unordered_set<std::string> PKB::QueryAllModifiesRelations() const {
   return {};
 }
 
+/// QueryModifiesS
+/// \param statement_number
+/// \param type todo: remove
+/// \return Variables modified in given statement_number
 std::unordered_set<std::string> PKB::QueryModifiesS(int statement_number,
                                                     EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetVariablesModifiedByStatement(statement_number);
+  return result;
 }
 
+/// QueryModifiesSBy
+/// \param identifier
+/// \param type
+/// \return Statements that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
                                                       EntityType type) const {
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetStatementsModifyingVariable(identifier);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
+/// QueryModifiesP
+/// \param identifier
+/// \param type todo: remove
+/// \return Variables modified in given Procedure identifier
 std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
                                                     EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetVariablesModifiedByProcedure(identifier);
+  return result;
 }
 
+/// QueryModifiesPBy
+/// \param identifier
+/// \param type todo: remove
+/// \return Procedures that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
                                                       EntityType type) const {
-  return relationship_manager_.GetModifiesPBy(identifier);
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetProceduresModifyingVariable(identifier);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
@@ -454,72 +511,4 @@ std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
 std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
                                                   Expression exp) const {
   return pattern_manager_.GetPattern(lhs, exp);
-}
-
-std::unordered_set<std::string> PKB::GetUsesP() const {
-  return relationship_manager_.GetUsesP();
-}
-
-std::unordered_set<std::string> PKB::GetUsesP(std::string uses_name) const {
-  return relationship_manager_.GetUsesP(uses_name);
-}
-
-std::unordered_set<std::string> PKB::GetUsesPBy() const {
-  return relationship_manager_.GetUsesPBy();
-}
-
-std::unordered_set<std::string> PKB::GetUsesPBy(
-    std::string variable_name) const {
-  return relationship_manager_.GetUsesPBy(variable_name);
-}
-
-std::unordered_set<std::string> PKB::GetUsesS() const {
-  return relationship_manager_.GetUsesS();
-}
-
-std::unordered_set<std::string> PKB::GetUsesS(int statement_number) const {
-  return relationship_manager_.GetUsesS(statement_number);
-}
-
-std::unordered_set<std::string> PKB::GetUsesSBy() const {
-  return relationship_manager_.GetUsesSBy();
-}
-
-std::unordered_set<std::string> PKB::GetUsesSBy(
-    std::string variable_name) const {
-  return relationship_manager_.GetUsesSBy(variable_name);
-}
-
-std::unordered_set<std::string> PKB::GetModifiesP() const {
-  return relationship_manager_.GetModifiesP();
-}
-
-std::unordered_set<std::string> PKB::GetModifiesP(std::string uses_name) const {
-  return relationship_manager_.GetModifiesP(uses_name);
-}
-
-std::unordered_set<std::string> PKB::GetModifiesPBy() const {
-  return relationship_manager_.GetModifiesPBy();
-}
-
-std::unordered_set<std::string> PKB::GetModifiesPBy(
-    std::string variable_name) const {
-  return relationship_manager_.GetModifiesPBy(variable_name);
-}
-
-std::unordered_set<std::string> PKB::GetModifiesS() const {
-  return relationship_manager_.GetModifiesS();
-}
-
-std::unordered_set<std::string> PKB::GetModifiesS(int statement_number) const {
-  return relationship_manager_.GetModifiesS(statement_number);
-}
-
-std::unordered_set<std::string> PKB::GetModifiesSBy() const {
-  return relationship_manager_.GetModifiesSBy();
-}
-
-std::unordered_set<std::string> PKB::GetModifiesSBy(
-    std::string variable_name) const {
-  return relationship_manager_.GetModifiesSBy(variable_name);
 }

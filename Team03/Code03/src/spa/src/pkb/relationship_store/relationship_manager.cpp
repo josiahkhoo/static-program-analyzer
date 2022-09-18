@@ -128,38 +128,46 @@ std::unordered_set<std::string> RelationshipManager::GetUsesSBy(
   return uses_store_.GetUsesSBy(variable_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesP() const {
+std::unordered_set<std::string> RelationshipManager::GetModifyingProcedures()
+    const {
   return modifies_store_.GetModifyingProcedures();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesP(
+std::unordered_set<std::string>
+RelationshipManager::GetVariablesModifiedByProcedure(
     std::string procedure_name) const {
   return modifies_store_.GetVariablesModifiedByProcedure(procedure_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesPBy() const {
+std::unordered_set<std::string>
+RelationshipManager::GetVariablesModifiedByProcedures() const {
   return modifies_store_.GetVariablesModifiedByProcedures();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesPBy(
+std::unordered_set<std::string>
+RelationshipManager::GetProceduresModifyingVariable(
     std::string variable_name) const {
   return modifies_store_.GetProceduresModifyingVariable(variable_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesS() const {
+std::unordered_set<std::string> RelationshipManager::GetModifyingStatements()
+    const {
   return modifies_store_.GetModifyingStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesS(
+std::unordered_set<std::string>
+RelationshipManager::GetVariablesModifiedByStatement(
     int statement_number) const {
   return modifies_store_.GetVariablesModifiedByStatement(statement_number);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesSBy() const {
+std::unordered_set<std::string>
+RelationshipManager::GetVariablesModifiedByStatements() const {
   return modifies_store_.GetVariablesModifiedByStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetModifiesSBy(
+std::unordered_set<std::string>
+RelationshipManager::GetStatementsModifyingVariable(
     std::string variable_name) const {
   return modifies_store_.GetStatementsModifyingVariable(variable_name);
 }
