@@ -366,7 +366,7 @@ std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
 
 std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
                                                       EntityType type) const {
-  return {};
+  return relationship_manager_.GetModifiesPBy(identifier);
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {

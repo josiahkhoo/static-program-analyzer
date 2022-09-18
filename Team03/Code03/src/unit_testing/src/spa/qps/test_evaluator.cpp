@@ -136,11 +136,6 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPattern(
-      EntityType type, Expression exp) const override {
-    return {"QueryPatternEnt"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryPattern(
       std::string lhs, Expression exp) const override {
     return {"QueryPatternStr"};
   }
