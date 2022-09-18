@@ -140,7 +140,7 @@ Expression QueryParser::ExtractExpression() {
 void QueryParser::ParseDeclaration() {
   while (!CheckEnd() && !MatchString("Select")) {
     Token next = Peek();
-    EntityType entType = ExpectEntityType();
+    EntityType entType = ExtractEntityType();
     next = Peek();
     Expect(Token::IDENTIFIER);
     Synonym synonym = Synonym(entType, next.GetValue());
@@ -160,17 +160,7 @@ void QueryParser::ParseDeclaration() {
   }
 }
 
-bool QueryParser::IsNextEntityType() {
-  try {
-    ExpectEntityType();
-    token_pos_--;
-    return true;
-  } catch (const SyntaxException &ex) {
-    return false;
-  }
-}
-
-EntityType QueryParser::ExpectEntityType() {
+EntityType QueryParser::ExtractEntityType() {
   if (MatchString("stmt")) {
     token_pos_++;
     return EntityType::STATEMENT;
@@ -229,8 +219,8 @@ bool QueryParser::ParseClause() {
   Expect("that");
   ParseFollows();
   ParseParent();
-  ParseUsesS();
-  ParseModifiesS();
+  ParseUses();
+  ParseModifies();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsOperationsEmpty()) {
@@ -324,7 +314,8 @@ bool QueryParser::ParsePattern() {
   // Validates if assign-entity was captured
   Token next = Peek();
   Expect(Token::IDENTIFIER);
-  Synonym synonym = Synonym(EntityType::ASSIGN, next.GetValue());
+  Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
+  CheckPatternSyn(synonym);
 
   Expect(Token::LEFT_ROUND_BRACKET);
 
@@ -431,22 +422,39 @@ void QueryParser::ParseParentT() {
   query_string_builder_.AddQueryOperation(parCl);
 }
 
-void QueryParser::ParseUsesS() {
+void QueryParser::ParseUses() {
   if (CheckEnd() || !MatchString("Uses")) {
     return;
   }
 
   Expect("Uses");
 
-  if (MatchKind(Token::ASTERISK)) {
-    return ParseUsesP();
-  }
-
   Expect(Token::LEFT_ROUND_BRACKET);
 
-  // Get stmt
-  StatementReference stmtRef = ExtractStmtRef();
+  CheckUsesLhs();
+}
 
+void QueryParser::CheckUsesLhs() {
+  Token next = Peek();
+  if (next.Is(Token::UNDERSCORE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+  try {
+    StatementReference stmtRef = ExtractStmtRef();
+    ParseUsesS(stmtRef);
+  } catch (SyntaxException &err) {
+    EntityReference entRef = ExtractEntityRef();
+    ParseUsesP(entRef);
+  }
+}
+
+void QueryParser::CheckEntityRhs(const EntityReference &entRef) const {
+  if (entRef.IsSynonym() && entRef.GetSynonym().GetEntityType() != VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
+}
+
+void QueryParser::ParseUsesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
       !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::PRINT ||
@@ -462,10 +470,7 @@ void QueryParser::ParseUsesS() {
   // Get ent
   EntityReference entRef = ExtractEntityRef();
 
-  if (entRef.IsSynonym() &&
-      entRef.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
+  CheckEntityRhs(entRef);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesSClause> usesCl =
@@ -473,15 +478,8 @@ void QueryParser::ParseUsesS() {
   query_string_builder_.AddQueryOperation(usesCl);
 }
 
-void QueryParser::ParseUsesP() {
-  Expect(Token::ASTERISK);
-
-  Expect(Token::LEFT_ROUND_BRACKET);
-
-  // Get ent1
-  EntityReference entRef1 = ExtractEntityRef();
-
-  if (!(entRef1.IsWildCard() || entRef1.IsIdentifier())) {
+void QueryParser::ParseUsesP(const EntityReference &entRef1) {
+  if (!entRef1.IsIdentifier()) {
     throw SemanticException("Expected identifier entity reference");
   }
 
@@ -490,10 +488,7 @@ void QueryParser::ParseUsesP() {
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
-  if (entRef2.IsSynonym() &&
-      entRef2.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
+  CheckEntityRhs(entRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesPClause> usesCl =
@@ -501,22 +496,33 @@ void QueryParser::ParseUsesP() {
   query_string_builder_.AddQueryOperation(usesCl);
 }
 
-void QueryParser::ParseModifiesS() {
+void QueryParser::ParseModifies() {
   if (CheckEnd() || !MatchString("Modifies")) {
     return;
   }
 
   Expect("Modifies");
 
-  if (MatchKind(Token::ASTERISK)) {
-    return ParseModifiesP();
-  }
-
   Expect(Token::LEFT_ROUND_BRACKET);
 
-  // Get stmt
-  StatementReference stmtRef = ExtractStmtRef();
+  CheckModifiesLhs();
+}
 
+void QueryParser::CheckModifiesLhs() {
+  Token next = Peek();
+  if (next.Is(Token::UNDERSCORE)) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
+  try {
+    StatementReference stmtRef = ExtractStmtRef();
+    ParseModifiesS(stmtRef);
+  } catch (SyntaxException &err) {
+    EntityReference entRef = ExtractEntityRef();
+    ParseModifiesP(entRef);
+  }
+}
+
+void QueryParser::ParseModifiesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
       !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::READ ||
@@ -532,10 +538,7 @@ void QueryParser::ParseModifiesS() {
   // Get ent
   EntityReference entRef = ExtractEntityRef();
 
-  if (entRef.IsSynonym() &&
-      entRef.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
+  CheckEntityRhs(entRef);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesSClause> modCl =
@@ -543,15 +546,8 @@ void QueryParser::ParseModifiesS() {
   query_string_builder_.AddQueryOperation(modCl);
 }
 
-void QueryParser::ParseModifiesP() {
-  Expect(Token::ASTERISK);
-
-  Expect(Token::LEFT_ROUND_BRACKET);
-
-  // Get ent1
-  EntityReference entRef1 = ExtractEntityRef();
-
-  if (!(entRef1.IsWildCard() || entRef1.IsIdentifier())) {
+void QueryParser::ParseModifiesP(const EntityReference &entRef1) {
+  if (!entRef1.IsIdentifier()) {
     throw SemanticException("Expected identifier entity reference");
   }
 
@@ -560,10 +556,7 @@ void QueryParser::ParseModifiesP() {
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
-  if (entRef2.IsSynonym() &&
-      entRef2.GetSynonym().GetEntityType() != EntityType::VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
+  CheckEntityRhs(entRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesPClause> modCl =
@@ -574,5 +567,11 @@ void QueryParser::ParseModifiesP() {
 void QueryParser::ParseCleanUpSyntax() {
   if (!CheckEnd() && Peek().IsNot(Token::END)) {
     throw SyntaxException("Unexpected additional token(s)");
+  }
+}
+
+void QueryParser::CheckPatternSyn(Synonym synonym) const {
+  if (synonym.GetEntityType() != EntityType::ASSIGN) {
+    throw SemanticException("Syn-assign not supported");
   }
 }
