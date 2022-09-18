@@ -1,0 +1,7 @@
+procedure p {
+    print x;
+}
+
+procedure p {
+    print y;
+}

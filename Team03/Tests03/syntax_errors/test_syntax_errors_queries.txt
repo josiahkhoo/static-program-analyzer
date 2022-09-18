@@ -33,3 +33,8 @@ SyntaxError
 Select a pattern a(_, _"x+y)")
 SyntaxError
 5000
+8 - (SYNTAX ERROR) Pattern expression must be string
+assign a2; variable v;
+Select a2  pattern a2 (_, v)
+SyntaxError
+5000
