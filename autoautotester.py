@@ -31,7 +31,8 @@ test_array = (
     ("Uses Statement", "uses_s"),
     ("Modifies Procedure", "modifies_p"),
     ("Modifies Statement", "modifies_s"),
-    ("Clause and Pattern", "clause_and_pattern")
+    ("Clause and Pattern", "clause_and_pattern"),
+    ("Parse weird source", "parse_weird_source")
 
     # Milestone 2 Tests
     # ("Uses Statement with Calls", "uses_s_with_call"),
