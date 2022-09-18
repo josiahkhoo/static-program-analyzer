@@ -92,40 +92,40 @@ std::unordered_set<std::string> RelationshipManager::GetParentTByStatements(
   return parent_store_.GetParentTByStatements(statement_number);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesP() const {
-  return uses_store_.GetUsesP();
+std::unordered_set<std::string> RelationshipManager::GetUsingProcedures() const {
+  return uses_store_.GetUsingProcedures();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesP(
+std::unordered_set<std::string> RelationshipManager::GetVariablesUsedByProcedure(
     std::string procedure_name) const {
-  return uses_store_.GetUsesP(procedure_name);
+  return uses_store_.GetVariablesUsedByProcedure(procedure_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesPBy() const {
-  return uses_store_.GetUsesPBy();
+std::unordered_set<std::string> RelationshipManager::GetVariablesUsedByProcedures() const {
+  return uses_store_.GetVariablesUsedByProcedures();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesPBy(
+std::unordered_set<std::string> RelationshipManager::GetProceduresUsingVariable(
     std::string variable_name) const {
-  return uses_store_.GetUsesPBy(variable_name);
+  return uses_store_.GetProceduresUsingVariable(variable_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesS() const {
-  return uses_store_.GetUsesS();
+std::unordered_set<std::string> RelationshipManager::GetUsingStatements() const {
+  return uses_store_.GetUsingStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesS(
+std::unordered_set<std::string> RelationshipManager::GetVariablesUsedByStatement(
     int statement_number) const {
-  return uses_store_.GetUsesS(statement_number);
+  return uses_store_.GetVariablesUsedByStatement(statement_number);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesSBy() const {
-  return uses_store_.GetUsesSBy();
+std::unordered_set<std::string> RelationshipManager::GetVariablesUsedByStatements() const {
+  return uses_store_.GetVariablesUsedByStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::GetUsesSBy(
+std::unordered_set<std::string> RelationshipManager::GetStatementsUsingVariable(
     std::string variable_name) const {
-  return uses_store_.GetUsesSBy(variable_name);
+  return uses_store_.GetStatementsUsingVariable(variable_name);
 }
 
 std::unordered_set<std::string> RelationshipManager::GetModifyingProcedures()

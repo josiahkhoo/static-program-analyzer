@@ -1,5 +1,7 @@
 #include "modifies_storage.h"
 
+/// Add Procedure Modifies Relationship
+/// \param abstraction
 void ModifiesStorage::AddRelationship(ModifiesPAbstraction abstraction) {
   std::string proc_name = abstraction.GetLeftHandSide().GetName();
   std::string var_name = abstraction.GetRightHandSide().GetName();
@@ -16,6 +18,8 @@ void ModifiesStorage::AddRelationship(ModifiesPAbstraction abstraction) {
   }
 }
 
+/// Add Statement Modifies Relationship
+/// \param abstraction
 void ModifiesStorage::AddRelationship(ModifiesSAbstraction abstraction) {
   int statement_number = abstraction.GetLeftHandSide().GetStatementNumber();
   std::string var_name = abstraction.GetRightHandSide().GetName();
@@ -32,6 +36,8 @@ void ModifiesStorage::AddRelationship(ModifiesSAbstraction abstraction) {
   }
 }
 
+/// GetModifyingProcedures
+/// \return Gets all procedures that modify variables
 std::unordered_set<std::string> ModifiesStorage::GetModifyingProcedures()
     const {
   std::unordered_set<std::string> res;
@@ -43,6 +49,8 @@ std::unordered_set<std::string> ModifiesStorage::GetModifyingProcedures()
   return res;
 }
 
+/// GetVariablesModifiedByProcedures
+/// \return Gets all variables that are modified by procedures
 std::unordered_set<std::string>
 ModifiesStorage::GetVariablesModifiedByProcedures() const {
   std::unordered_set<std::string> res;
@@ -54,6 +62,8 @@ ModifiesStorage::GetVariablesModifiedByProcedures() const {
   return res;
 }
 
+/// GetModifyingStatements
+/// \return Gets all statements that modify variables
 std::unordered_set<std::string> ModifiesStorage::GetModifyingStatements()
     const {
   std::unordered_set<std::string> res;
@@ -65,6 +75,8 @@ std::unordered_set<std::string> ModifiesStorage::GetModifyingStatements()
   return res;
 }
 
+/// GetVariablesModifiedByStatements
+/// \return Gets all variables that are modified by statements
 std::unordered_set<std::string>
 ModifiesStorage::GetVariablesModifiedByStatements() const {
   std::unordered_set<std::string> res;
@@ -76,6 +88,9 @@ ModifiesStorage::GetVariablesModifiedByStatements() const {
   return res;
 }
 
+/// GetVariablesModifiedByProcedure
+/// \param procedure_name
+/// \return Gets all variables modified by a specified procedure
 std::unordered_set<std::string>
 ModifiesStorage::GetVariablesModifiedByProcedure(
     std::string procedure_name) const {
@@ -89,6 +104,9 @@ ModifiesStorage::GetVariablesModifiedByProcedure(
   return res;
 }
 
+/// GetVariablesModifiedByStatement
+/// \param statement_number
+/// \return Gets all variables modified by a specified statement
 std::unordered_set<std::string>
 ModifiesStorage::GetVariablesModifiedByStatement(int statement_number) const {
   std::unordered_set<std::string> res;
@@ -101,6 +119,9 @@ ModifiesStorage::GetVariablesModifiedByStatement(int statement_number) const {
   return res;
 }
 
+/// GetProceduresModifyingVariable
+/// \param variable_name
+/// \return Gets all procedures that modify a specified variable
 std::unordered_set<std::string> ModifiesStorage::GetProceduresModifyingVariable(
     std::string variable_name) const {
   std::unordered_set<std::string> res;
@@ -113,6 +134,9 @@ std::unordered_set<std::string> ModifiesStorage::GetProceduresModifyingVariable(
   return res;
 }
 
+/// GetStatementsModifyingVariable
+/// \param variable_name
+/// \return Gets all statements that modify a specified variable
 std::unordered_set<std::string> ModifiesStorage::GetStatementsModifyingVariable(
     std::string variable_name) const {
   std::unordered_set<std::string> res;
@@ -125,6 +149,7 @@ std::unordered_set<std::string> ModifiesStorage::GetStatementsModifyingVariable(
   return res;
 }
 
+/// Clear Storage
 void ModifiesStorage::Clear() {
   stmt_to_var_modifies_map_.clear();
   proc_to_var_modifies_map_.clear();

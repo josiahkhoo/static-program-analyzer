@@ -19,21 +19,21 @@ class UsesStorage {
 
   void AddRelationship(UsesSAbstraction abstraction);
 
-  std::unordered_set<std::string> GetUsesP() const;
+  std::unordered_set<std::string> GetUsingProcedures() const;
 
-  std::unordered_set<std::string> GetUsesP(std::string procedure_name) const;
+  std::unordered_set<std::string> GetVariablesUsedByProcedure(std::string procedure_name) const;
 
-  std::unordered_set<std::string> GetUsesPBy() const;
+  std::unordered_set<std::string> GetVariablesUsedByProcedures() const;
 
-  std::unordered_set<std::string> GetUsesPBy(std::string variable_name) const;
+  std::unordered_set<std::string> GetProceduresUsingVariable(std::string variable_name) const;
 
-  std::unordered_set<std::string> GetUsesS() const;
+  std::unordered_set<std::string> GetUsingStatements() const;
 
-  std::unordered_set<std::string> GetUsesS(int statement_number) const;
+  std::unordered_set<std::string> GetVariablesUsedByStatement(int statement_number) const;
 
-  std::unordered_set<std::string> GetUsesSBy() const;
+  std::unordered_set<std::string> GetVariablesUsedByStatements() const;
 
-  std::unordered_set<std::string> GetUsesSBy(std::string variable_name) const;
+  std::unordered_set<std::string> GetStatementsUsingVariable(std::string variable_name) const;
 
   // Empty storage
   void Clear();

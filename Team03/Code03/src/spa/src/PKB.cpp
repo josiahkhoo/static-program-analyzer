@@ -306,7 +306,8 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
 }
 
 std::unordered_set<std::string> PKB::QueryAllUsesS(EntityType type) const {
-  std::unordered_set<std::string> statements = relationship_manager_.GetUsesS();
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetUsingStatements();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -319,7 +320,7 @@ std::unordered_set<std::string> PKB::QueryAllUsesS(EntityType type) const {
 
 std::unordered_set<std::string> PKB::QueryAllUsesSBy(EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesSBy();
+      relationship_manager_.GetVariablesUsedByStatements();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -337,7 +338,7 @@ std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
 std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
                                                 EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesS(statement_number);
+      relationship_manager_.GetVariablesUsedByStatement(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -351,7 +352,7 @@ std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
 std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesSBy(identifier);
+      relationship_manager_.GetStatementsUsingVariable(identifier);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -363,7 +364,8 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
 }
 
 std::unordered_set<std::string> PKB::QueryAllUsesP(EntityType type) const {
-  std::unordered_set<std::string> statements = relationship_manager_.GetUsesP();
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetUsingProcedures();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -376,7 +378,7 @@ std::unordered_set<std::string> PKB::QueryAllUsesP(EntityType type) const {
 
 std::unordered_set<std::string> PKB::QueryAllUsesPBy(EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesPBy();
+      relationship_manager_.GetVariablesUsedByProcedures();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -390,7 +392,7 @@ std::unordered_set<std::string> PKB::QueryAllUsesPBy(EntityType type) const {
 std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
                                                 EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesP(identifier);
+      relationship_manager_.GetVariablesUsedByProcedure(identifier);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -404,7 +406,7 @@ std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
 std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsesPBy(identifier);
+      relationship_manager_.GetProceduresUsingVariable(identifier);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {

@@ -1,5 +1,7 @@
 #include "uses_storage.h"
 
+/// Add Procedure Uses Relationship
+/// \param abstraction
 void UsesStorage::AddRelationship(UsesPAbstraction abstraction) {
   std::string lhs = abstraction.GetLeftHandSide().GetName();
   std::string rhs = abstraction.GetRightHandSide().GetName();
@@ -15,6 +17,8 @@ void UsesStorage::AddRelationship(UsesPAbstraction abstraction) {
   uses_p_by_map_.find(rhs)->second->AddProcedure(lhs);
 }
 
+/// Add Statement Uses Relationship
+/// \param abstraction
 void UsesStorage::AddRelationship(UsesSAbstraction abstraction) {
   int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
   std::string rhs = abstraction.GetRightHandSide().GetName();
@@ -30,8 +34,9 @@ void UsesStorage::AddRelationship(UsesSAbstraction abstraction) {
   uses_s_by_map_.find(rhs)->second->AddStatement(lhs);
 }
 
-// Gets all procedures that use variables
-std::unordered_set<std::string> UsesStorage::GetUsesP() const {
+/// GetUsingProcedures
+/// \return Gets all procedures that use variables
+std::unordered_set<std::string> UsesStorage::GetUsingProcedures() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_p_map_) {
     res.emplace(entry.first);
@@ -39,8 +44,10 @@ std::unordered_set<std::string> UsesStorage::GetUsesP() const {
   return res;
 }
 
-// Gets all variables used by a specified procedure
-std::unordered_set<std::string> UsesStorage::GetUsesP(
+/// GetVariablesUsedByProcedure
+/// \param procedure_name
+/// \return Gets all variables used by a specified procedure
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByProcedure(
     std::string procedure_name) const {
   if (uses_p_map_.find(procedure_name) == uses_p_map_.end()) {
     return {};
@@ -50,8 +57,9 @@ std::unordered_set<std::string> UsesStorage::GetUsesP(
   return res;
 }
 
-// Gets all variables that are used by procedures
-std::unordered_set<std::string> UsesStorage::GetUsesPBy() const {
+/// GetVariablesUsedByProcedures
+/// \return Gets all variables that are used by procedures
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByProcedures() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_p_by_map_) {
     res.emplace(entry.first);
@@ -59,8 +67,10 @@ std::unordered_set<std::string> UsesStorage::GetUsesPBy() const {
   return res;
 }
 
-// Gets all procedures that use a specified variable
-std::unordered_set<std::string> UsesStorage::GetUsesPBy(
+/// GetProceduresUsingVariable
+/// \param variable_name
+/// \return Gets all procedures that use a specified variable
+std::unordered_set<std::string> UsesStorage::GetProceduresUsingVariable(
     std::string variable_name) const {
   if (uses_p_by_map_.find(variable_name) == uses_p_by_map_.end()) {
     return {};
@@ -70,8 +80,9 @@ std::unordered_set<std::string> UsesStorage::GetUsesPBy(
   return res;
 }
 
-// Gets all statements that use variables
-std::unordered_set<std::string> UsesStorage::GetUsesS() const {
+/// GetUsingStatements
+/// \return Gets all statements that use variables
+std::unordered_set<std::string> UsesStorage::GetUsingStatements() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_s_map_) {
     res.emplace(std::to_string(entry.first));
@@ -79,8 +90,10 @@ std::unordered_set<std::string> UsesStorage::GetUsesS() const {
   return res;
 }
 
-// Gets all variables used by a specified statements
-std::unordered_set<std::string> UsesStorage::GetUsesS(
+/// GetVariablesUsedByStatement
+/// \param statement_number
+/// \return Gets all variables used by a specified statement
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByStatement(
     int statement_number) const {
   if (uses_s_map_.find(statement_number) == uses_s_map_.end()) {
     return {};
@@ -90,8 +103,9 @@ std::unordered_set<std::string> UsesStorage::GetUsesS(
   return res;
 }
 
-// Gets all variables that are used by statements
-std::unordered_set<std::string> UsesStorage::GetUsesSBy() const {
+/// GetVariablesUsedByStatements
+/// \return Gets all variables that are used by statements
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByStatements() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_s_by_map_) {
     res.emplace(entry.first);
@@ -99,8 +113,10 @@ std::unordered_set<std::string> UsesStorage::GetUsesSBy() const {
   return res;
 }
 
-// Gets all statements that use a specified variable
-std::unordered_set<std::string> UsesStorage::GetUsesSBy(
+/// GetStatementsUsingVariable
+/// \param variable_name
+/// \return Gets all statements that use a specified variable
+std::unordered_set<std::string> UsesStorage::GetStatementsUsingVariable(
     std::string variable_name) const {
   if (uses_s_by_map_.find(variable_name) == uses_s_by_map_.end()) {
     return {};
