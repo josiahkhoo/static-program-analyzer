@@ -27,7 +27,7 @@ test_array = (
     ("Syntax Errors", "syntax_errors"),
     ("Patterns Only", "patterns_only"),
     # ("Parent / ParentT", "parent_parent_t"),
-    # ("Uses Procedure", "uses_p"),
+    ("Uses Procedure", "uses_p"),
     ("Uses Statement", "uses_s"),
     # ("Modifies Procedure", "modifies_p"),
     # ("Modifies Statement", "modifies_s"),
