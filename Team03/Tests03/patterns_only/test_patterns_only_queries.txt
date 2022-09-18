@@ -63,8 +63,3 @@ assign a; variable v;
 Select v pattern a(v, _)
 a, x
 5000
-14 - (SUCCESS) Stmt #1 contains x as a sub-expression on the RHS of variable
-assign a; variable v;
-Select a pattern a(v, _"(x)"_)
-1
-5000
