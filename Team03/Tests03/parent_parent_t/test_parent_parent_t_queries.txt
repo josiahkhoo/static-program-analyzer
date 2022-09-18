@@ -41,7 +41,7 @@ Select s such that Parent(4, s)
 9 - (SUCCESS) Retrieve all children of if parent statements
 stmt s; if i;
 Select s such that Parent(i, s)
-7, 8, 14, 18, 19, 20, 24, 25
+7, 8, 14, 18, 19, 20, 21, 24, 25
 5000
 10 - (SUCCESS) Retrieve all children of while parent statements
 stmt s; while w;

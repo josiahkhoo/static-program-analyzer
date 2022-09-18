@@ -42,13 +42,13 @@ std::unordered_set<std::string> ParentClause::Fetch(
 
 [[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryParent(
+  return queryable_pkb.QueryParentBy(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryParentBy(
+  return queryable_pkb.QueryParent(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
