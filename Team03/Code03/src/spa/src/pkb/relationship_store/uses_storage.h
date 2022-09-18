@@ -21,19 +21,23 @@ class UsesStorage {
 
   std::unordered_set<std::string> GetUsingProcedures() const;
 
-  std::unordered_set<std::string> GetVariablesUsedByProcedure(std::string procedure_name) const;
+  std::unordered_set<std::string> GetVariablesUsedByProcedure(
+      std::string procedure_name) const;
 
   std::unordered_set<std::string> GetVariablesUsedByProcedures() const;
 
-  std::unordered_set<std::string> GetProceduresUsingVariable(std::string variable_name) const;
+  std::unordered_set<std::string> GetProceduresUsingVariable(
+      std::string variable_name) const;
 
   std::unordered_set<std::string> GetUsingStatements() const;
 
-  std::unordered_set<std::string> GetVariablesUsedByStatement(int statement_number) const;
+  std::unordered_set<std::string> GetVariablesUsedByStatement(
+      int statement_number) const;
 
   std::unordered_set<std::string> GetVariablesUsedByStatements() const;
 
-  std::unordered_set<std::string> GetStatementsUsingVariable(std::string variable_name) const;
+  std::unordered_set<std::string> GetStatementsUsingVariable(
+      std::string variable_name) const;
 
   // Empty storage
   void Clear();
