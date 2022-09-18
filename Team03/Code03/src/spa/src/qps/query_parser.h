@@ -74,6 +74,8 @@ class QueryParser : public Parser<QueryString> {
   EntityReference ExtractEntityRef();
   Expression ExtractExpression();
   EntityType ExtractEntityType();
+  std::string GetTerm();
+  std::string GetExpression();
 };
 
 #endif  // SPA_QUERY_PARSER_H

@@ -28,3 +28,33 @@ stmt s; assign a;
 Select s such that Follows(s, a) pattern a("z", _"x"_)
 6, 13, 18
 5000
+7 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: variable is pattern modified and used
+assign a; variable v;
+Select a such that Uses (a, v) pattern a (v, _)
+5, 9, 11, 17, 18, 19, 22, 25
+5000
+8 - (SUCCESS) Disjoint operation with multiple declaration, flip retrieve assigns: variable is pattern modified and used
+assign a; variable v;
+Select a pattern a (v, _) such that Uses (a, v)
+5, 9, 11, 17, 18, 19, 22, 25
+5000
+9 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: variable is pattern modified / modified
+assign a; variable v;
+Select a such that Modifies (a, v) pattern a (v, _)
+1, 2, 3, 5, 7, 8, 9, 11, 15, 17, 18, 19, 21, 22, 24, 25
+5000
+10 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: modified by variable modified by tail i
+assign a; variable v;
+Select a such that Modifies (a, v) pattern a (v, _"i")
+9, 22
+5000
+11 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: followed by a modified assign
+assign a, a1; variable v;
+Select a such that Follows (a, a1) pattern a1 (v, _)
+1, 2, 18
+5000
+12 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: matches x + 1 and has follower
+assign a2; variable v;
+Select a2 such that Follows (a2, _) pattern a2 (v, _"x + 1"_)
+18
+5000

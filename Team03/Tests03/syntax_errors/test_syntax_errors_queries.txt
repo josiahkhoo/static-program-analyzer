@@ -18,3 +18,23 @@ SyntaxError
 Select a
 SyntaxError
 5000
+5 - (SYNTAX ERROR) Invalid expression single operator
+
+Select a pattern a(_, "+")
+SyntaxError
+5000
+6 - (SYNTAX ERROR) Invalid expression trailing operator
+
+Select a pattern a(_, _"x+")
+SyntaxError
+5000
+7 - (SYNTAX ERROR) Invalid expression missing bracket
+
+Select a pattern a(_, _"x+y)")
+SyntaxError
+5000
+8 - (SYNTAX ERROR) Pattern expression must be string
+assign a2; variable v;
+Select a2  pattern a2 (_, v)
+SyntaxError
+5000
