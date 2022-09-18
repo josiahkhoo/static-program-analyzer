@@ -458,6 +458,7 @@ void QueryParser::ParseUsesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
       !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::PRINT ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::STATEMENT ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||
@@ -526,6 +527,7 @@ void QueryParser::ParseModifiesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
       !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::READ ||
+        stmtRef.GetSynonym().GetEntityType() == EntityType::STATEMENT ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
         stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||

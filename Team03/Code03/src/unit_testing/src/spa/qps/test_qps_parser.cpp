@@ -907,6 +907,175 @@ TEST_CASE("`Assign Follow Pattern`", "[QPS Parser]") {
               .has_back_wildcard);
 }
 
+TEST_CASE("UsesS Syn-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "stmt"),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Uses"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<UsesSClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetSynonym().GetIdentifier();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == "s");
+  REQUIRE(clause_rhs == "v");
+}
+
+TEST_CASE("UsesS Stmt-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "stmt"),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Uses"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::NUMBER, "1"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<UsesSClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetLineNumber();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == 1);
+  REQUIRE(clause_rhs == "v");
+}
+
+TEST_CASE("UsesP Ident-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Uses"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<UsesPClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetIdentifier();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == "s");
+  REQUIRE(clause_rhs == "v");
+}
+
+TEST_CASE("ModifiesS Syn-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "stmt"),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Modifies"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::IDENTIFIER, "s"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "v"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<ModifiesSClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetSynonym().GetIdentifier();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == "s");
+  REQUIRE(clause_rhs == "v");
+}
+
+TEST_CASE("ModifiesS Stmt-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Modifies"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::NUMBER, "1"),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<ModifiesSClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetLineNumber();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == 1);
+  REQUIRE(clause_rhs == "a");
+}
+
+TEST_CASE("ModifiesP Ident-Var", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "such"),
+                                Token(Token::IDENTIFIER, "that"),
+                                Token(Token::IDENTIFIER, "Modifies"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::NUMBER, "1"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::COMMA),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  QueryString res = qp.Parse(tokens_);
+
+  auto clause =
+      std::dynamic_pointer_cast<ModifiesPClause>(res.GetQueryOperation()[0]);
+  auto clause_lhs = clause->GetLeftHandSide().GetIdentifier();
+  auto clause_rhs = clause->GetRightHandSide().GetSynonym().GetIdentifier();
+  REQUIRE(clause_lhs == "1");
+  REQUIRE(clause_rhs == "a");
+}
+
 TEST_CASE("'End-less' query", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {
@@ -1211,28 +1380,6 @@ TEST_CASE("invalid ParentT semantics", "[QPS Parser]") {
   REQUIRE_THROWS(qp.Parse(tokens_));
 }
 
-TEST_CASE("invalid UsesSStmt semantics", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "stmt"),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::IDENTIFIER, "such"),
-                                Token(Token::IDENTIFIER, "that"),
-                                Token(Token::IDENTIFIER, "Uses"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::COMMA),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  REQUIRE_THROWS(qp.Parse(tokens_));
-}
-
 TEST_CASE("invalid UsesSVar semantics", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
@@ -1286,47 +1433,6 @@ TEST_CASE("invalid UsesPVar semantics", "[QPS Parser]") {
                                 Token(Token::IDENTIFIER, "that"),
                                 Token(Token::IDENTIFIER, "Uses"),
                                 Token(Token::ASTERISK),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::NUMBER, "1"),
-                                Token(Token::COMMA),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  REQUIRE_THROWS(qp.Parse(tokens_));
-}
-
-TEST_CASE("invalid ModifiesSStmt semantics", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "variable"),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "stmt"),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::IDENTIFIER, "such"),
-                                Token(Token::IDENTIFIER, "that"),
-                                Token(Token::IDENTIFIER, "Modifies"),
-                                Token(Token::LEFT_ROUND_BRACKET),
-                                Token(Token::IDENTIFIER, "s"),
-                                Token(Token::COMMA),
-                                Token(Token::IDENTIFIER, "v"),
-                                Token(Token::RIGHT_ROUND_BRACKET),
-                                Token(Token::END)};
-  REQUIRE_THROWS(qp.Parse(tokens_));
-}
-
-TEST_CASE("invalid ModifiesSVar semantics", "[QPS Parser]") {
-  QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::SEMICOLON),
-                                Token(Token::IDENTIFIER, "Select"),
-                                Token(Token::IDENTIFIER, "a"),
-                                Token(Token::IDENTIFIER, "such"),
-                                Token(Token::IDENTIFIER, "that"),
-                                Token(Token::IDENTIFIER, "Modifies"),
                                 Token(Token::LEFT_ROUND_BRACKET),
                                 Token(Token::NUMBER, "1"),
                                 Token(Token::COMMA),
