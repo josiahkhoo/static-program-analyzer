@@ -28,10 +28,14 @@ test_array = (
     ("Patterns Only", "patterns_only"),
     # ("Parent / ParentT", "parent_parent_t"),
     # ("Uses Procedure", "uses_p"),
-    # ("Uses Statement", "uses_s"),
+    ("Uses Statement", "uses_s"),
     # ("Modifies Procedure", "modifies_p"),
-    # ("Modifies Statement", "modifies_s")
-    ("Clause and Pattern", "clause_and_pattern")
+    # ("Modifies Statement", "modifies_s"),
+    # ("Clause and Pattern", "clause_and_pattern")
+
+    # Milestone 2 Tests
+    # ("Uses Statement with Calls", "uses_s_with_call"),
+    # ("Uses Procedure with Calls", "uses_p_with_call"),
 )
 
 overall_passed_test_cases = 0

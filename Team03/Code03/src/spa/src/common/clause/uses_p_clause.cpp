@@ -18,7 +18,7 @@ std::unordered_set<std::string> UsesPClause::Fetch(
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Uses(a, _)
-      return queryable_pkb.QueryAllUses(
+      return queryable_pkb.QueryAllUsesP(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
   }
@@ -30,7 +30,7 @@ std::unordered_set<std::string> UsesPClause::Fetch(
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Uses(_, a)
-      return queryable_pkb.QueryAllUsesBy(
+      return queryable_pkb.QueryAllUsesPBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }
@@ -38,6 +38,18 @@ std::unordered_set<std::string> UsesPClause::Fetch(
     return queryable_pkb.QueryAllUsesRelations();
   }
   return {};
+}
+
+[[nodiscard]] std::unordered_set<std::string> UsesPClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryUsesP(
+      lhs, GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> UsesPClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryUsesPBy(
+      rhs, GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 const Reference &UsesPClause::GetLeftHandSide() const { return lhs_; }

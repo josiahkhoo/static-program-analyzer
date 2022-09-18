@@ -1,5 +1,7 @@
 #include "q_node.h"
 
+#include "q_result.h"
+
 QNode::QNode() : left_node_(nullptr), right_node_(nullptr){};
 
 void QNode::SetLeftNode(std::shared_ptr<QNode> left_node) {
@@ -18,6 +20,4 @@ bool QNode::IsLeaf() const {
   return (left_node_ == nullptr && right_node_ == nullptr);
 }
 
-std::unordered_set<std::string> QNode::Fetch(const QueryablePkb &pkb) {
-  return {};
-}
+QResult QNode::Fetch(const QueryablePkb &pkb) { return {{}, {}}; }
