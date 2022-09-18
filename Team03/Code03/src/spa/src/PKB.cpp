@@ -418,19 +418,28 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 }
 
 /// QueryAllModifies
-/// \param type todo: remove
-/// \return All Variables that are modified by Procedures and Statements
+/// \param type
+/// \return All Variables that are modified by EntityType (Procedure or
+/// Statement types)
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetVariablesModifiedByProcedures();
-  std::unordered_set<std::string> vars_s =
-      relationship_manager_.GetVariablesModifiedByStatements();
-  for (const std::string& var : vars_s) {
-    if (result.find(var) == result.end()) {
-      result.emplace(var);
-    }
+  if (type == EntityType::PROCEDURE) {
+    return relationship_manager_.GetVariablesModifiedByProcedures();
   }
-  return result;
+  if (type == EntityType::STATEMENT) {
+    return relationship_manager_.GetVariablesModifiedByStatements();
+  } else {
+    std::unordered_set<std::string> result;
+    std::unordered_set<std::string> typed_statements = QueryAll(type);
+    for (const std::string& statement : typed_statements) {
+      std::unordered_set<std::string> vars =
+          relationship_manager_.GetVariablesModifiedByStatement(
+              std::stoi(statement));
+      for (const std::string& var : vars) {
+        result.emplace(var);
+      }
+    }
+    return result;
+  }
 }
 
 /// QueryAllModifiesBy

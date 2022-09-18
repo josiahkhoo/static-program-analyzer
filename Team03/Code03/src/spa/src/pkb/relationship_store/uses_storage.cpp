@@ -59,7 +59,8 @@ std::unordered_set<std::string> UsesStorage::GetVariablesUsedByProcedure(
 
 /// GetVariablesUsedByProcedures
 /// \return Gets all variables that are used by procedures
-std::unordered_set<std::string> UsesStorage::GetVariablesUsedByProcedures() const {
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByProcedures()
+    const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_p_by_map_) {
     res.emplace(entry.first);
@@ -105,7 +106,8 @@ std::unordered_set<std::string> UsesStorage::GetVariablesUsedByStatement(
 
 /// GetVariablesUsedByStatements
 /// \return Gets all variables that are used by statements
-std::unordered_set<std::string> UsesStorage::GetVariablesUsedByStatements() const {
+std::unordered_set<std::string> UsesStorage::GetVariablesUsedByStatements()
+    const {
   std::unordered_set<std::string> res;
   for (auto const& entry : uses_s_by_map_) {
     res.emplace(entry.first);
