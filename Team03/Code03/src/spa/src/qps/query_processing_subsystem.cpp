@@ -1,5 +1,6 @@
 #include "query_processing_subsystem.h"
 
+#include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
 QueryProcessingSubsystem::QueryProcessingSubsystem(
@@ -20,6 +21,9 @@ void QueryProcessingSubsystem::Process(std::string query,
   } catch (const SyntaxException &ex) {
     results.emplace_back(ex.what());
     return;  // Exit application
+  } catch (const SemanticException &ex) {
+    results.emplace_back(ex.what());
+    return;
   }
   std::shared_ptr<QNode> q_plan = planner_.Plan(q_string);
   std::unordered_set<std::string> q_res =

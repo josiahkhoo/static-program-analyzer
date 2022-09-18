@@ -12,6 +12,8 @@ class Synonym {
 
   [[nodiscard]] std::string GetIdentifier();
 
+  bool IsEntityType(EntityType type) const;
+
   bool operator==(const Synonym &rhs) const;
 
   bool operator!=(const Synonym &rhs) const;

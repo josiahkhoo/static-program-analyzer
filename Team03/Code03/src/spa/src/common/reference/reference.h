@@ -19,6 +19,8 @@ class Reference {
 
   [[nodiscard]] bool IsWildCard() const;
 
+  [[nodiscard]] bool IsEntityType(EntityType type) const;
+
   [[nodiscard]] virtual bool IsLineNumber() const = 0;
 
   [[nodiscard]] virtual int GetLineNumber() const = 0;
