@@ -48,4 +48,9 @@ TEST_CASE("Assign Pattern Bracketization", "[QueryPatternProcessor]") {
   std::string processed_pattern_9 = "(((x)+(((y)+(z))*(i)))+(j))";
   REQUIRE(processed_pattern_9.compare(
               processor.ProcessAssignPattern(test_pattern_9)) == 0);
+
+  std::string test_pattern_10 = "x+(y+z)*(i+j)";
+  std::string processed_pattern_10 = "((x)+(((y)+(z))*((i)+(j))))";
+  REQUIRE(processed_pattern_10.compare(
+              processor.ProcessAssignPattern(test_pattern_10)) == 0);
 }
