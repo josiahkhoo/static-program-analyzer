@@ -246,7 +246,12 @@ std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
 }
 
 std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
-  return {};
+  std::unordered_set<std::string> res =
+      relationship_manager_.GetParentStatements();
+  std::unordered_set<std::string> children =
+      relationship_manager_.GetParentByStatements();
+  res.merge(children);
+  return res;
 }
 
 std::unordered_set<std::string> PKB::QueryParent(int statement_number,

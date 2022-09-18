@@ -14,7 +14,7 @@ std::unordered_set<std::string> ParentClause::Fetch(
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. Parent(a, 1)
-      return queryable_pkb.QueryParentBy(
+      return queryable_pkb.QueryParent(
           GetRightHandSide().GetLineNumber(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
@@ -25,7 +25,7 @@ std::unordered_set<std::string> ParentClause::Fetch(
   } else if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Parent(1, a)
-      return queryable_pkb.QueryParent(
+      return queryable_pkb.QueryParentBy(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
@@ -42,13 +42,13 @@ std::unordered_set<std::string> ParentClause::Fetch(
 
 [[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryParent(
+  return queryable_pkb.QueryParentBy(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryParentBy(
+  return queryable_pkb.QueryParent(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
