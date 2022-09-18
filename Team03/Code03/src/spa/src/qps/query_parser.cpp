@@ -119,13 +119,7 @@ Expression QueryParser::ExtractExpression() {
   // Pattern to match
   if (MatchKind(Token::INVERTED_COMMAS)) {
     token_pos_++;
-    std::string pattern;
-    while (Peek().IsNot(Token::INVERTED_COMMAS)) {
-      Token next = Peek();
-      token_pos_++;
-      pattern.append(next.GetValue());
-    }
-    exp.to_match = pattern;
+    exp.to_match = GetExpression();
     Expect(Token::INVERTED_COMMAS);
   }
   // Wildcard back
@@ -135,6 +129,49 @@ Expression QueryParser::ExtractExpression() {
   }
 
   return exp;
+}
+
+std::string QueryParser::GetExpression() {
+  std::string res;
+  Token next = Peek();
+  while (next.IsNot(Token::INVERTED_COMMAS) &&
+         next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
+    res.append(GetTerm());
+    token_pos_++;
+    next = Peek();
+  }
+  return res;
+}
+
+std::string QueryParser::GetTerm() {
+  std::string res;
+  Token next = Peek();
+  // var_name, const_value, operator
+  if (next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER)) {
+    res.append(next.GetValue());
+  } else if (next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
+             next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
+             next.Is(Token::PERCENT)) {
+    res.append(next.GetValue());
+    token_pos_++;
+    res.append(GetTerm());
+  }
+  // ( exp )
+  else if (next.Is(Token::LEFT_ROUND_BRACKET)) {
+    token_pos_++;
+    res.append("(");
+
+    res.append(GetExpression());
+
+    Expect(Token::RIGHT_ROUND_BRACKET);
+    token_pos_--;
+    res.append(")");
+  }
+
+  if (res.empty()) {
+    throw SyntaxException("Invalid expression");
+  }
+  return res;
 }
 
 void QueryParser::ParseDeclaration() {
