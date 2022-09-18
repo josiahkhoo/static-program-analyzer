@@ -422,10 +422,13 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
-  if (type == EntityType::PROCEDURE) {
+  if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
+    return {};
+  }
+  else if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetVariablesModifiedByProcedures();
   }
-  if (type == EntityType::STATEMENT) {
+  else if (type == EntityType::STATEMENT) {
     return relationship_manager_.GetVariablesModifiedByStatements();
   } else {
     std::unordered_set<std::string> result;
