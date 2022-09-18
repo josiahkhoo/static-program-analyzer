@@ -20,17 +20,15 @@ class QueryParser : public Parser<QueryString> {
 
   bool MatchKind(Token::Kind kind);
 
-  bool MatchString(const std::string &s);
+  bool MatchString(const std::string& s);
 
   bool CheckEnd();
 
   void Expect(Token::Kind kind);
 
-  void Expect(const std::string &s);
+  void Expect(const std::string& s);
 
   void ParseDeclaration();
-
-  EntityType ExpectEntityType();
 
   void ParseSelect();
 
@@ -40,27 +38,42 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseFollowsT();
 
+  void CheckFollowsParentRef(const StatementReference& stmtRef) const;
+
   void ParseParent();
 
   void ParseParentT();
 
-  void ParseUsesS();
+  void ParseUses();
 
-  void ParseUsesP();
+  void CheckUsesLhs();
 
-  void ParseModifiesS();
+  void CheckEntityRhs(const EntityReference& entRef) const;
 
-  void ParseModifiesP();
+  void ParseUsesS(const StatementReference& stmtRef);
+
+  void ParseUsesP(const EntityReference& entRef1);
+
+  void ParseModifies();
+
+  void CheckModifiesLhs();
+
+  void ParseModifiesS(const StatementReference& stmtRef);
+
+  void ParseModifiesP(const EntityReference& entRef1);
 
   bool ParsePattern();
 
+  void CheckPatternSyn(const Synonym& synonym) const;
+
   void ParseQueryOperation();
+
+  void ParseCleanUpSyntax();
 
   StatementReference ExtractStmtRef();
   EntityReference ExtractEntityRef();
   Expression ExtractExpression();
-  void ParseCleanUpSyntax();
-  bool IsNextEntityType();
+  EntityType ExtractEntityType();
 };
 
 #endif  // SPA_QUERY_PARSER_H

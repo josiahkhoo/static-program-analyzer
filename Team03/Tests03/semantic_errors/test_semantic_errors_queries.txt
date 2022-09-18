@@ -8,7 +8,7 @@ variable v;
 Select v such that Modifies(_, v)
 SemanticError
 5000
-3 - (SEMANTIC ERROR) Syn-assign must actually be assign
+3 - (SEMANTIC ERROR) Syn-assign must be 'assign' only
 stmt s;
 Select s pattern s(_,_)
 SemanticError
