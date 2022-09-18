@@ -38,6 +38,8 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseFollowsT();
 
+  void CheckFollowsParentRef(const StatementReference& stmtRef) const;
+
   void ParseParent();
 
   void ParseParentT();
@@ -62,7 +64,7 @@ class QueryParser : public Parser<QueryString> {
 
   bool ParsePattern();
 
-  void CheckPatternSyn(Synonym synonym) const;
+  void CheckPatternSyn(const Synonym& synonym) const;
 
   void ParseQueryOperation();
 

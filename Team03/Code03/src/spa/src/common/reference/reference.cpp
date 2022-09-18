@@ -11,6 +11,10 @@ bool Reference::IsSynonym() const { return synonym_.has_value(); }
 
 bool Reference::IsWildCard() const { return is_wild_card_; }
 
+bool Reference::IsEntityType(EntityType type) const {
+  return synonym_->IsEntityType(type);
+}
+
 Reference::Reference(Synonym synonym) : synonym_(synonym) {
   is_wild_card_ = false;
 }

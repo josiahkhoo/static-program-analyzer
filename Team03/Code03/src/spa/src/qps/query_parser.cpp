@@ -245,24 +245,14 @@ void QueryParser::ParseFollows() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
-  if (stmtRef1.IsSynonym() &&
-      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef1);
 
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
-  if (stmtRef2.IsSynonym() &&
-      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<FollowsClause> folCl =
@@ -278,30 +268,28 @@ void QueryParser::ParseFollowsT() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
-  if (stmtRef1.IsSynonym() &&
-      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef1);
 
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
-  if (stmtRef2.IsSynonym() &&
-      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
 
   std::shared_ptr<FollowsTClause> folCl =
       std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddQueryOperation(folCl);
+}
+
+void QueryParser::CheckFollowsParentRef(const StatementReference &stmtRef) const {
+  if (stmtRef.IsSynonym() &&
+      (stmtRef.IsEntityType(VARIABLE) || stmtRef.IsEntityType(CONSTANT) ||
+       stmtRef.IsEntityType(PROCEDURE))) {
+    throw SemanticException("Synonym is of a wrong entity type");
+  }
 }
 
 bool QueryParser::ParsePattern() {
@@ -338,6 +326,12 @@ bool QueryParser::ParsePattern() {
   return true;
 }
 
+void QueryParser::CheckPatternSyn(const Synonym& synonym) const {
+  if (!synonym.IsEntityType(ASSIGN)) {
+    throw SemanticException("Syn-assign not supported");
+  }
+}
+
 void QueryParser::ParseQueryOperation() {
   while (token_pos_ < tokens_.size() - 1) {
     bool found_clause = ParseClause();
@@ -364,24 +358,14 @@ void QueryParser::ParseParent() {
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
-  if (stmtRef1.IsSynonym() &&
-      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef1);
 
   Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
-  if (stmtRef2.IsSynonym() &&
-      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentClause> parCl =
@@ -399,22 +383,12 @@ void QueryParser::ParseParentT() {
 
   Expect(Token::COMMA);
 
-  if (stmtRef1.IsSynonym() &&
-      (stmtRef1.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef1.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef1);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
-  if (stmtRef2.IsSynonym() &&
-      (stmtRef2.GetSynonym().GetEntityType() == EntityType::VARIABLE ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::CONSTANT ||
-       stmtRef2.GetSynonym().GetEntityType() == EntityType::PROCEDURE)) {
-    throw SemanticException("Synonym is of a wrong entity type");
-  }
+  CheckFollowsParentRef(stmtRef2);
 
   Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentTClause> parCl =
@@ -456,13 +430,10 @@ void QueryParser::CheckEntityRhs(const EntityReference &entRef) const {
 
 void QueryParser::ParseUsesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
-      !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::PRINT ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::STATEMENT ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::CALL)) {
+      !(stmtRef.IsEntityType(ASSIGN) || stmtRef.IsEntityType(PRINT) ||
+        stmtRef.IsEntityType(STATEMENT) || stmtRef.IsEntityType(IF) ||
+        stmtRef.IsEntityType(WHILE) || stmtRef.IsEntityType(PROCEDURE) ||
+        stmtRef.IsEntityType(CALL))) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
 
@@ -525,13 +496,10 @@ void QueryParser::CheckModifiesLhs() {
 
 void QueryParser::ParseModifiesS(const StatementReference &stmtRef) {
   if (stmtRef.IsSynonym() &&
-      !(stmtRef.GetSynonym().GetEntityType() == EntityType::ASSIGN ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::READ ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::STATEMENT ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::IF ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::WHILE ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::PROCEDURE ||
-        stmtRef.GetSynonym().GetEntityType() == EntityType::CALL)) {
+      !(stmtRef.IsEntityType(ASSIGN) || stmtRef.IsEntityType(READ) ||
+        stmtRef.IsEntityType(STATEMENT) || stmtRef.IsEntityType(IF) ||
+        stmtRef.IsEntityType(WHILE) || stmtRef.IsEntityType(PROCEDURE) ||
+        stmtRef.IsEntityType(CALL))) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
 
@@ -569,11 +537,5 @@ void QueryParser::ParseModifiesP(const EntityReference &entRef1) {
 void QueryParser::ParseCleanUpSyntax() {
   if (!CheckEnd() && Peek().IsNot(Token::END)) {
     throw SyntaxException("Unexpected additional token(s)");
-  }
-}
-
-void QueryParser::CheckPatternSyn(Synonym synonym) const {
-  if (synonym.GetEntityType() != EntityType::ASSIGN) {
-    throw SemanticException("Syn-assign not supported");
   }
 }
