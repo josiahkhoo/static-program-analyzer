@@ -58,9 +58,9 @@ class QueryParser : public Parser<QueryString> {
 
   void CheckModifiesLhs();
 
-  void ParseModifiesS(const StatementReference& stmtRef);
+  void ParseModifiesS();
 
-  void ParseModifiesP(const EntityReference& entRef1);
+  void ParseModifiesP();
 
   bool ParsePattern();
 
