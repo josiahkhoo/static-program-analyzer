@@ -418,7 +418,7 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 }
 
 /// QueryAllModifies
-/// \param type todo: remove
+/// \param type
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
