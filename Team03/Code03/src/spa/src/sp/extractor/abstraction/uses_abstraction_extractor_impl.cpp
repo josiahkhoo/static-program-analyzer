@@ -26,6 +26,10 @@ UsesAbstractionExtractorImpl::Extract(
             t_node_proc_ent_umap.find(*curr_node_ptr)->second, variable_entity);
         break;
       } else if (curr_node_ptr->GetParent()->IsType(TNode::Assign) &&
+                 *curr_node_ptr->GetParent()->GetChildren()[1] ==
+                     *curr_node_ptr) {
+        // Do nothing here and continue
+      } else if (curr_node_ptr->GetParent()->IsType(TNode::Assign) &&
                  *curr_node_ptr->GetParent()->GetChildren()[0] ==
                      *curr_node_ptr) {
         // Break if variable is on LHS of assign

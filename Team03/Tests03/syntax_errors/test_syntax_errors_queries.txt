@@ -18,3 +18,8 @@ SyntaxError
 Select a
 SyntaxError
 5000
+5 - (SYNTAX ERROR) Pattern expression
+assign a2; variable v;
+Select a2  pattern a2 (_, v)
+SyntaxError
+5000

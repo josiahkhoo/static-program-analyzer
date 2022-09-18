@@ -31,9 +31,14 @@ test_array = (
     ("Uses Statement", "uses_s"),
     ("Modifies Procedure", "modifies_p"),
     ("Modifies Statement", "modifies_s"),
-    ("Clause and Pattern", "clause_and_pattern")
+    ("Clause and Pattern", "clause_and_pattern"),
+    ("Parse weird source", "parse_weird_source"),
 
     # Milestone 2 Tests
+    # ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),
+    # ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
+    # ("Source Error: Recursive procedure call", "source_error_recursive_call"),
+    # ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
     # ("Uses Statement with Calls", "uses_s_with_call"),
     # ("Uses Procedure with Calls", "uses_p_with_call"),
 )

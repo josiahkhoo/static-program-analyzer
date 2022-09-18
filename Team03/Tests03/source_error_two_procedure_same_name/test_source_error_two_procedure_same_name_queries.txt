@@ -1,0 +1,5 @@
+1 - (SUCCESS) Select all procedure return nothing
+procedure p;
+Select p
+
+5000

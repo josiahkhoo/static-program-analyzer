@@ -1,0 +1,65 @@
+1 - (SUCCESS) All Variables entities
+variable v;
+Select v
+read, call, if, while, procedure, then, else, print
+5000
+2 - (SUCCESS) All Statements entities
+stmt s;
+Select s
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+5000
+3 - (SUCCESS) All While entities
+while w;
+Select w
+3
+5000
+4 - (SUCCESS) All Assign entities
+assign a;
+Select a
+4, 5, 6, 7, 8, 11, 13, 14, 15, 17
+5000
+5 - (SUCCESS) All If entities
+if i;
+Select i
+10, 12
+5000
+6 - (SUCCESS) All Call entities
+call c;
+Select c
+2, 9
+5000
+7 - (SUCCESS) All Print entities
+print p;
+Select p
+16
+5000
+8 - (SUCCESS) All Constant entities
+constant c;
+Select c
+0, 10
+5000
+9 - (SUCCESS) All Procedure entities
+procedure p;
+Select p
+procedure
+5000
+10 - (SUCCESS) All statements that modifies if
+stmt stmt;
+Select stmt such that Modifies(stmt, "if")
+3, 4
+5000
+11 - (SUCCESS) All statements that uses if
+stmt stmt;
+Select stmt such that Uses(stmt, "if")
+3, 4, 10
+5000
+11 - (SUCCESS) All statements that modifies while
+stmt stmt;
+Select stmt such that Modifies(stmt, "while")
+3, 5
+5000
+11 - (SUCCESS) All statements that uses while
+stmt stmt;
+Select stmt such that Modifies(stmt, "while")
+3, 5
+5000
