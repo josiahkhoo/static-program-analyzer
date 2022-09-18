@@ -98,13 +98,13 @@ void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
 
 void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
   for (const ModifiesSAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
 void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
   for (const ModifiesPAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
@@ -419,9 +419,28 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 
 /// QueryAllModifies
 /// \param type
+/// \return All statements or procedures that modifies some Variable
+std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
+  if (type == EntityType::PROCEDURE) {
+    return relationship_manager_.GetModifyingProcedures();
+  }
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetModifyingStatements();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+/// QueryAllModifiesBy
+/// \param type
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
-std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
+std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
     return {};
   } else if (type == EntityType::PROCEDURE) {
@@ -441,22 +460,6 @@ std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
     }
     return result;
   }
-}
-
-/// QueryAllModifiesBy
-/// \param type
-/// \return All Statements that modifies some Variable
-std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetModifyingStatements();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
 }
 
 /// QueryAllModifiesRelations

@@ -29,8 +29,8 @@ test_array = (
     # ("Parent / ParentT", "parent_parent_t"),
     ("Uses Procedure", "uses_p"),
     ("Uses Statement", "uses_s"),
-    # ("Modifies Procedure", "modifies_p"),
-    # ("Modifies Statement", "modifies_s"),
+    ("Modifies Procedure", "modifies_p"),
+    ("Modifies Statement", "modifies_s"),
     ("Clause and Pattern", "clause_and_pattern")
 
     # Milestone 2 Tests

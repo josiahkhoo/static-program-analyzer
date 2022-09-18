@@ -37,6 +37,15 @@ std::unordered_set<std::string> ModifiesSClause::Fetch(
   if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
     return queryable_pkb.QueryAllModifiesRelations();
   }
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsIdentifier()) {
+    auto possible_rhs = queryable_pkb.QueryModifiesS(
+        GetLeftHandSide().GetLineNumber(), EntityType::VARIABLE);
+    if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
+        possible_rhs.end()) {
+      return {GetRightHandSide().GetIdentifier()};
+    }
+    return {};
+  }
   return {};
 }
 
