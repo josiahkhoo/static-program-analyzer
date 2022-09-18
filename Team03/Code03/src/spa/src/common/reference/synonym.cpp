@@ -9,7 +9,9 @@ EntityType Synonym::GetEntityType() { return entity_type_; }
 
 std::string Synonym::GetIdentifier() { return identifier_; }
 
-bool Synonym::IsEntityType(EntityType type) const { return entity_type_ == type; }
+bool Synonym::IsEntityType(EntityType type) const {
+  return entity_type_ == type;
+}
 
 bool Synonym::operator==(const Synonym &rhs) const {
   return entity_type_ == rhs.entity_type_ && identifier_ == rhs.identifier_;
