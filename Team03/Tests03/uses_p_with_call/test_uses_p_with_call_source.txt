@@ -9,28 +9,30 @@ procedure Example {
     else {
       y = z + x; }
     z = z + x + i;
-    read z;
+    call q;
     i = i - 1; }
-  read z; }
+  call p; }
 
 procedure p {
   if (x<0) then {
     while (i>0) {
       x = z * 3 + 2 * y;
-      read z;
+      call q;
       i = i - 1; }
     x = x + 1;
     z = x + z;
-    read z; }
+    print z; }
   else {
     z = 1; }
   z = z + x + i; }
 
 procedure q {
-  if (j==1) then {
+  if (x==1) then {
     z = x + 1; }
   else {
     x = z + x; } }
 
 procedure s {
   print x; }
+
+procedure k {}
