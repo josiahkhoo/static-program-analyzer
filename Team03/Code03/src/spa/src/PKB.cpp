@@ -424,11 +424,9 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
     return {};
-  }
-  else if (type == EntityType::PROCEDURE) {
+  } else if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetVariablesModifiedByProcedures();
-  }
-  else if (type == EntityType::STATEMENT) {
+  } else if (type == EntityType::STATEMENT) {
     return relationship_manager_.GetVariablesModifiedByStatements();
   } else {
     std::unordered_set<std::string> result;
