@@ -5,7 +5,7 @@
 #include "common/entity/while_entity.h"
 #include "pkb/relationship_store/parent_storage.h"
 
-TEST_CASE("Parent Storage Management", "[ParentStorage]") {
+TEST_CASE("Parent Storage Management Single Child", "[ParentStorage]") {
   TNode mock_while_node =
       TNode(1, TNode::While, 1, std::vector<std::shared_ptr<TNode>>());
   WhileEntity mock_lhs_one = WhileEntity(mock_while_node, 1);
@@ -38,6 +38,48 @@ TEST_CASE("Parent Storage Management", "[ParentStorage]") {
   REQUIRE(*parent_by_list.find("2") == "2");
   REQUIRE(all_parent_list.size() > 1);
   REQUIRE(all_parent_list.size() == all_parent_by_list.size());
+}
+
+TEST_CASE("Parent Storage Management Multi Child", "[ParentStorage]") {
+  TNode mock_while_node =
+      TNode(1, TNode::While, 1, std::vector<std::shared_ptr<TNode>>());
+  WhileEntity mock_lhs = WhileEntity(mock_while_node, 1);
+  TNode mock_call_node =
+      TNode(2, TNode::Call, 2, std::vector<std::shared_ptr<TNode>>());
+  CallEntity mock_rhs_one = CallEntity(mock_call_node, 2);
+  TNode mock_if_node =
+      TNode(3, TNode::IfElseThen, 3, std::vector<std::shared_ptr<TNode>>());
+  IfEntity mock_rhs_two = IfEntity(mock_if_node, 3);
+  TNode mock_assign_node =
+      TNode(4, TNode::Assign, 4, std::vector<std::shared_ptr<TNode>>());
+  AssignEntity mock_rhs_three = AssignEntity(mock_assign_node, 4);
+  ParentAbstraction mock_parent_abstraction_one =
+      ParentAbstraction(mock_lhs, mock_rhs_one);
+  ParentAbstraction mock_parent_abstraction_two =
+      ParentAbstraction(mock_lhs, mock_rhs_two);
+  ParentAbstraction mock_parent_abstraction_three =
+      ParentAbstraction(mock_lhs, mock_rhs_three);
+  ParentStorage parent_storage;
+  parent_storage.AddRelationship(mock_parent_abstraction_one);
+  parent_storage.AddRelationship(mock_parent_abstraction_two);
+  parent_storage.AddRelationship(mock_parent_abstraction_three);
+  std::unordered_set<std::string> parent_list =
+      parent_storage.GetParentStatements(2);
+  std::unordered_set<std::string> parent_by_list =
+      parent_storage.GetParentByStatements(1);
+  std::unordered_set<std::string> all_parent_list =
+      parent_storage.GetParentStatements();
+  std::unordered_set<std::string> all_parent_by_list =
+      parent_storage.GetParentByStatements();
+
+  REQUIRE(*parent_list.find("1") == "1");
+  REQUIRE(*parent_by_list.find("2") == "2");
+  REQUIRE(*parent_by_list.find("3") == "3");
+  REQUIRE(*parent_by_list.find("4") == "4");
+  REQUIRE(*all_parent_list.find("1") == "1");
+  REQUIRE(*all_parent_by_list.find("2") == "2");
+  REQUIRE(*all_parent_by_list.find("3") == "3");
+  REQUIRE(*all_parent_by_list.find("4") == "4");
 }
 
 /* ======================================
