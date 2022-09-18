@@ -8,8 +8,8 @@
 
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
-#include "parent_t_by_relationship.h"
-#include "parent_t_relationship.h"
+#include "parent_by_relationship.h"
+#include "parent_relationship.h"
 
 class ParentStorage {
  public:
@@ -37,10 +37,10 @@ class ParentStorage {
   void Clear();
 
  private:
-  std::unordered_map<int, int> parent_map_;
-  std::unordered_map<int, int> parent_by_map_;
-  std::unordered_map<int, std::unique_ptr<ParentTRelationship>> parent_t_map_;
-  std::unordered_map<int, std::unique_ptr<ParentTByRelationship>>
+  std::unordered_map<int, std::unique_ptr<ParentRelationship>> parent_map_;
+  std::unordered_map<int, std::unique_ptr<ParentByRelationship>> parent_by_map_;
+  std::unordered_map<int, std::unique_ptr<ParentRelationship>> parent_t_map_;
+  std::unordered_map<int, std::unique_ptr<ParentByRelationship>>
       parent_t_by_map_;
 };
 
