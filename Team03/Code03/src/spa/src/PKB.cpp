@@ -86,13 +86,13 @@ void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
 
 void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
   for (const UsesSAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
 void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
   for (const UsesPAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+    relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
@@ -317,4 +317,38 @@ std::unordered_set<std::string> PKB::QueryPattern(EntityType type,
 std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
                                                   Expression exp) const {
   return pattern_manager_.GetPattern(lhs, exp);
+}
+
+std::unordered_set<std::string> PKB::GetUsesP() const {
+  return relationship_manager_.GetUsesP();
+}
+
+std::unordered_set<std::string> PKB::GetUsesP(std::string uses_name) const {
+  return relationship_manager_.GetUsesP(uses_name);
+}
+
+std::unordered_set<std::string> PKB::GetUsesPBy() const {
+  return relationship_manager_.GetUsesPBy();
+}
+
+std::unordered_set<std::string> PKB::GetUsesPBy(
+    std::string variable_name) const {
+  return relationship_manager_.GetUsesPBy(variable_name);
+}
+
+std::unordered_set<std::string> PKB::GetUsesS() const {
+  return relationship_manager_.GetUsesS();
+}
+
+std::unordered_set<std::string> PKB::GetUsesS(int statement_number) const {
+  return relationship_manager_.GetUsesS(statement_number);
+}
+
+std::unordered_set<std::string> PKB::GetUsesSBy() const {
+  return relationship_manager_.GetUsesSBy();
+}
+
+std::unordered_set<std::string> PKB::GetUsesSBy(
+    std::string variable_name) const {
+  return relationship_manager_.GetUsesSBy(variable_name);
 }

@@ -16,6 +16,14 @@ void RelationshipManager::AddAbstraction(ParentTAbstraction abstraction) {
   parent_store_.AddRelationship(abstraction);
 }
 
+void RelationshipManager::AddAbstraction(UsesPAbstraction abstraction) {
+  uses_store_.AddRelationship(abstraction);
+}
+
+void RelationshipManager::AddAbstraction(UsesSAbstraction abstraction) {
+  uses_store_.AddRelationship(abstraction);
+}
+
 std::unordered_set<std::string> RelationshipManager::GetFollowsStatements()
     const {
   return follows_store_.GetFollowsStatements();
@@ -74,6 +82,42 @@ std::unordered_set<std::string> RelationshipManager::GetParentByStatements()
 std::unordered_set<std::string> RelationshipManager::GetParentTByStatements(
     int statement_number) const {
   return parent_store_.GetParentTByStatements(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesP() const {
+  return uses_store_.GetUsesP();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesP(
+    std::string procedure_name) const {
+  return uses_store_.GetUsesP(procedure_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesPBy() const {
+  return uses_store_.GetUsesPBy();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesPBy(
+    std::string variable_name) const {
+  return uses_store_.GetUsesPBy(variable_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesS() const {
+  return uses_store_.GetUsesS();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesS(
+    int statement_number) const {
+  return uses_store_.GetUsesS(statement_number);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesSBy() const {
+  return uses_store_.GetUsesSBy();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetUsesSBy(
+    std::string variable_name) const {
+  return uses_store_.GetUsesSBy(variable_name);
 }
 
 void RelationshipManager::Clear() {
