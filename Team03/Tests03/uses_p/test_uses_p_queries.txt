@@ -1,35 +1,5 @@
-1 - (SUCCESS) Retrieve all procedures which uses a variable
-variable v; procedure p;
-Select p such that Uses (p, v)
-Example, p, q, s, k
-5000
-2 - (SUCCESS) Retrieve all procedures which uses variable y (including indirect calls)
-procedure p;
-Select p such that Uses (p, "y")
-Example, p
-5000
-3 - (SUCCESS) Retrieve all procedures which uses wildcard
-procedure p;
-Select p such that Uses (p, _)
-Example, p, q, s
-5000
-4 - (SUCCESS) Retrieve all variables used in Example procedure (including indirect calls)
-variable v; procedure p;
-Select v such that Uses ("Example", v)
-x, z, y, i
-5000
 5 - (SUCCESS) Retrieve all procedures IF Example procedure uses x (conditional)
 procedure p;
 Select p such that Uses ("Example", "x")
 Example, p, q, s, k
-5000
-6 - (SUCCESS) Retrieve all procedures if k procedure uses something
-procedure p;
-Select p such that Uses ("k", _)
-
-5000
-7 - (SUCCESS) Retrieve all variables used in procedure s
-variable v;
-Select v such that Uses ("s", v)
-x
 5000

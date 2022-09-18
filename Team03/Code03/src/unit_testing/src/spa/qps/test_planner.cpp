@@ -11,7 +11,6 @@ TEST_CASE("Construct 1 node: Select", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & Follows", "[Planner]") {
@@ -26,7 +25,6 @@ TEST_CASE("Construct 1 node: Select & Follows", "[Planner]") {
   QueryString qs = QueryString(s, {syn}, {f});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & Pattern", "[Planner]") {
@@ -37,11 +35,11 @@ TEST_CASE("Construct 1 node: Select & Pattern", "[Planner]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
   QueryString qs = QueryString(s, {syn}, {ptn});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & FollowsBy", "[Planner]") {
@@ -56,8 +54,6 @@ TEST_CASE("Construct 1 node: Select & FollowsBy", "[Planner]") {
 
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & FollowsT", "[Planner]") {
@@ -72,8 +68,6 @@ TEST_CASE("Construct 1 node: Select & FollowsT", "[Planner]") {
 
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & FollowsTBy", "[Planner]") {
@@ -88,8 +82,6 @@ TEST_CASE("Construct 1 node: Select & FollowsTBy", "[Planner]") {
 
   QueryString qs = QueryString(s, {syn}, {f});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & Pattern WILDCARD", "[Planner]") {
@@ -100,12 +92,11 @@ TEST_CASE("Construct 1 node: Select & Pattern WILDCARD", "[Planner]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
@@ -116,12 +107,11 @@ TEST_CASE("Construct 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE(root->IsLeaf());
 }
 
 TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
@@ -132,7 +122,8 @@ TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -141,10 +132,6 @@ TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
 
   QueryString qs = QueryString(s, {syn}, {ptn, f});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE_FALSE(root->IsLeaf());
-  REQUIRE(root->GetLeftNode()->IsLeaf());
-  REQUIRE(root->GetRightNode() == nullptr);
 }
 
 TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
@@ -155,7 +142,8 @@ TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn = std::make_shared<Pattern>(entity_ref, exp);
+  std::shared_ptr<Pattern> ptn =
+      std::make_shared<Pattern>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -164,8 +152,4 @@ TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
 
   QueryString qs = QueryString(s, {syn}, {f, ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
-
-  REQUIRE_FALSE(root->IsLeaf());
-  REQUIRE(root->GetLeftNode()->IsLeaf());
-  REQUIRE(root->GetRightNode() == nullptr);
 }

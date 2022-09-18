@@ -13,6 +13,16 @@ class Clause : public QueryOperation {
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
 
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;
+
+  [[nodiscard]] Synonym GetSynonym() const override;
+
+  [[nodiscard]] std::pair<Synonym, Synonym> GetSynonymPair() const override;
+
+  [[nodiscard]] Type GetType() const override;
+
+  [[nodiscard]] IterateSide GetIterateSide(
+      std::vector<std::vector<std::string>> lhs,
+      std::vector<std::vector<std::string>> rhs) const override;
 };
 
 #endif  // SPA_CLAUSE_H

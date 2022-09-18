@@ -1,0 +1,50 @@
+1 - (SUCCESS) Retrieve all stmts which uses a variable (everything except 24 - read)
+variable v; stmt s;
+Select s such that Uses (s, v)
+4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26
+5000
+2 - (SUCCESS) Retrieve all stmts which uses variable y - including upper callers
+stmt s;
+Select s such that Uses (s, "y")
+12, 13, 14, 15
+5000
+3 - (SUCCESS) Retrieve all stmts which uses wildcard (everything except 24 - read)
+stmt s;
+Select s such that Uses (s, _)
+4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26
+5000
+4 - (SUCCESS) Retrieve all variables used in stmt 15 assign
+variable v;
+Select v such that Uses (15, v)
+z, y
+5000
+5 - (SUCCESS) Retrieve all variables used in stmt 26 print
+variable v;
+Select v such that Uses (26, v)
+x
+5000
+6 - (SUCCESS) Retrieve all variables used in stmt 13 if - should return from every branch in if
+variable v;
+Select v such that Uses (13, v)
+x, y, i, z
+5000
+7 - (SUCCESS) Retrieve all variables used in stmt 4 while - should return from every branch in while (incl. nest)
+variable v;
+Select v such that Uses (4, v)
+i, x, z
+5000
+8 - (SUCCESS) Retrieve all procedures used in stmt 12 call - should return nothing
+procedure p;
+Select p such that Uses (12, p)
+
+5000
+9 - (SUCCESS) Retrieve all variables used in stmt 12 call - should return all indirect
+variable v;
+Select v such that Uses (12, v)
+x, i, z, y
+5000
+10 - (SUCCESS) Retrieve all variables used in stmt 20 read - should return nothing
+variable v;
+Select v such that Uses (20, v)
+
+5000

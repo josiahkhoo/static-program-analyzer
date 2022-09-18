@@ -49,7 +49,12 @@ Select variable
 i, x, y, z
 5000
 11 - (SUCCESS) Multiple entity declaration via commas
-while w1, w2, w3;
+while w1, w2;
 Select w1
 4, 14
+5000
+12 - (SUCCESS) Multiple entity declaration via commas but not enough combinations in source returns nothing
+while w1, w2, w3, w4;
+Select w1
+
 5000

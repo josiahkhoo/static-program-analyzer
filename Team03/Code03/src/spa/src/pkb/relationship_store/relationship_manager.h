@@ -6,9 +6,14 @@
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/modifies_p_abstraction.h"
+#include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "common/abstraction/uses_p_abstraction.h"
+#include "common/abstraction/uses_s_abstraction.h"
 #include "follows_storage.h"
+#include "modifies_storage.h"
 #include "parent_storage.h"
 #include "uses_storage.h"
 
@@ -34,6 +39,12 @@ class RelationshipManager {
 
   // store usesS to ParentStorage
   void AddAbstraction(UsesSAbstraction abstraction);
+
+  // store modifiesP to ModifiesStorage
+  void AddAbstraction(ModifiesPAbstraction abstraction);
+
+  // store modifiesS to ModifiesStorage
+  void AddAbstraction(ModifiesSAbstraction abstraction);
 
   /* ====================================
    * General Relationship Getter Methods
@@ -70,21 +81,45 @@ class RelationshipManager {
   std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
-  std::unordered_set<std::string> GetUsesP() const;
+  std::unordered_set<std::string> GetUsingProcedures() const;
 
-  std::unordered_set<std::string> GetUsesP(std::string procedure_name) const;
+  std::unordered_set<std::string> GetVariablesUsedByProcedure(
+      std::string procedure_name) const;
 
-  std::unordered_set<std::string> GetUsesPBy() const;
+  std::unordered_set<std::string> GetVariablesUsedByProcedures() const;
 
-  std::unordered_set<std::string> GetUsesPBy(std::string variable_name) const;
+  std::unordered_set<std::string> GetProceduresUsingVariable(
+      std::string variable_name) const;
 
-  std::unordered_set<std::string> GetUsesS() const;
+  std::unordered_set<std::string> GetUsingStatements() const;
 
-  std::unordered_set<std::string> GetUsesS(int statement_number) const;
+  std::unordered_set<std::string> GetVariablesUsedByStatement(
+      int statement_number) const;
 
-  std::unordered_set<std::string> GetUsesSBy() const;
+  std::unordered_set<std::string> GetVariablesUsedByStatements() const;
 
-  std::unordered_set<std::string> GetUsesSBy(std::string variable_name) const;
+  std::unordered_set<std::string> GetStatementsUsingVariable(
+      std::string variable_name) const;
+
+  std::unordered_set<std::string> GetModifyingProcedures() const;
+
+  std::unordered_set<std::string> GetVariablesModifiedByProcedure(
+      std::string procedure_name) const;
+
+  std::unordered_set<std::string> GetVariablesModifiedByProcedures() const;
+
+  std::unordered_set<std::string> GetProceduresModifyingVariable(
+      std::string variable_name) const;
+
+  std::unordered_set<std::string> GetModifyingStatements() const;
+
+  std::unordered_set<std::string> GetVariablesModifiedByStatement(
+      int statement_number) const;
+
+  std::unordered_set<std::string> GetVariablesModifiedByStatements() const;
+
+  std::unordered_set<std::string> GetStatementsModifyingVariable(
+      std::string variable_name) const;
 
   /* ====================================
    * Clear All Relationship Storages
@@ -95,6 +130,7 @@ class RelationshipManager {
   FollowsStorage follows_store_;
   ParentStorage parent_store_;
   UsesStorage uses_store_;
+  ModifiesStorage modifies_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H

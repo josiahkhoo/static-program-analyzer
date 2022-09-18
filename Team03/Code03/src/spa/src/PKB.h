@@ -118,23 +118,38 @@ class PKB : public QueryablePkb, public StorablePkb {
                                                EntityType type) const override;
   std::unordered_set<std::string> QueryParentTBy(
       int statement_number, EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesS(EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesSBy(
+      EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesRelations() const override;
+  std::unordered_set<std::string> QueryUsesS(int statement_number,
+                                             EntityType type) const override;
+  std::unordered_set<std::string> QueryUsesSBy(std::string identifier,
+                                               EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesP(EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesPBy(
+      EntityType type) const override;
+  std::unordered_set<std::string> QueryUsesP(std::string identifier,
+                                             EntityType type) const override;
+  std::unordered_set<std::string> QueryUsesPBy(std::string identifier,
+                                               EntityType type) const override;
+  std::unordered_set<std::string> QueryAllModifies(
+      EntityType type) const override;
+  std::unordered_set<std::string> QueryAllModifiesBy(
+      EntityType type) const override;
+  std::unordered_set<std::string> QueryAllModifiesRelations() const override;
+  std::unordered_set<std::string> QueryModifiesS(
+      int statement_number, EntityType type) const override;
+  std::unordered_set<std::string> QueryModifiesSBy(
+      std::string identifier, EntityType type) const override;
+  std::unordered_set<std::string> QueryModifiesP(
+      std::string identifier, EntityType type) const override;
+  std::unordered_set<std::string> QueryModifiesPBy(
+      std::string identifier, EntityType type) const override;
   std::unordered_set<std::string> QueryAllPattern(
       Expression exp) const override;
-  std::unordered_set<std::string> QueryPattern(EntityType type,
-                                               Expression exp) const override;
   std::unordered_set<std::string> QueryPattern(std::string lhs,
                                                Expression exp) const override;
-  std::unordered_set<std::string> GetUsesP() const override;
-  std::unordered_set<std::string> GetUsesP(
-      std::string procedure_name) const override;
-  std::unordered_set<std::string> GetUsesPBy() const override;
-  std::unordered_set<std::string> GetUsesPBy(
-      std::string variable_name) const override;
-  std::unordered_set<std::string> GetUsesS() const override;
-  std::unordered_set<std::string> GetUsesS(int statement_number) const override;
-  std::unordered_set<std::string> GetUsesSBy() const override;
-  std::unordered_set<std::string> GetUsesSBy(
-      std::string variable_name) const override;
 
  private:
   EntityManager entity_manager_;

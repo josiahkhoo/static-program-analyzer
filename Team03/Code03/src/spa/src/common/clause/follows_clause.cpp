@@ -10,6 +10,7 @@ std::unordered_set<std::string> FollowsClause::Fetch(
     const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
+
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. Follow(a, 1)
@@ -21,8 +22,7 @@ std::unordered_set<std::string> FollowsClause::Fetch(
       return queryable_pkb.QueryAllFollows(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
-  }
-  if (GetRightHandSide().IsSynonym()) {
+  } else if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. Follow(1, a)
       return queryable_pkb.QueryFollows(
@@ -37,7 +37,18 @@ std::unordered_set<std::string> FollowsClause::Fetch(
       return queryable_pkb.QueryAllFollowsRelations();
     }
   }
-  return {};
+}
+
+[[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryFollows(
+      std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+[[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryFollowsBy(
+      std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 const Reference &FollowsClause::GetLeftHandSide() const { return lhs_; }
