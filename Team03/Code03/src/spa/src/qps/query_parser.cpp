@@ -414,12 +414,17 @@ void QueryParser::CheckUsesLhs() {
   if (next.Is(Token::UNDERSCORE)) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
-  try {
-    StatementReference stmtRef = ExtractStmtRef();
-    ParseUsesS(stmtRef);
-  } catch (SyntaxException &err) {
-    EntityReference entRef = ExtractEntityRef();
-    ParseUsesP(entRef);
+  if (next.Is(Token::IDENTIFIER)) {
+    Synonym syn = query_string_builder_.GetSynonym(next.GetValue());
+    if (syn.IsEntityType(PROCEDURE)) {
+      ParseUsesP();
+    } else {
+      ParseUsesS();
+    }
+  } else if (next.Is(Token::INVERTED_COMMAS)) {
+    ParseUsesP();
+  } else {
+    ParseUsesS();
   }
 }
 
@@ -429,12 +434,13 @@ void QueryParser::CheckEntityRhs(const EntityReference &entRef) const {
   }
 }
 
-void QueryParser::ParseUsesS(const StatementReference &stmtRef) {
+void QueryParser::ParseUsesS() {
+  StatementReference stmtRef = ExtractStmtRef();
+
   if (stmtRef.IsSynonym() &&
       !(stmtRef.IsEntityType(ASSIGN) || stmtRef.IsEntityType(PRINT) ||
         stmtRef.IsEntityType(STATEMENT) || stmtRef.IsEntityType(IF) ||
-        stmtRef.IsEntityType(WHILE) || stmtRef.IsEntityType(PROCEDURE) ||
-        stmtRef.IsEntityType(CALL))) {
+        stmtRef.IsEntityType(WHILE) || stmtRef.IsEntityType(CALL))) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
 
@@ -451,8 +457,10 @@ void QueryParser::ParseUsesS(const StatementReference &stmtRef) {
   query_string_builder_.AddQueryOperation(usesCl);
 }
 
-void QueryParser::ParseUsesP(const EntityReference &entRef1) {
-  if (!entRef1.IsIdentifier()) {
+void QueryParser::ParseUsesP() {
+  EntityReference entRef1 = ExtractEntityRef();
+
+  if (!(entRef1.IsIdentifier() || entRef1.IsEntityType(PROCEDURE))) {
     throw SemanticException("Expected identifier entity reference");
   }
 
