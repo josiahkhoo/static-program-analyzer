@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "qps/exceptions/syntax_exception.h"
+
 QueryStringBuilder::QueryStringBuilder() = default;
 
 void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
@@ -29,7 +31,7 @@ Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
       return synonym;
     }
   }
-  throw std::runtime_error("Cannot find synonym matching given identifier");
+  throw SyntaxException("Synonym not declared");
 }
 
 bool QueryStringBuilder::IsOperationsEmpty() {

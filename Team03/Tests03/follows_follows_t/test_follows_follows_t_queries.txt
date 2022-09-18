@@ -48,3 +48,8 @@ assign a, a1;
 Select a such that Follows(a, a1)
 1, 2, 18
 5000
+10 - (SUCCESS) Assign entities - Follows(Synonym, Synonym)
+assign a, a1;
+Select a such that Follows(a, a1)
+1, 2, 18
+5000
