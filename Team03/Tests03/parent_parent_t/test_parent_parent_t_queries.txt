@@ -31,12 +31,12 @@ Select s such that Parent(_, s)
 7 - (SUCCESS) Child statement of if condition
 stmt s;
 Select s such that Parent(13, s)
-14, 18, 19, 20
+14, 18, 19, 20, 21
 5000
 8 - (SUCCESS) Child statement of while condition
 stmt s;
 Select s such that Parent(4, s)
-5, 6, 9
+5, 6, 9, 10, 11
 5000
 9 - (SUCCESS) Retrieve all children of if parent statements
 stmt s; if i;
@@ -53,47 +53,57 @@ call c; stmt s;
 Select s such that Parent(s, c)
 4, 14
 5000
-12 - (SUCCESS) Retrieve all nested children within a nested if-while condition
+12 - (SUCCESS) Retrieve all nested children assignments within a nested if-while condition
 assign a;
 Select a such that Parent*(13, a)
-14, 15, 16, 17, 18, 19, 20, 21
+15, 17, 18, 19, 21
 5000
-13 - (SUCCESS) Retrieve all nested children within a nested while-if condition
+13 - (SUCCESS) Retrieve all nested children assignments within a nested while-if condition
 assign a;
 Select a such that Parent*(4, a)
-5, 6, 7
+5, 7, 8, 9, 11
 5000
-14 - (SUCCESS) Retrieve all nested parents of a call statement within a nested if-while condition
+14 - (SUCCESS) Retrieve all nested children within a nested if-while condition
+stmt s;
+Select s such that Parent*(13, s)
+14, 15, 16, 17, 18, 19, 20, 21
+5000
+15 - (SUCCESS) Retrieve all nested children within a nested while-if condition
+stmt s;
+Select s such that Parent*(4, s)
+5, 6, 7, 8, 9, 10, 11
+5000
+16 - (SUCCESS) Retrieve all nested parents of a call statement within a nested if-while condition
 stmt s;
 Select s such that Parent*(s, 16)
 13, 14
 5000
-15 - (SUCCESS) Retrieve all nested parents of a assign statement within a nested while-if condition
+17 - (SUCCESS) Retrieve all nested parents of a assign statement within a nested while-if condition
 stmt s;
 Select s such that Parent*(s, 7)
 4, 6
 5000
-16 - (SUCCESS) Retrieve all nested parents
+18 - (SUCCESS) Retrieve all nested parents
 stmt s;
 Select s such that Parent*(s, _)
 4, 6, 13, 14, 23
 5000
-17 - (SUCCESS) Retrieve all nested children
+19 - (SUCCESS) Retrieve all nested children
 stmt s;
 Select s such that Parent*(_, s)
 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 21, 24, 25
 5000
-18 - (SUCCESS) Retrieve all statements if there is a nested condition - Parent
+20 - (SUCCESS) Retrieve all statements if there is a nested condition - Parent
 stmt s;
 Select s such that Parent(_, _)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
 5000
-19 - (SUCCESS) Retrieve all statements if there is a nested condition - ParentT
+21 - (SUCCESS) Retrieve all statements if there is a nested condition - ParentT
 stmt s;
 Select s such that Parent*(_, _)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
 5000
-20 - (SUCCESS) Retrieve all parents and above of call statements
+22 - (SUCCESS) Retrieve all parents and above of call statements
 call c; stmt s;
 Select s such that Parent*(s, c)
 4, 13, 14

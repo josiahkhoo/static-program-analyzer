@@ -14,7 +14,7 @@ std::unordered_set<std::string> ParentTClause::Fetch(
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsLineNumber()) {
       // E.g. ParentT(a, 1)
-      return queryable_pkb.QueryParentTBy(
+      return queryable_pkb.QueryParentT(
           GetRightHandSide().GetLineNumber(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
@@ -25,7 +25,7 @@ std::unordered_set<std::string> ParentTClause::Fetch(
   } else if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsLineNumber()) {
       // E.g. ParentT(1, a)
-      return queryable_pkb.QueryParentT(
+      return queryable_pkb.QueryParentTBy(
           GetLeftHandSide().GetLineNumber(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
