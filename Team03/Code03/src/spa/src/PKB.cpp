@@ -305,12 +305,29 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
-  return {};
+std::unordered_set<std::string> PKB::QueryAllUsesS(EntityType type) const {
+  std::unordered_set<std::string> statements = relationship_manager_.GetUsesS();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
-  return {};
+std::unordered_set<std::string> PKB::QueryAllUsesSBy(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetUsesSBy();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
@@ -335,6 +352,31 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetUsesSBy(identifier);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesP(EntityType type) const {
+  std::unordered_set<std::string> statements = relationship_manager_.GetUsesP();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+std::unordered_set<std::string> PKB::QueryAllUsesPBy(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetUsesPBy();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
