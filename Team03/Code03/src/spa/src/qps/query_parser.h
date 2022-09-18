@@ -50,17 +50,17 @@ class QueryParser : public Parser<QueryString> {
 
   void CheckEntityRhs(const EntityReference& entRef) const;
 
-  void ParseUsesS(const StatementReference& stmtRef);
+  void ParseUsesS();
 
-  void ParseUsesP(const EntityReference& entRef1);
+  void ParseUsesP();
 
   void ParseModifies();
 
   void CheckModifiesLhs();
 
-  void ParseModifiesS(const StatementReference& stmtRef);
+  void ParseModifiesS();
 
-  void ParseModifiesP(const EntityReference& entRef1);
+  void ParseModifiesP();
 
   bool ParsePattern();
 
