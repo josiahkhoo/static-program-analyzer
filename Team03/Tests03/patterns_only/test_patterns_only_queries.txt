@@ -93,8 +93,8 @@ assign a;
 Select a pattern a ( _, _"(100 + 2) * 6"_)
 4
 5000
-19 - (SUCCESS) Stmt #4 does contain 100 + 2 as a sub-expression on the RHS
+20 - (SUCCESS) Stmt #1 contains bracketed z * t as a sub-expression on the RHS
 assign a;
-Select a pattern a ( _, _"100 + 2"_)
-4
+Select a pattern a ( _, _"(z * t)"_)
+1
 5000
