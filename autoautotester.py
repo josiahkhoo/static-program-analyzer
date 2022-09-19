@@ -33,6 +33,7 @@ test_array = (
     ("Modifies Statement", "modifies_s"),
     ("Clause and Pattern", "clause_and_pattern"),
     ("Parse weird source", "parse_weird_source"),
+    ("Parse conditional source", "parse_conditional_source"),
 
     # Milestone 2 Tests
     # ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),

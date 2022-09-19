@@ -1,0 +1,5 @@
+1 - (SUCCESS) Select all variables modified in reads
+read s; variable v;
+Select v such that Modifies(s, v)
+p, q, r, s
+5000

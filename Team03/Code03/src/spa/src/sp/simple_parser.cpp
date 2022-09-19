@@ -242,6 +242,7 @@ std::shared_ptr<TNode> SimpleParser::ParseCondExpr() {
     t_node_id_++;
     std::shared_ptr<TNode> not_node = std::make_shared<TNode>(
         t_node_id_, TNode::Not, statement_number_, children);
+    AssignParentToChildren(not_node, children);
     return not_node;
   } else if (MatchKind(Token::LEFT_ROUND_BRACKET)) {
     // '(' cond_expr ')' '&&' '(' cond_expr ')' |
