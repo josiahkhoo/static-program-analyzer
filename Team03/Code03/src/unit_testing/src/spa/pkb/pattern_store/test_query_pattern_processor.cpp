@@ -28,4 +28,29 @@ TEST_CASE("Assign Pattern Bracketization", "[QueryPatternProcessor]") {
   std::string processed_pattern_5 = "";
   REQUIRE(processed_pattern_5.compare(
               processor.ProcessAssignPattern(test_pattern_5)) == 0);
+
+  std::string test_pattern_6 = "(x)";
+  std::string processed_pattern_6 = "(x)";
+  REQUIRE(processed_pattern_6.compare(
+              processor.ProcessAssignPattern(test_pattern_6)) == 0);
+
+  std::string test_pattern_7 = "(x+y)";
+  std::string processed_pattern_7 = "((x)+(y))";
+  REQUIRE(processed_pattern_7.compare(
+              processor.ProcessAssignPattern(test_pattern_7)) == 0);
+
+  std::string test_pattern_8 = "x*(y+z)";
+  std::string processed_pattern_8 = "((x)*((y)+(z)))";
+  REQUIRE(processed_pattern_8.compare(
+              processor.ProcessAssignPattern(test_pattern_8)) == 0);
+
+  std::string test_pattern_9 = "x+(y+z)*i+j";
+  std::string processed_pattern_9 = "(((x)+(((y)+(z))*(i)))+(j))";
+  REQUIRE(processed_pattern_9.compare(
+              processor.ProcessAssignPattern(test_pattern_9)) == 0);
+
+  std::string test_pattern_10 = "x+(y+z)*(i+j)";
+  std::string processed_pattern_10 = "((x)+(((y)+(z))*((i)+(j))))";
+  REQUIRE(processed_pattern_10.compare(
+              processor.ProcessAssignPattern(test_pattern_10)) == 0);
 }
