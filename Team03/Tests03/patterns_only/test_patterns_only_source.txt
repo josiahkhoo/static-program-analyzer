@@ -1,4 +1,6 @@
 procedure Test {
     x = v + x * y + z * t;
     a = b;
+    c = d * e * f * g;
+    e = (100 + 2) * 6;
 }

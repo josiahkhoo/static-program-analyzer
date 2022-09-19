@@ -51,15 +51,50 @@ Select a pattern a(v, _"x"_)
 11 - (SUCCESS) Stmt #1 contains anything as a sub-expression on the RHS of variable
 assign a; variable v;
 Select a pattern a(v, _)
-1, 2
+1, 2, 3, 4
 5000
 12 - (SUCCESS) Stmt #1 contains anything as a sub-expression on the RHS of variable
 assign a;
 Select a pattern a(_, _)
-1, 2
+1, 2, 3, 4
 5000
 13 - (SUCCESS) Select all variables that appear on the LHS of some assignment
 assign a; variable v;
 Select v pattern a(v, _)
-a, x
+a, x, c, e
+5000
+14 - (SUCCESS) Stmt #1 contains x as a sub-expression on the RHS of variable
+assign a; variable v;
+Select a pattern a(v, _"(x)"_)
+1
+5000
+15 - (SUCCESS) Stmt #3 contains d*e*f*g as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"d*e*f*g"_)
+3
+5000
+16 - (SUCCESS) Stmt #3 does not contain e*f as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"e*f"_)
+
+5000
+17 - (SUCCESS) Stmt #3 does not contain e*f as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"f*g"_)
+
+5000
+18 - (SUCCESS) Stmt #4 does not contain 100 + 2 * 6 as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"100 + 2 * 6"_)
+
+5000
+19 - (SUCCESS) Stmt #4 does contain (100 + 2) * 6 as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"(100 + 2) * 6"_)
+4
+5000
+19 - (SUCCESS) Stmt #4 does contain 100 + 2 as a sub-expression on the RHS
+assign a;
+Select a pattern a ( _, _"100 + 2"_)
+4
 5000
