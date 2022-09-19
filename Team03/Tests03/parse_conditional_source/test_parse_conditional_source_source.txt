@@ -1,0 +1,14 @@
+procedure conditional {
+    while (!(x == 0)) {
+        read p;
+    }
+    while (! ((1==0) && (1==0))) {
+        read q;
+    }
+    while (1>= 1%((0-1)) ) {
+        read r;
+    }
+    while (1>= 1%((1)) ) {
+        read s;
+    }
+}
