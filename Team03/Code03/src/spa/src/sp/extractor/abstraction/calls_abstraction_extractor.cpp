@@ -24,7 +24,6 @@ std::vector<CallsAbstraction> CallsAbstractionExtractor::Extract(
   for (const auto &call_entity : call_entities) {
     auto* curr_node_ptr = const_cast<TNode*>(call_entity.GetNodePointer());
     auto* parent_node_ptr = const_cast<TNode*> (curr_node_ptr->GetParent().get());
-
     if (procedure_mapping.find(parent_node_ptr) == procedure_mapping.end()) {
       std::unordered_set<TNode*> procedure_call_nodes = {curr_node_ptr};
       procedure_mapping[parent_node_ptr] = procedure_call_nodes;
@@ -34,8 +33,11 @@ std::vector<CallsAbstraction> CallsAbstractionExtractor::Extract(
   }
 
   for (const auto& [parent, children] : procedure_mapping) {
-    auto lhs = t_node_stmt_ent_umap.find(*parent)->second;
+    auto lhs = t_node_proc_ent_umap.find(*parent)->second;
+    for (const auto& child : children) {
+      auto rhs = t_node_proc_ent_umap.find(*child)->second;
+      calls_abstractions.emplace_back(lhs, rhs);
+    }
   }
-
   return calls_abstractions;
 }
