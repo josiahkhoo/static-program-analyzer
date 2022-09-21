@@ -4,8 +4,7 @@
 #include "abstraction.h"
 #include "common/entity/procedure_entity.h"
 
-class CallsTAbstraction
-    : public Abstraction<ProcedureEntity, ProcedureEntity> {
+class CallsTAbstraction : public Abstraction<ProcedureEntity, ProcedureEntity> {
  public:
   CallsTAbstraction(ProcedureEntity lhs, ProcedureEntity rhs);
 
