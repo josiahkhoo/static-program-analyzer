@@ -13,7 +13,8 @@ std::vector<FollowsTAbstraction> FollowsTAbstractionExtractor::Extract(
     const std::vector<WhileEntity> &while_entities,
     std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
     std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
-    std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap) const {
+    std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
+    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap) const {
   std::vector<FollowsTAbstraction> follows_t_abstractions = {};
   for (const auto &procedure_entity : procedure_entities) {
     RetrieveFromChildren(

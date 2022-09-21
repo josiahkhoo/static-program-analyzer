@@ -46,28 +46,32 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap);
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
 
   std::vector<FollowsTAbstraction> follows_t_abstractions =
       follows_t_abstraction_extractor_.Extract(
           assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap);
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
 
   std::vector<ParentAbstraction> parent_abstractions =
       parent_abstraction_extractor_.Extract(
           assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap);
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
 
   std::vector<ParentTAbstraction> parent_t_abstractions =
       parent_t_abstraction_extractor_.Extract(
           assign_entities, call_entities, constant_entities, if_entities,
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap);
+          t_node_var_ent_umap, t_node_const_ent_umap,
+          t_node_procedure_ent_umap);
 
   auto [uses_s_abstractions, uses_p_abstractions] =
       uses_abstraction_extractor_.Extract(

@@ -43,11 +43,12 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v2.GetNodePointer(), v2},
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
+    std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
 
     std::vector<FollowsTAbstraction> abstractions =
         extractor_under_test.Extract({}, {}, {}, {}, {}, {p}, {re1, re2, re3},
                                      {re1, re2, re3}, {}, {}, stmt_umap,
-                                     var_umap, const_umap);
+                                     var_umap, const_umap, proc_umap);
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
@@ -104,11 +105,12 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v2.GetNodePointer(), v2},
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
+    std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
 
     std::vector<FollowsTAbstraction> abstractions =
         extractor_under_test.Extract({}, {}, {}, {if_ent}, {}, {},
                                      {re1, re2, re3}, {re1, re2, re3}, {}, {},
-                                     stmt_umap, var_umap, const_umap);
+                                     stmt_umap, var_umap, const_umap, proc_umap);
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
@@ -163,11 +165,12 @@ TEST_CASE("FollowsTAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v2.GetNodePointer(), v2},
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
+    std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
 
     std::vector<FollowsTAbstraction> abstractions =
         extractor_under_test.Extract({}, {}, {}, {}, {}, {}, {re1, re2, re3},
                                      {re1, re2, re3}, {}, {while_entity},
-                                     stmt_umap, var_umap, const_umap);
+                                     stmt_umap, var_umap, const_umap, proc_umap);
 
     REQUIRE(abstractions.size() == 3);
     // Check Follows(1,2)
