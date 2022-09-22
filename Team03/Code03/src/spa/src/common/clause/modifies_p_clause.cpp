@@ -39,7 +39,7 @@ std::unordered_set<std::string> ModifiesPClause::Fetch(
   }
   // Handle for both idents
   if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
-    auto possible_rhs = queryable_pkb.QueryUsesP(
+    auto possible_rhs = queryable_pkb.QueryModifiesP(
         GetLeftHandSide().GetIdentifier(), EntityType::VARIABLE);
     if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
