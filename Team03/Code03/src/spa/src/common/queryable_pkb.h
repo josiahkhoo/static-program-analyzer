@@ -107,8 +107,8 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCallsBy(
       EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string>
-  QueryAllCallsRelations() const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCallsRelations()
+      const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCalls(
       std::string identifier, EntityType type) const = 0;
