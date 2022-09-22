@@ -16,6 +16,13 @@ Token TokenHandler::Peek() {
   return tokens_[token_pos_];
 }
 
+std::string TokenHandler::PeekValue() {
+  if (token_pos_ >= tokens_.size()) {
+    throw SyntaxException("No more tokens");
+  }
+  return tokens_[token_pos_].GetValue();
+}
+
 bool TokenHandler::MatchKind(Token::Kind kind) { return Peek().Is(kind); }
 
 bool TokenHandler::MatchString(const std::string& s) {
@@ -51,5 +58,3 @@ void TokenHandler::Back() { token_pos_--; }
 bool TokenHandler::IsNotEnd() {
   return (token_pos_ < tokens_.size() - 1);
 }
-
-std::vector<Token> TokenHandler::GetTokens() { return tokens_; }

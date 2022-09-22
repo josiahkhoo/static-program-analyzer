@@ -14,6 +14,7 @@ class TokenHandler {
   explicit TokenHandler();
   explicit TokenHandler(std::vector<Token> tokens);
   Token Peek();
+  std::string PeekValue();
   bool MatchKind(Token::Kind kind);
   bool MatchString(const std::string& s);
   bool CheckEnd();
@@ -21,9 +22,6 @@ class TokenHandler {
   void Expect(const std::string& s);
   void Forward();
   void Back();
-
-  // Todo: Convert SIMPLE parser to use TokenHandler
-  std::vector<Token> GetTokens();
   bool IsNotEnd();
 };
 

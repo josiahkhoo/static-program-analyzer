@@ -26,25 +26,17 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseFollowsT();
 
-  void CheckFollowsParentRef(const StatementReference& stmtRef) const;
-
   void ParseParent();
 
   void ParseParentT();
 
   void ParseUses();
 
-  void CheckUsesLhs();
-
-  void CheckEntityRhs(const EntityReference& entRef) const;
-
   void ParseUsesS();
 
   void ParseUsesP();
 
   void ParseModifies();
-
-  void CheckModifiesLhs();
 
   void ParseModifiesS();
 
@@ -54,22 +46,13 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseCallsT();
 
-  void CheckProcedureEntity(const EntityReference& entRef) const;
-
   bool ParsePattern();
-
-  void CheckPatternSyn(const Synonym& synonym) const;
 
   void ParseQueryOperation();
 
   void ParseCleanUpSyntax();
-
-  StatementReference ExtractStmtRef();
-  EntityReference ExtractEntityRef();
-  Expression ExtractExpression();
-  EntityType ExtractEntityType();
-  std::string GetTerm();
-  std::string GetExpression();
+  void CheckUsesLhs(TokenHandler tokens, const QueryStringBuilder& builder);
+  void CheckModifiesLhs(TokenHandler tokens, const QueryStringBuilder& builder);
 };
 
 #endif  // SPA_QUERY_PARSER_H
