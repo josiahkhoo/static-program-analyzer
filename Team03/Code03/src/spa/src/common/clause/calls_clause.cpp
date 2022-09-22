@@ -1,46 +1,45 @@
-#include "modifies_p_clause.h"
+#include "calls_clause.h"
 
 #include <cassert>
-#include <utility>
 
-ModifiesPClause::ModifiesPClause(EntityReference lhs, EntityReference rhs)
+CallsClause::CallsClause(EntityReference lhs, EntityReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
-std::unordered_set<std::string> ModifiesPClause::Fetch(
+std::unordered_set<std::string> CallsClause::Fetch(
     const QueryablePkb &queryable_pkb) const {
   // Both left hand and right hand side cannot be synonyms together.
   assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsIdentifier()) {
-      // E.g. Modifies(a, "x")
-      return queryable_pkb.QueryModifiesPBy(
+      // E.g. Calls(p, "first")
+      return queryable_pkb.QueryCallsBy(
           GetRightHandSide().GetIdentifier(),
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
-      // E.g. Modifies(a, _)
-      return queryable_pkb.QueryAllModifies(
+      // E.g. Calls(p, _)
+      return queryable_pkb.QueryAllCalls(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
   }
   if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsIdentifier()) {
-      // E.g. Modifies("x", a)
-      return queryable_pkb.QueryModifiesP(
+      // E.g. Calls("first", p)
+      return queryable_pkb.QueryCalls(
           GetLeftHandSide().GetIdentifier(),
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
-      // E.g. Modifies(_, a)
-      return queryable_pkb.QueryAllModifiesBy(
+      // E.g. Calls(_, p)
+      return queryable_pkb.QueryAllCallsBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }
   if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
-    return queryable_pkb.QueryAllModifiesRelations();
+    return queryable_pkb.QueryAllCallsRelations();
   }
   // Handle for both idents
   if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
-    auto possible_rhs = queryable_pkb.QueryModifiesP(
-        GetLeftHandSide().GetIdentifier(), EntityType::VARIABLE);
+    auto possible_rhs = queryable_pkb.QueryCalls(
+        GetLeftHandSide().GetIdentifier(), EntityType::PROCEDURE);
     if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
       return {GetRightHandSide().GetIdentifier()};
@@ -50,18 +49,18 @@ std::unordered_set<std::string> ModifiesPClause::Fetch(
   return {};
 }
 
-[[nodiscard]] std::unordered_set<std::string> ModifiesPClause::FetchPossibleRhs(
+[[nodiscard]] std::unordered_set<std::string> CallsClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryModifiesP(
+  return queryable_pkb.QueryCalls(
       lhs, GetRightHandSide().GetSynonym().GetEntityType());
 }
 
-[[nodiscard]] std::unordered_set<std::string> ModifiesPClause::FetchPossibleLhs(
+[[nodiscard]] std::unordered_set<std::string> CallsClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryModifiesPBy(
+  return queryable_pkb.QueryCallsBy(
       rhs, GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-const Reference &ModifiesPClause::GetLeftHandSide() const { return lhs_; }
+const Reference &CallsClause::GetLeftHandSide() const { return lhs_; }
 
-const Reference &ModifiesPClause::GetRightHandSide() const { return rhs_; }
+const Reference &CallsClause::GetRightHandSide() const { return rhs_; }
