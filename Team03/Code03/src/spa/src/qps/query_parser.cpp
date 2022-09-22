@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "common/clause/calls_clause.h"
+#include "common/clause/calls_t_clause.h"
 #include "common/clause/modifies_p_clause.h"
 #include "common/clause/modifies_s_clause.h"
 #include "common/clause/parent_clause.h"
@@ -258,6 +260,7 @@ bool QueryParser::ParseClause() {
   ParseParent();
   ParseUses();
   ParseModifies();
+  ParseCalls();
   // Check for each clause type, append below new clauses
 
   if (query_string_builder_.IsOperationsEmpty()) {
@@ -586,6 +589,64 @@ void QueryParser::ParseModifiesP() {
   std::shared_ptr<ModifiesPClause> modCl =
       std::make_shared<ModifiesPClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(modCl);
+}
+
+void QueryParser::ParseCalls() {
+  if (CheckEnd() || !MatchString("Calls")) {
+    return;
+  }
+
+  Expect("Calls");
+
+  if (MatchKind(Token::ASTERISK)) {
+    return ParseCallsT();
+  }
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  EntityReference entRef1 = ExtractEntityRef();
+
+  CheckProcedureEntity(entRef1);
+
+  Expect(Token::COMMA);
+
+  // Get ent2
+  EntityReference entRef2 = ExtractEntityRef();
+
+  CheckProcedureEntity(entRef2);
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<CallsClause> callsCl =
+      std::make_shared<CallsClause>(entRef1, entRef2);
+  query_string_builder_.AddQueryOperation(callsCl);
+}
+
+void QueryParser::ParseCallsT() {
+  Expect(Token::ASTERISK);
+
+  Expect(Token::LEFT_ROUND_BRACKET);
+
+  EntityReference entRef1 = ExtractEntityRef();
+
+  CheckProcedureEntity(entRef1);
+
+  Expect(Token::COMMA);
+
+  // Get ent2
+  EntityReference entRef2 = ExtractEntityRef();
+
+  CheckProcedureEntity(entRef2);
+
+  Expect(Token::RIGHT_ROUND_BRACKET);
+  std::shared_ptr<CallsTClause> callsTCl =
+      std::make_shared<CallsTClause>(entRef1, entRef2);
+  query_string_builder_.AddQueryOperation(callsTCl);
+}
+
+void QueryParser::CheckProcedureEntity(const EntityReference &entRef) const {
+  if (!entRef.IsEntityType(PROCEDURE)) {
+    throw SemanticException("Expected procedure reference");
+  }
 }
 
 void QueryParser::ParseCleanUpSyntax() {

@@ -62,6 +62,12 @@ class QueryParser : public Parser<QueryString> {
 
   void ParseModifiesP();
 
+  void ParseCalls();
+
+  void ParseCallsT();
+
+  void CheckProcedureEntity(const EntityReference& entRef) const;
+
   bool ParsePattern();
 
   void CheckPatternSyn(const Synonym& synonym) const;
