@@ -6,6 +6,8 @@
 
 class FollowsClause : public Clause {
  public:
+  static const std::string CLAUSE_WORD;
+
   FollowsClause(StatementReference lhs, StatementReference rhs);
 
   [[nodiscard]] std::unordered_set<std::string> Fetch(

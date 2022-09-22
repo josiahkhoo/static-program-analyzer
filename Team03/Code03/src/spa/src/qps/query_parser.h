@@ -4,6 +4,7 @@
 #include "common/parser.h"
 #include "query_string.h"
 #include "query_string_builder.h"
+#include "token_handler.h"
 
 class QueryParser : public Parser<QueryString> {
  public:
@@ -12,21 +13,8 @@ class QueryParser : public Parser<QueryString> {
   QueryString Parse(std::vector<Token> tokens_) override;
 
  private:
-  int token_pos_ = 0;
-  std::vector<Token> tokens_;
+  TokenHandler tokens_;
   QueryStringBuilder query_string_builder_;
-
-  Token Peek();
-
-  bool MatchKind(Token::Kind kind);
-
-  bool MatchString(const std::string& s);
-
-  bool CheckEnd();
-
-  void Expect(Token::Kind kind);
-
-  void Expect(const std::string& s);
 
   void ParseDeclaration();
 

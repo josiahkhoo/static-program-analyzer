@@ -17,12 +17,12 @@
 #include "qps/exceptions/syntax_exception.h"
 
 QueryParser::QueryParser() {
-  tokens_ = {};
+  tokens_ = TokenHandler();
   query_string_builder_ = QueryStringBuilder();
 }
 
 QueryString QueryParser::Parse(std::vector<Token> tokens) {
-  tokens_ = tokens;
+  tokens_ = TokenHandler(tokens);
   ParseDeclaration();
   ParseSelect();
   ParseQueryOperation();
@@ -30,56 +30,21 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
   return query_string_builder_.GetQueryString();
 }
 
-Token QueryParser::Peek() {
-  if (token_pos_ >= tokens_.size()) {
-    throw SyntaxException("No more tokens");
-  }
-  return tokens_[token_pos_];
-}
-
-bool QueryParser::MatchKind(Token::Kind kind) { return Peek().Is(kind); }
-
-bool QueryParser::MatchString(const std::string &s) {
-  Token next = Peek();
-  if (next.IsNot(Token::IDENTIFIER)) {
-    return false;
-  }
-  return (next.GetValue() == s);
-}
-
-bool QueryParser::CheckEnd() { return token_pos_ == tokens_.size(); }
-
-void QueryParser::Expect(Token::Kind kind) {
-  if (MatchKind(kind)) {
-    token_pos_++;
-  } else {
-    throw SyntaxException("Expected different token");
-  }
-}
-
-void QueryParser::Expect(const std::string &s) {
-  if (MatchString(s)) {
-    token_pos_++;
-  } else {
-    throw SyntaxException("Expected different string");
-  }
-}
-
 StatementReference QueryParser::ExtractStmtRef() {
   StatementReference statement_reference;
 
-  if (MatchKind(Token::IDENTIFIER)) {
+  if (tokens_.MatchKind(Token::IDENTIFIER)) {
     // Checks current declared synonyms to do matching
-    Synonym synonym = query_string_builder_.GetSynonym(Peek().GetValue());
+    Synonym synonym = query_string_builder_.GetSynonym(tokens_.Peek().GetValue());
     statement_reference = StatementReference(synonym);
-  } else if (MatchKind(Token::UNDERSCORE)) {
+  } else if (tokens_.MatchKind(Token::UNDERSCORE)) {
     statement_reference = StatementReference();
-  } else if (MatchKind(Token::NUMBER)) {
-    statement_reference = StatementReference(stoi(Peek().GetValue()));
+  } else if (tokens_.MatchKind(Token::NUMBER)) {
+    statement_reference = StatementReference(stoi(tokens_.Peek().GetValue()));
   } else {
-    throw SyntaxException("Expected different stmtRef");
+    throw SyntaxException("tokens_.Expected different stmtRef");
   }
-  token_pos_++;
+  tokens_.Forward();
   return statement_reference;
 }
 
@@ -87,24 +52,24 @@ EntityReference QueryParser::ExtractEntityRef() {
   EntityReference entity_reference;
 
   // Wildcard
-  if (MatchKind(Token::UNDERSCORE)) {
-    token_pos_++;
+  if (tokens_.MatchKind(Token::UNDERSCORE)) {
+    tokens_.Forward();
     entity_reference = EntityReference();
   }
   // Identifier
-  else if (MatchKind(Token::INVERTED_COMMAS)) {
-    token_pos_++;
-    entity_reference = EntityReference(Peek().GetValue());
-    token_pos_++;
-    Expect(Token::INVERTED_COMMAS);
+  else if (tokens_.MatchKind(Token::INVERTED_COMMAS)) {
+    tokens_.Forward();
+    entity_reference = EntityReference(tokens_.Peek().GetValue());
+    tokens_.Forward();
+    tokens_.Expect(Token::INVERTED_COMMAS);
   }
   // Synonym
-  else if (MatchKind(Token::IDENTIFIER)) {
+  else if (tokens_.MatchKind(Token::IDENTIFIER)) {
     entity_reference =
-        EntityReference(query_string_builder_.GetSynonym(Peek().GetValue()));
-    token_pos_++;
+        EntityReference(query_string_builder_.GetSynonym(tokens_.Peek().GetValue()));
+    tokens_.Forward();
   } else {
-    throw SyntaxException("Expected different entRef");
+    throw SyntaxException("tokens_.Expected different entRef");
   }
 
   return entity_reference;
@@ -114,20 +79,20 @@ Expression QueryParser::ExtractExpression() {
   Expression exp;
 
   // Wildcard front
-  if (MatchKind(Token::UNDERSCORE)) {
+  if (tokens_.MatchKind(Token::UNDERSCORE)) {
     exp.has_front_wildcard = true;
-    token_pos_++;
+    tokens_.Forward();
   }
   // Pattern to match
-  if (MatchKind(Token::INVERTED_COMMAS)) {
-    token_pos_++;
+  if (tokens_.MatchKind(Token::INVERTED_COMMAS)) {
+    tokens_.Forward();
     exp.to_match = GetExpression();
-    Expect(Token::INVERTED_COMMAS);
+    tokens_.Expect(Token::INVERTED_COMMAS);
   }
   // Wildcard back
-  if (MatchKind(Token::UNDERSCORE)) {
+  if (tokens_.MatchKind(Token::UNDERSCORE)) {
     exp.has_back_wildcard = true;
-    token_pos_++;
+    tokens_.Forward();
   }
 
   return exp;
@@ -135,19 +100,19 @@ Expression QueryParser::ExtractExpression() {
 
 std::string QueryParser::GetExpression() {
   std::string res;
-  Token next = Peek();
+  Token next = tokens_.Peek();
   while (next.IsNot(Token::INVERTED_COMMAS) &&
          next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
     res.append(GetTerm());
-    token_pos_++;
-    next = Peek();
+    tokens_.Forward();
+    next = tokens_.Peek();
   }
   return res;
 }
 
 std::string QueryParser::GetTerm() {
   std::string res;
-  Token next = Peek();
+  Token next = tokens_.Peek();
   // var_name, const_value, operator
   if (next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER)) {
     res.append(next.GetValue());
@@ -155,18 +120,18 @@ std::string QueryParser::GetTerm() {
              next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
              next.Is(Token::PERCENT)) {
     res.append(next.GetValue());
-    token_pos_++;
+    tokens_.Forward();
     res.append(GetTerm());
   }
   // ( exp )
   else if (next.Is(Token::LEFT_ROUND_BRACKET)) {
-    token_pos_++;
+    tokens_.Forward();
     res.append("(");
 
     res.append(GetExpression());
 
-    Expect(Token::RIGHT_ROUND_BRACKET);
-    token_pos_--;
+    tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
+    tokens_.Back();
     res.append(")");
   }
 
@@ -177,21 +142,21 @@ std::string QueryParser::GetTerm() {
 }
 
 void QueryParser::ParseDeclaration() {
-  while (!CheckEnd() && !MatchString("Select")) {
-    Token next = Peek();
+  while (! tokens_.CheckEnd() && ! tokens_.MatchString("Select")) {
+    Token next = tokens_.Peek();
     EntityType entType = ExtractEntityType();
-    next = Peek();
-    Expect(Token::IDENTIFIER);
+    next = tokens_.Peek();
+    tokens_.Expect(Token::IDENTIFIER);
     Synonym synonym = Synonym(entType, next.GetValue());
     query_string_builder_.AddDeclaration(synonym);
-    while (MatchKind(Token::COMMA)) {
-      token_pos_++;
-      next = Peek();
-      Expect(Token::IDENTIFIER);
+    while (tokens_.MatchKind(Token::COMMA)) {
+      tokens_.Forward();
+      next = tokens_.Peek();
+      tokens_.Expect(Token::IDENTIFIER);
       synonym = Synonym(entType, next.GetValue());
       query_string_builder_.AddDeclaration(synonym);
     }
-    Expect(Token::SEMICOLON);
+    tokens_.Expect(Token::SEMICOLON);
   }
 
   if (query_string_builder_.IsDeclarationsEmpty()) {
@@ -200,49 +165,42 @@ void QueryParser::ParseDeclaration() {
 }
 
 EntityType QueryParser::ExtractEntityType() {
-  if (MatchString("stmt")) {
-    token_pos_++;
-    return EntityType::STATEMENT;
-  } else if (MatchString("read")) {
-    token_pos_++;
-    return EntityType::READ;
-  } else if (MatchString("print")) {
-    token_pos_++;
-    return EntityType::PRINT;
-  } else if (MatchString("call")) {
-    token_pos_++;
-    return EntityType::CALL;
-  } else if (MatchString("while")) {
-    token_pos_++;
-    return EntityType::WHILE;
-  } else if (MatchString("if")) {
-    token_pos_++;
-    return EntityType::IF;
-  } else if (MatchString("assign")) {
-    token_pos_++;
-    return EntityType::ASSIGN;
-  } else if (MatchString("variable")) {
-    token_pos_++;
-    return EntityType::VARIABLE;
-  } else if (MatchString("constant")) {
-    token_pos_++;
-    return EntityType::CONSTANT;
-  } else if (MatchString("procedure")) {
-    token_pos_++;
-    return EntityType::PROCEDURE;
+  EntityType result;
+  if ( tokens_.MatchString("stmt")) {
+    result = EntityType::STATEMENT;
+  } else if ( tokens_.MatchString("read")) {
+    result = EntityType::READ;
+  } else if ( tokens_.MatchString("print")) {
+    result = EntityType::PRINT;
+  } else if ( tokens_.MatchString("call")) {
+    result = EntityType::CALL;
+  } else if ( tokens_.MatchString("while")) {
+    result = EntityType::WHILE;
+  } else if ( tokens_.MatchString("if")) {
+    result = EntityType::IF;
+  } else if ( tokens_.MatchString("assign")) {
+    result = EntityType::ASSIGN;
+  } else if ( tokens_.MatchString("variable")) {
+    result = EntityType::VARIABLE;
+  } else if ( tokens_.MatchString("constant")) {
+    result = EntityType::CONSTANT;
+  } else if ( tokens_.MatchString("procedure")) {
+    result = EntityType::PROCEDURE;
   } else {
-    throw SyntaxException("Expected different declaration");
+    throw SyntaxException("tokens_.Expected different declaration");
   }
+  tokens_.Forward();
+  return result;
 }
 
 void QueryParser::ParseSelect() {
-  if (CheckEnd()) {
+  if ( tokens_.CheckEnd()) {
     return;
   }
-  Token next = Peek();
-  Expect("Select");
-  next = Peek();
-  Expect(Token::IDENTIFIER);
+  Token next = tokens_.Peek();
+  tokens_.Expect("Select");
+  next = tokens_.Peek();
+  tokens_.Expect(Token::IDENTIFIER);
 
   Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
   Select new_select = Select(synonym);
@@ -251,11 +209,11 @@ void QueryParser::ParseSelect() {
 }
 
 bool QueryParser::ParseClause() {
-  if (CheckEnd() || !MatchString("such")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("such")) {
     return false;
   }
-  token_pos_++;
-  Expect("that");
+  tokens_.Forward();
+  tokens_.Expect("that");
   ParseFollows();
   ParseParent();
   ParseUses();
@@ -270,54 +228,54 @@ bool QueryParser::ParseClause() {
 }
 
 void QueryParser::ParseFollows() {
-  if (CheckEnd() || !MatchString("Follows")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("Follows")) {
     return;
   }
 
-  Expect("Follows");
+  tokens_.Expect("Follows");
 
-  if (MatchKind(Token::ASTERISK)) {
+  if (tokens_.MatchKind(Token::ASTERISK)) {
     return ParseFollowsT();
   }
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef1);
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<FollowsClause> folCl =
       std::make_shared<FollowsClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddQueryOperation(folCl);
 }
 
 void QueryParser::ParseFollowsT() {
-  Expect(Token::ASTERISK);
+  tokens_.Expect(Token::ASTERISK);
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef1);
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
 
   std::shared_ptr<FollowsTClause> folCl =
       std::make_shared<FollowsTClause>(stmtRef1, stmtRef2);
@@ -334,19 +292,19 @@ void QueryParser::CheckFollowsParentRef(
 }
 
 bool QueryParser::ParsePattern() {
-  if (CheckEnd() || !MatchString("pattern")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("pattern")) {
     return false;
   }
 
-  Expect(Token::IDENTIFIER);
+  tokens_.Expect(Token::IDENTIFIER);
 
   // Validates if assign-entity was captured
-  Token next = Peek();
-  Expect(Token::IDENTIFIER);
+  Token next = tokens_.Peek();
+  tokens_.Expect(Token::IDENTIFIER);
   Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
   CheckPatternSyn(synonym);
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   EntityReference entity_ref = ExtractEntityRef();
 
@@ -355,11 +313,11 @@ bool QueryParser::ParsePattern() {
     throw SemanticException("Synonym is not a variable entity");
   }
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   Expression exp = ExtractExpression();
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
 
   std::shared_ptr<Pattern> ptn =
       std::make_shared<Pattern>(synonym, entity_ref, exp);
@@ -374,7 +332,7 @@ void QueryParser::CheckPatternSyn(const Synonym &synonym) const {
 }
 
 void QueryParser::ParseQueryOperation() {
-  while (token_pos_ < tokens_.size() - 1) {
+  while (tokens_.IsNotEnd()) {
     bool found_clause = ParseClause();
     bool found_pattern = ParsePattern();
     if (!(found_clause || found_pattern)) {
@@ -384,45 +342,45 @@ void QueryParser::ParseQueryOperation() {
 }
 
 void QueryParser::ParseParent() {
-  if (CheckEnd() || !MatchString("Parent")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("Parent")) {
     return;
   }
 
-  Expect("Parent");
+  tokens_.Expect("Parent");
 
-  if (MatchKind(Token::ASTERISK)) {
+  if (tokens_.MatchKind(Token::ASTERISK)) {
     return ParseParentT();
   }
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef1);
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get stmt2
   StatementReference stmtRef2 = ExtractStmtRef();
 
   CheckFollowsParentRef(stmtRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentClause> parCl =
       std::make_shared<ParentClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddQueryOperation(parCl);
 }
 
 void QueryParser::ParseParentT() {
-  Expect(Token::ASTERISK);
+  tokens_.Expect(Token::ASTERISK);
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   // Get stmt1
   StatementReference stmtRef1 = ExtractStmtRef();
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   CheckFollowsParentRef(stmtRef1);
 
@@ -431,26 +389,26 @@ void QueryParser::ParseParentT() {
 
   CheckFollowsParentRef(stmtRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ParentTClause> parCl =
       std::make_shared<ParentTClause>(stmtRef1, stmtRef2);
   query_string_builder_.AddQueryOperation(parCl);
 }
 
 void QueryParser::ParseUses() {
-  if (CheckEnd() || !MatchString("Uses")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("Uses")) {
     return;
   }
 
-  Expect("Uses");
+  tokens_.Expect("Uses");
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   CheckUsesLhs();
 }
 
 void QueryParser::CheckUsesLhs() {
-  Token next = Peek();
+  Token next = tokens_.Peek();
   if (next.Is(Token::UNDERSCORE)) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
@@ -484,14 +442,14 @@ void QueryParser::ParseUsesS() {
     throw SemanticException("Synonym is of a wrong entity type");
   }
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent
   EntityReference entRef = ExtractEntityRef();
 
   CheckEntityRhs(entRef);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesSClause> usesCl =
       std::make_shared<UsesSClause>(stmtRef, entRef);
   query_string_builder_.AddQueryOperation(usesCl);
@@ -501,36 +459,36 @@ void QueryParser::ParseUsesP() {
   EntityReference entRef1 = ExtractEntityRef();
 
   if (!(entRef1.IsIdentifier() || entRef1.IsEntityType(PROCEDURE))) {
-    throw SemanticException("Expected identifier entity reference");
+    throw SemanticException("tokens_.Expected identifier entity reference");
   }
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
   CheckEntityRhs(entRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesPClause> usesCl =
       std::make_shared<UsesPClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(usesCl);
 }
 
 void QueryParser::ParseModifies() {
-  if (CheckEnd() || !MatchString("Modifies")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("Modifies")) {
     return;
   }
 
-  Expect("Modifies");
+  tokens_.Expect("Modifies");
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   CheckModifiesLhs();
 }
 
 void QueryParser::CheckModifiesLhs() {
-  Token next = Peek();
+  Token next = tokens_.Peek();
   if (next.Is(Token::UNDERSCORE)) {
     throw SemanticException("Synonym is of a wrong entity type");
   }
@@ -558,14 +516,14 @@ void QueryParser::ParseModifiesS() {
     throw SemanticException("Synonym is of a wrong entity type");
   }
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent
   EntityReference entRef = ExtractEntityRef();
 
   CheckEntityRhs(entRef);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesSClause> modCl =
       std::make_shared<ModifiesSClause>(stmtRef, entRef);
   query_string_builder_.AddQueryOperation(modCl);
@@ -575,69 +533,69 @@ void QueryParser::ParseModifiesP() {
   EntityReference entRef1 = ExtractEntityRef();
 
   if (!(entRef1.IsIdentifier() || entRef1.IsEntityType(PROCEDURE))) {
-    throw SemanticException("Expected identifier entity reference");
+    throw SemanticException("tokens_.Expected identifier entity reference");
   }
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
   CheckEntityRhs(entRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<ModifiesPClause> modCl =
       std::make_shared<ModifiesPClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(modCl);
 }
 
 void QueryParser::ParseCalls() {
-  if (CheckEnd() || !MatchString("Calls")) {
+  if ( tokens_.CheckEnd() || ! tokens_.MatchString("Calls")) {
     return;
   }
 
-  Expect("Calls");
+  tokens_.Expect("Calls");
 
-  if (MatchKind(Token::ASTERISK)) {
+  if (tokens_.MatchKind(Token::ASTERISK)) {
     return ParseCallsT();
   }
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   EntityReference entRef1 = ExtractEntityRef();
 
   CheckProcedureEntity(entRef1);
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
   CheckProcedureEntity(entRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<CallsClause> callsCl =
       std::make_shared<CallsClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(callsCl);
 }
 
 void QueryParser::ParseCallsT() {
-  Expect(Token::ASTERISK);
+  tokens_.Expect(Token::ASTERISK);
 
-  Expect(Token::LEFT_ROUND_BRACKET);
+  tokens_.Expect(Token::LEFT_ROUND_BRACKET);
 
   EntityReference entRef1 = ExtractEntityRef();
 
   CheckProcedureEntity(entRef1);
 
-  Expect(Token::COMMA);
+  tokens_.Expect(Token::COMMA);
 
   // Get ent2
   EntityReference entRef2 = ExtractEntityRef();
 
   CheckProcedureEntity(entRef2);
 
-  Expect(Token::RIGHT_ROUND_BRACKET);
+  tokens_.Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<CallsTClause> callsTCl =
       std::make_shared<CallsTClause>(entRef1, entRef2);
   query_string_builder_.AddQueryOperation(callsTCl);
@@ -645,12 +603,12 @@ void QueryParser::ParseCallsT() {
 
 void QueryParser::CheckProcedureEntity(const EntityReference &entRef) const {
   if (!entRef.IsEntityType(PROCEDURE)) {
-    throw SemanticException("Expected procedure reference");
+    throw SemanticException("tokens_.Expected procedure reference");
   }
 }
 
 void QueryParser::ParseCleanUpSyntax() {
-  if (!CheckEnd() && Peek().IsNot(Token::END)) {
-    throw SyntaxException("Unexpected additional token(s)");
+  if (! tokens_.CheckEnd() && tokens_.Peek().IsNot(Token::END)) {
+    throw SyntaxException("Untokens_.Expected additional token(s)");
   }
 }
