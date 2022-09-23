@@ -76,7 +76,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       SourceProcessor(lexer, simple_parser, design_extractor, pkb);
 
   SECTION("Parse valid source file") {
-    std::string filepath = std::getenv("SAMPLE_SOURCE_PATH=..\\..\\..\\..\\..\\Tests03\\patterns_only\\test_patterns_only_source.txt");
+    std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
     source_processor_under_test.Process(filepath);
     Planner planner_;
     Evaluator evaluator_;
