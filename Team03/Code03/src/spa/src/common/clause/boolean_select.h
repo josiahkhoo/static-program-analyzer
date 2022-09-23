@@ -1,5 +1,5 @@
-#ifndef SPA_TEAM03_CODE03_SRC_SPA_SRC_COMMON_CLAUSE_BOOLEAN_SELECT_H_
-#define SPA_TEAM03_CODE03_SRC_SPA_SRC_COMMON_CLAUSE_BOOLEAN_SELECT_H_
+#ifndef SPA_BOOLEAN_SELECT_H
+#define SPA_BOOLEAN_SELECT_H
 
 #include "select.h"
 
@@ -8,8 +8,6 @@ class BooleanSelect : public Select {
   [[nodiscard]] std::vector<Synonym> GetSynonyms() const override;
   [[nodiscard]] std::unordered_set<std::string> GetResultSet(
       QResult q_result) const override;
-
- public:
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_COMMON_CLAUSE_BOOLEAN_SELECT_H_
