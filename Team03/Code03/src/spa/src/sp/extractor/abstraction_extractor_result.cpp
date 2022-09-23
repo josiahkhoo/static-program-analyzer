@@ -47,8 +47,8 @@ AbstractionExtractorResult::GetParentTAbstractions() const {
   return parent_t_abstractions_;
 }
 
-std::vector<CallsAbstraction>
-AbstractionExtractorResult::GetCallsAbstractions() const {
+std::vector<CallsAbstraction> AbstractionExtractorResult::GetCallsAbstractions()
+    const {
   return calls_abstractions_;
 }
 

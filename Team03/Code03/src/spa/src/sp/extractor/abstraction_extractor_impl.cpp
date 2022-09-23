@@ -117,9 +117,10 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
           proc_node_call_ent_umap, proc_name_node_umap);
 
-  return {follows_abstractions,    follows_t_abstractions, parent_abstractions,
-          parent_t_abstractions, calls_abstractions, calls_t_abstractions,
-          uses_s_abstractions,    uses_p_abstractions,
+  return {follows_abstractions,    follows_t_abstractions,
+          parent_abstractions,     parent_t_abstractions,
+          calls_abstractions,      calls_t_abstractions,
+          uses_s_abstractions,     uses_p_abstractions,
           modifies_s_abstractions, modifies_p_abstractions};
 }
 

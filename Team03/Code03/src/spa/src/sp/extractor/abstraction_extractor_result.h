@@ -1,6 +1,8 @@
 #ifndef SPA_ABSTRACTION_EXTRACTOR_RESULT_H
 #define SPA_ABSTRACTION_EXTRACTOR_RESULT_H
 
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"
@@ -9,8 +11,6 @@
 #include "common/abstraction/parent_t_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
-#include "common/abstraction/calls_abstraction.h"
-#include "common/abstraction/calls_t_abstraction.h"
 
 class AbstractionExtractorResult {
  public:

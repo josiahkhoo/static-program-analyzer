@@ -89,8 +89,7 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       &parent_abstraction_extractor_;
   const SubAbstractionExtractor<ParentTAbstraction>
       &parent_t_abstraction_extractor_;
-  const SubAbstractionExtractor<CallsAbstraction>
-      &calls_abstraction_extractor_;
+  const SubAbstractionExtractor<CallsAbstraction> &calls_abstraction_extractor_;
   const SubAbstractionExtractor<CallsTAbstraction>
       &calls_t_abstraction_extractor_;
   const UsesAbstractionExtractor &uses_abstraction_extractor_;
