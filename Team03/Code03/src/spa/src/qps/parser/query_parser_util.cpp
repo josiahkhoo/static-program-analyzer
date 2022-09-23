@@ -173,6 +173,7 @@ void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
     throw SemanticException("Expected procedure reference");
   }
 }
+
 bool QueryParserUtil::CheckProcedureClause(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {

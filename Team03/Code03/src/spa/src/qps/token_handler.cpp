@@ -55,6 +55,4 @@ void TokenHandler::Forward() { token_pos_++; }
 
 void TokenHandler::Back() { token_pos_--; }
 
-bool TokenHandler::IsNotEnd() {
-  return (token_pos_ < tokens_.size() - 1);
-}
+bool TokenHandler::IsNotEnd() { return (token_pos_ < tokens_.size() - 1); }

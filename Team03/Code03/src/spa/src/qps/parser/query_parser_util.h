@@ -30,7 +30,7 @@ class QueryParserUtil {
   static void CheckEntityRhs(const EntityReference& entRef);
   static void CheckProcedureEntity(const EntityReference& entRef);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
-                            const QueryStringBuilder& builder);
+                                   const QueryStringBuilder& builder);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H
