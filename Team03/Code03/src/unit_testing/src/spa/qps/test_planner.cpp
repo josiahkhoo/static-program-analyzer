@@ -1,4 +1,5 @@
 #include "catch.hpp"
+#include "common/clause/synonym_select.h"
 #include "common/queryable_pkb.h"
 #include "common/reference/expression.h"
 #include "qps/planner.h"
@@ -7,7 +8,8 @@ TEST_CASE("Construct 1 node: Select", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   QueryString qs = QueryString(s, {syn}, {});
 
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -17,7 +19,8 @@ TEST_CASE("Construct 1 node: Select & Follows", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
@@ -31,7 +34,8 @@ TEST_CASE("Construct 1 node: Select & Pattern", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
@@ -46,7 +50,8 @@ TEST_CASE("Construct 1 node: Select & FollowsBy", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
@@ -60,7 +65,8 @@ TEST_CASE("Construct 1 node: Select & FollowsT", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsTClause> f =
@@ -74,7 +80,8 @@ TEST_CASE("Construct 1 node: Select & FollowsTBy", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsTClause> f =
@@ -88,7 +95,8 @@ TEST_CASE("Construct 1 node: Select & Pattern WILDCARD", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
@@ -103,7 +111,8 @@ TEST_CASE("Construct 1 node: Select & Pattern IDENTIFIER", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -118,7 +127,8 @@ TEST_CASE("Construct 2 node: Select & Pattern & Follows", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -138,7 +148,8 @@ TEST_CASE("Construct 2 node: Select & Follows & Pattern", "[Planner]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";

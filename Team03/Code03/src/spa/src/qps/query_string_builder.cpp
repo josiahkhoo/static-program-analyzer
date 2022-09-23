@@ -11,8 +11,9 @@ void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
   declared_synonyms_.push_back(declared_synonym);
 }
 
-void QueryStringBuilder::AddSelect(Select select_clause) {
-  select_ = std::move(select_clause);
+void QueryStringBuilder::AddSelect(
+    const std::shared_ptr<Select>& select_clause) {
+  select_ = select_clause;
 }
 
 void QueryStringBuilder::AddQueryOperation(

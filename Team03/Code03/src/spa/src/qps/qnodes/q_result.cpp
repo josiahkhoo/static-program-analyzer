@@ -155,6 +155,8 @@ std::vector<std::vector<std::string>> QResult::GetRows(
       }
     }
   }
+  // Return empty if indexes size != synonyms
+  if (indexes.size() != synonyms.size()) return {};
   std::unordered_set<std::vector<std::string>, VectorHash> new_rows_set;
   for (auto row : GetRows()) {
     std::vector<std::string> new_row;

@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <unordered_set>
+#include <vector>
 
 #include "common/queryable_pkb.h"
 #include "common/reference/synonym.h"

@@ -524,6 +524,38 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
   return result;
 }
 
+std::unordered_set<std::string> PKB::QueryAllCalls(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllCallsBy(EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryCalls(std::string identifier,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryCallsBy(std::string identifier,
+                                                  EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier,
+                                                 EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier,
+                                                   EntityType type) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }
