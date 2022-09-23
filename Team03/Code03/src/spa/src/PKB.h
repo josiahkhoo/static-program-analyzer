@@ -90,6 +90,12 @@ class PKB : public QueryablePkb, public StorablePkb {
   // CallsT
   void Store(std::vector<CallsTAbstraction> abstractions) override;
 
+  // WhilePattern
+  void Store(std::vector<WhilePatternAbstraction> abstractions) override;
+
+  // IfPattern
+  void Store(std::vector<IfPatternAbstraction> abstractions) override;
+
   /* ====================================
    * Entity Query Methods
    * ==================================== */
@@ -166,10 +172,16 @@ class PKB : public QueryablePkb, public StorablePkb {
                                               EntityType type) const override;
   std::unordered_set<std::string> QueryCallsTBy(std::string identifier,
                                                 EntityType type) const override;
-  std::unordered_set<std::string> QueryAllPattern(
+  std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const override;
-  std::unordered_set<std::string> QueryPattern(std::string lhs,
-                                               Expression exp) const override;
+  std::unordered_set<std::string> QueryAssignPattern(
+      std::string lhs, Expression exp) const override;
+  std::unordered_set<std::string> QueryAllWhilePattern() const override;
+  std::unordered_set<std::string> QueryWhilePattern(
+      std::string ident) const override;
+  std::unordered_set<std::string> QueryAllIfPattern() const override;
+  std::unordered_set<std::string> QueryIfPattern(
+      std::string ident) const override;
 
  private:
   EntityManager entity_manager_;
