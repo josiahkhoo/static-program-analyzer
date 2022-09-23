@@ -44,13 +44,14 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
-
 
     std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+        proc_name_node_umap);
 
     REQUIRE(abstractions.empty());
   }
@@ -132,7 +133,8 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         {*v5.GetNodePointer(), v5}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
@@ -230,7 +232,8 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         {*v4.GetNodePointer(), v4}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
@@ -334,7 +337,8 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         {*v5.GetNodePointer(), v5}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
@@ -443,7 +447,8 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         {*v5.GetNodePointer(), v5}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(

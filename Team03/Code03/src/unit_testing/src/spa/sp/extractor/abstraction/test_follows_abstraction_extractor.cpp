@@ -44,12 +44,14 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+        proc_name_node_umap);
 
     REQUIRE(abstractions.size() == 2);
     // Check Follows(1,2)
@@ -104,12 +106,14 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
         {}, {}, {}, {if_ent}, {}, {}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+        proc_name_node_umap);
 
     REQUIRE(abstractions.size() == 2);
     // Check Follows(1,2)
@@ -162,7 +166,8 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         {*v3.GetNodePointer(), v3}};
     std::unordered_map<TNode, ConstantEntity> const_umap = {};
     std::unordered_map<TNode, ProcedureEntity> proc_umap = {};
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap = {};
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
     std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(

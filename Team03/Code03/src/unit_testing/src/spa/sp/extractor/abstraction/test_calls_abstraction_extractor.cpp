@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 
 #include "catch.hpp"
@@ -6,7 +7,6 @@
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
 #include "sp/simple_parser.h"
-#include <algorithm>
 
 TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
   CallsAbstractionExtractor extractor_under_test = CallsAbstractionExtractor();
@@ -47,17 +47,21 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
-        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
     std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(abstractions.empty());
   }
@@ -83,17 +87,21 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
-        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
     std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -106,9 +114,11 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     REQUIRE_FALSE(abstractions.empty());
     REQUIRE(abstractions.size() == 2);
     std::pair<std::string, std::string> first = {"main", "second"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),first) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), first) !=
+             calls_vector.end()));
     std::pair<std::string, std::string> second = {"main", "third"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),second) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), second) !=
+             calls_vector.end()));
   }
 
   SECTION("Extract from Procedure with chain call") {
@@ -132,17 +142,21 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
-        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
     std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -157,9 +171,11 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     REQUIRE_FALSE(abstractions.empty());
     REQUIRE(abstractions.size() == 2);
     std::pair<std::string, std::string> first = {"main", "second"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),first) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), first) !=
+             calls_vector.end()));
     std::pair<std::string, std::string> second = {"second", "third"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),second) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), second) !=
+             calls_vector.end()));
   }
 
   SECTION("Extract from Procedure 2 calls and with chain call") {
@@ -183,17 +199,21 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
-        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
     std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -206,10 +226,13 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
     REQUIRE_FALSE(abstractions.empty());
     REQUIRE(abstractions.size() == 3);
     std::pair<std::string, std::string> first = {"main", "second"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),first) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), first) !=
+             calls_vector.end()));
     std::pair<std::string, std::string> second = {"main", "third"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),second) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), second) !=
+             calls_vector.end()));
     std::pair<std::string, std::string> third = {"second", "third"};
-    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(),third) != calls_vector.end()));
+    REQUIRE((std::find(calls_vector.begin(), calls_vector.end(), third) !=
+             calls_vector.end()));
   }
 }

@@ -15,8 +15,9 @@ std::vector<FollowsAbstraction> FollowsAbstractionExtractor::Extract(
     std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
     std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
     std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>&  proc_node_call_ent_umap,
-    std::unordered_map<std::string, const TNode *>& proc_name_node_umap) const {
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        &proc_node_call_ent_umap,
+    std::unordered_map<std::string, const TNode *> &proc_name_node_umap) const {
   std::vector<FollowsAbstraction> follows_abstractions = {};
 
   for (const auto &procedure_entity : procedure_entities) {
