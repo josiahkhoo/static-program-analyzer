@@ -4,7 +4,7 @@
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "cstdlib"
-#include "qps/query_parser.h"
+#include "qps/parser/query_parser.h"
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"

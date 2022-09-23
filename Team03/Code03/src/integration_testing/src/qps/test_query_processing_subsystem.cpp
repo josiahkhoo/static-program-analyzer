@@ -4,8 +4,8 @@
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "qps/evaluator.h"
+#include "qps/parser/query_parser.h"
 #include "qps/planner.h"
-#include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
 
 TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {

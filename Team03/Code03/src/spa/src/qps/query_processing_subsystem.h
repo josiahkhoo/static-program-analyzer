@@ -7,7 +7,7 @@
 #include "common/lexer.h"
 #include "evaluator.h"
 #include "planner.h"
-#include "query_parser.h"
+#include "qps/parser/query_parser.h"
 
 class QueryProcessingSubsystem {
  public:
