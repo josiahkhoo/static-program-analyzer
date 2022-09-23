@@ -1,4 +1,5 @@
 #include "catch.hpp"
+#include "common/clause/synonym_select.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/qnodes/entity_node.h"
@@ -211,7 +212,8 @@ TEST_CASE("Query 'Select'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
@@ -227,7 +229,8 @@ TEST_CASE("Query 'Select Follows'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsClause> f =
@@ -249,7 +252,8 @@ TEST_CASE("Query 'Select FollowsBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
@@ -271,7 +275,8 @@ TEST_CASE("Query 'Select FollowsT'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsTClause> f =
@@ -293,7 +298,8 @@ TEST_CASE("Query 'Select FollowsTBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsTClause> f =
@@ -315,7 +321,8 @@ TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
@@ -337,7 +344,8 @@ TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -360,7 +368,8 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -592,7 +601,8 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -827,7 +837,8 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -859,7 +870,8 @@ TEST_CASE("Union check'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root_1 = p.Plan(qs);
   std::shared_ptr<QNode> root_2 = p.Plan(qs);

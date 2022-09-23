@@ -13,7 +13,6 @@
 Planner::Planner() = default;
 
 std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
-  Select select_clause = q_string.GetSelect();
   std::vector<std::shared_ptr<QueryOperation>> no_syn_ops, single_syn_ops,
       double_syn_ops;
 
