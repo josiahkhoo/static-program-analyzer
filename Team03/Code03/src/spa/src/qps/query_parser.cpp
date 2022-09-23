@@ -16,7 +16,7 @@
 #include "qps/parser/operations/pattern_parser.h"
 #include "qps/parser/operations/uses_p_parser.h"
 #include "qps/parser/operations/uses_s_parser.h"
-#include "query_parser_util.h"
+#include "qps/parser/query_parser_util.h"
 
 QueryParser::QueryParser() = default;
 

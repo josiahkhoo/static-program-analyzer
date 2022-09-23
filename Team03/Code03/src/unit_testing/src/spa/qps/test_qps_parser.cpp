@@ -7,7 +7,7 @@
 #include "common/clause/synonym_select.h"
 #include "common/clause/uses_p_clause.h"
 #include "common/clause/uses_s_clause.h"
-#include "qps/parser/query_parser.h"
+#include "qps/query_parser.h"
 
 TEST_CASE("Declaration flags", "[QPS Parser]") {
   SECTION("'Statement Select' query") {

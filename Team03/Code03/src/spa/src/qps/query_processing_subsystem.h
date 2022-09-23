@@ -7,18 +7,20 @@
 #include "common/lexer.h"
 #include "evaluator.h"
 #include "planner.h"
-#include "qps/parser/query_parser.h"
+#include "query_parser.h"
 
 class QueryProcessingSubsystem {
  public:
-  QueryProcessingSubsystem(const Lexer &lexer, const Planner &planner,
-                           const Evaluator &evaluator,
-                           const QueryablePkb &queryable_pkb);
+  QueryProcessingSubsystem(
+      const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
+      const Planner &planner, const Evaluator &evaluator,
+      const QueryablePkb &queryable_pkb);
 
   void Process(std::string query, std::list<std::string> &results);
 
  private:
   const Lexer &lexer_;
+  Parser<QueryString, std::vector<Token>> &parser_;
   const Planner &planner_;
   const Evaluator &evaluator_;
   const QueryablePkb &queryable_pkb_;

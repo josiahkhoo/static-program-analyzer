@@ -4,7 +4,7 @@
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "cstdlib"
-#include "qps/parser/query_parser.h"
+#include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
@@ -78,7 +78,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
 
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
-        QueryProcessingSubsystem(lexer, planner_, evaluator_, pkb);
+        QueryProcessingSubsystem(lexer, query_parser_, planner_, evaluator_, pkb);
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};

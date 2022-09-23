@@ -10,8 +10,8 @@
 #include "PKB.h"
 #include "common/lexer.h"
 #include "qps/evaluator.h"
-#include "qps/parser/query_parser.h"
 #include "qps/planner.h"
+#include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
@@ -100,7 +100,7 @@ class TestWrapper : public AbstractWrapper {
   Evaluator evaluator_;
 
   QueryProcessingSubsystem query_processing_subsystem =
-      QueryProcessingSubsystem(lexer_, planner_, evaluator_, pkb_);
+      QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_, pkb_);
 };
 
 #endif
