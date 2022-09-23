@@ -43,7 +43,7 @@ void CallsTAbstractionExtractor::TraverseProcedureTree(
     auto proc_child_node = proc_name_node_umap[child->GetStringValue()];
     auto rhs = t_node_proc_ent_umap.find(*proc_child_node)->second;
     if (unique_procedures.find(rhs.GetName()) == unique_procedures.end()) {
-      unique_procedures.insert(rhs.GetName());
+      unique_procedures.emplace(rhs.GetName());
       calls_t_abstractions.emplace_back(lhs, rhs);
       std::unordered_set<const TNode *> next_children =
           proc_node_call_ent_umap[proc_child_node];
