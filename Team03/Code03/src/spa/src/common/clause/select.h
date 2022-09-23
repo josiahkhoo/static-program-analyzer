@@ -1,16 +1,18 @@
 #ifndef SPA_SELECT_H
 #define SPA_SELECT_H
 
-#include "common/reference/entity_reference.h"
+#include <unordered_set>
+#include <vector>
+
+#include "common/reference/synonym.h"
+#include "qps/qnodes/q_result.h"
 
 class Select {
  public:
-  explicit Select(Synonym synonym);
+  [[nodiscard]] virtual std::vector<Synonym> GetSynonyms() const = 0;
 
-  [[nodiscard]] Synonym GetSynonym() const;
-
- private:
-  Synonym synonym_;
+  [[nodiscard]] virtual std::unordered_set<std::string> GetResultSet(
+      QResult q_result) const = 0;
 };
 
 #endif  // SPA_SELECT_H

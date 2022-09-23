@@ -10,6 +10,7 @@
 #include "common/clause/parent_t_clause.h"
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
+#include "common/clause/synonym_select.h"
 #include "common/clause/uses_p_clause.h"
 #include "common/clause/uses_s_clause.h"
 #include "common/entity/assign_entity.h"
@@ -245,9 +246,9 @@ void QueryParser::ParseSelect() {
   Expect(Token::IDENTIFIER);
 
   Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
-  Select new_select = Select(synonym);
 
-  query_string_builder_.AddSelect(new_select);
+  query_string_builder_.AddSelect(
+      std::make_shared<SynonymSelect>(std::vector{synonym}));
 }
 
 bool QueryParser::ParseClause() {
