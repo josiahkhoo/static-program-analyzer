@@ -1,6 +1,8 @@
 #ifndef SPA_STORABLE_PKB_H
 #define SPA_STORABLE_PKB_H
 
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"
@@ -53,6 +55,10 @@ class StorablePkb {
   virtual void Store(std::vector<ModifiesSAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<ModifiesPAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<CallsAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<CallsTAbstraction> abstractions) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H
