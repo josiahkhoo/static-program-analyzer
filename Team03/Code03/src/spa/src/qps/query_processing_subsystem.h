@@ -11,10 +11,10 @@
 
 class QueryProcessingSubsystem {
  public:
-  QueryProcessingSubsystem(
-      const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
-      const Planner &planner, const Evaluator &evaluator,
-      const QueryablePkb &queryable_pkb);
+  QueryProcessingSubsystem(const Lexer &lexer,
+                           Parser<QueryString, std::vector<Token>> &parser,
+                           const Planner &planner, const Evaluator &evaluator,
+                           const QueryablePkb &queryable_pkb);
 
   void Process(std::string query, std::list<std::string> &results);
 
