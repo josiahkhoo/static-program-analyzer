@@ -366,7 +366,8 @@ TEST_CASE("'Assign Select FollowT' query", "[QPS Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select expected_select = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -374,7 +375,7 @@ TEST_CASE("'Assign Select FollowT' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect().GetSynonym() == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == f.GetLeftHandSide());
