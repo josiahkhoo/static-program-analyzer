@@ -61,7 +61,7 @@ int TNode::GetIntValue() const {
 }
 
 std::string TNode::GetStringValue() const {
-  assert(IsType (Call) || IsType(Procedure) || IsType(Variable));
+  assert(IsType(Call) || IsType(Procedure) || IsType(Variable));
   assert(maybe_string_.has_value());
   return maybe_string_.value();
 }
