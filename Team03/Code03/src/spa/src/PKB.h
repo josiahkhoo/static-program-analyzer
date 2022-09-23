@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
 #include "common/entity/assign_entity.h"
@@ -81,6 +83,12 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   // ModifiesP
   void Store(std::vector<ModifiesPAbstraction> abstractions) override;
+
+  // Calls
+  void Store(std::vector<CallsAbstraction> abstractions) override;
+
+  // CallsT
+  void Store(std::vector<CallsTAbstraction> abstractions) override;
 
   /* ====================================
    * Entity Query Methods

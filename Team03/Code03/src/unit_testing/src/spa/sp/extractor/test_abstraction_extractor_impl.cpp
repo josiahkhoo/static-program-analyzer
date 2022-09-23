@@ -1,5 +1,7 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include "sp/extractor/abstraction/calls_abstraction_extractor.h"
+#include "sp/extractor/abstraction/calls_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
@@ -19,6 +21,10 @@ TEST_CASE("Abstraction Extractor", "[AbstractionExtractor]") {
   When(Method(parent_abstraction_extractor, Extract)).AlwaysReturn({});
   Mock<ParentTAbstractionExtractor> parent_t_abstraction_extractor;
   When(Method(parent_t_abstraction_extractor, Extract)).AlwaysReturn({});
+  Mock<CallsAbstractionExtractor> calls_abstraction_extractor;
+  When(Method(calls_abstraction_extractor, Extract)).AlwaysReturn({});
+  Mock<CallsTAbstractionExtractor> calls_t_abstraction_extractor;
+  When(Method(calls_t_abstraction_extractor, Extract)).AlwaysReturn({});
   Mock<UsesAbstractionExtractor> uses_abstraction_extractor;
   When(Method(uses_abstraction_extractor, Extract)).AlwaysReturn({{}, {}});
   Mock<ModifiesAbstractionExtractor> modifies_abstraction_extractor;
@@ -27,7 +33,8 @@ TEST_CASE("Abstraction Extractor", "[AbstractionExtractor]") {
   AbstractionExtractorImpl extractor_under_test = AbstractionExtractorImpl(
       follows_abstraction_extractor.get(),
       follows_t_abstraction_extractor.get(), parent_abstraction_extractor.get(),
-      parent_t_abstraction_extractor.get(), uses_abstraction_extractor.get(),
+      parent_t_abstraction_extractor.get(), calls_abstraction_extractor.get(),
+      calls_t_abstraction_extractor.get(), uses_abstraction_extractor.get(),
       modifies_abstraction_extractor.get());
 
   SECTION("Extracts respective entities") {

@@ -7,6 +7,8 @@
 #include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
 #include "common/entity/assign_entity.h"
@@ -45,6 +47,10 @@ class StorablePkb {
   virtual void Store(std::vector<ParentAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<ParentTAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<CallsAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<CallsTAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<UsesSAbstraction> abstractions) = 0;
 

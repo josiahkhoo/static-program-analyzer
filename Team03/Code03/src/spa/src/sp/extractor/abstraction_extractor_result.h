@@ -9,6 +9,8 @@
 #include "common/abstraction/parent_t_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 
 class AbstractionExtractorResult {
  public:
@@ -17,6 +19,8 @@ class AbstractionExtractorResult {
       std::vector<FollowsTAbstraction> follows_t_abstractions,
       std::vector<ParentAbstraction> parent_abstractions,
       std::vector<ParentTAbstraction> parent_t_abstractions,
+      std::vector<CallsAbstraction> calls_abstractions,
+      std::vector<CallsTAbstraction> calls_t_abstractions,
       std::vector<UsesSAbstraction> uses_s_abstractions,
       std::vector<UsesPAbstraction> uses_p_abstractions,
       std::vector<ModifiesSAbstraction> modifies_s_abstractions,
@@ -30,6 +34,10 @@ class AbstractionExtractorResult {
   [[nodiscard]] std::vector<ParentAbstraction> GetParentAbstractions() const;
 
   [[nodiscard]] std::vector<ParentTAbstraction> GetParentTAbstractions() const;
+
+  [[nodiscard]] std::vector<CallsAbstraction> GetCallsAbstractions() const;
+
+  [[nodiscard]] std::vector<CallsTAbstraction> GetCallsTAbstractions() const;
 
   [[nodiscard]] std::vector<UsesSAbstraction> GetUsesSAbstractions() const;
 
@@ -50,6 +58,8 @@ class AbstractionExtractorResult {
   std::vector<FollowsTAbstraction> follows_t_abstractions_;
   std::vector<ParentAbstraction> parent_abstractions_;
   std::vector<ParentTAbstraction> parent_t_abstractions_;
+  std::vector<CallsAbstraction> calls_abstractions_;
+  std::vector<CallsTAbstraction> calls_t_abstractions_;
   std::vector<UsesSAbstraction> uses_s_abstractions_;
   std::vector<UsesPAbstraction> uses_p_abstractions_;
   std::vector<ModifiesSAbstraction> modifies_s_abstractions_;

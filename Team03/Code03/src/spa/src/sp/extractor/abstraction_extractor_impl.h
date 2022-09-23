@@ -6,6 +6,8 @@
 
 #include "abstraction_extractor.h"
 #include "abstraction_extractor_result.h"
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/entity/assign_entity.h"
 #include "common/entity/call_entity.h"
 #include "common/entity/constant_entity.h"
@@ -32,6 +34,10 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
           &parent_abstraction_extractor,
       const SubAbstractionExtractor<ParentTAbstraction>
           &parent_t_abstraction_extractor,
+      const SubAbstractionExtractor<CallsAbstraction>
+          &calls_abstraction_extractor,
+      const SubAbstractionExtractor<CallsTAbstraction>
+          &calls_t_abstraction_extractor,
       const UsesAbstractionExtractor &uses_abstraction_extractor,
       const ModifiesAbstractionExtractor &modifies_abstraction_extractor);
 
@@ -83,6 +89,10 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
       &parent_abstraction_extractor_;
   const SubAbstractionExtractor<ParentTAbstraction>
       &parent_t_abstraction_extractor_;
+  const SubAbstractionExtractor<CallsAbstraction>
+      &calls_abstraction_extractor_;
+  const SubAbstractionExtractor<CallsTAbstraction>
+      &calls_t_abstraction_extractor_;
   const UsesAbstractionExtractor &uses_abstraction_extractor_;
   const ModifiesAbstractionExtractor &modifies_abstraction_extractor_;
 };
