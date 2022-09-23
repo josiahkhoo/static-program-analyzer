@@ -1,5 +1,7 @@
 #include "abstraction_extractor_impl.h"
 
+#include <unordered_set>
+
 #include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 
@@ -40,6 +42,11 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
       GetTNodeConstantEntityMap(constant_entities);
   std::unordered_map<TNode, ProcedureEntity> t_node_procedure_ent_umap =
       GetTNodeProcedureEntityMap(procedure_entities);
+  std::unordered_map<const TNode *, std::unordered_set<const TNode *>>  proc_node_call_ent_umap =
+      GetProcNodeCallEntityMap(call_entities);
+  std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+      GetProcNameNodeMap(procedure_entities);
+
 
   std::vector<FollowsAbstraction> follows_abstractions =
       follows_abstraction_extractor_.Extract(
@@ -47,7 +54,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   std::vector<FollowsTAbstraction> follows_t_abstractions =
       follows_t_abstraction_extractor_.Extract(
@@ -55,7 +63,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   std::vector<ParentAbstraction> parent_abstractions =
       parent_abstraction_extractor_.Extract(
@@ -63,7 +72,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   std::vector<ParentTAbstraction> parent_t_abstractions =
       parent_t_abstraction_extractor_.Extract(
@@ -71,7 +81,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   auto [uses_s_abstractions, uses_p_abstractions] =
       uses_abstraction_extractor_.Extract(
@@ -79,7 +90,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   auto [modifies_s_abstractions, modifies_p_abstractions] =
       modifies_abstraction_extractor_.Extract(
@@ -87,7 +99,8 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           print_entities, procedure_entities, read_entities, statement_entities,
           variable_entities, while_entities, t_node_stmt_ent_umap,
           t_node_var_ent_umap, t_node_const_ent_umap,
-          t_node_procedure_ent_umap);
+          t_node_procedure_ent_umap, proc_node_call_ent_umap,
+          proc_name_node_umap);
 
   return {follows_abstractions,    follows_t_abstractions, parent_abstractions,
           parent_t_abstractions,   uses_s_abstractions,    uses_p_abstractions,
@@ -127,5 +140,37 @@ AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
   std::unordered_map<TNode, ProcedureEntity> umap;
   for (const auto &procedure_entity : procedure_entities)
     umap.emplace(*procedure_entity.GetNodePointer(), procedure_entity);
+  return umap;
+}
+
+std::unordered_map<const TNode *, std::unordered_set<const TNode *>> AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+    const std::vector<CallEntity> &call_entities) {
+  std::unordered_map<const TNode *, std::unordered_set<const TNode *>> umap;
+  for (const auto &call_entity : call_entities) {
+    auto *curr_node_ptr = const_cast<TNode *>(call_entity.GetNodePointer());
+    auto *parent_node_ptr =
+        const_cast<TNode *>(curr_node_ptr->GetParent().get());
+    while (parent_node_ptr != nullptr) {
+      if (parent_node_ptr->IsType(TNode::Procedure)) {
+        break;
+      }
+      parent_node_ptr = parent_node_ptr->GetParent().get();
+    }
+    if (umap.find(parent_node_ptr) != umap.end()) {
+      umap[parent_node_ptr].emplace(curr_node_ptr);
+    } else {
+      std::unordered_set<const TNode *> procedure_call_nodes = {curr_node_ptr};
+      umap.emplace(parent_node_ptr, procedure_call_nodes);
+    }
+  }
+  return umap;
+}
+
+std::unordered_map<std::string, const TNode *> AbstractionExtractorImpl::GetProcNameNodeMap(
+    const std::vector<ProcedureEntity> &procedure_entities) {
+  std::unordered_map<std::string, const TNode *> umap;
+  for (const auto &proc_entity : procedure_entities) {
+    umap.emplace(proc_entity.GetName(), proc_entity.GetNodePointer());
+  }
   return umap;
 }

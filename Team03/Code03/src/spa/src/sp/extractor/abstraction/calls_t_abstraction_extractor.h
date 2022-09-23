@@ -1,10 +1,8 @@
 #ifndef SPA_CALLS_T_ABSTRACTION_EXTRACTOR_H
 #define SPA_CALLS_T_ABSTRACTION_EXTRACTOR_H
+
 #include "common/abstraction/calls_t_abstraction.h"
 #include "sp/extractor/sub_abstraction_extractor.h"
-
-#include <unordered_map>
-#include <unordered_set>
 
 class CallsTAbstractionExtractor
     : public SubAbstractionExtractor<CallsTAbstraction> {
@@ -23,7 +21,9 @@ class CallsTAbstractionExtractor
       std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
       std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
       std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
-      std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap)
+      std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
+      std::unordered_map<const TNode *, std::unordered_set<const TNode *>>&  proc_node_call_ent_umap,
+      std::unordered_map<std::string, const TNode *>& proc_name_node_umap)
       const override;
 
   void TraverseProcedureTree(

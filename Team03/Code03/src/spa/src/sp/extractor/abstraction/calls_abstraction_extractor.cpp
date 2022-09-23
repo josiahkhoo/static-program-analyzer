@@ -1,8 +1,5 @@
 #include "calls_abstraction_extractor.h"
 
-#include <unordered_map>
-#include <unordered_set>
-
 std::vector<CallsAbstraction> CallsAbstractionExtractor::Extract(
     const std::vector<AssignEntity> &assign_entities,
     const std::vector<CallEntity> &call_entities,
@@ -17,7 +14,9 @@ std::vector<CallsAbstraction> CallsAbstractionExtractor::Extract(
     std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
     std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
     std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
-    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap) const {
+    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>&  proc_node_call_ent_umap,
+    std::unordered_map<std::string, const TNode *>& proc_name_node_umap) const {
   std::vector<CallsAbstraction> calls_abstractions = {};
   std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
       procedure_mapping;

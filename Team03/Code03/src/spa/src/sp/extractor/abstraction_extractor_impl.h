@@ -2,6 +2,7 @@
 #define SPA_ABSTRACTION_EXTRACTOR_IMPL_H
 
 #include <unordered_map>
+#include <unordered_set>
 
 #include "abstraction_extractor.h"
 #include "abstraction_extractor_result.h"
@@ -61,6 +62,14 @@ class AbstractionExtractorImpl : public AbstractionExtractor {
   [[nodiscard]] std::
       unordered_map<TNode, ProcedureEntity> static GetTNodeProcedureEntityMap(
           const std::vector<ProcedureEntity> &procedure_entities);
+
+  [[nodiscard]] std::
+      unordered_map<const TNode *, std::unordered_set<const TNode *>> static GetProcNodeCallEntityMap(
+          const std::vector<CallEntity> &call_entities);
+
+  [[nodiscard]] std::
+      unordered_map<std::string, const TNode *> static GetProcNameNodeMap(
+          const std::vector<ProcedureEntity> &proc_entities);
 
  private:
   const SubAbstractionExtractor<FollowsAbstraction>

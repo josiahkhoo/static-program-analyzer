@@ -46,6 +46,10 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -54,7 +58,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 3);
     REQUIRE(
@@ -98,6 +102,11 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
+
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -106,7 +115,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 1);
     REQUIRE(
@@ -140,6 +149,10 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -148,7 +161,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(
@@ -204,6 +217,10 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -212,7 +229,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 2);
     REQUIRE(
@@ -250,6 +267,10 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -258,7 +279,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(
@@ -314,6 +335,10 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto [modifies_s_abstractions, modifies_p_abstractions] =
         extractor_under_test.Extract(
@@ -322,7 +347,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
             eer.GetPrintEntities(), eer.GetProcedureEntities(),
             eer.GetReadEntities(), eer.GetStatementEntities(),
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap);
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(modifies_s_abstractions.size() == 6);
     REQUIRE(

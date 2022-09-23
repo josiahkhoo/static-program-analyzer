@@ -46,13 +46,18 @@ TEST_CASE("CallsTAbstraction Extractor", "[CallsTAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     REQUIRE(abstractions.empty());
   }
@@ -78,13 +83,18 @@ TEST_CASE("CallsTAbstraction Extractor", "[CallsTAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+        proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -123,13 +133,17 @@ TEST_CASE("CallsTAbstraction Extractor", "[CallsTAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -170,13 +184,17 @@ TEST_CASE("CallsTAbstraction Extractor", "[CallsTAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {
@@ -217,13 +235,17 @@ TEST_CASE("CallsTAbstraction Extractor", "[CallsTAbstractionExtractor]") {
     std::unordered_map<TNode, ProcedureEntity> proc_umap =
         AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
             eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> proc_node_call_ent_umap =
+        AbstractionExtractorImpl::GetProcNodeCallEntityMap(eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
         eer.GetAssignEntities(), eer.GetCallEntities(),
         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
         eer.GetProcedureEntities(), eer.GetReadEntities(),
         eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap);
+        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
 
     std::vector<std::pair<std::string, std::string>> calls_vector;
     for (auto i : abstractions) {

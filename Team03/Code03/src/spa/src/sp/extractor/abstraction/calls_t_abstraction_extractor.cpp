@@ -1,8 +1,5 @@
 #include "calls_t_abstraction_extractor.h"
 
-#include <unordered_map>
-#include <unordered_set>
-
 std::vector<CallsTAbstraction> CallsTAbstractionExtractor::Extract(
     const std::vector<AssignEntity> &assign_entities,
     const std::vector<CallEntity> &call_entities,
@@ -17,39 +14,15 @@ std::vector<CallsTAbstraction> CallsTAbstractionExtractor::Extract(
     std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
     std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
     std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
-    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap) const {
+    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>&  proc_node_call_ent_umap,
+    std::unordered_map<std::string, const TNode *>& proc_name_node_umap) const {
   std::vector<CallsTAbstraction> calls_t_abstractions = {};
-  std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-      procedure_mapping;
-  std::unordered_map<std::string, const TNode *> proc_name_mapping;
 
-  for (const auto &proc_entity : procedure_entities) {
-    proc_name_mapping.insert(
-        {proc_entity.GetName(), proc_entity.GetNodePointer()});
-  }
-
-  for (const auto &call_entity : call_entities) {
-    auto *curr_node_ptr = const_cast<TNode *>(call_entity.GetNodePointer());
-    auto *parent_node_ptr =
-        const_cast<TNode *>(curr_node_ptr->GetParent().get());
-    while (parent_node_ptr != nullptr) {
-      if (parent_node_ptr->IsType(TNode::Procedure)) {
-        break;
-      }
-      parent_node_ptr = parent_node_ptr->GetParent().get();
-    }
-    if (procedure_mapping.find(parent_node_ptr) != procedure_mapping.end()) {
-      procedure_mapping[parent_node_ptr].insert(curr_node_ptr);
-    } else {
-      std::unordered_set<const TNode *> procedure_call_nodes = {curr_node_ptr};
-      procedure_mapping.insert({parent_node_ptr, procedure_call_nodes});
-    }
-  }
-
-  for (const auto &[parent, children] : procedure_mapping) {
+  for (const auto &[parent, children] : proc_node_call_ent_umap) {
     auto lhs = t_node_proc_ent_umap.find(*parent)->second;
     std::unordered_set<std::string> unique_procedures;
-    TraverseProcedureTree(t_node_proc_ent_umap, calls_t_abstractions, proc_name_mapping, procedure_mapping,
+    TraverseProcedureTree(t_node_proc_ent_umap, calls_t_abstractions, proc_name_node_umap, proc_node_call_ent_umap,
          children, lhs, unique_procedures);
   }
 
@@ -59,19 +32,19 @@ std::vector<CallsTAbstraction> CallsTAbstractionExtractor::Extract(
 void CallsTAbstractionExtractor::TraverseProcedureTree(
     std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
     std::vector<CallsTAbstraction> &calls_t_abstractions,
-    std::unordered_map<std::string, const TNode *> &proc_name_mapping,
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> &procedure_mapping,
+    std::unordered_map<std::string, const TNode *> &proc_name_node_umap,
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>> &proc_node_call_ent_umap,
     const std::unordered_set<const TNode*> &children, ProcedureEntity &lhs,
     std::unordered_set<std::string> &unique_procedures) const {
 
   for (const auto &child : children) {
-    auto proc_child_node = proc_name_mapping[child->GetStringValue()];
+    auto proc_child_node = proc_name_node_umap[child->GetStringValue()];
     auto rhs = t_node_proc_ent_umap.find(*proc_child_node)->second;
     if (unique_procedures.find(rhs.GetName()) == unique_procedures.end()) {
       unique_procedures.insert(rhs.GetName());
       calls_t_abstractions.emplace_back(lhs, rhs);
-      std::unordered_set<const TNode*> next_children = procedure_mapping[proc_child_node];
-      TraverseProcedureTree(t_node_proc_ent_umap, calls_t_abstractions, proc_name_mapping, procedure_mapping,
+      std::unordered_set<const TNode*> next_children = proc_node_call_ent_umap[proc_child_node];
+      TraverseProcedureTree(t_node_proc_ent_umap, calls_t_abstractions, proc_name_node_umap, proc_node_call_ent_umap,
                             next_children, lhs, unique_procedures);
     }
   }
