@@ -28,10 +28,11 @@ TEST_CASE("Pattern ASSIGN Single-Syn", "[QPS Pattern Parser]") {
               ->GetSynonym()
               .IsEntityType(ASSIGN));
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetEntity().IsWildCard());
+              ->GetEntity()
+              .IsWildCard());
   REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_front_wildcard);
+                    ->GetExpression()
+                    .has_front_wildcard);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
@@ -63,9 +64,11 @@ TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
 
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetSynonymPair().first.IsEntityType(ASSIGN));
+              ->GetSynonymPair()
+              .first.IsEntityType(ASSIGN));
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetSynonymPair().second.IsEntityType(VARIABLE));
+              ->GetSynonymPair()
+              .second.IsEntityType(VARIABLE));
   REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
                     ->GetExpression()
                     .has_front_wildcard);
@@ -348,9 +351,11 @@ TEST_CASE("Pattern IF Double-Syn", "[QPS Pattern Parser]") {
 
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetSynonymPair().first.IsEntityType(IF));
+              ->GetSynonymPair()
+              .first.IsEntityType(IF));
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetSynonymPair().second.IsEntityType(VARIABLE));
+              ->GetSynonymPair()
+              .second.IsEntityType(VARIABLE));
 }
 
 TEST_CASE("invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
@@ -438,7 +443,8 @@ TEST_CASE("Pattern WHILE Single-Syn Ident", "[QPS Pattern Parser]") {
               ->GetSynonym()
               .IsEntityType(WHILE));
   REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-              ->GetEntity().GetIdentifier() == "x");
+              ->GetEntity()
+              .GetIdentifier() == "x");
 }
 
 TEST_CASE("invalid Pattern WHILE: not wildcard", "[QPS Pattern Parser]") {
