@@ -33,7 +33,14 @@ std::shared_ptr<QueryOperation> PatternParser::Parse(
     throw SemanticException("Synonym is not a variable entity");
   }
   tokens->Expect(Token::COMMA);
-  Expression exp = QueryParserUtil::ExtractExpression(tokens, builder);
+  Expression exp;
+  if (synonym.IsEntityType(ASSIGN)) {
+    exp = QueryParserUtil::ExtractExpression(tokens, builder);
+  } else if (synonym.IsEntityType(IF)) {
+    tokens->Expect(Token::UNDERSCORE);
+    tokens->Expect(Token::COMMA);
+    tokens->Expect(Token::UNDERSCORE);
+  }
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<Pattern> ptn =
       std::make_shared<Pattern>(synonym, entity_ref, exp);
