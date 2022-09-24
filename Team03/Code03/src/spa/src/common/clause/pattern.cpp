@@ -19,9 +19,10 @@ Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
 std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
-    return queryable_pkb.QueryAllPattern(expression_);
+    return queryable_pkb.QueryAllAssignPattern(expression_);
   } else if (GetEntity().IsIdentifier()) {
-    return queryable_pkb.QueryPattern(GetEntity().GetIdentifier(), expression_);
+    return queryable_pkb.QueryAssignPattern(GetEntity().GetIdentifier(),
+                                            expression_);
   }
   assert(false);
 }
@@ -34,7 +35,7 @@ std::unordered_set<std::string> Pattern::FetchPossibleRhs(
 
 std::unordered_set<std::string> Pattern::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryPattern(rhs, expression_);
+  return queryable_pkb.QueryAssignPattern(rhs, expression_);
   assert(false);
 }
 
