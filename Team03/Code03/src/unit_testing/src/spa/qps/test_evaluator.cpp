@@ -997,8 +997,7 @@ TEST_CASE("BOOLEAN check'", "[Evaluator]") {
   Evaluator eval = Evaluator();
 
   Planner p = Planner();
-  std::shared_ptr<Select> s =
-      std::make_shared<BooleanSelect>();
+  std::shared_ptr<Select> s = std::make_shared<BooleanSelect>();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root_1 = p.Plan(qs);
