@@ -68,7 +68,6 @@ void QueryParser::ParseSelect() {
 }
 
 void QueryParser::ParseQueryOperation() {
-
   // Check for each clause type, append below new clauses
   // Note: Order matters, place stricter clause first i.e. Follows* > Follows
   st_parsers_.push_back(std::make_unique<FollowsTParser>());
