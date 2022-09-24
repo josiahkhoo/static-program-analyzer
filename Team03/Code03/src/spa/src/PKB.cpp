@@ -120,6 +120,18 @@ void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
   }
 }
 
+void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
+  for (const WhilePatternAbstraction& abstraction : abstractions) {
+    // TODO
+  }
+}
+
+void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
+  for (const IfPatternAbstraction& abstraction : abstractions) {
+    // TODO
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
@@ -568,11 +580,37 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier,
   return {};
 }
 
-std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {
+std::unordered_set<std::string> PKB::QueryAllAssignPattern(
+    Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }
 
-std::unordered_set<std::string> PKB::QueryPattern(std::string lhs,
-                                                  Expression exp) const {
+std::unordered_set<std::string> PKB::QueryAssignPattern(std::string lhs,
+                                                        Expression exp) const {
   return pattern_manager_.GetPattern(lhs, exp);
+}
+
+std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
+  return {};
+};
+
+std::unordered_set<std::string> PKB::QueryWhilePattern(
+    std::string ident) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
+    int statement_number) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryAllIfPattern() const { return {}; };
+
+std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
+    int statement_number) const {
+  return {};
 }

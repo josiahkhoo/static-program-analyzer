@@ -171,12 +171,12 @@ class QueryablePkbStub : public QueryablePkb {
     return {};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+  [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const override {
-    return {"QueryAllPattern"};
+    return {"QueryAllAssignPattern"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+  [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const override {
     return {"QueryPatternStr"};
   }
@@ -204,6 +204,36 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] std::unordered_set<std::string> QueryAllCallsRelations()
       const override {
     return {"QueryAllCallsRelations"};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+      const override {
+    return {"QueryAllWhilePattern"};
+  };
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+      std::string ident) const override {
+    return {"QueryWhilePattern"};
+  };
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+      const override {
+    return {"QueryAllIfPattern"};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+      std::string ident) const override {
+    return {"QueryIfPattern"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
+      int statement_number) const {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+      int statement_number) const {
+    return {};
   }
 };
 
@@ -333,7 +363,7 @@ TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
   std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();
-  std::unordered_set<std::string> expected = pkb.QueryAllPattern(exp);
+  std::unordered_set<std::string> expected = pkb.QueryAllAssignPattern(exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result == expected);
@@ -357,7 +387,7 @@ TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result == expected);
@@ -386,7 +416,7 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result.empty());
@@ -561,12 +591,12 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
         Expression exp) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
         std::string lhs, Expression exp) const override {
       return {"4", "2"};
     }
@@ -595,6 +625,36 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
         const override {
       return {};
     }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+        const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+        std::string ident) const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+        const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+        std::string ident) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -619,7 +679,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   auto it = result.begin();
@@ -797,12 +857,12 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
         Expression exp) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
         std::string lhs, Expression exp) const override {
       return {"2", "4"};
     }
@@ -831,6 +891,36 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
         const override {
       return {};
     }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+        const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+        std::string ident) const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+        const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+        std::string ident) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -855,7 +945,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE_FALSE(result.empty());
