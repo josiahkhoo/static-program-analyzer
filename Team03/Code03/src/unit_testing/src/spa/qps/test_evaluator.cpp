@@ -1,4 +1,5 @@
 #include "catch.hpp"
+#include "common/clause/boolean_select.h"
 #include "common/clause/synonym_select.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
@@ -974,5 +975,26 @@ TEST_CASE("Union check'", "[Evaluator]") {
   std::unordered_set<std::string> result = eval.Execute(pkb, root_3, s);
   std::unordered_set<std::string> expected = {"QueryAll", "QueryAll",
                                               "QueryAll"};
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("BOOLEAN check'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+
+  Planner p = Planner();
+  std::shared_ptr<Select> s =
+      std::make_shared<BooleanSelect>();
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  QueryString qs = QueryString(s, {syn}, {});
+  std::shared_ptr<QNode> root_1 = p.Plan(qs);
+  std::shared_ptr<QNode> root_2 = p.Plan(qs);
+  std::shared_ptr<QNode> root_3 = p.Plan(qs);
+
+  root_3->SetLeftNode(root_1);
+  root_3->SetRightNode(root_2);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> result = eval.Execute(pkb, root_3, s);
+  std::unordered_set<std::string> expected = {"TRUE"};
   REQUIRE(result == expected);
 }

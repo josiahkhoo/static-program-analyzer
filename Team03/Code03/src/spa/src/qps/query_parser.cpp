@@ -1,5 +1,6 @@
 #include "query_parser.h"
 
+#include "common/clause/boolean_select.h"
 #include "common/clause/pattern.h"
 #include "common/clause/select.h"
 #include "common/clause/synonym_select.h"
@@ -57,14 +58,17 @@ void QueryParser::ParseSelect() {
   if (tokens_->CheckEnd()) {
     return;
   }
-  Token next = tokens_->Peek();
   tokens_->Expect("Select");
-  next = tokens_->Peek();
+  std::string syn_token = tokens_->PeekValue();
   tokens_->Expect(Token::IDENTIFIER);
-
-  Synonym synonym = query_string_builder_.GetSynonym(next.GetValue());
-  query_string_builder_.AddSelect(
-      std::make_shared<SynonymSelect>(std::vector{synonym}));
+  if (syn_token == "BOOLEAN") {
+    query_string_builder_.AddSelect(
+        std::make_shared<BooleanSelect>());
+  } else {
+    Synonym synonym = query_string_builder_.GetSynonym(syn_token);
+    query_string_builder_.AddSelect(
+        std::make_shared<SynonymSelect>(std::vector{synonym}));
+  }
 }
 
 void QueryParser::ParseQueryOperation() {
