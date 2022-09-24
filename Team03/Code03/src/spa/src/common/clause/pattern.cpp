@@ -42,19 +42,25 @@ std::unordered_set<std::string> Pattern::Fetch(
 
 std::unordered_set<std::string> Pattern::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
+  if (syn_.IsEntityType(ASSIGN)) {
+    return queryable_pkb.QueryPatternVariablesFromAssign(std::stoi(lhs));
+  } else if (syn_.IsEntityType(IF)) {
+    return queryable_pkb.QueryPatternVariablesFromIf(std::stoi(lhs));
+  } else if (syn_.IsEntityType(WHILE)) {
+    return queryable_pkb.QueryPatternVariablesFromWhile(std::stoi(lhs));
+  }
   assert(false);
   return {};
 }
 
 std::unordered_set<std::string> Pattern::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-
   if (syn_.IsEntityType(ASSIGN)) {
     return queryable_pkb.QueryAssignPattern(rhs, expression_);
   } else if (syn_.IsEntityType(IF)) {
-    return queryable_pkb.QueryPatternVariablesFromIf(std::stoi(rhs));
+    return queryable_pkb.QueryIfPattern(rhs);
   } else if (syn_.IsEntityType(WHILE)) {
-    return queryable_pkb.QueryPatternVariablesFromWhile(std::stoi(rhs));
+    return queryable_pkb.QueryWhilePattern(rhs);
   }
   assert(false);
   return {};

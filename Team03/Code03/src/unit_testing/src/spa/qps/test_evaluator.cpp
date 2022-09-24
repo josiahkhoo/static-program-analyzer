@@ -226,6 +226,11 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryIfPattern"};
   }
 
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
+      int statement_number) const override {
+    return {};
+  }
+
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
       int statement_number) const {
     return {};
@@ -655,6 +660,11 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
         int statement_number) const {
       return {};
     }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
+        int statement_number) const override {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -919,6 +929,11 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
         int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
+        int statement_number) const override {
       return {};
     }
   };
