@@ -11,8 +11,9 @@ class CallsParser : public QueryOperationParser {
   static const std::string CLAUSE_WORD;
 
  public:
-  [[nodiscard]] static bool MatchParser(
-      const std::shared_ptr<TokenHandler>& tokens);
+  [[nodiscard]] bool MatchParser(
+      const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
+          data) const override;
   std::shared_ptr<QueryOperation> Parse(
       std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data)
       override;

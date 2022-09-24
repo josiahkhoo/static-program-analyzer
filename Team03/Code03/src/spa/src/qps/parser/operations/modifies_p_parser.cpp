@@ -7,7 +7,7 @@ const std::string ModifiesPParser::CLAUSE_WORD = "Modifies";
 
 bool ModifiesPParser::MatchParser(
     const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) {
+        data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

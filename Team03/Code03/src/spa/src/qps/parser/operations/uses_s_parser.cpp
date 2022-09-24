@@ -7,7 +7,7 @@ const std::string UsesSParser::CLAUSE_WORD = "Uses";
 
 bool UsesSParser::MatchParser(
     const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) {
+        data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

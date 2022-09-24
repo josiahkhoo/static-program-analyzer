@@ -12,6 +12,10 @@ class QueryOperationParser
           std::shared_ptr<QueryOperation>,
           std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>> {
  public:
+  /// Checks if tokens match grammar rules of QueryOperation object
+  [[nodiscard]] virtual bool MatchParser(
+      const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
+          data) const = 0;
   /// Converts tokens into QueryOperation object
   std::shared_ptr<QueryOperation> Parse(
       std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data)

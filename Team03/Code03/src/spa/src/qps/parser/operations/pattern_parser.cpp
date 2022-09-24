@@ -5,7 +5,11 @@
 
 const std::string PatternParser::CLAUSE_WORD = "pattern";
 
-bool PatternParser::MatchParser(const std::shared_ptr<TokenHandler> &tokens) {
+bool PatternParser::MatchParser(
+    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
+        data) const {
+  // Get data
+  std::shared_ptr<TokenHandler> tokens = data.first;
   return QueryOperationMatcher::MatchParser(tokens, CLAUSE_WORD);
 }
 

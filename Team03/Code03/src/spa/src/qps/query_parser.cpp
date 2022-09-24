@@ -68,6 +68,20 @@ void QueryParser::ParseSelect() {
 }
 
 void QueryParser::ParseQueryOperation() {
+
+  // Check for each clause type, append below new clauses
+  // Note: Order matters, place stricter clause first i.e. Follows* > Follows
+  st_parsers_.push_back(std::make_unique<FollowsTParser>());
+  st_parsers_.push_back(std::make_unique<FollowsParser>());
+  st_parsers_.push_back(std::make_unique<ParentTParser>());
+  st_parsers_.push_back(std::make_unique<ParentParser>());
+  st_parsers_.push_back(std::make_unique<CallsTParser>());
+  st_parsers_.push_back(std::make_unique<CallsParser>());
+  st_parsers_.push_back(std::make_unique<UsesPParser>());
+  st_parsers_.push_back(std::make_unique<UsesSParser>());
+  st_parsers_.push_back(std::make_unique<ModifiesPParser>());
+  st_parsers_.push_back(std::make_unique<ModifiesSParser>());
+
   while (tokens_->IsNotEnd()) {
     bool found_clause = ParseClause();
     bool found_pattern = ParsePattern();
@@ -99,42 +113,12 @@ void QueryParser::ParseIndividualClause() {
               tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
-  // Clauses with T or none
-  if (FollowsTParser::MatchParser(tokens_)) {
-    FollowsTParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (FollowsParser::MatchParser(tokens_)) {
-    FollowsParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (ParentTParser::MatchParser(tokens_)) {
-    ParentTParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (ParentParser::MatchParser(tokens_)) {
-    ParentParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (CallsTParser::MatchParser(tokens_)) {
-    CallsTParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (CallsParser::MatchParser(tokens_)) {
-    CallsParser clause_parser;
-    op = clause_parser.Parse(queryData);
+  for (const auto& clause_parser : st_parsers_) {
+    if (clause_parser->MatchParser(queryData)) {
+      op = clause_parser->Parse(queryData);
+      break;
+    }
   }
-  // Clauses with P or S
-  else if (UsesPParser::MatchParser(queryData)) {
-    UsesPParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (UsesSParser::MatchParser(queryData)) {
-    UsesSParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (ModifiesPParser::MatchParser(queryData)) {
-    ModifiesPParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  } else if (ModifiesSParser::MatchParser(queryData)) {
-    ModifiesSParser clause_parser;
-    op = clause_parser.Parse(queryData);
-  }
-  // Check for each clause type, append below new clauses
-
   if (op != nullptr) {
     query_string_builder_.AddQueryOperation(op);
   }
@@ -147,8 +131,8 @@ bool QueryParser::ParsePattern() {
               tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
-  if (PatternParser::MatchParser(tokens_)) {
-    PatternParser pp;
+  PatternParser pp;
+  if (pp.MatchParser(queryData)) {
     op = pp.Parse(queryData);
     query_string_builder_.AddQueryOperation(op);
     return true;

@@ -12,9 +12,9 @@ class UsesSParser : public QueryOperationParser {
   static void CheckUsesSType(const StatementReference& stmtRef);
 
  public:
-  [[nodiscard]] static bool MatchParser(
+  [[nodiscard]] bool MatchParser(
       const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-          data);
+          data) const override;
   std::shared_ptr<QueryOperation> Parse(
       std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data)
       override;

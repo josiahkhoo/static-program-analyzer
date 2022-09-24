@@ -4,7 +4,11 @@
 
 const std::string CallsParser::CLAUSE_WORD = "Calls";
 
-bool CallsParser::MatchParser(const std::shared_ptr<TokenHandler>& tokens) {
+bool CallsParser::MatchParser(
+    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
+        data) const {
+  // Get data
+  std::shared_ptr<TokenHandler> tokens = data.first;
   return QueryOperationMatcher::MatchParser(tokens, CLAUSE_WORD);
 }
 
