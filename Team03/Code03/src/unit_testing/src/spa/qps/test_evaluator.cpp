@@ -661,8 +661,8 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
-        int statement_number) const override {
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromAssign(int statement_number) const override {
       return {};
     }
   };
@@ -932,8 +932,8 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
-        int statement_number) const override {
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromAssign(int statement_number) const override {
       return {};
     }
   };
