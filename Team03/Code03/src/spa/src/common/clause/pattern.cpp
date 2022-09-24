@@ -18,7 +18,7 @@ Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
 
 std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
-  if (entity_.IsSynonym() || entity_.IsWildCard()) {
+  if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
     if (syn_.IsEntityType(ASSIGN)) {
       return queryable_pkb.QueryAllAssignPattern(expression_);
     } else if (syn_.IsEntityType(IF)) {
@@ -26,14 +26,14 @@ std::unordered_set<std::string> Pattern::Fetch(
     } else if (syn_.IsEntityType(WHILE)) {
       return queryable_pkb.QueryAllWhilePattern();
     }
-  } else if (entity_.IsIdentifier()) {
+  } else if (GetEntity().IsIdentifier()) {
     if (syn_.IsEntityType(ASSIGN)) {
-      return queryable_pkb.QueryAssignPattern(entity_.GetIdentifier(),
+      return queryable_pkb.QueryAssignPattern(GetEntity().GetIdentifier(),
                                               expression_);
     } else if (syn_.IsEntityType(IF)) {
-      return queryable_pkb.QueryIfPattern(entity_.GetIdentifier());
+      return queryable_pkb.QueryIfPattern(GetEntity().GetIdentifier());
     } else if (syn_.IsEntityType(WHILE)) {
-      return queryable_pkb.QueryWhilePattern(entity_.GetIdentifier());
+      return queryable_pkb.QueryWhilePattern(GetEntity().GetIdentifier());
     }
   }
   assert(false);

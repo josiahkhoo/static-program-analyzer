@@ -24,6 +24,7 @@ std::shared_ptr<QueryOperation> PatternParser::Parse(
   Token next = tokens->Peek();
   tokens->Expect(Token::IDENTIFIER);
   Synonym synonym = builder.GetSynonym(next.GetValue());
+  // Check if ASSIGN, IF, WHILE
   QueryParserUtil::CheckPatternSyn(synonym);
   tokens->Expect(Token::LEFT_ROUND_BRACKET);
   EntityReference entity_ref =
@@ -34,11 +35,18 @@ std::shared_ptr<QueryOperation> PatternParser::Parse(
   }
   tokens->Expect(Token::COMMA);
   Expression exp;
+  // ASSIGN get expression
   if (synonym.IsEntityType(ASSIGN)) {
     exp = QueryParserUtil::ExtractExpression(tokens, builder);
-  } else if (synonym.IsEntityType(IF)) {
+  }
+  // IF get _,_
+  else if (synonym.IsEntityType(IF)) {
     tokens->Expect(Token::UNDERSCORE);
     tokens->Expect(Token::COMMA);
+    tokens->Expect(Token::UNDERSCORE);
+  }
+  // WHILE get _
+  else if (synonym.IsEntityType(WHILE)) {
     tokens->Expect(Token::UNDERSCORE);
   }
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
