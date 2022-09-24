@@ -11,7 +11,7 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
   When(Method(mock_entity_extractor, Extract)).Return(eer);
   Mock<AbstractionExtractorImpl> mock_abstraction_extractor;
   AbstractionExtractorResult aer =
-      AbstractionExtractorResult({}, {}, {}, {}, {}, {}, {}, {});
+      AbstractionExtractorResult({}, {}, {}, {}, {}, {}, {}, {}, {}, {});
   When(Method(mock_abstraction_extractor, Extract)).Return(aer);
 
   DesignExtractorImpl extractor_under_test = DesignExtractorImpl(

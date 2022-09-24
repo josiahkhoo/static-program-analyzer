@@ -1,5 +1,5 @@
 procedure procedure{
-    read read; call call; while (while!= 0) {
+    read read; call procedure; while (while!= 0) {
       if = if;
       while = while;
       call = call;
