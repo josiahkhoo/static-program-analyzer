@@ -14,7 +14,7 @@ bool PatternParser::MatchParser(
 }
 
 std::shared_ptr<QueryOperation> PatternParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder &> data) {
+    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
