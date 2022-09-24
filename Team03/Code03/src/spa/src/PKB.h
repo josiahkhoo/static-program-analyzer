@@ -179,9 +179,13 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::unordered_set<std::string> QueryAllWhilePattern() const override;
   std::unordered_set<std::string> QueryWhilePattern(
       std::string ident) const override;
+  std::unordered_set<std::string> QueryPatternVariablesFromWhile(
+      int statement_number) const override;
   std::unordered_set<std::string> QueryAllIfPattern() const override;
   std::unordered_set<std::string> QueryIfPattern(
       std::string ident) const override;
+  std::unordered_set<std::string> QueryPatternVariablesFromIf(
+      int statement_number) const override;
 
  private:
   EntityManager entity_manager_;

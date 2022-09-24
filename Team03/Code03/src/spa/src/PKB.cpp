@@ -599,8 +599,18 @@ std::unordered_set<std::string> PKB::QueryWhilePattern(
   return {};
 }
 
+std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
+    int statement_number) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllIfPattern() const { return {}; };
 
 std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
+    int statement_number) const {
   return {};
 }

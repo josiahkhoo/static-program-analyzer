@@ -225,6 +225,16 @@ class QueryablePkbStub : public QueryablePkb {
       std::string ident) const override {
     return {"QueryIfPattern"};
   }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
+      int statement_number) const {
+    return {};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+      int statement_number) const {
+    return {};
+  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
@@ -635,6 +645,16 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
         std::string ident) const override {
       return {};
     }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -889,6 +909,16 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
     [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
         std::string ident) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
       return {};
     }
   };
