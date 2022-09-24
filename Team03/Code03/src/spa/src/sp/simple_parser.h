@@ -1,13 +1,13 @@
 #ifndef SPA_SIMPLE_PARSER_H
 #define SPA_SIMPLE_PARSER_H
 
+#include <unordered_map>
+#include <unordered_set>
+
 #include "common/lexer.h"
 #include "common/parser.h"
 #include "common/t_node.h"
 #include "common/token.h"
-
-#include <unordered_set>
-#include <unordered_map>
 
 class SimpleParser : public Parser<TNode, std::vector<Token>> {
  public:
@@ -73,7 +73,8 @@ class SimpleParser : public Parser<TNode, std::vector<Token>> {
 
   void CheckValidProgram();
 
-  void TraverseProcedureTree(std::unordered_set<std::string> &children, std::string &start, std::string &end);
+  void TraverseProcedureTree(std::unordered_set<std::string> &children,
+                             std::string &start, std::string &end);
 };
 
 #endif  // SPA_SIMPLE_PARSER_H

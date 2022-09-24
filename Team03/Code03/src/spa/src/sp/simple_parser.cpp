@@ -63,7 +63,7 @@ std::shared_ptr<TNode> SimpleParser::ParseProcedure() {
   std::string proc_name_ = Peek(token_pos_).GetValue();
   Expect(Token::IDENTIFIER);
 
-  if (proc_map_.find(proc_name_) == proc_map_.end()){
+  if (proc_map_.find(proc_name_) == proc_map_.end()) {
     curr_proc_ = proc_name_;
     std::unordered_set<std::string> empty_set;
     proc_map_.emplace(proc_name_, empty_set);
@@ -466,17 +466,18 @@ void SimpleParser::CheckValidProgram() {
 }
 
 void SimpleParser::TraverseProcedureTree(
-    std::unordered_set<std::string> &children, std::string &start, std::string &end) {
+    std::unordered_set<std::string> &children, std::string &start,
+    std::string &end) {
   for (const auto &child : children) {
     end = child;
     if (end == start) {
-      throw std::runtime_error ("Cyclic procedure calling!");
+      throw std::runtime_error("Cyclic procedure calling!");
     }
     if (proc_map_.find(end) == proc_map_.end()) {
-      throw std::runtime_error ("Called procedure not found!");
+      throw std::runtime_error("Called procedure not found!");
     }
     auto next_children = proc_map_[child];
-    if (next_children.empty()){
+    if (next_children.empty()) {
       break;
     }
     TraverseProcedureTree(next_children, start, end);
