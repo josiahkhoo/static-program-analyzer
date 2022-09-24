@@ -5,12 +5,14 @@
 #include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
+#include "common/abstraction/if_pattern_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/modifies_s_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
+#include "common/abstraction/while_pattern_abstraction.h"
 
 class AbstractionExtractorResult {
  public:
@@ -24,7 +26,9 @@ class AbstractionExtractorResult {
       std::vector<UsesSAbstraction> uses_s_abstractions,
       std::vector<UsesPAbstraction> uses_p_abstractions,
       std::vector<ModifiesSAbstraction> modifies_s_abstractions,
-      std::vector<ModifiesPAbstraction> modifies_p_abstractions);
+      std::vector<ModifiesPAbstraction> modifies_p_abstractions,
+      std::vector<IfPatternAbstraction> if_pattern_abstractions,
+      std::vector<WhilePatternAbstraction> while_pattern_abstractions);
 
   [[nodiscard]] std::vector<FollowsAbstraction> GetFollowsAbstractions() const;
 
@@ -49,6 +53,12 @@ class AbstractionExtractorResult {
   [[nodiscard]] std::vector<ModifiesPAbstraction> GetModifiesPAbstractions()
       const;
 
+  [[nodiscard]] std::vector<IfPatternAbstraction> GetIfPatternAbstractions()
+      const;
+
+  [[nodiscard]] std::vector<WhilePatternAbstraction>
+  GetWhilePatternAbstractions() const;
+
   bool operator==(const AbstractionExtractorResult &rhs) const;
 
   bool operator!=(const AbstractionExtractorResult &rhs) const;
@@ -64,6 +74,8 @@ class AbstractionExtractorResult {
   std::vector<UsesPAbstraction> uses_p_abstractions_;
   std::vector<ModifiesSAbstraction> modifies_s_abstractions_;
   std::vector<ModifiesPAbstraction> modifies_p_abstractions_;
+  std::vector<IfPatternAbstraction> if_pattern_abstractions_;
+  std::vector<WhilePatternAbstraction> while_pattern_abstractions_;
 };
 
 #endif  // SPA_ABSTRACTION_EXTRACTOR_RESULT_H

@@ -4,10 +4,12 @@
 #include "sp/extractor/abstraction/calls_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/if_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/parent_abstraction_extractor.h"
 #include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
+#include "sp/extractor/abstraction/while_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 
 using namespace fakeit;
@@ -29,13 +31,21 @@ TEST_CASE("Abstraction Extractor", "[AbstractionExtractor]") {
   When(Method(uses_abstraction_extractor, Extract)).AlwaysReturn({{}, {}});
   Mock<ModifiesAbstractionExtractor> modifies_abstraction_extractor;
   When(Method(modifies_abstraction_extractor, Extract)).AlwaysReturn({{}, {}});
+  Mock<IfPatternAbstractionExtractor> if_pattern_abstraction_extractor;
+  When(Method(if_pattern_abstraction_extractor, Extract))
+      .AlwaysReturn({{}, {}});
+  Mock<WhilePatternAbstractionExtractor> while_pattern_abstraction_extractor;
+  When(Method(while_pattern_abstraction_extractor, Extract))
+      .AlwaysReturn({{}, {}});
 
   AbstractionExtractorImpl extractor_under_test = AbstractionExtractorImpl(
       follows_abstraction_extractor.get(),
       follows_t_abstraction_extractor.get(), parent_abstraction_extractor.get(),
       parent_t_abstraction_extractor.get(), calls_abstraction_extractor.get(),
-      calls_t_abstraction_extractor.get(), uses_abstraction_extractor.get(),
-      modifies_abstraction_extractor.get());
+      calls_t_abstraction_extractor.get(),
+      if_pattern_abstraction_extractor.get(),
+      while_pattern_abstraction_extractor.get(),
+      uses_abstraction_extractor.get(), modifies_abstraction_extractor.get());
 
   SECTION("Extracts respective entities") {
     std::vector<AssignEntity> assign_entities = {};
