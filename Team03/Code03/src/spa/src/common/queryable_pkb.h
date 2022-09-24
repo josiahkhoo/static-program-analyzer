@@ -128,6 +128,10 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const = 0;
 
+  /// Query pattern variables used in assign statements.
+  [[nodiscard]] virtual std::unordered_set<std::string>
+  QueryPatternVariablesFromAssign(int statement_number) const = 0;
+
   /// Query all while statements that has any patterns.
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
       const = 0;

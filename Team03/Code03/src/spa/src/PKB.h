@@ -176,6 +176,8 @@ class PKB : public QueryablePkb, public StorablePkb {
       Expression exp) const override;
   std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const override;
+  std::unordered_set<std::string> QueryPatternVariablesFromAssign(
+      int statement_number) const override;
   std::unordered_set<std::string> QueryAllWhilePattern() const override;
   std::unordered_set<std::string> QueryWhilePattern(
       std::string ident) const override;

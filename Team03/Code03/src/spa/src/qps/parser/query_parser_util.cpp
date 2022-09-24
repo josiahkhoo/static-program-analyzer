@@ -157,7 +157,8 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 }
 
 void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
-  if (!synonym.IsEntityType(ASSIGN)) {
+  if (!(synonym.IsEntityType(ASSIGN) || synonym.IsEntityType(IF) ||
+        synonym.IsEntityType(WHILE))) {
     throw SemanticException("Syn-assign not supported");
   }
 }

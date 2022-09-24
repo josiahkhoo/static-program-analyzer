@@ -19,24 +19,51 @@ Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
 std::unordered_set<std::string> Pattern::Fetch(
     const QueryablePkb &queryable_pkb) const {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
-    return queryable_pkb.QueryAllAssignPattern(expression_);
+    if (syn_.IsEntityType(ASSIGN)) {
+      return queryable_pkb.QueryAllAssignPattern(expression_);
+    } else if (syn_.IsEntityType(IF)) {
+      return queryable_pkb.QueryAllIfPattern();
+    } else if (syn_.IsEntityType(WHILE)) {
+      return queryable_pkb.QueryAllWhilePattern();
+    }
   } else if (GetEntity().IsIdentifier()) {
-    return queryable_pkb.QueryAssignPattern(GetEntity().GetIdentifier(),
-                                            expression_);
+    if (syn_.IsEntityType(ASSIGN)) {
+      return queryable_pkb.QueryAssignPattern(GetEntity().GetIdentifier(),
+                                              expression_);
+    } else if (syn_.IsEntityType(IF)) {
+      return queryable_pkb.QueryIfPattern(GetEntity().GetIdentifier());
+    } else if (syn_.IsEntityType(WHILE)) {
+      return queryable_pkb.QueryWhilePattern(GetEntity().GetIdentifier());
+    }
   }
   assert(false);
+  return {};
 }
 
 std::unordered_set<std::string> Pattern::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
+  if (syn_.IsEntityType(ASSIGN)) {
+    return queryable_pkb.QueryPatternVariablesFromAssign(std::stoi(lhs));
+  } else if (syn_.IsEntityType(IF)) {
+    return queryable_pkb.QueryPatternVariablesFromIf(std::stoi(lhs));
+  } else if (syn_.IsEntityType(WHILE)) {
+    return queryable_pkb.QueryPatternVariablesFromWhile(std::stoi(lhs));
+  }
   assert(false);
   return {};
 }
 
 std::unordered_set<std::string> Pattern::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryAssignPattern(rhs, expression_);
+  if (syn_.IsEntityType(ASSIGN)) {
+    return queryable_pkb.QueryAssignPattern(rhs, expression_);
+  } else if (syn_.IsEntityType(IF)) {
+    return queryable_pkb.QueryIfPattern(rhs);
+  } else if (syn_.IsEntityType(WHILE)) {
+    return queryable_pkb.QueryWhilePattern(rhs);
+  }
   assert(false);
+  return {};
 }
 
 const EntityReference &Pattern::GetEntity() const { return entity_; }
