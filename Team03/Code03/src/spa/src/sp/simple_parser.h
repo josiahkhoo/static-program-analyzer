@@ -6,7 +6,7 @@
 #include "common/t_node.h"
 #include "common/token.h"
 
-class SimpleParser : public Parser<TNode> {
+class SimpleParser : public Parser<TNode, std::vector<Token>> {
  public:
   SimpleParser();
 

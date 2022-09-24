@@ -11,14 +11,14 @@
 
 class SourceProcessor {
  public:
-  SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
+  SourceProcessor(Lexer &lexer, Parser<TNode, std::vector<Token>> &parser,
                   DesignExtractor &design_extractor, StorablePkb &storable_pkb);
 
   void Process(const std::string &filename);
 
  private:
   Lexer &lexer_;
-  Parser<TNode> &parser_;
+  Parser<TNode, std::vector<Token>> &parser_;
   DesignExtractor &design_extractor_;
   StorablePkb &storable_pkb_;
 

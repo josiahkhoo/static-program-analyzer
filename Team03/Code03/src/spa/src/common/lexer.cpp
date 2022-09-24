@@ -3,8 +3,6 @@
 #include <istream>
 #include <regex>
 
-#include "token.h"
-
 std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::WHITESPACE, "^(\\s+)"},
     {Token::NUMBER, "^(\\d+)"},

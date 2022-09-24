@@ -2,7 +2,8 @@
 
 #include "fstream"
 
-SourceProcessor::SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
+SourceProcessor::SourceProcessor(Lexer &lexer,
+                                 Parser<TNode, std::vector<Token>> &parser,
                                  DesignExtractor &design_extractor,
                                  StorablePkb &storable_pkb)
     : lexer_(lexer),
