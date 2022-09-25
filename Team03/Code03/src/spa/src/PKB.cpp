@@ -357,17 +357,30 @@ std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllUsesSBy(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetVariablesUsedByStatements();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
+/// QueryAllUsesBy
+/// \param type
+/// \return All Variables that are used by EntityType (Procedure or
+/// Statement types)
+std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
+  if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
+    return {};
+  } else if (type == EntityType::PROCEDURE) {
+    return relationship_manager_.GetVariablesUsedByProcedures();
+  } else if (type == EntityType::STATEMENT) {
+    return relationship_manager_.GetVariablesUsedByStatements();
+  } else {
+    std::unordered_set<std::string> result;
+    std::unordered_set<std::string> typed_statements = QueryAll(type);
+    for (const std::string& statement : typed_statements) {
+      std::unordered_set<std::string> vars =
+          relationship_manager_.GetVariablesUsedByStatement(
+              std::stoi(statement));
+      for (const std::string& var : vars) {
+        result.emplace(var);
+      }
     }
+    return result;
   }
-  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
@@ -392,19 +405,6 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetStatementsUsingVariable(identifier);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
-}
-
-std::unordered_set<std::string> PKB::QueryAllUsesPBy(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetVariablesUsedByProcedures();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {

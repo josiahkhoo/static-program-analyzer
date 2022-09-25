@@ -135,9 +135,7 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   // Uses query methods
   std::unordered_set<std::string> QueryAllUses(EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesSBy(
-      EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesPBy(
+  std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllUsesRelations() const override;
   std::unordered_set<std::string> QueryUsesS(int statement_number,

@@ -56,7 +56,7 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUses(
       EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesSBy(
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesRelations()
@@ -67,9 +67,6 @@ class QueryablePkb {
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryUsesSBy(
       std::string identifier, EntityType type) const = 0;
-
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesPBy(
-      EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryUsesP(
       std::string identifier, EntityType type) const = 0;

@@ -79,9 +79,9 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryAllUses"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const override {
-    return {"QueryAllUsesSBy"};
+    return {"QueryAllUsesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
@@ -92,11 +92,6 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
       std::string identifier, EntityType type) const override {
     return {"QueryUsesSBy"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-      EntityType type) const override {
-    return {"QueryAllUsesPBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
@@ -542,18 +537,13 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
         EntityType type) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
         int statement_number, EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-        EntityType type) const override {
       return {};
     }
 
@@ -808,7 +798,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
         EntityType type) const override {
       return {};
     }
@@ -820,11 +810,6 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
         std::string identifier, EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-        EntityType type) const override {
       return {};
     }
 
