@@ -175,8 +175,7 @@ void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
   }
 }
 
-void QueryParserUtil::CheckVariableEntity(
-    const EntityReference& entity_ref) {
+void QueryParserUtil::CheckVariableEntity(const EntityReference& entity_ref) {
   if (entity_ref.IsSynonym() &&
       entity_ref.GetSynonym().GetEntityType() != VARIABLE) {
     throw SemanticException("Synonym is not a variable entity");
