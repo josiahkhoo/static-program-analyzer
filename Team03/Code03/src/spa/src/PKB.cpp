@@ -334,7 +334,17 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllUsesS(EntityType type) const {
+/* ====================================
+ * Uses Query Methods
+ * ==================================== */
+
+/// QueryAllUses
+/// \param type
+/// \return All statements or procedures that uses some Variable
+std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
+  if (type == EntityType::PROCEDURE) {
+    return relationship_manager_.GetUsingProcedures();
+  }
   std::unordered_set<std::string> statements =
       relationship_manager_.GetUsingStatements();
   std::unordered_set<std::string> typed_statements = QueryAll(type);
@@ -392,19 +402,6 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllUsesP(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetUsingProcedures();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
-}
-
 std::unordered_set<std::string> PKB::QueryAllUsesPBy(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetVariablesUsedByProcedures();
@@ -445,6 +442,10 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
   }
   return result;
 }
+
+/* ====================================
+ * Modifies Query Methods
+ * ==================================== */
 
 /// QueryAllModifies
 /// \param type
@@ -548,6 +549,10 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
   return result;
 }
 
+/* ====================================
+ * Calls Query Methods
+ * ==================================== */
+
 std::unordered_set<std::string> PKB::QueryAllCalls(EntityType type) const {
   return {};
 }
@@ -580,6 +585,10 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier,
   return {};
 }
 
+/* ====================================
+ * Assign Pattern Query Methods
+ * ==================================== */
+
 std::unordered_set<std::string> PKB::QueryAllAssignPattern(
     Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
@@ -595,6 +604,10 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
   return {};
 }
 
+/* ====================================
+ * While Pattern Query Methods
+ * ==================================== */
+
 std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
   return {};
 };
@@ -608,6 +621,10 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
     int statement_number) const {
   return {};
 }
+
+/* ====================================
+ * If Pattern Query Methods
+ * ==================================== */
 
 std::unordered_set<std::string> PKB::QueryAllIfPattern() const { return {}; };
 

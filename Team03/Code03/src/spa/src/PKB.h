@@ -132,21 +132,24 @@ class PKB : public QueryablePkb, public StorablePkb {
                                                EntityType type) const override;
   std::unordered_set<std::string> QueryParentTBy(
       int statement_number, EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesS(EntityType type) const override;
+
+  // Uses query methods
+  std::unordered_set<std::string> QueryAllUses(EntityType type) const override;
   std::unordered_set<std::string> QueryAllUsesSBy(
+      EntityType type) const override;
+  std::unordered_set<std::string> QueryAllUsesPBy(
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllUsesRelations() const override;
   std::unordered_set<std::string> QueryUsesS(int statement_number,
                                              EntityType type) const override;
   std::unordered_set<std::string> QueryUsesSBy(std::string identifier,
                                                EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesP(EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesPBy(
-      EntityType type) const override;
   std::unordered_set<std::string> QueryUsesP(std::string identifier,
                                              EntityType type) const override;
   std::unordered_set<std::string> QueryUsesPBy(std::string identifier,
                                                EntityType type) const override;
+
+  // Modifies query methods
   std::unordered_set<std::string> QueryAllModifies(
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllModifiesBy(
@@ -160,6 +163,8 @@ class PKB : public QueryablePkb, public StorablePkb {
       std::string identifier, EntityType type) const override;
   std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier, EntityType type) const override;
+
+  // Calls query methods
   std::unordered_set<std::string> QueryAllCalls(EntityType type) const override;
   std::unordered_set<std::string> QueryAllCallsBy(
       EntityType type) const override;
@@ -172,17 +177,23 @@ class PKB : public QueryablePkb, public StorablePkb {
                                               EntityType type) const override;
   std::unordered_set<std::string> QueryCallsTBy(std::string identifier,
                                                 EntityType type) const override;
+
+  // Assign pattern query methods
   std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const override;
   std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const override;
   std::unordered_set<std::string> QueryPatternVariablesFromAssign(
       int statement_number) const override;
+
+  // While pattern query methods
   std::unordered_set<std::string> QueryAllWhilePattern() const override;
   std::unordered_set<std::string> QueryWhilePattern(
       std::string ident) const override;
   std::unordered_set<std::string> QueryPatternVariablesFromWhile(
       int statement_number) const override;
+
+  // If pattern query methods
   std::unordered_set<std::string> QueryAllIfPattern() const override;
   std::unordered_set<std::string> QueryIfPattern(
       std::string ident) const override;
