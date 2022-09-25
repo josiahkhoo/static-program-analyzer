@@ -2,7 +2,6 @@
 #define SPA_CALLS_T_PARSER_H
 
 #include "common/clause/calls_t_clause.h"
-#include "qps/parser/query_operation_matcher_t.h"
 #include "qps/parser/query_operation_parser.h"
 
 /// Parser tokens and creates a new CallsTClause object

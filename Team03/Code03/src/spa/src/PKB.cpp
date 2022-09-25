@@ -590,6 +590,11 @@ std::unordered_set<std::string> PKB::QueryAssignPattern(std::string lhs,
   return pattern_manager_.GetPattern(lhs, exp);
 }
 
+std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
+    int statement_number) const {
+  return {};
+}
+
 std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
   return {};
 };

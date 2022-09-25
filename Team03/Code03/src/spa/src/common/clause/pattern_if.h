@@ -1,23 +1,20 @@
-#ifndef SPA_PATTERN_H
-#define SPA_PATTERN_H
+#ifndef SPA_PATTERN_IF_H
+#define SPA_PATTERN_IF_H
 
 #include <vector>
 
 #include "common/pair.h"
 #include "common/query_operation.h"
 #include "common/reference/entity_reference.h"
-#include "common/reference/expression.h"
 
-class Pattern : public QueryOperation {
+class PatternIf : public QueryOperation {
  public:
-  explicit Pattern(Synonym syn, EntityReference entity, Expression expression);
+  explicit PatternIf(Synonym syn, EntityReference entity);
 
   [[nodiscard]] std::unordered_set<std::string> Fetch(
       const QueryablePkb &queryable_pkb) const override;
 
   [[nodiscard]] const EntityReference &GetEntity() const;
-
-  [[nodiscard]] const Expression &GetExpression() const;
 
   [[nodiscard]] Synonym GetSynonym() const override;
 
@@ -38,7 +35,6 @@ class Pattern : public QueryOperation {
  private:
   Synonym syn_;
   EntityReference entity_;
-  Expression expression_;
 };
 
-#endif  // SPA_PATTERN_H
+#endif  // SPA_PATTERN_IF_H

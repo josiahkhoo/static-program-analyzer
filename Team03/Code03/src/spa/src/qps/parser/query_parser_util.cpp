@@ -157,7 +157,8 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 }
 
 void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
-  if (!synonym.IsEntityType(ASSIGN)) {
+  if (!(synonym.IsEntityType(ASSIGN) || synonym.IsEntityType(IF) ||
+        synonym.IsEntityType(WHILE))) {
     throw SemanticException("Syn-assign not supported");
   }
 }
@@ -171,6 +172,13 @@ void QueryParserUtil::CheckEntityRhs(const EntityReference& entRef) {
 void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
   if (!entRef.IsEntityType(PROCEDURE)) {
     throw SemanticException("Expected procedure reference");
+  }
+}
+
+void QueryParserUtil::CheckVariableEntity(const EntityReference& entity_ref) {
+  if (entity_ref.IsSynonym() &&
+      entity_ref.GetSynonym().GetEntityType() != VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
   }
 }
 

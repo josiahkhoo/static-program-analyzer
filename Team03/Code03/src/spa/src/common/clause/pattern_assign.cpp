@@ -1,4 +1,4 @@
-#include "pattern.h"
+#include "pattern_assign.h"
 
 #include <cassert>
 #include <unordered_set>
@@ -6,7 +6,8 @@
 
 #include "common/queryable_pkb.h"
 
-Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
+PatternAssign::PatternAssign(Synonym syn, EntityReference entity,
+                             Expression expression)
     : syn_(std::move(syn)), entity_(std::move(entity)) {
   // Full Wildcard
   Expression exp = std::move(expression);
@@ -16,7 +17,7 @@ Pattern::Pattern(Synonym syn, EntityReference entity, Expression expression)
   expression_ = exp;
 }
 
-std::unordered_set<std::string> Pattern::Fetch(
+std::unordered_set<std::string> PatternAssign::Fetch(
     const QueryablePkb &queryable_pkb) const {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
     return queryable_pkb.QueryAllAssignPattern(expression_);
@@ -25,35 +26,34 @@ std::unordered_set<std::string> Pattern::Fetch(
                                             expression_);
   }
   assert(false);
-}
-
-std::unordered_set<std::string> Pattern::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
-  assert(false);
   return {};
 }
 
-std::unordered_set<std::string> Pattern::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryAssignPattern(rhs, expression_);
-  assert(false);
+std::unordered_set<std::string> PatternAssign::FetchPossibleRhs(
+    std::string lhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryPatternVariablesFromAssign(std::stoi(lhs));
 }
 
-const EntityReference &Pattern::GetEntity() const { return entity_; }
+std::unordered_set<std::string> PatternAssign::FetchPossibleLhs(
+    std::string rhs, const QueryablePkb &queryable_pkb) const {
+  return queryable_pkb.QueryAssignPattern(rhs, expression_);
+}
 
-const Expression &Pattern::GetExpression() const { return expression_; }
+const EntityReference &PatternAssign::GetEntity() const { return entity_; }
 
-Synonym Pattern::GetSynonym() const {
+const Expression &PatternAssign::GetExpression() const { return expression_; }
+
+Synonym PatternAssign::GetSynonym() const {
   assert(GetType() == QueryOperation::SINGLE_SYNONYM);
   return syn_;
 }
 
-std::pair<Synonym, Synonym> Pattern::GetSynonymPair() const {
+std::pair<Synonym, Synonym> PatternAssign::GetSynonymPair() const {
   assert(GetType() == QueryOperation::DOUBLE_SYNONYM);
   return {syn_, GetEntity().GetSynonym()};
 }
 
-QueryOperation::Type Pattern::GetType() const {
+QueryOperation::Type PatternAssign::GetType() const {
   // A pattern can only be a single synonym or double synonym
   if (GetEntity().IsSynonym()) {
     return QueryOperation::DOUBLE_SYNONYM;
@@ -61,7 +61,7 @@ QueryOperation::Type Pattern::GetType() const {
   return QueryOperation::SINGLE_SYNONYM;
 }
 
-QueryOperation::IterateSide Pattern::GetIterateSide(
+QueryOperation::IterateSide PatternAssign::GetIterateSide(
     std::vector<std::vector<std::string>> lhs,
     std::vector<std::vector<std::string>> rhs) const {
   return QueryOperation::RHS;

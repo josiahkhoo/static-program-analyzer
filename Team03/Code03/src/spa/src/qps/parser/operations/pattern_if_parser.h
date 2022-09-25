@@ -1,11 +1,11 @@
-#ifndef SPA_FOLLOW_T_PARSER_H
-#define SPA_FOLLOW_T_PARSER_H
+#ifndef SPA_PATTERN_IF_PARSER_H
+#define SPA_PATTERN_IF_PARSER_H
 
-#include "common/clause/follows_t_clause.h"
+#include "common/clause/pattern_assign.h"
 #include "qps/parser/query_operation_parser.h"
 
-/// Parser tokens and creates a new FollowsTClause object
-class FollowsTParser : public QueryOperationParser {
+/// Parser tokens and creates a new Pattern IF object
+class PatternIfParser : public QueryOperationParser {
  private:
   static const std::string CLAUSE_WORD;
 
@@ -18,4 +18,4 @@ class FollowsTParser : public QueryOperationParser {
       override;
 };
 
-#endif  // SPA_FOLLOW_T_PARSER_H
+#endif  // SPA_PATTERN_IF_PARSER_H
