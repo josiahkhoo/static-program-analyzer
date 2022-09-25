@@ -15,7 +15,9 @@ AbstractionExtractorResult::AbstractionExtractorResult(
     std::vector<UsesSAbstraction> uses_s_abstractions,
     std::vector<UsesPAbstraction> uses_p_abstractions,
     std::vector<ModifiesSAbstraction> modifies_s_abstractions,
-    std::vector<ModifiesPAbstraction> modifies_p_abstractions)
+    std::vector<ModifiesPAbstraction> modifies_p_abstractions,
+    std::vector<IfPatternAbstraction> if_pattern_abstractions,
+    std::vector<WhilePatternAbstraction> while_pattern_abstractions)
     : follows_abstractions_(std::move(follows_abstractions)),
       follows_t_abstractions_(std::move(follows_t_abstractions)),
       parent_abstractions_(std::move(parent_abstractions)),
@@ -25,7 +27,9 @@ AbstractionExtractorResult::AbstractionExtractorResult(
       uses_s_abstractions_(std::move(uses_s_abstractions)),
       uses_p_abstractions_(std::move(uses_p_abstractions)),
       modifies_s_abstractions_(std::move(modifies_s_abstractions)),
-      modifies_p_abstractions_(std::move(modifies_p_abstractions)) {}
+      modifies_p_abstractions_(std::move(modifies_p_abstractions)),
+      if_pattern_abstractions_(std::move(if_pattern_abstractions)),
+      while_pattern_abstractions_(std::move(while_pattern_abstractions)) {}
 
 std::vector<FollowsAbstraction>
 AbstractionExtractorResult::GetFollowsAbstractions() const {
@@ -75,6 +79,16 @@ AbstractionExtractorResult::GetModifiesSAbstractions() const {
 std::vector<ModifiesPAbstraction>
 AbstractionExtractorResult::GetModifiesPAbstractions() const {
   return modifies_p_abstractions_;
+}
+
+std::vector<IfPatternAbstraction>
+AbstractionExtractorResult::GetIfPatternAbstractions() const {
+  return if_pattern_abstractions_;
+}
+
+std::vector<WhilePatternAbstraction>
+AbstractionExtractorResult::GetWhilePatternAbstractions() const {
+  return while_pattern_abstractions_;
 }
 
 bool AbstractionExtractorResult::operator==(
