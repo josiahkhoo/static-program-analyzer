@@ -175,6 +175,14 @@ void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
   }
 }
 
+void QueryParserUtil::CheckVariableEntity(
+    const EntityReference& entity_ref) {
+  if (entity_ref.IsSynonym() &&
+      entity_ref.GetSynonym().GetEntityType() != VARIABLE) {
+    throw SemanticException("Synonym is not a variable entity");
+  }
+}
+
 bool QueryParserUtil::CheckProcedureClause(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {

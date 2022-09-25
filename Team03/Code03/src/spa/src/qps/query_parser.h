@@ -17,6 +17,7 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
   std::shared_ptr<TokenHandler> tokens_;
   QueryStringBuilder query_string_builder_;
   std::vector<std::unique_ptr<QueryOperationParser>> st_parsers_;
+  std::vector<std::unique_ptr<QueryOperationParser>> pattern_parsers_;
 
   void ParseDeclaration();
 
@@ -30,7 +31,7 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
 
   bool ParsePattern();
 
-  void ParseCleanUpSyntax();
+  void CheckLeftoverTokens();
 };
 
 #endif  // SPA_QUERY_PARSER_H

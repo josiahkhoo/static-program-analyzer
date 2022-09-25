@@ -1,5 +1,6 @@
 #include "follows_t_parser.h"
 
+#include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_parser_util.h"
 
 const std::string FollowsTParser::CLAUSE_WORD = "Follows";
@@ -9,7 +10,7 @@ bool FollowsTParser::MatchParser(
         data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
-  return QueryOperationMatcherT::MatchParser(tokens, CLAUSE_WORD);
+  return QueryOperationMatcher::MatchTParser(tokens, CLAUSE_WORD);
 }
 
 std::shared_ptr<QueryOperation> FollowsTParser::Parse(

@@ -14,7 +14,9 @@
 #include "qps/parser/operations/modifies_s_parser.h"
 #include "qps/parser/operations/parent_parser.h"
 #include "qps/parser/operations/parent_t_parser.h"
-#include "qps/parser/operations/pattern_parser.h"
+#include "qps/parser/operations/pattern_assign_parser.h"
+#include "qps/parser/operations/pattern_if_parser.h"
+#include "qps/parser/operations/pattern_while_parser.h"
 #include "qps/parser/operations/uses_p_parser.h"
 #include "qps/parser/operations/uses_s_parser.h"
 #include "qps/parser/query_parser_util.h"
@@ -27,7 +29,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
   ParseDeclaration();
   ParseSelect();
   ParseQueryOperation();
-  ParseCleanUpSyntax();
+  CheckLeftoverTokens();
   return query_string_builder_.GetQueryString();
 }
 
@@ -84,6 +86,10 @@ void QueryParser::ParseQueryOperation() {
   st_parsers_.push_back(std::make_unique<ModifiesPParser>());
   st_parsers_.push_back(std::make_unique<ModifiesSParser>());
 
+  pattern_parsers_.push_back(std::make_unique<PatternAssignParser>());
+  pattern_parsers_.push_back(std::make_unique<PatternIfParser>());
+  pattern_parsers_.push_back(std::make_unique<PatternWhileParser>());
+
   while (tokens_->IsNotEnd()) {
     bool found_clause = ParseClause();
     bool found_pattern = ParsePattern();
@@ -133,16 +139,20 @@ bool QueryParser::ParsePattern() {
               tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
-  PatternParser pp;
-  if (pp.MatchParser(queryData)) {
-    op = pp.Parse(queryData);
+  for (const auto& clause_parser : pattern_parsers_) {
+    if (clause_parser->MatchParser(queryData)) {
+      op = clause_parser->Parse(queryData);
+      break;
+    }
+  }
+  if (op != nullptr) {
     query_string_builder_.AddQueryOperation(op);
     return true;
   }
   return false;
 }
 
-void QueryParser::ParseCleanUpSyntax() {
+void QueryParser::CheckLeftoverTokens() {
   if (!tokens_->CheckEnd() && tokens_->Peek().IsNot(Token::END)) {
     throw SyntaxException("Unexpected additional token(s)");
   }
