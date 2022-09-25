@@ -246,12 +246,12 @@ std::shared_ptr<TNode> SimpleParser::ParseCondExpr() {
     throw std::runtime_error("Empty condition!");
   }
 
-  //Check for rel_expr
-  int saved_token_pos =  token_pos_;
+  // Check for rel_expr
+  int saved_token_pos = token_pos_;
   try {
     std::shared_ptr<TNode> success = ParseRelExpr();
     return success;
-  } catch (const std::exception &){
+  } catch (const std::exception &) {
     token_pos_ = saved_token_pos;
   }
 
