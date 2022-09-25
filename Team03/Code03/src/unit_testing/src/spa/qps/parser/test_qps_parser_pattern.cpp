@@ -1,4 +1,6 @@
 #include "catch.hpp"
+#include "common/clause/pattern_if.h"
+#include "common/clause/pattern_while.h"
 #include "qps/query_parser.h"
 
 QueryParser qp = QueryParser();
@@ -24,21 +26,23 @@ TEST_CASE("Pattern ASSIGN Single-Syn", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetSynonym()
               .IsEntityType(ASSIGN));
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetEntity()
               .IsWildCard());
-  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                    ->GetExpression()
-                    .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE_FALSE(
+      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
+          ->GetExpression()
+          .has_front_wildcard);
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                    ->GetExpression()
-                    .has_back_wildcard);
+  REQUIRE_FALSE(
+      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
+          ->GetExpression()
+          .has_back_wildcard);
 }
 
 TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
@@ -63,21 +67,23 @@ TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetSynonymPair()
               .first.IsEntityType(ASSIGN));
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetSynonymPair()
               .second.IsEntityType(VARIABLE));
-  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                    ->GetExpression()
-                    .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE_FALSE(
+      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
+          ->GetExpression()
+          .has_front_wildcard);
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                    ->GetExpression()
-                    .has_back_wildcard);
+  REQUIRE_FALSE(
+      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
+          ->GetExpression()
+          .has_back_wildcard);
 }
 
 TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
@@ -98,13 +104,13 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
     QueryString res = qp.Parse(tokens_);
 
     REQUIRE(res.GetQueryOperation().size() == 1);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .has_front_wildcard);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match.empty());
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .has_back_wildcard);
   }
@@ -129,13 +135,13 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
     QueryString res = qp.Parse(tokens_);
 
     REQUIRE(res.GetQueryOperation().size() == 1);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .has_front_wildcard);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "b");
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .has_back_wildcard);
   }
@@ -159,15 +165,16 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
     QueryString res = qp.Parse(tokens_);
 
     REQUIRE(res.GetQueryOperation().size() == 1);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .has_front_wildcard);
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "b");
-    REQUIRE_FALSE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
-                      ->GetExpression()
-                      .has_back_wildcard);
+    REQUIRE_FALSE(
+        std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
+            ->GetExpression()
+            .has_back_wildcard);
   }
 }
 
@@ -192,7 +199,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
                                   Token(Token::END)};
     QueryString res = qp.Parse(tokens_);
 
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "a+b");
   }
@@ -220,7 +227,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
                                   Token(Token::END)};
     QueryString res = qp.Parse(tokens_);
 
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "a+b-c%d");
   }
@@ -246,7 +253,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
                                   Token(Token::END)};
     QueryString res = qp.Parse(tokens_);
 
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "(a+b)");
   }
@@ -274,7 +281,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
                                   Token(Token::END)};
     QueryString res = qp.Parse(tokens_);
 
-    REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "((a)+b)");
   }
@@ -323,7 +330,7 @@ TEST_CASE("Pattern IF Single-Syn", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternIf>(res.GetQueryOperation()[0])
               ->GetSynonym()
               .IsEntityType(IF));
 }
@@ -350,10 +357,10 @@ TEST_CASE("Pattern IF Double-Syn", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternIf>(res.GetQueryOperation()[0])
               ->GetSynonymPair()
               .first.IsEntityType(IF));
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternIf>(res.GetQueryOperation()[0])
               ->GetSynonymPair()
               .second.IsEntityType(VARIABLE));
 }
@@ -415,7 +422,7 @@ TEST_CASE("Pattern WHILE Single-Syn", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternWhile>(res.GetQueryOperation()[0])
               ->GetSynonym()
               .IsEntityType(WHILE));
 }
@@ -439,10 +446,10 @@ TEST_CASE("Pattern WHILE Single-Syn Ident", "[QPS Pattern Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 1);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternWhile>(res.GetQueryOperation()[0])
               ->GetSynonym()
               .IsEntityType(WHILE));
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternWhile>(res.GetQueryOperation()[0])
               ->GetEntity()
               .GetIdentifier() == "x");
 }

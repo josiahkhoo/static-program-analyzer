@@ -760,7 +760,7 @@ TEST_CASE("'Procedure Select CallsT' query", "[QPS Parser]") {
               ->GetRightHandSide() == c.GetRightHandSide());
 }
 
-TEST_CASE("`Assign Pattern Follow`", "[QPS Parser]") {
+TEST_CASE("`Assign PatternAssign Follow`", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
@@ -790,13 +790,13 @@ TEST_CASE("`Assign Pattern Follow`", "[QPS Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   REQUIRE(res.GetQueryOperation().size() == 2);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[0])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .has_back_wildcard);
 
@@ -813,7 +813,7 @@ TEST_CASE("`Assign Pattern Follow`", "[QPS Parser]") {
               ->GetRightHandSide() == f.GetRightHandSide());
 }
 
-TEST_CASE("`Assign Follow Pattern`", "[QPS Parser]") {
+TEST_CASE("`Assign Follow PatternAssign`", "[QPS Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
@@ -855,13 +855,13 @@ TEST_CASE("`Assign Follow Pattern`", "[QPS Parser]") {
               ->GetRightHandSide() == f.GetRightHandSide());
 
   REQUIRE(res.GetQueryOperation().size() == 2);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[1])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .has_front_wildcard);
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[1])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<Pattern>(res.GetQueryOperation()[1])
+  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .has_back_wildcard);
 }

@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#include "common/clause/pattern_if.h"
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_parser_util.h"
@@ -37,8 +38,7 @@ std::shared_ptr<QueryOperation> PatternIfParser::Parse(
   tokens->Expect(Token::COMMA);
   tokens->Expect(Token::UNDERSCORE);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
-  Expression exp;
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(synonym, entity_ref, exp);
+  std::shared_ptr<PatternIf> ptn =
+      std::make_shared<PatternIf>(synonym, entity_ref);
   return ptn;
 }

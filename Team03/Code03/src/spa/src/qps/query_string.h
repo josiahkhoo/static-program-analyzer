@@ -6,7 +6,7 @@
 #include "common/clause/clause.h"
 #include "common/clause/follows_clause.h"
 #include "common/clause/follows_t_clause.h"
-#include "common/clause/pattern.h"
+#include "common/clause/pattern_assign.h"
 #include "common/clause/select.h"
 #include "common/entity/entity.h"
 

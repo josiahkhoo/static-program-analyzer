@@ -1,7 +1,7 @@
 #ifndef SPA_PATTERN_ASSIGN_PARSER_H
 #define SPA_PATTERN_ASSIGN_PARSER_H
 
-#include "common/clause/pattern.h"
+#include "common/clause/pattern_assign.h"
 #include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_operation_parser.h"
 

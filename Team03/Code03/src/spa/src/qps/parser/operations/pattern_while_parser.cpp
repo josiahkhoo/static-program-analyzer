@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#include "common/clause/pattern_while.h"
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_parser_util.h"
@@ -35,8 +36,7 @@ std::shared_ptr<QueryOperation> PatternWhileParser::Parse(
   assert(synonym.IsEntityType(WHILE));
   tokens->Expect(Token::UNDERSCORE);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
-  Expression exp;
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(synonym, entity_ref, exp);
+  std::shared_ptr<PatternWhile> ptn =
+      std::make_shared<PatternWhile>(synonym, entity_ref);
   return ptn;
 }

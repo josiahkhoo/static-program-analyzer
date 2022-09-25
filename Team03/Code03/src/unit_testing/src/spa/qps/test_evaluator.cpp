@@ -1,5 +1,7 @@
 #include "catch.hpp"
 #include "common/clause/boolean_select.h"
+#include "common/clause/pattern_if.h"
+#include "common/clause/pattern_while.h"
 #include "common/clause/synonym_select.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
@@ -229,17 +231,17 @@ class QueryablePkbStub : public QueryablePkb {
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
       int statement_number) const override {
-    return {};
+    return {"QueryPatternVariablesFromAssign"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
       int statement_number) const {
-    return {};
+    return {"QueryPatternVariablesFromWhile"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
       int statement_number) const {
-    return {};
+    return {"QueryPatternVariablesFromIf"};
   }
 };
 
@@ -352,7 +354,7 @@ TEST_CASE("Query 'Select FollowsTBy'", "[Evaluator]") {
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
+TEST_CASE("Query 'Select AllPatternAssign'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
@@ -362,8 +364,8 @@ TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -375,7 +377,7 @@ TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
+TEST_CASE("Query 'Select Pattern(String)Assign'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
@@ -385,8 +387,8 @@ TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
@@ -399,7 +401,50 @@ TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
+TEST_CASE("Query 'Select Pattern(String)If'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::IF, "i");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  EntityReference entity_ref = EntityReference("id");
+  std::shared_ptr<PatternIf> ptn = std::make_shared<PatternIf>(syn, entity_ref);
+
+  QueryString qs = QueryString(s, {syn}, {ptn});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected =
+      pkb.QueryIfPattern(entity_ref.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select Pattern(String)While'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::WHILE, "w");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  EntityReference entity_ref = EntityReference("id");
+  std::shared_ptr<PatternWhile> ptn =
+      std::make_shared<PatternWhile>(syn, entity_ref);
+
+  QueryString qs = QueryString(s, {syn}, {ptn});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected =
+      pkb.QueryWhilePattern(entity_ref.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select Pattern(String)Assign Follows'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
@@ -409,8 +454,8 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -428,7 +473,7 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
   REQUIRE(result.empty());
 }
 
-TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
+TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
           "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
@@ -677,8 +722,8 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference();
@@ -699,7 +744,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
   REQUIRE(result.find("2")->size() == 1);
 }
 
-TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
+TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
           "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
@@ -948,8 +993,8 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference();

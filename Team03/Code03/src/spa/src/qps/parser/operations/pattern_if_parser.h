@@ -1,7 +1,7 @@
 #ifndef SPA_PATTERN_IF_PARSER_H
 #define SPA_PATTERN_IF_PARSER_H
 
-#include "common/clause/pattern.h"
+#include "common/clause/pattern_assign.h"
 #include "qps/parser/query_operation_parser.h"
 
 /// Parser tokens and creates a new Pattern IF object

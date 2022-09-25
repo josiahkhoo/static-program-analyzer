@@ -35,7 +35,7 @@ std::shared_ptr<QueryOperation> PatternAssignParser::Parse(
   assert(synonym.IsEntityType(ASSIGN));
   exp = QueryParserUtil::ExtractExpression(tokens, builder);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(synonym, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(synonym, entity_ref, exp);
   return ptn;
 }
