@@ -1,12 +1,11 @@
-#ifndef SPA_PATTERN_PARSER_H
-#define SPA_PATTERN_PARSER_H
+#ifndef SPA_PATTERN_WHILE_PARSER_H
+#define SPA_PATTERN_WHILE_PARSER_H
 
-#include "common/clause/pattern.h"
-#include "qps/parser/query_operation_matcher.h"
+#include "common/clause/pattern_assign.h"
 #include "qps/parser/query_operation_parser.h"
 
-/// Parser tokens and creates a new Pattern object
-class PatternParser : public QueryOperationParser {
+/// Parser tokens and creates a new Pattern WHILE object
+class PatternWhileParser : public QueryOperationParser {
  private:
   static const std::string CLAUSE_WORD;
 
@@ -19,4 +18,4 @@ class PatternParser : public QueryOperationParser {
       override;
 };
 
-#endif  // SPA_PATTERN_PARSER_H
+#endif  // SPA_PATTERN_WHILE_PARSER_H

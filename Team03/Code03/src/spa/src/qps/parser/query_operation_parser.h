@@ -1,7 +1,6 @@
 #ifndef SPA_QUERY_OPERATION_PARSER_H
 #define SPA_QUERY_OPERATION_PARSER_H
 
-#include "common/clause/pattern.h"
 #include "common/parser.h"
 #include "qps/query_string_builder.h"
 #include "qps/token_handler.h"

@@ -61,4 +61,12 @@ void SourceProcessor::StoreDesignExtractorResult(
                          .GetModifiesSAbstractions());
   storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetModifiesPAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetCallsAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetCallsTAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetIfPatternAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetWhilePatternAbstractions());
 }

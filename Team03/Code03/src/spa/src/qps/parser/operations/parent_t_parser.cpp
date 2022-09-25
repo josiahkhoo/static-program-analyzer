@@ -1,5 +1,6 @@
 #include "parent_t_parser.h"
 
+#include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_parser_util.h"
 
 const std::string ParentTParser::CLAUSE_WORD = "Parent";
@@ -9,7 +10,7 @@ bool ParentTParser::MatchParser(
         data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
-  return QueryOperationMatcherT::MatchParser(tokens, CLAUSE_WORD);
+  return QueryOperationMatcher::MatchTParser(tokens, CLAUSE_WORD);
 }
 
 std::shared_ptr<QueryOperation> ParentTParser::Parse(
