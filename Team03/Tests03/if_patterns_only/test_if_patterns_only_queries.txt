@@ -1,0 +1,20 @@
+1 - (SUCCESS) Find variables used in IF pattern
+variable v; if i;
+Select v pattern i (v,_,_)
+x1, x2, x3, x4, x5
+5000
+2 - (SUCCESS) Find all IF statements containing pattern
+if i;
+Select i pattern i (_,_,_)
+1
+5000
+3 - (SUCCESS) Find all IF statements containing x1 returns result
+if i;
+Select i pattern i ("x1",_,_)
+1
+5000
+4 - (SUCCESS) Find all IF statements containing y1 returns no result
+if i;
+Select i pattern i ("y1",_,_)
+
+5000
