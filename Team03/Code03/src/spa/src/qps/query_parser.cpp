@@ -49,10 +49,6 @@ void QueryParser::ParseDeclaration() {
     }
     tokens_->Expect(Token::SEMICOLON);
   }
-
-  if (query_string_builder_.IsDeclarationsEmpty()) {
-    throw SyntaxException("No declaration declared");
-  }
 }
 
 void QueryParser::ParseSelect() {
