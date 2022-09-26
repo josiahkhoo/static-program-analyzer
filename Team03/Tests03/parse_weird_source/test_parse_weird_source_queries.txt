@@ -6,7 +6,7 @@ read, call, if, while, procedure, then, else, print
 2 - (SUCCESS) All Statements entities
 stmt s;
 Select s
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 5000
 3 - (SUCCESS) All While entities
 while w;
@@ -16,7 +16,7 @@ Select w
 4 - (SUCCESS) All Assign entities
 assign a;
 Select a
-4, 5, 6, 7, 8, 11, 13, 14, 15, 17
+4, 5, 6, 7, 8, 11, 13, 14, 15, 17, 18
 5000
 5 - (SUCCESS) All If entities
 if i;
@@ -41,7 +41,7 @@ Select c
 9 - (SUCCESS) All Procedure entities
 procedure p;
 Select p
-procedure
+procedure, call
 5000
 10 - (SUCCESS) All statements that modifies if
 stmt stmt;

@@ -18,4 +18,3 @@ bool CallsAbstraction::operator==(const CallsAbstraction &rhs) const {
 bool CallsAbstraction::operator!=(const CallsAbstraction &rhs) const {
   return !(rhs == *this);
 }
-

@@ -53,10 +53,10 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryParentTBy(
       int statement_number, EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesS(
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUses(
       EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesSBy(
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesRelations()
@@ -67,12 +67,6 @@ class QueryablePkb {
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryUsesSBy(
       std::string identifier, EntityType type) const = 0;
-
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesP(
-      EntityType type) const = 0;
-
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllUsesPBy(
-      EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryUsesP(
       std::string identifier, EntityType type) const = 0;
@@ -122,11 +116,41 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCallsTBy(
       std::string identifier, EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllPattern(
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryPattern(
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const = 0;
+
+  /// Query pattern variables used in assign statements.
+  [[nodiscard]] virtual std::unordered_set<std::string>
+  QueryPatternVariablesFromAssign(int statement_number) const = 0;
+
+  /// Query all while statements that has any patterns.
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+      const = 0;
+
+  /// Query all while patterns that uses a variable that matches a given
+  /// identifier.
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+      std::string ident) const = 0;
+
+  /// Query pattern variables used in while statements.
+  [[nodiscard]] virtual std::unordered_set<std::string>
+  QueryPatternVariablesFromWhile(int statement_number) const = 0;
+
+  /// Query all if statements that has any patterns.
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+      const = 0;
+
+  /// Query all if patterns that uses a variable that matches a given
+  /// identifier.
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+      std::string ident) const = 0;
+
+  /// Query pattern variables used in if statements.
+  [[nodiscard]] virtual std::unordered_set<std::string>
+  QueryPatternVariablesFromIf(int statement_number) const = 0;
 };
 
 #endif  // SPA_QUERYABLE_PKB_H

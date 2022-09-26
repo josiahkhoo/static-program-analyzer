@@ -6,7 +6,7 @@
 #include "common/clause/clause.h"
 #include "common/clause/follows_clause.h"
 #include "common/clause/follows_t_clause.h"
-#include "common/clause/pattern.h"
+#include "common/clause/pattern_assign.h"
 #include "common/clause/select.h"
 #include "common/entity/entity.h"
 
@@ -15,10 +15,10 @@ class QueryString {
   QueryString();
 
   explicit QueryString(
-      Select select, std::vector<Synonym> declared_synonyms,
+      std::shared_ptr<Select> select, std::vector<Synonym> declared_synonyms,
       std::vector<std::shared_ptr<QueryOperation>> query_operations);
 
-  [[nodiscard]] Select GetSelect() const;
+  [[nodiscard]] std::shared_ptr<Select> GetSelect() const;
 
   [[nodiscard]] const std::vector<Synonym> &GetSynonyms() const;
 
@@ -28,7 +28,7 @@ class QueryString {
  private:
   std::vector<std::shared_ptr<QueryOperation>> query_operations_;
   std::vector<Synonym> declared_synonyms_;
-  std::optional<Select> select_;
+  std::shared_ptr<Select> select_;
 };
 
 #endif  // SPA_QUERY_STRING_H

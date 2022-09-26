@@ -3,7 +3,7 @@
 
 #include "common/clause/follows_clause.h"
 #include "common/clause/follows_t_clause.h"
-#include "common/clause/pattern.h"
+#include "common/clause/pattern_assign.h"
 #include "common/clause/select.h"
 #include "common/entity/entity.h"
 #include "query_string.h"
@@ -14,7 +14,7 @@ class QueryStringBuilder {
 
   void AddDeclaration(const Synonym& declared_synonym);
 
-  void AddSelect(Select select_clause);
+  void AddSelect(const std::shared_ptr<Select>& select_clause);
 
   void AddQueryOperation(
       const std::shared_ptr<QueryOperation>& query_operation);
@@ -30,7 +30,7 @@ class QueryStringBuilder {
  private:
   std::vector<Synonym> declared_synonyms_;
   std::vector<std::shared_ptr<QueryOperation>> query_operations_;
-  std::optional<Select> select_;
+  std::optional<std::shared_ptr<Select>> select_;
 };
 
 #endif  // SPA_QUERY_STRING_BUILDER_H

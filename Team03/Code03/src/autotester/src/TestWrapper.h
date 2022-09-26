@@ -13,12 +13,16 @@
 #include "qps/planner.h"
 #include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
+#include "sp/extractor/abstraction/calls_abstraction_extractor.h"
+#include "sp/extractor/abstraction/calls_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/if_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/parent_abstraction_extractor.h"
 #include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
+#include "sp/extractor/abstraction/while_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 #include "sp/extractor/entity/assign_entity_node_extractor.h"
@@ -81,11 +85,17 @@ class TestWrapper : public AbstractWrapper {
   FollowsTAbstractionExtractor follows_t_abstraction_extractor_;
   ParentAbstractionExtractor parent_abstraction_extractor_;
   ParentTAbstractionExtractor parent_t_abstraction_extractor_;
+  CallsAbstractionExtractor calls_abstraction_extractor_;
+  CallsTAbstractionExtractor calls_t_abstraction_extractor_;
   UsesAbstractionExtractorImpl uses_abstraction_extractor_;
   ModifiesAbstractionExtractorImpl modifies_abstraction_extractor_;
+  IfPatternAbstractionExtractor if_pattern_abstraction_extractor_;
+  WhilePatternAbstractionExtractor while_pattern_abstraction_extractor_;
   AbstractionExtractorImpl abstraction_extractor_ = AbstractionExtractorImpl(
       follows_abstraction_extractor_, follows_t_abstraction_extractor_,
       parent_abstraction_extractor_, parent_t_abstraction_extractor_,
+      calls_abstraction_extractor_, calls_t_abstraction_extractor_,
+      if_pattern_abstraction_extractor_, while_pattern_abstraction_extractor_,
       uses_abstraction_extractor_, modifies_abstraction_extractor_);
 
   DesignExtractorImpl design_extractor_ =
@@ -100,7 +110,8 @@ class TestWrapper : public AbstractWrapper {
   Evaluator evaluator_;
 
   QueryProcessingSubsystem query_processing_subsystem =
-      QueryProcessingSubsystem(lexer_, planner_, evaluator_, pkb_);
+      QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
+                               pkb_);
 };
 
 #endif

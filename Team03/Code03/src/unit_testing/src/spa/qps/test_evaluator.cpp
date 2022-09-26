@@ -1,4 +1,8 @@
 #include "catch.hpp"
+#include "common/clause/boolean_select.h"
+#include "common/clause/pattern_if.h"
+#include "common/clause/pattern_while.h"
+#include "common/clause/synonym_select.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/qnodes/entity_node.h"
@@ -70,14 +74,14 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryParentTBy"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesS(
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
       EntityType type) const override {
-    return {"QueryAllUsesS"};
+    return {"QueryAllUses"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const override {
-    return {"QueryAllUsesSBy"};
+    return {"QueryAllUsesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
@@ -88,16 +92,6 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
       std::string identifier, EntityType type) const override {
     return {"QueryUsesSBy"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesP(
-      EntityType type) const override {
-    return {"QueryAllUsesP"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-      EntityType type) const override {
-    return {"QueryAllUsesPBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
@@ -170,12 +164,12 @@ class QueryablePkbStub : public QueryablePkb {
     return {};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+  [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const override {
-    return {"QueryAllPattern"};
+    return {"QueryAllAssignPattern"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+  [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
       std::string lhs, Expression exp) const override {
     return {"QueryPatternStr"};
   }
@@ -204,6 +198,41 @@ class QueryablePkbStub : public QueryablePkb {
       const override {
     return {"QueryAllCallsRelations"};
   }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+      const override {
+    return {"QueryAllWhilePattern"};
+  };
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+      std::string ident) const override {
+    return {"QueryWhilePattern"};
+  };
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+      const override {
+    return {"QueryAllIfPattern"};
+  }
+
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+      std::string ident) const override {
+    return {"QueryIfPattern"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
+      int statement_number) const override {
+    return {"QueryPatternVariablesFromAssign"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
+      int statement_number) const {
+    return {"QueryPatternVariablesFromWhile"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+      int statement_number) const {
+    return {"QueryPatternVariablesFromIf"};
+  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
@@ -211,7 +240,8 @@ TEST_CASE("Query 'Select'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
@@ -227,7 +257,8 @@ TEST_CASE("Query 'Select Follows'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsClause> f =
@@ -249,7 +280,8 @@ TEST_CASE("Query 'Select FollowsBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
@@ -271,7 +303,8 @@ TEST_CASE("Query 'Select FollowsT'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsTClause> f =
@@ -293,7 +326,8 @@ TEST_CASE("Query 'Select FollowsTBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsTClause> f =
@@ -310,62 +344,108 @@ TEST_CASE("Query 'Select FollowsTBy'", "[Evaluator]") {
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select AllPattern'", "[Evaluator]") {
+TEST_CASE("Query 'Select AllPatternAssign'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();
-  std::unordered_set<std::string> expected = pkb.QueryAllPattern(exp);
+  std::unordered_set<std::string> expected = pkb.QueryAllAssignPattern(exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select Pattern(String)'", "[Evaluator]") {
+TEST_CASE("Query 'Select Pattern(String)Assign'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   QueryString qs = QueryString(s, {syn}, {ptn});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result == expected);
 }
 
-TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
+TEST_CASE("Query 'Select Pattern(String)If'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::IF, "i");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  EntityReference entity_ref = EntityReference("id");
+  std::shared_ptr<PatternIf> ptn = std::make_shared<PatternIf>(syn, entity_ref);
+
+  QueryString qs = QueryString(s, {syn}, {ptn});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected =
+      pkb.QueryIfPattern(entity_ref.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select Pattern(String)While'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::WHILE, "w");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  EntityReference entity_ref = EntityReference("id");
+  std::shared_ptr<PatternWhile> ptn =
+      std::make_shared<PatternWhile>(syn, entity_ref);
+
+  QueryString qs = QueryString(s, {syn}, {ptn});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected =
+      pkb.QueryWhilePattern(entity_ref.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select Pattern(String)Assign Follows'", "[Evaluator]") {
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -377,13 +457,13 @@ TEST_CASE("Query 'Select Pattern(String) Follows'", "[Evaluator]") {
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result.empty());
 }
 
-TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
+TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
           "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
@@ -452,28 +532,18 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesS(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
         EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
         EntityType type) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
         int statement_number, EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesP(
-        EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-        EntityType type) const override {
       return {};
     }
 
@@ -552,12 +622,12 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
         Expression exp) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
         std::string lhs, Expression exp) const override {
       return {"4", "2"};
     }
@@ -586,18 +656,54 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
         const override {
       return {};
     }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+        const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+        std::string ident) const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+        const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+        std::string ident) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromAssign(int statement_number) const override {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference();
@@ -609,7 +715,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   auto it = result.begin();
@@ -618,7 +724,7 @@ TEST_CASE("Intersect check 'Select Pattern(String) AllFollows'",
   REQUIRE(result.find("2")->size() == 1);
 }
 
-TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
+TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
           "[Evaluator]") {
   class QueryablePkbStub : public QueryablePkb {
    public:
@@ -687,12 +793,12 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesS(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
         EntityType type) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesSBy(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
         EntityType type) const override {
       return {};
     }
@@ -704,16 +810,6 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
         std::string identifier, EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesP(
-        EntityType type) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryAllUsesPBy(
-        EntityType type) const override {
       return {};
     }
 
@@ -787,12 +883,12 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
         Expression exp) const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryPattern(
+    [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
         std::string lhs, Expression exp) const override {
       return {"2", "4"};
     }
@@ -821,18 +917,54 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
         const override {
       return {};
     }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
+        const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
+        std::string ident) const override {
+      return {};
+    };
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
+        const override {
+      return {};
+    }
+
+    [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
+        std::string ident) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromWhile(int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
+        int statement_number) const {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string>
+    QueryPatternVariablesFromAssign(int statement_number) const override {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
-  std::shared_ptr<Pattern> ptn =
-      std::make_shared<Pattern>(syn, entity_ref, exp);
+  std::shared_ptr<PatternAssign> ptn =
+      std::make_shared<PatternAssign>(syn, entity_ref, exp);
 
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference();
@@ -844,7 +976,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)'",
 
   QueryablePkbStub pkb = QueryablePkbStub();
   std::unordered_set<std::string> expected =
-      pkb.QueryPattern(entity_ref.GetIdentifier(), exp);
+      pkb.QueryAssignPattern(entity_ref.GetIdentifier(), exp);
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE_FALSE(result.empty());
@@ -859,7 +991,8 @@ TEST_CASE("Union check'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  Select s = Select(syn);
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root_1 = p.Plan(qs);
   std::shared_ptr<QNode> root_2 = p.Plan(qs);
@@ -872,5 +1005,25 @@ TEST_CASE("Union check'", "[Evaluator]") {
   std::unordered_set<std::string> result = eval.Execute(pkb, root_3, s);
   std::unordered_set<std::string> expected = {"QueryAll", "QueryAll",
                                               "QueryAll"};
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("BOOLEAN check'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+
+  Planner p = Planner();
+  std::shared_ptr<Select> s = std::make_shared<BooleanSelect>();
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  QueryString qs = QueryString(s, {syn}, {});
+  std::shared_ptr<QNode> root_1 = p.Plan(qs);
+  std::shared_ptr<QNode> root_2 = p.Plan(qs);
+  std::shared_ptr<QNode> root_3 = p.Plan(qs);
+
+  root_3->SetLeftNode(root_1);
+  root_3->SetRightNode(root_2);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> result = eval.Execute(pkb, root_3, s);
+  std::unordered_set<std::string> expected = {"TRUE"};
   REQUIRE(result == expected);
 }

@@ -5,7 +5,7 @@ procedure procedure{
       call = call;
       read = read;
       print = print;
-      call procedure;
+      call call;
       if (if ==0) then {
         then = then;
       } else {if (then==0) then {
@@ -14,3 +14,6 @@ procedure procedure{
         }
       }
         else = else;}print print;procedure = 10;}
+procedure call{
+    call = procedure;
+}

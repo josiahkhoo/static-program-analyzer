@@ -2,86 +2,36 @@
 #define SPA_QUERY_PARSER_H
 
 #include "common/parser.h"
-#include "query_string.h"
-#include "query_string_builder.h"
+#include "qps/parser/query_operation_parser.h"
+#include "qps/query_string.h"
+#include "qps/query_string_builder.h"
+#include "qps/token_handler.h"
 
-class QueryParser : public Parser<QueryString> {
+class QueryParser : public Parser<QueryString, std::vector<Token>> {
  public:
   QueryParser();
 
   QueryString Parse(std::vector<Token> tokens_) override;
 
  private:
-  int token_pos_ = 0;
-  std::vector<Token> tokens_;
+  std::shared_ptr<TokenHandler> tokens_;
   QueryStringBuilder query_string_builder_;
-
-  Token Peek();
-
-  bool MatchKind(Token::Kind kind);
-
-  bool MatchString(const std::string& s);
-
-  bool CheckEnd();
-
-  void Expect(Token::Kind kind);
-
-  void Expect(const std::string& s);
+  std::vector<std::unique_ptr<QueryOperationParser>> st_parsers_;
+  std::vector<std::unique_ptr<QueryOperationParser>> pattern_parsers_;
 
   void ParseDeclaration();
 
   void ParseSelect();
 
+  void ParseQueryOperation();
+
   bool ParseClause();
 
-  void ParseFollows();
-
-  void ParseFollowsT();
-
-  void CheckFollowsParentRef(const StatementReference& stmtRef) const;
-
-  void ParseParent();
-
-  void ParseParentT();
-
-  void ParseUses();
-
-  void CheckUsesLhs();
-
-  void CheckEntityRhs(const EntityReference& entRef) const;
-
-  void ParseUsesS();
-
-  void ParseUsesP();
-
-  void ParseModifies();
-
-  void CheckModifiesLhs();
-
-  void ParseModifiesS();
-
-  void ParseModifiesP();
-
-  void ParseCalls();
-
-  void ParseCallsT();
-
-  void CheckProcedureEntity(const EntityReference& entRef) const;
+  void ParseIndividualClause();
 
   bool ParsePattern();
 
-  void CheckPatternSyn(const Synonym& synonym) const;
-
-  void ParseQueryOperation();
-
-  void ParseCleanUpSyntax();
-
-  StatementReference ExtractStmtRef();
-  EntityReference ExtractEntityRef();
-  Expression ExtractExpression();
-  EntityType ExtractEntityType();
-  std::string GetTerm();
-  std::string GetExpression();
+  void CheckLeftoverTokens();
 };
 
 #endif  // SPA_QUERY_PARSER_H

@@ -4,9 +4,11 @@
 #include "qps/exceptions/syntax_exception.h"
 
 QueryProcessingSubsystem::QueryProcessingSubsystem(
-    const Lexer &lexer, const Planner &planner, const Evaluator &evaluator,
+    const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
+    const Planner &planner, const Evaluator &evaluator,
     const QueryablePkb &queryable_pkb)
     : lexer_(lexer),
+      parser_(parser),
       planner_(planner),
       evaluator_(evaluator),
       queryable_pkb_(queryable_pkb) {}
@@ -14,10 +16,9 @@ QueryProcessingSubsystem::QueryProcessingSubsystem(
 void QueryProcessingSubsystem::Process(std::string query,
                                        std::list<std::string> &results) {
   std::vector<Token> tokens = lexer_.LexLine(query);
-  QueryParser parser;
   QueryString q_string;
   try {
-    q_string = parser.Parse(tokens);
+    q_string = parser_.Parse(tokens);
   } catch (const SyntaxException &ex) {
     results.emplace_back(ex.what());
     return;  // Exit application

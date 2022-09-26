@@ -18,7 +18,7 @@ std::unordered_set<std::string> UsesSClause::Fetch(
           GetLeftHandSide().GetSynonym().GetEntityType());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Uses(a, _)
-      return queryable_pkb.QueryAllUsesS(
+      return queryable_pkb.QueryAllUses(
           GetLeftHandSide().GetSynonym().GetEntityType());
     }
   }
@@ -30,7 +30,7 @@ std::unordered_set<std::string> UsesSClause::Fetch(
           GetRightHandSide().GetSynonym().GetEntityType());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Uses(_, a)
-      return queryable_pkb.QueryAllUsesSBy(
+      return queryable_pkb.QueryAllUsesBy(
           GetRightHandSide().GetSynonym().GetEntityType());
     }
   }

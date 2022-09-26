@@ -2,7 +2,8 @@
 
 #include "fstream"
 
-SourceProcessor::SourceProcessor(Lexer &lexer, Parser<TNode> &parser,
+SourceProcessor::SourceProcessor(Lexer &lexer,
+                                 Parser<TNode, std::vector<Token>> &parser,
                                  DesignExtractor &design_extractor,
                                  StorablePkb &storable_pkb)
     : lexer_(lexer),
@@ -60,4 +61,12 @@ void SourceProcessor::StoreDesignExtractorResult(
                          .GetModifiesSAbstractions());
   storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetModifiesPAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetCallsAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetCallsTAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetIfPatternAbstractions());
+  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+                         .GetWhilePatternAbstractions());
 }

@@ -1,4 +1,4 @@
-1 - (SUCCESS) Exact Pattern Match
+1 - (SUCCESS) Exact PatternAssign Match
 assign a;
 Select a pattern a ( _ , "v + x * y + z * t")
 1

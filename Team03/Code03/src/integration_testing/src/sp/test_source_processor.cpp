@@ -6,12 +6,16 @@
 #include "cstdlib"
 #include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
+#include "sp/extractor/abstraction/calls_abstraction_extractor.h"
+#include "sp/extractor/abstraction/calls_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_abstraction_extractor.h"
 #include "sp/extractor/abstraction/follows_t_abstraction_extractor.h"
+#include "sp/extractor/abstraction/if_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/parent_abstraction_extractor.h"
 #include "sp/extractor/abstraction/parent_t_abstraction_extractor.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
+#include "sp/extractor/abstraction/while_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 #include "sp/extractor/entity/assign_entity_node_extractor.h"
@@ -57,11 +61,17 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
   FollowsTAbstractionExtractor follows_t_abstraction_extractor;
   ParentAbstractionExtractor parent_abstraction_extractor;
   ParentTAbstractionExtractor parent_t_abstraction_extractor;
+  CallsAbstractionExtractor calls_abstraction_extractor;
+  CallsTAbstractionExtractor calls_t_abstraction_extractor;
   UsesAbstractionExtractorImpl uses_abstraction_extractor;
   ModifiesAbstractionExtractorImpl modifies_abstraction_extractor;
+  IfPatternAbstractionExtractor if_pattern_abstraction_extractor;
+  WhilePatternAbstractionExtractor while_pattern_abstraction_extractor;
   AbstractionExtractorImpl abstraction_extractor = AbstractionExtractorImpl(
       follows_abstraction_extractor, follows_t_abstraction_extractor,
       parent_abstraction_extractor, parent_t_abstraction_extractor,
+      calls_abstraction_extractor, calls_t_abstraction_extractor,
+      if_pattern_abstraction_extractor, while_pattern_abstraction_extractor,
       uses_abstraction_extractor, modifies_abstraction_extractor);
 
   DesignExtractorImpl design_extractor =
@@ -78,7 +88,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
 
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
-        QueryProcessingSubsystem(lexer, planner_, evaluator_, pkb);
+        QueryProcessingSubsystem(lexer, query_parser_, planner_, evaluator_,
+                                 pkb);
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};

@@ -1,12 +1,15 @@
 #ifndef SPA_SIMPLE_PARSER_H
 #define SPA_SIMPLE_PARSER_H
 
+#include <unordered_map>
+#include <unordered_set>
+
 #include "common/lexer.h"
 #include "common/parser.h"
 #include "common/t_node.h"
 #include "common/token.h"
 
-class SimpleParser : public Parser<TNode> {
+class SimpleParser : public Parser<TNode, std::vector<Token>> {
  public:
   SimpleParser();
 
@@ -17,6 +20,8 @@ class SimpleParser : public Parser<TNode> {
   int statement_number_ = 0;
   int t_node_id_ = 0;
   std::vector<Token> tokens_;
+  std::string curr_proc_;
+  std::unordered_map<std::string, std::unordered_set<std::string>> proc_map_;
 
   Token Peek(int pos);
 
@@ -65,6 +70,11 @@ class SimpleParser : public Parser<TNode> {
   void AssignParentToChildren(
       std::shared_ptr<TNode> t_node,
       const std::vector<std::shared_ptr<TNode>> &children);
+
+  void CheckValidProgram();
+
+  void TraverseProcedureTree(std::unordered_set<std::string> &children,
+                             std::string &start, std::string &end);
 };
 
 #endif  // SPA_SIMPLE_PARSER_H
