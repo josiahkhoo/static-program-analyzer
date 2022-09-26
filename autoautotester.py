@@ -36,12 +36,14 @@ test_array = (
     ("Parse conditional source", "parse_conditional_source"),
 
     # Milestone 2 Tests
-    # ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),
-    # ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
-    # ("Source Error: Recursive procedure call", "source_error_recursive_call"),
-    # ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
+    ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),
+    ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
+    ("Source Error: Recursive procedure call", "source_error_recursive_call"),
+    ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
     # ("Uses Statement with Calls", "uses_s_with_call"),
     # ("Uses Procedure with Calls", "uses_p_with_call"),
+    ("Boolean select", "boolean_select"),
+    ("Calls / Calls T", "calls_calls_t")
 )
 
 overall_passed_test_cases = 0
