@@ -25,8 +25,6 @@ class QueryStringBuilder {
 
   bool IsOperationsEmpty();
 
-  bool IsDeclarationsEmpty();
-
  private:
   std::vector<Synonym> declared_synonyms_;
   std::vector<std::shared_ptr<QueryOperation>> query_operations_;
