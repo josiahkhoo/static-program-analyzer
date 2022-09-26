@@ -504,4 +504,137 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z6) !=
              modifies_p_vector.end()));
   }
+
+  SECTION("Extract from chain call") {
+    Lexer lexer;
+    std::string input =
+        "procedure p { call q; call r; read x;} "
+        "procedure q { call s; call s; read y;} "
+        "procedure r { call q; read z;} "
+        "procedure s { read m; } ";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+
+    REQUIRE_FALSE(modifies_s_abstractions.empty());
+    REQUIRE(modifies_s_abstractions.size() == 13);
+    std::pair<int, std::string> p1 = {1, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {1, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p3 = {2, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p3) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p4 = {2, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p5 = {2, "z"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p6 = {3, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p7 = {9, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p7) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p8 = {4, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p8) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p9 = {5, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p9) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p10 = {6, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p10) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p11 = {7, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p11) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p12 = {7, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p12) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p13 = {8, "z"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p13) !=
+             modifies_s_vector.end()));
+
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE_FALSE(modifies_p_abstractions.empty());
+    REQUIRE(modifies_p_abstractions.size() == 10);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z2 = {"p", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z2) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z3 = {"p", "z"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z3) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z4 = {"p", "m"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z4) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z5 = {"s", "m"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z5) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z6 = {"q", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z6) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z7 = {"q", "m"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z7) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z8 = {"r", "m"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z8) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z9 = {"r", "z"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z9) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z10 = {"r", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z10) !=
+             modifies_p_vector.end()));
+  }
 };
