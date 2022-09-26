@@ -95,26 +95,26 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier, EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCalls(
-      EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCalls()
+      const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCallsBy(
-      EntityType type) const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCallsBy()
+      const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllCallsRelations()
       const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCalls(
-      std::string identifier, EntityType type) const = 0;
+      std::string identifier) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCallsBy(
-      std::string identifier, EntityType type) const = 0;
+      std::string identifier) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCallsT(
-      std::string identifier, EntityType type) const = 0;
+      std::string identifier) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCallsTBy(
-      std::string identifier, EntityType type) const = 0;
+      std::string identifier) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const = 0;

@@ -86,13 +86,13 @@ void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
 
 void PKB::Store(std::vector<CallsAbstraction> abstractions) {
   for (const CallsAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
 void PKB::Store(std::vector<CallsTAbstraction> abstractions) {
   for (const CallsTAbstraction& abstraction : abstractions) {
-    // relationship_manager_.AddAbstraction(abstraction);
+     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
@@ -553,13 +553,13 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
  * Calls Query Methods
  * ==================================== */
 
-std::unordered_set<std::string> PKB::QueryAllCalls(EntityType type) const {
+std::unordered_set<std::string> PKB::QueryAllCalls() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures();
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryAllCallsBy(EntityType type) const {
+std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsByProcedures();
   return result;
@@ -574,29 +574,25 @@ std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryCalls(std::string identifier,
-                                                EntityType type) const {
+std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures(identifier);
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryCallsBy(std::string identifier,
-                                                  EntityType type) const {
+std::unordered_set<std::string> PKB::QueryCallsBy(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsByProcedures(identifier);
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier,
-                                                 EntityType type) const {
+std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsTProcedures(identifier);
   return result;
 }
 
-std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier,
-                                                   EntityType type) const {
+std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsTByProcedures(identifier);
   return result;
