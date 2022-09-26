@@ -1,0 +1,20 @@
+1 - (SUCCESS) Find variables used in WHILE pattern
+variable v; while w;
+Select v pattern w (v,_)
+y1, y2, y3, y4, y5
+5000
+2 - (SUCCESS) Find all WHILE statements containing pattern
+while w;
+Select w pattern w (_,_)
+7
+5000
+3 - (SUCCESS) Find all WHILE statements containing y1 returns result
+while w;
+Select w pattern w ("y1",_)
+7
+5000
+4 - (SUCCESS) Find all WHILE statements containing x1 returns no result
+while w;
+Select w pattern w ("x1",_)
+
+5000

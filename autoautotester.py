@@ -25,7 +25,7 @@ test_array = (
     ("Follows / FollowsT", "follows_follows_t"),
     ("Semantic Errors", "semantic_errors"),
     ("Syntax Errors", "syntax_errors"),
-    ("Patterns Only", "patterns_only"),
+    ("Assign Patterns only", "assign_patterns_only"),
     ("Parent / ParentT", "parent_parent_t"),
     ("Uses Procedure", "uses_p"),
     ("Uses Statement", "uses_s"),
@@ -36,12 +36,18 @@ test_array = (
     ("Parse conditional source", "parse_conditional_source"),
 
     # Milestone 2 Tests
-    # ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),
-    # ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
-    # ("Source Error: Recursive procedure call", "source_error_recursive_call"),
-    # ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
+    ("Source Error: Call non-existing procedure", "source_error_call_non_existing_procedure"),
+    ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
+    ("Source Error: Recursive procedure call", "source_error_recursive_call"),
+    ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
     # ("Uses Statement with Calls", "uses_s_with_call"),
     # ("Uses Procedure with Calls", "uses_p_with_call"),
+    # ("Modifies Statement with Calls", "modifies_s_with_call"),
+    # ("Modifies Procedure with Calls", "modifies_p_with_call"),
+    # ("Boolean select", "boolean_select"),
+    # ("Calls / Calls T", "calls_calls_t"),
+    # ("If Patterns only", "if_patterns_only"),
+    # ("While Patterns only", "while_patterns_only")
 )
 
 overall_passed_test_cases = 0

@@ -1,0 +1,60 @@
+1 - (SUCCESS) Retrieve all procedures that calls another procedure
+procedure p, q;
+Select p such that Calls(p, q)
+Example, p, q
+5000
+2 - (SUCCESS) Retrieve all procedures that are called by "Example"
+procedure q;
+Select q such that Calls("Example", q)
+q, p
+5000
+3 - (SUCCESS) Retrieve all procedures that are called by something
+procedure q;
+Select q such that Calls(_, q)
+q, p, s
+5000
+4 - (SUCCESS) Retrieve all procedures that call q
+procedure p;
+Select p such that Calls(p, "q")
+Example, p
+5000
+5 - (SUCCESS) Retrieve all procedures that call something
+procedure p;
+Select p such that Calls(p, _)
+Example, p, q
+5000
+6 - (SUCCESS) Return all procedures if there is any procedure that calls something
+procedure p;
+Select p such that Calls(_, _)
+Example, p, q, s, r
+5000
+7 - (SUCCESS) Retrieve all procedures that are called * by something
+procedure p, q;
+Select p such that Calls*(p, q)
+Example, p, q
+5000
+8 - (SUCCESS) Retrieve all procedures that are called * by "Example"
+procedure q;
+Select q such that Calls*("Example", q)
+q, p, s
+5000
+3 - (SUCCESS) Retrieve all procedures that are called * by something
+procedure q;
+Select q such that Calls*(_, q)
+q, p, s
+5000
+4 - (SUCCESS) Retrieve all procedures that call * s
+procedure p;
+Select p such that Calls(p, "s")
+Example, p
+5000
+5 - (SUCCESS) Retrieve all procedures that call * something
+procedure p;
+Select p such that Calls*(p, _)
+Example, p, q
+5000
+6 - (SUCCESS) Return all procedures if there is any procedure that call * something
+procedure p;
+Select p such that Calls(_, _)
+Example, p, q, s, r
+5000
