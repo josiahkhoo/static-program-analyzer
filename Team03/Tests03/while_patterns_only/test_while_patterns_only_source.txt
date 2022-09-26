@@ -1,0 +1,18 @@
+procedure Test {
+    if (!((x1 + x2) == (x3 + (x4 * x5)))) then {
+        x = 1;
+    } else {
+        z = 1;
+    }
+    if (1 == 0) then {
+        xx = 1;
+    } else {
+        zz = 1;
+    }
+    while (!((y1 + y2) == (y3 + (y4 * y5)))) {
+        y = 1;
+    }
+    while (1 == 0) then {
+        yy = 1;
+    }
+}

@@ -38,7 +38,3 @@ Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
 bool QueryStringBuilder::IsOperationsEmpty() {
   return query_operations_.empty();
 }
-
-bool QueryStringBuilder::IsDeclarationsEmpty() {
-  return declared_synonyms_.empty();
-}
