@@ -19,7 +19,8 @@ UsesAbstractionExtractorImpl::Extract(
     std::unordered_map<const TNode*, std::unordered_set<const TNode*>>&
         proc_node_call_ent_umap,
     std::unordered_map<std::string, const TNode*>& proc_name_node_umap) const {
-  std::unordered_map<const TNode*, std::unordered_set<const TNode*>> proc_var_map;
+  std::unordered_map<const TNode*, std::unordered_set<const TNode*>>
+      proc_var_map;
   std::vector<UsesSAbstraction> uses_s_abstractions;
   std::vector<UsesPAbstraction> uses_p_abstractions;
   for (const auto& variable_entity : variable_entities) {
@@ -30,7 +31,7 @@ UsesAbstractionExtractorImpl::Extract(
         if (proc_var_map.find(curr_node_ptr) != proc_var_map.end()) {
           proc_var_map[curr_node_ptr].emplace(var_node_ptr);
         } else {
-          std::unordered_set<const TNode *> proc_var_nodes = {var_node_ptr};
+          std::unordered_set<const TNode*> proc_var_nodes = {var_node_ptr};
           proc_var_map.emplace(curr_node_ptr, proc_var_nodes);
         }
         break;
@@ -56,16 +57,17 @@ UsesAbstractionExtractorImpl::Extract(
       curr_node_ptr = curr_node_ptr->GetParent().get();
     }
   }
-  for (const auto &proc_pair : proc_node_call_ent_umap) {
+  for (const auto& proc_pair : proc_node_call_ent_umap) {
     auto parent = proc_pair.first;
     auto children = proc_pair.second;
-    TraverseProcedureTree(t_node_proc_ent_umap, proc_name_node_umap, proc_node_call_ent_umap, proc_var_map,
-                          children, parent);
+    TraverseProcedureTree(t_node_proc_ent_umap, proc_name_node_umap,
+                          proc_node_call_ent_umap, proc_var_map, children,
+                          parent);
   }
-  for (const auto & proc_pair : proc_var_map) {
+  for (const auto& proc_pair : proc_var_map) {
     auto proc_node_ptr = proc_pair.first;
     auto lhs = t_node_proc_ent_umap.find(*proc_node_ptr)->second;
-    for (const auto & var : proc_var_map[proc_node_ptr]) {
+    for (const auto& var : proc_var_map[proc_node_ptr]) {
       auto rhs = t_node_var_ent_umap.find(*var)->second;
       uses_p_abstractions.emplace_back(lhs, rhs);
     }
@@ -74,7 +76,7 @@ UsesAbstractionExtractorImpl::Extract(
     auto call_node = call_entity.GetNodePointer();
     auto lhs = t_node_stmt_ent_umap.find(*call_node)->second;
     auto proc_node = proc_name_node_umap[call_node->GetStringValue()];
-    for(const auto & var : proc_var_map[proc_node]) {
+    for (const auto& var : proc_var_map[proc_node]) {
       auto rhs = t_node_var_ent_umap.find(*var)->second;
       uses_s_abstractions.emplace_back(lhs, rhs);
     }
@@ -83,20 +85,22 @@ UsesAbstractionExtractorImpl::Extract(
 }
 
 void UsesAbstractionExtractorImpl::TraverseProcedureTree(
-    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
-    std::unordered_map<std::string, const TNode *> &proc_name_node_umap,
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-        &proc_node_call_ent_umap,
-    std::unordered_map<const TNode*, std::unordered_set<const TNode*>> &proc_var_map,
-    std::unordered_set<const TNode*> &children, const TNode* parent) const {
-  for (const auto &child : children) {
+    std::unordered_map<TNode, ProcedureEntity>& t_node_proc_ent_umap,
+    std::unordered_map<std::string, const TNode*>& proc_name_node_umap,
+    std::unordered_map<const TNode*, std::unordered_set<const TNode*>>&
+        proc_node_call_ent_umap,
+    std::unordered_map<const TNode*, std::unordered_set<const TNode*>>&
+        proc_var_map,
+    std::unordered_set<const TNode*>& children, const TNode* parent) const {
+  for (const auto& child : children) {
     auto proc_child_node = proc_name_node_umap[child->GetStringValue()];
     auto next_children = proc_node_call_ent_umap[proc_child_node];
     if (!next_children.empty()) {
       TraverseProcedureTree(t_node_proc_ent_umap, proc_name_node_umap,
-                            proc_node_call_ent_umap, proc_var_map, next_children, proc_child_node);
+                            proc_node_call_ent_umap, proc_var_map,
+                            next_children, proc_child_node);
     }
-    for(const auto & var : proc_var_map[proc_child_node]) {
+    for (const auto& var : proc_var_map[proc_child_node]) {
       proc_var_map[parent].emplace(var);
     }
   }

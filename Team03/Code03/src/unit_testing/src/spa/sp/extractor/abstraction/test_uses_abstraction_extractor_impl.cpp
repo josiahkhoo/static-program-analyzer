@@ -62,7 +62,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
             proc_name_node_umap);
-    
+
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
       int lhs = i.GetLeftHandSide().GetStatementNumber();
@@ -77,7 +77,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
       std::pair<std::string, std::string> pair = {lhs, rhs};
       uses_p_vector.emplace_back(pair);
     }
-    
+
     REQUIRE(uses_s_abstractions.size() == 3);
     std::pair<int, std::string> p1 = {1, "x"};
     REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p1) !=
@@ -266,7 +266,6 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     std::pair<std::string, std::string> z4 = {"p", "v"};
     REQUIRE((std::find(uses_p_vector.begin(), uses_p_vector.end(), z4) !=
              uses_p_vector.end()));
-
   }
 
   SECTION("Extract from While") {
@@ -339,7 +338,6 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     std::pair<std::string, std::string> z2 = {"p", "x"};
     REQUIRE((std::find(uses_p_vector.begin(), uses_p_vector.end(), z2) !=
              uses_p_vector.end()));
-
   }
 
   SECTION("Extract from nested If-While") {
@@ -789,6 +787,5 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     std::pair<std::string, std::string> z12 = {"p", "l"};
     REQUIRE((std::find(uses_p_vector.begin(), uses_p_vector.end(), z12) !=
              uses_p_vector.end()));
-
   }
 };
