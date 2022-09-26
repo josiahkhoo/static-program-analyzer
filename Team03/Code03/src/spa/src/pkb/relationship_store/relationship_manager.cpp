@@ -32,6 +32,14 @@ void RelationshipManager::AddAbstraction(ModifiesSAbstraction abstraction) {
   modifies_store_.AddRelationship(abstraction);
 }
 
+void RelationshipManager::AddAbstraction(CallsAbstraction abstraction) {
+  calls_store_.AddRelationship(abstraction);
+}
+
+void RelationshipManager::AddAbstraction(CallsTAbstraction abstraction) {
+  calls_store_.AddRelationship(abstraction);
+}
+
 std::unordered_set<std::string> RelationshipManager::GetFollowsStatements()
     const {
   return follows_store_.GetFollowsStatements();
@@ -177,8 +185,37 @@ RelationshipManager::GetStatementsModifyingVariable(
   return modifies_store_.GetStatementsModifyingVariable(variable_name);
 }
 
+std::unordered_set<std::string> RelationshipManager::GetCallsProcedures() const {
+    return calls_store_.GetCallsProcedures();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetCallsProcedures(
+    std::string proc_name) const {
+  return calls_store_.GetCallsProcedures(proc_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetCallsTProcedures(
+    std::string proc_name) const {
+  return calls_store_.GetCallsTProcedures(proc_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures() const {
+  return calls_store_.GetCallsByProcedures();
+}
+
+std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures(
+    std::string proc_name) const {
+  return calls_store_.GetCallsByProcedures(proc_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
+    std::string proc_name) const {
+  return calls_store_.GetCallsTByProcedures(proc_name)
+}
+
 void RelationshipManager::Clear() {
   //  follows_store_.Clear();
   parent_store_.Clear();
   modifies_store_.Clear();
+  calls_store_.Clear();
 }

@@ -1,5 +1,7 @@
 #include "calls_storage.h"
 
+/// Add Calls Relationship
+/// \param abstraction
 void CallsStorage::AddRelationship(CallsAbstraction abstraction) {
   std::string caller = abstraction.GetLeftHandSide().GetName();
   std::string callee = abstraction.GetRightHandSide().GetName();
@@ -14,6 +16,8 @@ void CallsStorage::AddRelationship(CallsAbstraction abstraction) {
   }
 }
 
+/// Add Calls T Relationship
+/// \param abstraction
 void CallsStorage::AddRelationship(CallsTAbstraction abstraction) {
   std::string caller = abstraction.GetLeftHandSide().GetName();
   std::string callee = abstraction.GetRightHandSide().GetName();
@@ -50,6 +54,23 @@ std::unordered_set<std::string> CallsStorage::GetCallsProcedures(
   return res;
 }
 
+/// GetCallsProcedures
+/// \param proc_name
+/// \return Gets all procedures that directly or indirectly call a specified
+/// procedure
+std::unordered_set<std::string> CallsStorage::GetCallsTProcedures(
+    std::string proc_name) const {
+  if (calls_t_by_map_.find(proc_name) == calls_t_by_map_.end()) {
+    return {};
+  }
+  std::unordered_set<std::string> res = calls_t_by_map_.find(proc_name)->second;
+  std::unordered_set<std::string> s;
+  for (std::string entry : res) {
+    s.emplace(entry);
+  }
+  return s;
+}
+
 /// GetCallsByProcedures
 /// \return Gets all procedures that are directly called by any procedure
 std::unordered_set<std::string> CallsStorage::GetCallsByProcedures() const {
@@ -73,23 +94,6 @@ std::unordered_set<std::string> CallsStorage::GetCallsByProcedures(
   return res;
 }
 
-/// GetCallsProcedures
-/// \param proc_name
-/// \return Gets all procedures that directly or indirectly call a specified
-/// procedure
-std::unordered_set<std::string> CallsStorage::GetCallsTProcedures(
-    std::string proc_name) const {
-  if (calls_t_by_map_.find(proc_name) == calls_t_by_map_.end()) {
-    return {};
-  }
-  std::unordered_set<std::string> res = calls_t_by_map_.find(proc_name)->second;
-  std::unordered_set<std::string> s;
-  for (std::string entry : res) {
-    s.emplace(entry);
-  }
-  return s;
-}
-
 /// GetCallsTByProcedures
 /// \param proc_name
 /// \return Gets all procedures that are directly or indirectly called by a
@@ -103,6 +107,7 @@ std::unordered_set<std::string> CallsStorage::GetCallsTByProcedures(
   return res;
 }
 
+/// Clear Storage
 void CallsStorage::Clear() {
     calls_map_.clear();
     calls_by_map_.clear();

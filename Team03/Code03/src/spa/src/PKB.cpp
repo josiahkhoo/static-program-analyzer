@@ -525,35 +525,52 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
 }
 
 std::unordered_set<std::string> PKB::QueryAllCalls(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsProcedures();
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllCallsBy(EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsByProcedures();
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsProcedures();
+  std::unordered_set<std::string> called =
+      relationship_manager_.GetCallsByProcedures();
+  result.merge(called);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryCalls(std::string identifier,
                                                 EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsProcedures(identifier);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryCallsBy(std::string identifier,
                                                   EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsByProcedures(identifier);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier,
                                                  EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsTProcedures(identifier);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryCallsTBy(std::string identifier,
                                                    EntityType type) const {
-  return {};
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetCallsTByProcedures(identifier);
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllPattern(Expression exp) const {

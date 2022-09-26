@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "calls_storage.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"
@@ -45,6 +46,12 @@ class RelationshipManager {
 
   // store modifiesS to ModifiesStorage
   void AddAbstraction(ModifiesSAbstraction abstraction);
+
+  // store calls to CallsStorage
+  void AddAbstraction(CallsAbstraction abstraction);
+
+  // store callsT to CallsStorage
+  void AddAbstraction(CallsTAbstraction abstraction);
 
   /* ====================================
    * General Relationship Getter Methods
@@ -121,6 +128,22 @@ class RelationshipManager {
   std::unordered_set<std::string> GetStatementsModifyingVariable(
       std::string variable_name) const;
 
+  std::unordered_set<std::string> GetCallsProcedures() const;
+
+  std::unordered_set<std::string> GetCallsProcedures(
+      std::string proc_name) const;
+
+  std::unordered_set<std::string> GetCallsTProcedures(
+      std::string proc_name) const;
+
+  std::unordered_set<std::string> GetCallsByProcedures(
+      std::string proc_name) const;
+
+  std::unordered_set<std::string> GetCallsByProcedures() const;
+
+  std::unordered_set<std::string> GetCallsTByProcedures(
+      std::string proc_name) const;
+
   /* ====================================
    * Clear All Relationship Storages
    * ==================================== */
@@ -131,6 +154,7 @@ class RelationshipManager {
   ParentStorage parent_store_;
   UsesStorage uses_store_;
   ModifiesStorage modifies_store_;
+  CallsStorage calls_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
