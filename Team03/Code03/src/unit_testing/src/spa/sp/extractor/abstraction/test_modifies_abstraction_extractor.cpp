@@ -28,383 +28,461 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
 
-//  SECTION("Extract from Procedure with Read") {
-//    Lexer lexer;
-//    std::string input = "procedure p { read x; read y; read z; }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 3);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[1].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
-//             3 &&
-//         modifies_s_abstractions[2].GetRightHandSide().GetName() == "z"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 3);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
-//    REQUIRE((modifies_p_abstractions[2].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[2].GetRightHandSide().GetName() == "z"));
-//  }
-//
-//  SECTION("Extract from Procedure with Assign") {
-//    Lexer lexer;
-//    std::string input = "procedure p { m = x * y + z / 100; }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 1);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "m"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 1);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "m"));
-//  }
-//
-//  SECTION("Extract from If") {
-//    Lexer lexer;
-//    std::string input =
-//        "procedure p { if (v == 0) then { read x; read y; } else { read z; "
-//        "} }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 6);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
-//             3 &&
-//         modifies_s_abstractions[2].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
-//             4 &&
-//         modifies_s_abstractions[4].GetRightHandSide().GetName() == "z"));
-//    REQUIRE(
-//        (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[5].GetRightHandSide().GetName() == "z"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 3);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
-//    REQUIRE((modifies_p_abstractions[2].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[2].GetRightHandSide().GetName() == "z"));
-//  }
-//
-//  SECTION("Extract from While") {
-//    Lexer lexer;
-//    std::string input = "procedure p { while (v == 0) { read x; } }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 2);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 1);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
-//  }
-//
-//  SECTION("Extract from nested If-While") {
-//    Lexer lexer;
-//    std::string input =
-//        "procedure p { if (m == 0) then { while (n == 0) { read x; } } else { "
-//        "while (o == 0) { read y; } } }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 6);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             3 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-//             5 &&
-//         modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
-//             4 &&
-//         modifies_s_abstractions[4].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[5].GetRightHandSide().GetName() == "y"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 2);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
-//  }
-//
-//  SECTION("Extract from nested While-If") {
-//    Lexer lexer;
-//    std::string input =
-//        "procedure p { while (m == 0) { if (n == 0) then { read x; } else { "
-//        "read y; } } }";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
-//
-//    std::unordered_map<TNode, StatementEntity> stmt_umap =
-//        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
-//            eer.GetStatementEntities());
-//    std::unordered_map<TNode, VariableEntity> var_umap =
-//        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
-//            eer.GetVariableEntities());
-//    std::unordered_map<TNode, ConstantEntity> const_umap =
-//        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
-//            eer.GetConstantEntities());
-//    std::unordered_map<TNode, ProcedureEntity> proc_umap =
-//        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
-//            eer.GetProcedureEntities());
-//    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-//        proc_node_call_ent_umap =
-//            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
-//                eer.GetCallEntities());
-//    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
-//        AbstractionExtractorImpl::GetProcNameNodeMap(
-//            eer.GetProcedureEntities());
-//
-//    auto [modifies_s_abstractions, modifies_p_abstractions] =
-//        extractor_under_test.Extract(
-//            eer.GetAssignEntities(), eer.GetCallEntities(),
-//            eer.GetConstantEntities(), eer.GetIfEntities(),
-//            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-//            eer.GetReadEntities(), eer.GetStatementEntities(),
-//            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-//            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-//            proc_name_node_umap);
-//
-//    REQUIRE(modifies_s_abstractions.size() == 6);
-//    REQUIRE(
-//        (modifies_s_abstractions[0].GetLeftHandSide().GetStatementNumber() ==
-//             3 &&
-//         modifies_s_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[1].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[1].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[2].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[2].GetRightHandSide().GetName() == "x"));
-//    REQUIRE(
-//        (modifies_s_abstractions[3].GetLeftHandSide().GetStatementNumber() ==
-//             4 &&
-//         modifies_s_abstractions[3].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[4].GetLeftHandSide().GetStatementNumber() ==
-//             2 &&
-//         modifies_s_abstractions[4].GetRightHandSide().GetName() == "y"));
-//    REQUIRE(
-//        (modifies_s_abstractions[5].GetLeftHandSide().GetStatementNumber() ==
-//             1 &&
-//         modifies_s_abstractions[5].GetRightHandSide().GetName() == "y"));
-//
-//    REQUIRE(modifies_p_abstractions.size() == 2);
-//    REQUIRE((modifies_p_abstractions[0].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[0].GetRightHandSide().GetName() == "x"));
-//    REQUIRE((modifies_p_abstractions[1].GetLeftHandSide().GetName() == "p" &&
-//             modifies_p_abstractions[1].GetRightHandSide().GetName() == "y"));
-//  }
+  SECTION("Extract from Procedure with Read") {
+    Lexer lexer;
+    std::string input = "procedure p { read x; read y; read z; }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 3);
+    std::pair<int, std::string> p1 = {1, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {2, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p3 = {3, "z"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p3) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 3);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z2 = {"p", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z2) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z3 = {"p", "z"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z3) !=
+             modifies_p_vector.end()));
+  }
+
+  SECTION("Extract from Procedure with Assign") {
+    Lexer lexer;
+    std::string input = "procedure p { m = x * y + z / 100; }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 1);
+    std::pair<int, std::string> p1 = {1, "m"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 1);
+    std::pair<std::string, std::string> z1 = {"p", "m"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+  }
+
+  SECTION("Extract from If") {
+    Lexer lexer;
+    std::string input =
+        "procedure p { if (v == 0) then { read x; read y; } else { read z; "
+        "} }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 6);
+    std::pair<int, std::string> p1 = {2, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {1, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p3 = {3, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p3) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p4 = {1, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p5 = {4, "z"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p5) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p6 = {1, "z"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p6) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 3);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z2 = {"p", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z2) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z3 = {"p", "z"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z3) !=
+             modifies_p_vector.end()));
+  }
+
+  SECTION("Extract from While") {
+    Lexer lexer;
+    std::string input = "procedure p { while (v == 0) { read x; } }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 2);
+    std::pair<int, std::string> p1 = {2, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {1, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 1);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+  }
+
+  SECTION("Extract from nested If-While") {
+    Lexer lexer;
+    std::string input =
+        "procedure p { if (m == 0) then { while (n == 0) { read x; } } else { "
+        "while (o == 0) { read y; } } }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 6);
+    std::pair<int, std::string> p1 = {3, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {2, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p3 = {1, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p3) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p4 = {5, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p5 = {4, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p5) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p6 = {1, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p6) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 2);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z2 = {"p", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z2) !=
+             modifies_p_vector.end()));
+  }
+
+  SECTION("Extract from nested While-If") {
+    Lexer lexer;
+    std::string input =
+        "procedure p { while (m == 0) { if (n == 0) then { read x; } else { "
+        "read y; } } }";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
+
+    std::unordered_map<TNode, StatementEntity> stmt_umap =
+        AbstractionExtractorImpl::GetTNodeStatementEntityMap(
+            eer.GetStatementEntities());
+    std::unordered_map<TNode, VariableEntity> var_umap =
+        AbstractionExtractorImpl::GetTNodeVariableEntityMap(
+            eer.GetVariableEntities());
+    std::unordered_map<TNode, ConstantEntity> const_umap =
+        AbstractionExtractorImpl::GetTNodeConstantEntityMap(
+            eer.GetConstantEntities());
+    std::unordered_map<TNode, ProcedureEntity> proc_umap =
+        AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
+            eer.GetProcedureEntities());
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        proc_node_call_ent_umap =
+            AbstractionExtractorImpl::GetProcNodeCallEntityMap(
+                eer.GetCallEntities());
+    std::unordered_map<std::string, const TNode *> proc_name_node_umap =
+        AbstractionExtractorImpl::GetProcNameNodeMap(
+            eer.GetProcedureEntities());
+
+    auto [modifies_s_abstractions, modifies_p_abstractions] =
+        extractor_under_test.Extract(
+            eer.GetAssignEntities(), eer.GetCallEntities(),
+            eer.GetConstantEntities(), eer.GetIfEntities(),
+            eer.GetPrintEntities(), eer.GetProcedureEntities(),
+            eer.GetReadEntities(), eer.GetStatementEntities(),
+            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+            proc_name_node_umap);
+
+    std::vector<std::pair<int, std::string>> modifies_s_vector;
+    for (auto i : modifies_s_abstractions) {
+      int lhs = i.GetLeftHandSide().GetStatementNumber();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<int, std::string> pair = {lhs, rhs};
+      modifies_s_vector.emplace_back(pair);
+    }
+    std::vector<std::pair<std::string, std::string>> modifies_p_vector;
+    for (auto i : modifies_p_abstractions) {
+      std::string lhs = i.GetLeftHandSide().GetName();
+      std::string rhs = i.GetRightHandSide().GetName();
+      std::pair<std::string, std::string> pair = {lhs, rhs};
+      modifies_p_vector.emplace_back(pair);
+    }
+
+    REQUIRE(modifies_s_abstractions.size() == 6);
+    std::pair<int, std::string> p1 = {3, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p1) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p2 = {2, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p2) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p3 = {1, "x"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p3) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p4 = {4, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p4) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p5 = {2, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p5) !=
+             modifies_s_vector.end()));
+    std::pair<int, std::string> p6 = {1, "y"};
+    REQUIRE((std::find(modifies_s_vector.begin(), modifies_s_vector.end(), p6) !=
+             modifies_s_vector.end()));
+
+    REQUIRE(modifies_p_abstractions.size() == 2);
+    std::pair<std::string, std::string> z1 = {"p", "x"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z1) !=
+             modifies_p_vector.end()));
+    std::pair<std::string, std::string> z2 = {"p", "y"};
+    REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(), z2) !=
+             modifies_p_vector.end()));
+  }
 
   SECTION("Extract from chain call") {
     Lexer lexer;
