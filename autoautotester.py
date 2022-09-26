@@ -25,7 +25,7 @@ test_array = (
     ("Follows / FollowsT", "follows_follows_t"),
     ("Semantic Errors", "semantic_errors"),
     ("Syntax Errors", "syntax_errors"),
-    ("Patterns Only", "patterns_only"),
+    ("Assign Patterns only", "assign_patterns_only"),
     ("Parent / ParentT", "parent_parent_t"),
     ("Uses Procedure", "uses_p"),
     ("Uses Statement", "uses_s"),
