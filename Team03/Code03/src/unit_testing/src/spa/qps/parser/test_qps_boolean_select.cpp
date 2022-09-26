@@ -26,8 +26,7 @@ TEST_CASE("Boolean select", "[QPS Parser]") {
 
 TEST_CASE("Boolean select: No declarations", "[QPS Parser]") {
   QueryParser qp = QueryParser();
-  std::vector<Token> tokens_ = {
-                                Token(Token::IDENTIFIER, "Select"),
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "Select"),
                                 Token(Token::IDENTIFIER, "BOOLEAN"),
                                 Token(Token::IDENTIFIER, "such"),
                                 Token(Token::IDENTIFIER, "that"),
