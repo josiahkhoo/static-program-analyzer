@@ -5,6 +5,8 @@
 #include <unordered_set>
 
 #include "calls_storage.h"
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"

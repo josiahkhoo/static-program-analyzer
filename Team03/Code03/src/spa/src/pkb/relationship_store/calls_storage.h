@@ -6,8 +6,8 @@
 #include <unordered_set>
 #include <utility>
 
-#include "common/abstraction/Calls_abstraction.h"
-#include "common/abstraction/Calls_t_abstraction.h"
+#include "common/abstraction/calls_abstraction.h"
+#include "common/abstraction/calls_t_abstraction.h"
 
 class CallsStorage {
  public:
@@ -36,7 +36,8 @@ class CallsStorage {
 
  private:
   std::unordered_map<std::string, std::unordered_set<std::string>> calls_map_;
-  std::unordered_map<std::string, std::unordered_set<std::string>> calls_by_map_;
+  std::unordered_map<std::string, std::unordered_set<std::string>>
+      calls_by_map_;
   std::unordered_map<std::string, std::unordered_set<std::string>> calls_t_map_;
   std::unordered_map<std::string, std::unordered_set<std::string>>
       calls_t_by_map_;

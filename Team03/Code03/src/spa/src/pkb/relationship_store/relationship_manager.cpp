@@ -185,8 +185,9 @@ RelationshipManager::GetStatementsModifyingVariable(
   return modifies_store_.GetStatementsModifyingVariable(variable_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetCallsProcedures() const {
-    return calls_store_.GetCallsProcedures();
+std::unordered_set<std::string> RelationshipManager::GetCallsProcedures()
+    const {
+  return calls_store_.GetCallsProcedures();
 }
 
 std::unordered_set<std::string> RelationshipManager::GetCallsProcedures(
@@ -199,7 +200,8 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTProcedures(
   return calls_store_.GetCallsTProcedures(proc_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures() const {
+std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures()
+    const {
   return calls_store_.GetCallsByProcedures();
 }
 
@@ -210,7 +212,7 @@ std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures(
 
 std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
     std::string proc_name) const {
-  return calls_store_.GetCallsTByProcedures(proc_name)
+  return calls_store_.GetCallsTByProcedures(proc_name);
 }
 
 void RelationshipManager::Clear() {

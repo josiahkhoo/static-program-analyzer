@@ -109,9 +109,8 @@ std::unordered_set<std::string> CallsStorage::GetCallsTByProcedures(
 
 /// Clear Storage
 void CallsStorage::Clear() {
-    calls_map_.clear();
-    calls_by_map_.clear();
-    calls_t_map_.clear();
-    calls_t_by_map_.clear();
-
+  calls_map_.clear();
+  calls_by_map_.clear();
+  calls_t_map_.clear();
+  calls_t_by_map_.clear();
 }
