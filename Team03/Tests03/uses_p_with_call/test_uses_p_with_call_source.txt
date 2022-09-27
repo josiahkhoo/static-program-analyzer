@@ -35,4 +35,6 @@ procedure q {
 procedure s {
   print x; }
 
-procedure k {}
+procedure k {
+  x = x + 1;
+}
