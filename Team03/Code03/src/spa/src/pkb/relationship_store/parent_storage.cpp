@@ -6,35 +6,33 @@
 /// Add Parent Relationship
 /// \param abstraction
 void ParentStorage::AddRelationship(ParentAbstraction abstraction) {
-  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+  int parent = abstraction.GetLeftHandSide().GetStatementNumber();
+  int child = abstraction.GetRightHandSide().GetStatementNumber();
 
-  if (parent_map_.find(lhs) == parent_map_.end()) {
-    parent_map_.emplace(lhs, std::make_unique<ParentRelationship>(lhs));
+  if (!parent_map_.emplace(parent, std::unordered_set<int>{child})
+           .second) {
+    parent_map_.at(parent).emplace(child);
   }
-  parent_map_.find(lhs)->second->AddParentByStatementNumber(rhs);
-
-  if (parent_by_map_.find(rhs) == parent_by_map_.end()) {
-    parent_by_map_.emplace(rhs, std::make_unique<ParentByRelationship>(rhs));
+  if (!parent_by_map_.emplace(child, std::unordered_set<int>{parent})
+           .second) {
+    parent_by_map_.at(child).emplace(parent);
   }
-  parent_by_map_.find(rhs)->second->AddParentStatementNumber(lhs);
 }
 
 /// Add ParentT Relationship
 /// \param abstraction
 void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
-  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+  int parent = abstraction.GetLeftHandSide().GetStatementNumber();
+  int child = abstraction.GetRightHandSide().GetStatementNumber();
 
-  if (parent_t_map_.find(lhs) == parent_t_map_.end()) {
-    parent_t_map_.emplace(lhs, std::make_unique<ParentRelationship>(lhs));
+  if (!parent_t_map_.emplace(parent, std::unordered_set<int>{child})
+           .second) {
+    parent_t_map_.at(parent).emplace(child);
   }
-  parent_t_map_.find(lhs)->second->AddParentByStatementNumber(rhs);
-
-  if (parent_t_by_map_.find(rhs) == parent_t_by_map_.end()) {
-    parent_t_by_map_.emplace(rhs, std::make_unique<ParentByRelationship>(rhs));
+  if (!parent_t_by_map_.emplace(child, std::unordered_set<int>{parent})
+           .second) {
+    parent_t_by_map_.at(child).emplace(parent);
   }
-  parent_t_by_map_.find(rhs)->second->AddParentStatementNumber(lhs);
 }
 
 /// GetParentByStatements
@@ -43,16 +41,13 @@ void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
 /// statement
 std::unordered_set<std::string> ParentStorage::GetParentByStatements(
     int statement_number) const {
-  if (parent_map_.find(statement_number) == parent_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (parent_map_.find(statement_number) != parent_map_.end()) {
+    for (auto i : parent_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res =
-      parent_map_.find(statement_number)->second->GetParentByStatementNumbers();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetParentTByStatements
@@ -61,16 +56,13 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements(
 /// specified statement
 std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
     int statement_number) const {
-  if (parent_t_map_.find(statement_number) == parent_t_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (parent_t_map_.find(statement_number) != parent_t_map_.end()) {
+    for (auto i : parent_t_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res = parent_t_map_.find(statement_number)
-                                    ->second->GetParentByStatementNumbers();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetParentStatements
@@ -78,16 +70,13 @@ std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
 /// \return Gets all statements that are direct parents of a specified statement
 std::unordered_set<std::string> ParentStorage::GetParentStatements(
     int statement_number) const {
-  if (parent_by_map_.find(statement_number) == parent_by_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (parent_by_map_.find(statement_number) != parent_by_map_.end()) {
+    for (auto i : parent_by_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res =
-      parent_by_map_.find(statement_number)->second->GetParentStatementNumber();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetParentByStatements
@@ -106,16 +95,13 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements() const {
 /// specified statement
 std::unordered_set<std::string> ParentStorage::GetParentTStatements(
     int statement_number) const {
-  if (parent_t_by_map_.find(statement_number) == parent_t_by_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (parent_t_by_map_.find(statement_number) != parent_t_by_map_.end()) {
+    for (auto i : parent_t_by_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res = parent_t_by_map_.find(statement_number)
-                                    ->second->GetParentStatementNumber();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetParentStatements
@@ -129,11 +115,8 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
 }
 
 void ParentStorage::Clear() {
-  //  parent_map_.clear();
-  //  parent_by_map_.clear();
-  //
-  //  for (auto const& iter : parent_t_map_) {
-  //    auto& parent_t = iter.second;
-  //    parent_t.reset();
-  //  }
+    parent_map_.clear();
+    parent_by_map_.clear();
+    parent_t_map_.clear();
+    parent_t_by_map_.clear();
 }
