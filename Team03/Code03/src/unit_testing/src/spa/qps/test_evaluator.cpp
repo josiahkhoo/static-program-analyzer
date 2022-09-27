@@ -134,33 +134,32 @@ class QueryablePkbStub : public QueryablePkb {
     return {};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllCalls(
-      EntityType type) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAllCalls() const override {
     return {};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy(
-      EntityType type) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy()
+      const override {
     return {};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCalls(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {};
   }
 
@@ -592,33 +591,33 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllCalls(
-        EntityType type) const override {
+    [[nodiscard]] std::unordered_set<std::string> QueryAllCalls()
+        const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy(
-        EntityType type) const override {
+    [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy()
+        const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCalls(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
@@ -853,33 +852,33 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllCalls(
-        EntityType type) const override {
+    [[nodiscard]] std::unordered_set<std::string> QueryAllCalls()
+        const override {
       return {};
     }
 
-    [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy(
-        EntityType type) const override {
+    [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy()
+        const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCalls(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
-        std::string identifier, EntityType type) const override {
+        std::string identifier) const override {
       return {};
     }
 
