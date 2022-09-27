@@ -46,8 +46,8 @@ test_array = (
     # ("Modifies Procedure with Calls", "modifies_p_with_call"),
     # ("Boolean select", "boolean_select"),
     # ("Calls / Calls T", "calls_calls_t"),
-    # ("If Patterns only", "if_patterns_only"),
-    # ("While Patterns only", "while_patterns_only")
+    ("If Patterns only", "if_patterns_only"),
+    ("While Patterns only", "while_patterns_only")
 )
 
 overall_passed_test_cases = 0
