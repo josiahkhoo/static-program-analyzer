@@ -4,14 +4,9 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
 
 #include "common/abstraction/follows_abstraction.h"
 #include "common/abstraction/follows_t_abstraction.h"
-#include "common/abstraction/parent_abstraction.h"
-#include "common/abstraction/parent_t_abstraction.h"
-#include "follows_t_by_relationship.h"
-#include "follows_t_relationship.h"
 
 class FollowsStorage {
  public:
@@ -35,12 +30,14 @@ class FollowsStorage {
   std::unordered_set<std::string> GetFollowsTByStatements(
       int statement_number) const;
 
+  // Empty storage
+  void Clear();
+
  private:
   std::unordered_map<int, int> follows_map_;
   std::unordered_map<int, int> follows_by_map_;
-  std::unordered_map<int, std::unique_ptr<FollowsTRelationship>> follows_t_map_;
-  std::unordered_map<int, std::unique_ptr<FollowsTByRelationship>>
-      follows_t_by_map_;
+  std::unordered_map<int, std::unordered_set<int>> follows_t_map_;
+  std::unordered_map<int, std::unordered_set<int>> follows_t_by_map_;
 };
 
 #endif  // SPA_FOLLOWS_STORAGE_H

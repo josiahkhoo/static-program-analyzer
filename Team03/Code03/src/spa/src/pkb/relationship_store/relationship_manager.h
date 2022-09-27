@@ -5,16 +5,6 @@
 #include <unordered_set>
 
 #include "calls_storage.h"
-#include "common/abstraction/calls_abstraction.h"
-#include "common/abstraction/calls_t_abstraction.h"
-#include "common/abstraction/follows_abstraction.h"
-#include "common/abstraction/follows_t_abstraction.h"
-#include "common/abstraction/modifies_p_abstraction.h"
-#include "common/abstraction/modifies_s_abstraction.h"
-#include "common/abstraction/parent_abstraction.h"
-#include "common/abstraction/parent_t_abstraction.h"
-#include "common/abstraction/uses_p_abstraction.h"
-#include "common/abstraction/uses_s_abstraction.h"
 #include "follows_storage.h"
 #include "modifies_storage.h"
 #include "parent_storage.h"
@@ -58,91 +48,67 @@ class RelationshipManager {
   /* ====================================
    * General Relationship Getter Methods
    * ==================================== */
+  // Follows query methods
   std::unordered_set<std::string> GetFollowsStatements() const;
-
   std::unordered_set<std::string> GetFollowsStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetFollowsTStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetFollowsByStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetFollowsByStatements() const;
-
   std::unordered_set<std::string> GetFollowsTByStatements(
       int statement_number) const;
 
+  // Parent query methods
   std::unordered_set<std::string> GetParentStatements() const;
-
   std::unordered_set<std::string> GetParentStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetParentTStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetParentByStatements(
       int statement_number) const;
-
   std::unordered_set<std::string> GetParentByStatements() const;
-
   std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
+  // Uses query methods
   std::unordered_set<std::string> GetUsingProcedures() const;
-
   std::unordered_set<std::string> GetVariablesUsedByProcedure(
       std::string procedure_name) const;
-
   std::unordered_set<std::string> GetVariablesUsedByProcedures() const;
-
   std::unordered_set<std::string> GetProceduresUsingVariable(
       std::string variable_name) const;
-
   std::unordered_set<std::string> GetUsingStatements() const;
-
   std::unordered_set<std::string> GetVariablesUsedByStatement(
       int statement_number) const;
-
   std::unordered_set<std::string> GetVariablesUsedByStatements() const;
-
   std::unordered_set<std::string> GetStatementsUsingVariable(
       std::string variable_name) const;
 
+  // Modifies query methods
   std::unordered_set<std::string> GetModifyingProcedures() const;
-
   std::unordered_set<std::string> GetVariablesModifiedByProcedure(
       std::string procedure_name) const;
-
   std::unordered_set<std::string> GetVariablesModifiedByProcedures() const;
-
   std::unordered_set<std::string> GetProceduresModifyingVariable(
       std::string variable_name) const;
-
   std::unordered_set<std::string> GetModifyingStatements() const;
-
   std::unordered_set<std::string> GetVariablesModifiedByStatement(
       int statement_number) const;
-
   std::unordered_set<std::string> GetVariablesModifiedByStatements() const;
-
   std::unordered_set<std::string> GetStatementsModifyingVariable(
       std::string variable_name) const;
 
+  // Calls query methods
   std::unordered_set<std::string> GetCallsProcedures() const;
-
   std::unordered_set<std::string> GetCallsProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsTProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsByProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsByProcedures() const;
-
   std::unordered_set<std::string> GetCallsTByProcedures(
       std::string proc_name) const;
 
