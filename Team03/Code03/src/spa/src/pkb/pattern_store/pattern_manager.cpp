@@ -7,6 +7,14 @@ void PatternManager::AddAssignPattern(AssignEntity statement) {
   assign_pattern_storage_.AddAssignPattern(statement_number, lhs, rhs);
 }
 
+void PatternManager::AddIfPattern(IfPatternAbstraction abstraction) {
+  if_pattern_storage_.AddIfPattern(abstraction);
+}
+
+void PatternManager::AddWhilePattern(WhilePatternAbstraction abstraction) {
+  while_pattern_storage_.AddWhilePattern(abstraction);
+}
+
 std::unordered_set<std::string> PatternManager::GetAllPattern(
     Expression exp) const {
   bool front_wildcard = exp.has_front_wildcard;
@@ -27,4 +35,36 @@ std::unordered_set<std::string> PatternManager::GetPattern(
                                             back_wildcard);
 }
 
-void PatternManager::Clear() { assign_pattern_storage_.Clear(); }
+std::unordered_set<std::string> PatternManager::GetAllIfPattern() const {
+  return if_pattern_storage_.GetAllIfPattern();
+};
+
+std::unordered_set<std::string> PatternManager::GetIfPattern(
+    std::string var_ident) const {
+  return if_pattern_storage_.GetIfPattern(var_ident);
+};
+
+std::unordered_set<std::string> PatternManager::GetPatternVariablesFromIf(
+    int statement_number) const {
+  return if_pattern_storage_.GetPatternVariablesFromIf(statement_number);
+};
+
+std::unordered_set<std::string> PatternManager::GetAllWhilePattern() const {
+  return while_pattern_storage_.GetAllWhilePattern();
+};
+
+std::unordered_set<std::string> PatternManager::GetWhilePattern(
+    std::string var_ident) const {
+  return while_pattern_storage_.GetWhilePattern(var_ident);
+};
+
+std::unordered_set<std::string> PatternManager::GetPatternVariablesFromWhile(
+    int statement_number) const {
+  return while_pattern_storage_.GetPatternVariablesFromWhile(statement_number);
+};
+
+void PatternManager::Clear() {
+  assign_pattern_storage_.Clear();
+  if_pattern_storage_.Clear();
+  while_pattern_storage_.Clear();
+}
