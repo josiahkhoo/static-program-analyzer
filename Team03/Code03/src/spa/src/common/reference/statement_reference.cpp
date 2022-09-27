@@ -5,6 +5,9 @@
 
 StatementReference::StatementReference() : Reference(true) {}
 
+StatementReference::StatementReference(int line_number)
+    : line_number_(line_number), Reference(false) {}
+
 StatementReference::StatementReference(Synonym synonym)
     : Reference(std::move(synonym)) {}
 
@@ -16,9 +19,6 @@ int StatementReference::GetLineNumber() const {
 bool StatementReference::IsLineNumber() const {
   return line_number_.has_value();
 }
-
-StatementReference::StatementReference(int line_number)
-    : line_number_(line_number), Reference(false) {}
 
 bool StatementReference::IsIdentifier() const { return false; }
 

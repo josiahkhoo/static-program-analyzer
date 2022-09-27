@@ -10,7 +10,7 @@ const std::string PatternAssignParser::CLAUSE_WORD = "pattern";
 bool PatternAssignParser::MatchParser(
     const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
         data) const {
-  return QueryOperationMatcher::MatchEntityParser(data, CLAUSE_WORD, ASSIGN);
+  return QueryOperationMatcher::MatchParser(data, CLAUSE_WORD, ASSIGN);
 }
 
 std::shared_ptr<QueryOperation> PatternAssignParser::Parse(

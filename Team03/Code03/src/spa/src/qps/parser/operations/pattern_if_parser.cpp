@@ -12,7 +12,7 @@ const std::string PatternIfParser::CLAUSE_WORD = "pattern";
 bool PatternIfParser::MatchParser(
     const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
         data) const {
-  return QueryOperationMatcher::MatchEntityParser(data, CLAUSE_WORD, IF);
+  return QueryOperationMatcher::MatchParser(data, CLAUSE_WORD, IF);
 }
 
 std::shared_ptr<QueryOperation> PatternIfParser::Parse(
