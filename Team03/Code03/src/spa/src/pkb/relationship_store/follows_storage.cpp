@@ -1,5 +1,7 @@
 #include "follows_storage.h"
 
+/// Add Follows Relationship
+/// \param abstraction
 void FollowsStorage::AddRelationship(FollowsAbstraction abstraction) {
   int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
   int rhs = abstraction.GetRightHandSide().GetStatementNumber();
@@ -8,6 +10,8 @@ void FollowsStorage::AddRelationship(FollowsAbstraction abstraction) {
   follows_by_map_.emplace(rhs, lhs);
 }
 
+/// Add FollowsT Relationship
+/// \param abstraction
 void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
   int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
   int rhs = abstraction.GetRightHandSide().GetStatementNumber();
@@ -24,6 +28,9 @@ void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
   follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
 }
 
+/// GetFollowsStatements
+/// \param statement_number
+/// \return Gets all statements directly following a specified statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
@@ -34,6 +41,9 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(
   return res;
 }
 
+/// GetFollowsTStatements
+/// \param statement_number
+/// \return Gets all statements directly or indirectly following a specified statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
     int statement_number) const {
   if (follows_t_map_.find(statement_number) == follows_t_map_.end()) {
@@ -48,6 +58,9 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
   return s;
 }
 
+/// GetFollowsByStatements
+/// \param statement_number
+/// \return Gets all statements directly followed by a specified statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
@@ -58,6 +71,8 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements(
   return res;
 }
 
+/// GetFollowsByStatements
+/// \return Gets all statements followed by any statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements() const {
   std::unordered_set<std::string> res;
   for (auto entry : follows_by_map_) {
@@ -66,6 +81,9 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements() const {
   return res;
 }
 
+/// GetFollowsTByStatements
+/// \param statement_number
+/// \return Gets all statements directly or indirectly followed by a specified statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsTByStatements(
     int statement_number) const {
   if (follows_t_by_map_.find(statement_number) == follows_t_by_map_.end()) {
@@ -80,6 +98,8 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsTByStatements(
   return s;
 }
 
+/// GetFollowsStatements
+/// \return Gets all statements following any statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements() const {
   std::unordered_set<std::string> res;
   for (auto entry : follows_map_) {

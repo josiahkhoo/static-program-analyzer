@@ -3,6 +3,8 @@
 #include "parent_by_relationship.h"
 #include "parent_relationship.h"
 
+/// Add Parent Relationship
+/// \param abstraction
 void ParentStorage::AddRelationship(ParentAbstraction abstraction) {
   int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
   int rhs = abstraction.GetRightHandSide().GetStatementNumber();
@@ -18,6 +20,8 @@ void ParentStorage::AddRelationship(ParentAbstraction abstraction) {
   parent_by_map_.find(rhs)->second->AddParentStatementNumber(lhs);
 }
 
+/// Add ParentT Relationship
+/// \param abstraction
 void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
   int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
   int rhs = abstraction.GetRightHandSide().GetStatementNumber();
@@ -33,6 +37,9 @@ void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
   parent_t_by_map_.find(rhs)->second->AddParentStatementNumber(lhs);
 }
 
+/// GetParentByStatements
+/// \param statement_number
+/// \return Gets all statements that are direct children of a specified statement
 std::unordered_set<std::string> ParentStorage::GetParentByStatements(
     int statement_number) const {
   if (parent_map_.find(statement_number) == parent_map_.end()) {
@@ -47,6 +54,9 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements(
   return s;
 }
 
+/// GetParentTByStatements
+/// \param statement_number
+/// \return Gets all statements that are direct or indirect children of a specified statement
 std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
     int statement_number) const {
   if (parent_t_map_.find(statement_number) == parent_t_map_.end()) {
@@ -61,6 +71,9 @@ std::unordered_set<std::string> ParentStorage::GetParentTByStatements(
   return s;
 }
 
+/// GetParentStatements
+/// \param statement_number
+/// \return Gets all statements that are direct parents of a specified statement
 std::unordered_set<std::string> ParentStorage::GetParentStatements(
     int statement_number) const {
   if (parent_by_map_.find(statement_number) == parent_by_map_.end()) {
@@ -75,6 +88,8 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements(
   return s;
 }
 
+/// GetParentByStatements
+/// \return Gets all statements that are direct children of any statement
 std::unordered_set<std::string> ParentStorage::GetParentByStatements() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : parent_by_map_) {
@@ -83,6 +98,9 @@ std::unordered_set<std::string> ParentStorage::GetParentByStatements() const {
   return res;
 }
 
+/// GetParentTStatements
+/// \param statement_number
+/// \return Gets all statements that are direct or indirect parents of a specified statement
 std::unordered_set<std::string> ParentStorage::GetParentTStatements(
     int statement_number) const {
   if (parent_t_by_map_.find(statement_number) == parent_t_by_map_.end()) {
@@ -97,6 +115,8 @@ std::unordered_set<std::string> ParentStorage::GetParentTStatements(
   return s;
 }
 
+/// GetParentStatements
+/// \return Gets all statements that are direct parents of any statement
 std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
   std::unordered_set<std::string> res;
   for (auto const& entry : parent_map_) {
