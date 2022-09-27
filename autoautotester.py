@@ -21,7 +21,7 @@ debug: str = args.debug
 # Comment out tests that you don't want to test
 test_array = (
     # Milestone 1 tests
-    # ("Entities Only", "entities_only"),
+    ("Entities Only", "entities_only"),
     ("Follows / FollowsT", "follows_follows_t"),
     ("Semantic Errors", "semantic_errors"),
     ("Syntax Errors", "syntax_errors"),
@@ -40,10 +40,10 @@ test_array = (
     ("Source Error: Cyclic procedure call", "source_error_cyclic_call"),
     ("Source Error: Recursive procedure call", "source_error_recursive_call"),
     ("Source Error: Two procedure same name", "source_error_two_procedure_same_name"),
-    # ("Uses Statement with Calls", "uses_s_with_call"),
-    # ("Uses Procedure with Calls", "uses_p_with_call"),
-    # ("Modifies Statement with Calls", "modifies_s_with_call"),
-    # ("Modifies Procedure with Calls", "modifies_p_with_call"),
+    ("Uses Statement with Calls", "uses_s_with_call"),
+    ("Uses Procedure with Calls", "uses_p_with_call"),
+    ("Modifies Statement with Calls", "modifies_s_with_call"),
+    ("Modifies Procedure with Calls", "modifies_p_with_call"),
     # ("Boolean select", "boolean_select"),
     # ("Calls / Calls T", "calls_calls_t"),
     # ("If Patterns only", "if_patterns_only"),
