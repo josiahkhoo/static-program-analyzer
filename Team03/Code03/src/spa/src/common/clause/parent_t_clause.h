@@ -8,9 +8,6 @@ class ParentTClause : public Clause {
  public:
   ParentTClause(StatementReference lhs, StatementReference rhs);
 
-  [[nodiscard]] std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const override;
-
   [[nodiscard]] std::unordered_set<std::string> FetchPossibleRhs(
       std::string lhs, const QueryablePkb &queryable_pkb) const override;
 

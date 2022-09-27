@@ -1,43 +1,9 @@
 #include "follows_clause.h"
 
-#include <cassert>
 #include <utility>
 
 FollowsClause::FollowsClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-
-std::unordered_set<std::string> FollowsClause::Fetch(
-    const QueryablePkb &queryable_pkb) const {
-  // Both left hand and right hand side cannot be synonyms together.
-  assert(!(GetLeftHandSide().IsSynonym() && GetRightHandSide().IsSynonym()));
-
-  if (GetLeftHandSide().IsSynonym()) {
-    if (GetRightHandSide().IsLineNumber()) {
-      // E.g. Follow(a, 1)
-      return queryable_pkb.QueryFollowsBy(
-          GetRightHandSide().GetLineNumber(),
-          GetLeftHandSide().GetSynonym().GetEntityType());
-    } else if (GetRightHandSide().IsWildCard()) {
-      // E.g. Follow(a, _)
-      return queryable_pkb.QueryAllFollows(
-          GetLeftHandSide().GetSynonym().GetEntityType());
-    }
-  } else if (GetRightHandSide().IsSynonym()) {
-    if (GetLeftHandSide().IsLineNumber()) {
-      // E.g. Follow(1, a)
-      return queryable_pkb.QueryFollows(
-          GetLeftHandSide().GetLineNumber(),
-          GetRightHandSide().GetSynonym().GetEntityType());
-    } else if (GetLeftHandSide().IsWildCard()) {
-      // E.g. Follow(_, a)
-      return queryable_pkb.QueryAllFollowsBy(
-          GetRightHandSide().GetSynonym().GetEntityType());
-    }
-    if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
-      return queryable_pkb.QueryAllFollowsRelations();
-    }
-  }
-}
 
 [[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
@@ -83,8 +49,8 @@ std::unordered_set<std::string> FollowsClause::FetchLhs(
 
 bool FollowsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
-    auto possible_rhs = FetchPossibleRhs(
-        std::to_string(GetLeftHandSide().GetLineNumber()), queryable_pkb);
+    auto possible_rhs = queryable_pkb.QueryFollows(
+        GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);
     if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=
         possible_rhs.end()) {
       return true;
@@ -92,13 +58,15 @@ bool FollowsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
     return false;
   } else if (GetLeftHandSide().IsLineNumber() &&
              GetRightHandSide().IsWildCard()) {
-    return !FetchPossibleRhs(std::to_string(GetLeftHandSide().GetLineNumber()),
-                             queryable_pkb)
+    return !queryable_pkb
+                .QueryFollows(GetLeftHandSide().GetLineNumber(),
+                              EntityType::STATEMENT)
                 .empty();
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsLineNumber()) {
-    return !FetchPossibleLhs(std::to_string(GetRightHandSide().GetLineNumber()),
-                             queryable_pkb)
+    return !queryable_pkb
+                .QueryFollowsBy(GetRightHandSide().GetLineNumber(),
+                                EntityType::STATEMENT)
                 .empty();
   }
   return !queryable_pkb.QueryAllFollowsRelations().empty();
