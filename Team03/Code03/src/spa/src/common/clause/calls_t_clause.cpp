@@ -12,25 +12,19 @@ std::unordered_set<std::string> CallsTClause::Fetch(
   if (GetLeftHandSide().IsSynonym()) {
     if (GetRightHandSide().IsIdentifier()) {
       // E.g. Calls*(p, "first")
-      return queryable_pkb.QueryCallsTBy(
-          GetRightHandSide().GetIdentifier(),
-          GetLeftHandSide().GetSynonym().GetEntityType());
+      return queryable_pkb.QueryCallsTBy(GetRightHandSide().GetIdentifier());
     } else if (GetRightHandSide().IsWildCard()) {
       // E.g. Calls*(p, _)
-      return queryable_pkb.QueryAllCalls(
-          GetLeftHandSide().GetSynonym().GetEntityType());
+      return queryable_pkb.QueryAllCalls();
     }
   }
   if (GetRightHandSide().IsSynonym()) {
     if (GetLeftHandSide().IsIdentifier()) {
       // E.g. Calls*("first", p)
-      return queryable_pkb.QueryCallsT(
-          GetLeftHandSide().GetIdentifier(),
-          GetRightHandSide().GetSynonym().GetEntityType());
+      return queryable_pkb.QueryCallsT(GetLeftHandSide().GetIdentifier());
     } else if (GetLeftHandSide().IsWildCard()) {
       // E.g. Calls*(_, p)
-      return queryable_pkb.QueryAllCallsBy(
-          GetRightHandSide().GetSynonym().GetEntityType());
+      return queryable_pkb.QueryAllCallsBy();
     }
   }
   if (GetLeftHandSide().IsWildCard() && GetRightHandSide().IsWildCard()) {
@@ -38,8 +32,8 @@ std::unordered_set<std::string> CallsTClause::Fetch(
   }
   // Handle for both idents
   if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
-    auto possible_rhs = queryable_pkb.QueryCallsT(
-        GetLeftHandSide().GetIdentifier(), EntityType::PROCEDURE);
+    auto possible_rhs =
+        queryable_pkb.QueryCallsT(GetLeftHandSide().GetIdentifier());
     if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
       return {GetRightHandSide().GetIdentifier()};
@@ -51,14 +45,12 @@ std::unordered_set<std::string> CallsTClause::Fetch(
 
 [[nodiscard]] std::unordered_set<std::string> CallsTClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryCallsT(
-      lhs, GetRightHandSide().GetSynonym().GetEntityType());
+  return queryable_pkb.QueryCallsT(lhs);
 }
 
 [[nodiscard]] std::unordered_set<std::string> CallsTClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryCallsTBy(
-      rhs, GetLeftHandSide().GetSynonym().GetEntityType());
+  return queryable_pkb.QueryCallsTBy(rhs);
 }
 
 const Reference &CallsTClause::GetLeftHandSide() const { return lhs_; }
