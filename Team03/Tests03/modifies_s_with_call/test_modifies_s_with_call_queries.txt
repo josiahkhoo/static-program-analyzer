@@ -31,7 +31,7 @@ z
 7 - (SUCCESS) Retrieve all variables modified in statement 13 if - should return from every branch in if
 variable v;
 Select v such that Modifies (23, v)
-x, i, z
+x, z
 5000
 7 - (SUCCESS) Retrieve all variables modified in statement 4 while - should return from every branch in while (incl. nest)
 variable v;

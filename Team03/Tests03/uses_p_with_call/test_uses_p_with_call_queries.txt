@@ -11,7 +11,7 @@ Example, p
 3 - (SUCCESS) Retrieve all procedures which uses wildcard
 procedure p;
 Select p such that Uses (p, _)
-Example, p, q, s
+Example, p, q, s, k
 5000
 4 - (SUCCESS) Retrieve all variables used in Example procedure (including indirect calls)
 variable v; procedure p;
