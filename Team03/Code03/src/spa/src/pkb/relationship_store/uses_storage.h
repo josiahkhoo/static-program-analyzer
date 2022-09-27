@@ -4,7 +4,6 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
 
 #include "common/abstraction/uses_p_abstraction.h"
 #include "common/abstraction/uses_s_abstraction.h"
