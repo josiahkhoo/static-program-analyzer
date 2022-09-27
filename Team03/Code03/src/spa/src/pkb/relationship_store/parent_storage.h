@@ -37,8 +37,7 @@ class ParentStorage {
   std::unordered_map<int, std::unordered_set<int>> parent_map_;
   std::unordered_map<int, std::unordered_set<int>> parent_by_map_;
   std::unordered_map<int, std::unordered_set<int>> parent_t_map_;
-  std::unordered_map<int, std::unordered_set<int>>
-      parent_t_by_map_;
+  std::unordered_map<int, std::unordered_set<int>> parent_t_by_map_;
 };
 
 #endif  // SPA_PARENT_STORAGE_H

@@ -6,12 +6,10 @@ void ParentStorage::AddRelationship(ParentAbstraction abstraction) {
   int parent = abstraction.GetLeftHandSide().GetStatementNumber();
   int child = abstraction.GetRightHandSide().GetStatementNumber();
 
-  if (!parent_map_.emplace(parent, std::unordered_set<int>{child})
-           .second) {
+  if (!parent_map_.emplace(parent, std::unordered_set<int>{child}).second) {
     parent_map_.at(parent).emplace(child);
   }
-  if (!parent_by_map_.emplace(child, std::unordered_set<int>{parent})
-           .second) {
+  if (!parent_by_map_.emplace(child, std::unordered_set<int>{parent}).second) {
     parent_by_map_.at(child).emplace(parent);
   }
 }
@@ -22,8 +20,7 @@ void ParentStorage::AddRelationship(ParentTAbstraction abstraction) {
   int parent = abstraction.GetLeftHandSide().GetStatementNumber();
   int child = abstraction.GetRightHandSide().GetStatementNumber();
 
-  if (!parent_t_map_.emplace(parent, std::unordered_set<int>{child})
-           .second) {
+  if (!parent_t_map_.emplace(parent, std::unordered_set<int>{child}).second) {
     parent_t_map_.at(parent).emplace(child);
   }
   if (!parent_t_by_map_.emplace(child, std::unordered_set<int>{parent})
@@ -113,8 +110,8 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
 
 /// Clear Storage
 void ParentStorage::Clear() {
-    parent_map_.clear();
-    parent_by_map_.clear();
-    parent_t_map_.clear();
-    parent_t_by_map_.clear();
+  parent_map_.clear();
+  parent_by_map_.clear();
+  parent_t_map_.clear();
+  parent_t_by_map_.clear();
 }
