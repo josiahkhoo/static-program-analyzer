@@ -13,33 +13,38 @@ variable v;
 select v such
 SyntaxError
 5000
-4 - (SYNTAX ERROR) Undeclared synonym
-
-Select a
-SyntaxError
-5000
-5 - (SYNTAX ERROR) Invalid expression single operator
-
+4 - (SYNTAX ERROR) Invalid PatternAssign expression single operator
+assign a;
 Select a pattern a(_, "+")
 SyntaxError
 5000
-6 - (SYNTAX ERROR) Invalid expression trailing operator
-
+5 - (SYNTAX ERROR) Invalid PatternAssign expression trailing operator
+assign a;
 Select a pattern a(_, _"x+")
 SyntaxError
 5000
-7 - (SYNTAX ERROR) Invalid expression missing bracket
-
+6 - (SYNTAX ERROR) Invalid PatternAssign expression missing bracket
+assign a;
 Select a pattern a(_, _"x+y)")
 SyntaxError
 5000
-8 - (SYNTAX ERROR) PatternAssign expression must be string
+7 - (SYNTAX ERROR) Invalid PatternAssign expression must be string
 assign a2; variable v;
 Select a2  pattern a2 (_, v)
+SyntaxError
+5000
+8 - (SYNTAX ERROR) Invalid PatternAssign expression must be string
+constant c; assign a; variable v;
+Select c such that Uses (a, v) pattern a (_,  c)
 SyntaxError
 5000
 9 - (SYNTAX ERROR) Invalid expression bracket single operator
 assign a;
 Select a pattern a ( _, _"(*)"_)
+SyntaxError
+5000
+10 - (SYNTAX ERROR) Invalid expression missing 1st const
+assign a;
+Select a pattern a (_, _" +temp"_)
 SyntaxError
 5000
