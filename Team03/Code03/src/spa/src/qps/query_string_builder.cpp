@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "qps/exceptions/syntax_exception.h"
+#include "qps/exceptions/semantic_exception.h"
 
 QueryStringBuilder::QueryStringBuilder() = default;
 
@@ -32,7 +32,7 @@ Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
       return synonym;
     }
   }
-  throw SyntaxException("Synonym not declared");
+  throw SemanticException("Synonym not declared");
 }
 
 bool QueryStringBuilder::IsOperationsEmpty() {

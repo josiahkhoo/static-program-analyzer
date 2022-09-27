@@ -106,6 +106,10 @@ std::string QueryParserUtil::GetExpression(
     const QueryStringBuilder& builder) {
   std::string res;
   Token next = tokens->Peek();
+  // Start of expression must be term
+  if (isMathOperator(next)) {
+    throw SyntaxException("Invalid expression");
+  }
   while (next.IsNot(Token::INVERTED_COMMAS) &&
          next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
     res.append(GetTerm(tokens, builder));
@@ -123,9 +127,7 @@ std::string QueryParserUtil::GetTerm(
   // var_name, const_value, operator
   if (next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER)) {
     res.append(next.GetValue());
-  } else if (next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
-             next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
-             next.Is(Token::PERCENT)) {
+  } else if (isMathOperator(next)) {
     res.append(next.GetValue());
     tokens->Forward();
     res.append(GetTerm(tokens, builder));
@@ -146,6 +148,12 @@ std::string QueryParserUtil::GetTerm(
     throw SyntaxException("Invalid expression");
   }
   return res;
+}
+
+bool QueryParserUtil::isMathOperator(Token& next) {
+  return next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
+         next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
+         next.Is(Token::PERCENT);
 }
 
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {

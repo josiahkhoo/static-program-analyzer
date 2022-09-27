@@ -32,6 +32,9 @@ class QueryParserUtil {
   static void CheckVariableEntity(const EntityReference& entity_ref);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
                                    const QueryStringBuilder& builder);
+
+ private:
+  static bool isMathOperator(Token& next);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H
