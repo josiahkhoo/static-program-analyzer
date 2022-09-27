@@ -56,3 +56,45 @@ std::unordered_set<std::string> CallsClause::Fetch(
 const Reference &CallsClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &CallsClause::GetRightHandSide() const { return rhs_; }
+
+std::unordered_set<std::string> CallsClause::FetchRhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsIdentifier()) {
+    // E.g. Calls("first", p)
+    return queryable_pkb.QueryCalls(GetLeftHandSide().GetIdentifier());
+  }
+  // E.g. Calls(_, p)
+  return queryable_pkb.QueryAllCallsBy();
+}
+
+std::unordered_set<std::string> CallsClause::FetchLhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetRightHandSide().IsIdentifier()) {
+    // E.g. Calls(p, "first")
+    return queryable_pkb.QueryCallsBy(GetRightHandSide().GetIdentifier());
+  }
+  // E.g. Calls(p, _)
+  return queryable_pkb.QueryAllCalls();
+}
+
+bool CallsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
+    auto possible_rhs =
+        FetchPossibleRhs(GetLeftHandSide().GetIdentifier(), queryable_pkb);
+    if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
+        possible_rhs.end()) {
+      return true;
+    }
+    return false;
+  } else if (GetLeftHandSide().IsIdentifier() &&
+             GetRightHandSide().IsWildCard()) {
+    return !FetchPossibleRhs(GetLeftHandSide().GetIdentifier(), queryable_pkb)
+                .empty();
+  } else if (GetLeftHandSide().IsWildCard() &&
+             GetRightHandSide().IsIdentifier()) {
+    return !FetchPossibleLhs(GetRightHandSide().GetIdentifier(), queryable_pkb)
+                .empty();
+  }
+  // Handle for wildcard wildcard
+  return !queryable_pkb.QueryAllCalls().empty();
+}

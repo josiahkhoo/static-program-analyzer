@@ -66,3 +66,51 @@ std::unordered_set<std::string> UsesPClause::Fetch(
 const Reference &UsesPClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &UsesPClause::GetRightHandSide() const { return rhs_; }
+
+std::unordered_set<std::string> UsesPClause::FetchRhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsIdentifier()) {
+    // E.g. Uses("x", a)
+    return queryable_pkb.QueryUsesP(
+        GetLeftHandSide().GetIdentifier(),
+        GetRightHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Uses(_, a)
+  return queryable_pkb.QueryAllUsesBy(
+      GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+std::unordered_set<std::string> UsesPClause::FetchLhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetRightHandSide().IsIdentifier()) {
+    // E.g. Uses(a, "x")
+    return queryable_pkb.QueryUsesPBy(
+        GetRightHandSide().GetIdentifier(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Uses(a, _)
+  return queryable_pkb.QueryAllUses(
+      GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
+bool UsesPClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
+    auto possible_rhs =
+        FetchPossibleRhs(GetLeftHandSide().GetIdentifier(), queryable_pkb);
+    if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
+        possible_rhs.end()) {
+      return true;
+    }
+    return false;
+  } else if (GetLeftHandSide().IsIdentifier() &&
+             GetRightHandSide().IsWildCard()) {
+    return !FetchPossibleRhs(GetLeftHandSide().GetIdentifier(), queryable_pkb)
+                .empty();
+  } else if (GetLeftHandSide().IsWildCard() &&
+             GetRightHandSide().IsIdentifier()) {
+    return !FetchPossibleLhs(GetRightHandSide().GetIdentifier(), queryable_pkb)
+                .empty();
+  }
+  // Handle for wildcard wildcard
+  return !queryable_pkb.QueryAllUsesRelations().empty();
+}

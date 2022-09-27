@@ -22,6 +22,14 @@ class ModifiesSClause : public Clause {
 
   [[nodiscard]] const Reference &GetRightHandSide() const override;
 
+  [[nodiscard]] std::unordered_set<std::string> FetchRhs(
+      const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] std::unordered_set<std::string> FetchLhs(
+      const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
+
  private:
   StatementReference lhs_;
   EntityReference rhs_;

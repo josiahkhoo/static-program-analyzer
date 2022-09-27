@@ -54,3 +54,52 @@ std::unordered_set<std::string> FollowsClause::Fetch(
 const Reference &FollowsClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &FollowsClause::GetRightHandSide() const { return rhs_; }
+
+std::unordered_set<std::string> FollowsClause::FetchRhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsLineNumber()) {
+    // E.g. Follow(1, a)
+    return queryable_pkb.QueryFollows(
+        GetLeftHandSide().GetLineNumber(),
+        GetRightHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Follow(_, a)
+  return queryable_pkb.QueryAllFollowsBy(
+      GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+std::unordered_set<std::string> FollowsClause::FetchLhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetRightHandSide().IsLineNumber()) {
+    // E.g. Follow(a, 1)
+    return queryable_pkb.QueryFollowsBy(
+        GetRightHandSide().GetLineNumber(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Follow(a, _)
+  return queryable_pkb.QueryAllFollows(
+      GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
+bool FollowsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
+    auto possible_rhs = FetchPossibleRhs(
+        std::to_string(GetLeftHandSide().GetLineNumber()), queryable_pkb);
+    if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=
+        possible_rhs.end()) {
+      return true;
+    }
+    return false;
+  } else if (GetLeftHandSide().IsLineNumber() &&
+             GetRightHandSide().IsWildCard()) {
+    return !FetchPossibleRhs(std::to_string(GetLeftHandSide().GetLineNumber()),
+                             queryable_pkb)
+                .empty();
+  } else if (GetLeftHandSide().IsWildCard() &&
+             GetRightHandSide().IsLineNumber()) {
+    return !FetchPossibleLhs(std::to_string(GetRightHandSide().GetLineNumber()),
+                             queryable_pkb)
+                .empty();
+  }
+  return !queryable_pkb.QueryAllFollowsRelations().empty();
+}

@@ -66,3 +66,7 @@ QueryOperation::IterateSide PatternAssign::GetIterateSide(
     std::vector<std::vector<std::string>> rhs) const {
   return QueryOperation::RHS;
 }
+
+bool PatternAssign::IsTrue(const QueryablePkb &queryable_pkb) const {
+  assert(!"Patterns are never no synonyms, this should not get called");
+}

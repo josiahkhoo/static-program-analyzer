@@ -65,3 +65,52 @@ std::unordered_set<std::string> UsesSClause::Fetch(
 const Reference &UsesSClause::GetLeftHandSide() const { return lhs_; }
 
 const Reference &UsesSClause::GetRightHandSide() const { return rhs_; }
+
+std::unordered_set<std::string> UsesSClause::FetchRhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsLineNumber()) {
+    // E.g. Uses(1, a)
+    return queryable_pkb.QueryUsesS(
+        GetLeftHandSide().GetLineNumber(),
+        GetRightHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Uses(_, a)
+  return queryable_pkb.QueryAllUsesBy(
+      GetRightHandSide().GetSynonym().GetEntityType());
+}
+
+std::unordered_set<std::string> UsesSClause::FetchLhs(
+    const QueryablePkb &queryable_pkb) const {
+  if (GetRightHandSide().IsIdentifier()) {
+    // E.g. Uses(a, "x")
+    return queryable_pkb.QueryUsesSBy(
+        GetRightHandSide().GetIdentifier(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
+  }
+  // E.g. Uses(a, _)
+  return queryable_pkb.QueryAllUses(
+      GetLeftHandSide().GetSynonym().GetEntityType());
+}
+
+bool UsesSClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsIdentifier()) {
+    auto possible_rhs = FetchPossibleRhs(
+        std::to_string(GetLeftHandSide().GetLineNumber()), queryable_pkb);
+    if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
+        possible_rhs.end()) {
+      return true;
+    }
+    return false;
+  } else if (GetLeftHandSide().IsLineNumber() &&
+             GetRightHandSide().IsWildCard()) {
+    return !FetchPossibleRhs(std::to_string(GetLeftHandSide().GetLineNumber()),
+                             queryable_pkb)
+                .empty();
+  } else if (GetLeftHandSide().IsWildCard() &&
+             GetRightHandSide().IsIdentifier()) {
+    return !FetchPossibleLhs(GetRightHandSide().GetIdentifier(), queryable_pkb)
+                .empty();
+  }
+  // Handle for wildcard wildcard
+  return !queryable_pkb.QueryAllUsesRelations().empty();
+}
