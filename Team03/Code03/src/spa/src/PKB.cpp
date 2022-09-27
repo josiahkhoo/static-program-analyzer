@@ -122,13 +122,13 @@ void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
 
 void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
   for (const WhilePatternAbstraction& abstraction : abstractions) {
-    // TODO
+    pattern_manager_.AddWhilePattern(abstraction);
   }
 }
 
 void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
   for (const IfPatternAbstraction& abstraction : abstractions) {
-    // TODO
+    pattern_manager_.AddIfPattern(abstraction);
   }
 }
 
@@ -608,31 +608,54 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
  * While Pattern Query Methods
  * ==================================== */
 
+/// QueryAllWhilePattern
+/// \return Get all While Statements that use a variable in conditional
+/// container
 std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
-  return {};
+  return pattern_manager_.GetAllWhilePattern();
 };
 
+/// QueryWhilePattern
+/// \param ident
+/// \return Get all While Statements that use variable ident in conditional
+/// container
 std::unordered_set<std::string> PKB::QueryWhilePattern(
     std::string ident) const {
-  return {};
+  return pattern_manager_.GetWhilePattern(ident);
 }
 
+/// QueryPatternVariablesFromWhile
+/// \param statement_number
+/// \return Get all variables used in conditional container of given While
+/// Statement
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
     int statement_number) const {
-  return {};
+  return pattern_manager_.GetPatternVariablesFromWhile(statement_number);
 }
 
 /* ====================================
  * If Pattern Query Methods
  * ==================================== */
 
-std::unordered_set<std::string> PKB::QueryAllIfPattern() const { return {}; };
+/// QueryAllIfPattern
+/// \return Get all If Statements that use a variable in conditional container
+std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
+  return pattern_manager_.GetAllIfPattern();
+};
 
+/// QueryIfPattern
+/// \param ident
+/// \return Get all If Statements that use variable ident in conditional
+/// container
 std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
-  return {};
+  return pattern_manager_.GetIfPattern(ident);
 }
 
+/// QueryPatternVariablesFromIf
+/// \param statement_number
+/// \return Get all variables used in conditional container of given If
+/// Statement
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
     int statement_number) const {
-  return {};
+  return pattern_manager_.GetPatternVariablesFromIf(statement_number);
 }
