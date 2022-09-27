@@ -277,7 +277,7 @@ RelationshipManager::GetStatementsModifyingVariable(
 }
 
 void RelationshipManager::Clear() {
-  //  follows_store_.Clear();
+  follows_store_.Clear();
   parent_store_.Clear();
   modifies_store_.Clear();
 }

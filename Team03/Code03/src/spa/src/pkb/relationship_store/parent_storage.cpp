@@ -111,6 +111,7 @@ std::unordered_set<std::string> ParentStorage::GetParentStatements() const {
   return res;
 }
 
+/// Clear Storage
 void ParentStorage::Clear() {
     parent_map_.clear();
     parent_by_map_.clear();
