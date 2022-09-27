@@ -48,7 +48,7 @@ stmt s; assign a; variable v;
 Select a such that Follows* (a, v) pattern s (v,  _)
 SemanticError
 5000
-11 - (SYNTAX ERROR) Undeclared synonym
+11 - (SEMANTIC ERROR) Undeclared synonym
 
 Select a
 SemanticError
