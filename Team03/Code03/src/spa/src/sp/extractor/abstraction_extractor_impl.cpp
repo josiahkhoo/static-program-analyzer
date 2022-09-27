@@ -152,6 +152,7 @@ std::unordered_map<TNode, StatementEntity>
 AbstractionExtractorImpl::GetTNodeStatementEntityMap(
     const std::vector<StatementEntity> &statement_entities) {
   std::unordered_map<TNode, StatementEntity> umap;
+  umap.reserve(statement_entities.size());
   for (const auto &statement_entity : statement_entities)
     umap.emplace(*statement_entity.GetNodePointer(), statement_entity);
   return umap;
@@ -161,6 +162,7 @@ std::unordered_map<TNode, VariableEntity>
 AbstractionExtractorImpl::GetTNodeVariableEntityMap(
     const std::vector<VariableEntity> &variable_entities) {
   std::unordered_map<TNode, VariableEntity> umap;
+  umap.reserve(variable_entities.size());
   for (const auto &variable_entity : variable_entities)
     umap.emplace(*variable_entity.GetNodePointer(), variable_entity);
   return umap;
@@ -170,6 +172,7 @@ std::unordered_map<TNode, ConstantEntity>
 AbstractionExtractorImpl::GetTNodeConstantEntityMap(
     const std::vector<ConstantEntity> &constant_entities) {
   std::unordered_map<TNode, ConstantEntity> umap;
+  umap.reserve(constant_entities.size());
   for (const auto &constant_entity : constant_entities)
     umap.emplace(*constant_entity.GetNodePointer(), constant_entity);
   return umap;
@@ -179,6 +182,7 @@ std::unordered_map<TNode, ProcedureEntity>
 AbstractionExtractorImpl::GetTNodeProcedureEntityMap(
     const std::vector<ProcedureEntity> &procedure_entities) {
   std::unordered_map<TNode, ProcedureEntity> umap;
+  umap.reserve(procedure_entities.size());
   for (const auto &procedure_entity : procedure_entities)
     umap.emplace(*procedure_entity.GetNodePointer(), procedure_entity);
   return umap;
@@ -212,6 +216,7 @@ std::unordered_map<std::string, const TNode *>
 AbstractionExtractorImpl::GetProcNameNodeMap(
     const std::vector<ProcedureEntity> &procedure_entities) {
   std::unordered_map<std::string, const TNode *> umap;
+  umap.reserve(procedure_entities.size());
   for (const auto &proc_entity : procedure_entities) {
     umap.emplace(proc_entity.GetName(), proc_entity.GetNodePointer());
   }
