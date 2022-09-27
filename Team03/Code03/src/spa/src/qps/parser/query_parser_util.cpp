@@ -152,8 +152,8 @@ std::string QueryParserUtil::GetTerm(
 
 bool QueryParserUtil::isMathOperator(Token& next) {
   return next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
-               next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
-               next.Is(Token::PERCENT);
+         next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
+         next.Is(Token::PERCENT);
 }
 
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
