@@ -100,19 +100,15 @@ class RelationshipManager {
   std::unordered_set<std::string> GetStatementsModifyingVariable(
       std::string variable_name) const;
 
+  // Calls query methods
   std::unordered_set<std::string> GetCallsProcedures() const;
-
   std::unordered_set<std::string> GetCallsProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsTProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsByProcedures(
       std::string proc_name) const;
-
   std::unordered_set<std::string> GetCallsByProcedures() const;
-
   std::unordered_set<std::string> GetCallsTByProcedures(
       std::string proc_name) const;
 

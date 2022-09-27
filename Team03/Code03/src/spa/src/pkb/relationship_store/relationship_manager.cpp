@@ -51,10 +51,14 @@ void RelationshipManager::AddAbstraction(ModifiesSAbstraction abstraction) {
   modifies_store_.AddRelationship(abstraction);
 }
 
+/// Add Calls Relationship
+/// \param abstraction
 void RelationshipManager::AddAbstraction(CallsAbstraction abstraction) {
   calls_store_.AddRelationship(abstraction);
 }
 
+/// Add Calls T Relationship
+/// \param abstraction
 void RelationshipManager::AddAbstraction(CallsTAbstraction abstraction) {
   calls_store_.AddRelationship(abstraction);
 }
@@ -284,36 +288,56 @@ RelationshipManager::GetStatementsModifyingVariable(
   return modifies_store_.GetStatementsModifyingVariable(variable_name);
 }
 
+/// GetCallsProcedures
+/// \return Gets all procedures that call any procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsProcedures()
     const {
   return calls_store_.GetCallsProcedures();
 }
 
+/// GetCallsProcedures
+/// \param proc_name
+/// \return Gets all procedures that directly call a specified procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsProcedures(
     std::string proc_name) const {
   return calls_store_.GetCallsProcedures(proc_name);
 }
 
+/// GetCallsProcedures
+/// \param proc_name
+/// \return Gets all procedures that directly or indirectly call a specified
+/// procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsTProcedures(
     std::string proc_name) const {
   return calls_store_.GetCallsTProcedures(proc_name);
 }
 
+/// GetCallsByProcedures
+/// \return Gets all procedures that are directly called by any procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures()
     const {
   return calls_store_.GetCallsByProcedures();
 }
 
+/// GetCallsByProcedures
+/// \param proc_name
+/// \return Gets all procedures that are directly called by a specified
+/// procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures(
     std::string proc_name) const {
   return calls_store_.GetCallsByProcedures(proc_name);
 }
 
+/// GetCallsTByProcedures
+/// \param proc_name
+/// \return Gets all procedures that are directly or indirectly called by a
+/// specified procedure
 std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
     std::string proc_name) const {
   return calls_store_.GetCallsTByProcedures(proc_name);
 }
 
+/// Clear Storage
 void RelationshipManager::Clear() {
   follows_store_.Clear();
   parent_store_.Clear();
