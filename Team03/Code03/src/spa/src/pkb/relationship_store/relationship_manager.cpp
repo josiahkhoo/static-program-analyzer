@@ -1,8 +1,8 @@
 #include "relationship_manager.h"
 
 /** ====================================
-   * General Relationship Adder Methods
-   * ==================================== */
+ * General Relationship Adder Methods
+ * ==================================== */
 /// Add Follows Relationship
 /// \param abstraction
 void RelationshipManager::AddAbstraction(FollowsAbstraction abstraction) {
@@ -52,8 +52,8 @@ void RelationshipManager::AddAbstraction(ModifiesSAbstraction abstraction) {
 }
 
 /** ====================================
-   * General Relationship Getter Methods
-   * ==================================== */
+ * General Relationship Getter Methods
+ * ==================================== */
 /// GetFollowsStatements
 /// \return Gets all statements following any statement
 std::unordered_set<std::string> RelationshipManager::GetFollowsStatements()
@@ -71,7 +71,8 @@ std::unordered_set<std::string> RelationshipManager::GetFollowsStatements(
 
 /// GetFollowsTStatements
 /// \param statement_number
-/// \return Gets all statements directly or indirectly following a specified statement
+/// \return Gets all statements directly or indirectly following a specified
+/// statement
 std::unordered_set<std::string> RelationshipManager::GetFollowsTStatements(
     int statement_number) const {
   return follows_store_.GetFollowsTStatements(statement_number);
@@ -94,7 +95,8 @@ std::unordered_set<std::string> RelationshipManager::GetFollowsByStatements()
 
 /// GetFollowsTByStatements
 /// \param statement_number
-/// \return Gets all statements directly or indirectly followed by a specified statement
+/// \return Gets all statements directly or indirectly followed by a specified
+/// statement
 std::unordered_set<std::string> RelationshipManager::GetFollowsTByStatements(
     int statement_number) const {
   return follows_store_.GetFollowsTByStatements(statement_number);
@@ -117,7 +119,8 @@ std::unordered_set<std::string> RelationshipManager::GetParentStatements(
 
 /// GetParentTStatements
 /// \param statement_number
-/// \return Gets all statements that are direct or indirect parents of a specified statement
+/// \return Gets all statements that are direct or indirect parents of a
+/// specified statement
 std::unordered_set<std::string> RelationshipManager::GetParentTStatements(
     int statement_number) const {
   return parent_store_.GetParentTStatements(statement_number);
@@ -125,7 +128,8 @@ std::unordered_set<std::string> RelationshipManager::GetParentTStatements(
 
 /// GetParentByStatements
 /// \param statement_number
-/// \return Gets all statements that are direct children of a specified statement
+/// \return Gets all statements that are direct children of a specified
+/// statement
 std::unordered_set<std::string> RelationshipManager::GetParentByStatements(
     int statement_number) const {
   return parent_store_.GetParentByStatements(statement_number);
@@ -140,7 +144,8 @@ std::unordered_set<std::string> RelationshipManager::GetParentByStatements()
 
 /// GetParentTByStatements
 /// \param statement_number
-/// \return Gets all statements that are direct or indirect children of a specified statement
+/// \return Gets all statements that are direct or indirect children of a
+/// specified statement
 std::unordered_set<std::string> RelationshipManager::GetParentTByStatements(
     int statement_number) const {
   return parent_store_.GetParentTByStatements(statement_number);

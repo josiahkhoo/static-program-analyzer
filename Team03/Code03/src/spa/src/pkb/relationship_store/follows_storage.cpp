@@ -13,19 +13,17 @@ void FollowsStorage::AddRelationship(FollowsAbstraction abstraction) {
 /// Add FollowsT Relationship
 /// \param abstraction
 void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
-  int lhs = abstraction.GetLeftHandSide().GetStatementNumber();
-  int rhs = abstraction.GetRightHandSide().GetStatementNumber();
+  int followed = abstraction.GetLeftHandSide().GetStatementNumber();
+  int follower = abstraction.GetRightHandSide().GetStatementNumber();
 
-  if (follows_t_map_.find(lhs) == follows_t_map_.end()) {
-    follows_t_map_.emplace(lhs, std::make_unique<FollowsTRelationship>(lhs));
+  if (!follows_t_map_.emplace(followed, std::unordered_set<int>{follower})
+           .second) {
+    follows_t_map_.at(followed).emplace(follower);
   }
-  follows_t_map_.find(lhs)->second->AddFollowsTByStatementNumber(rhs);
-
-  if (follows_t_by_map_.find(rhs) == follows_t_by_map_.end()) {
-    follows_t_by_map_.emplace(rhs,
-                              std::make_unique<FollowsTByRelationship>(rhs));
+  if (!follows_t_by_map_.emplace(follower, std::unordered_set<int>{followed})
+           .second) {
+    follows_t_by_map_.at(follower).emplace(followed);
   }
-  follows_t_by_map_.find(rhs)->second->AddFollowsTStatementNumber(lhs);
 }
 
 /// GetFollowsStatements
@@ -34,28 +32,25 @@ void FollowsStorage::AddRelationship(FollowsTAbstraction abstraction) {
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
-  if (follows_map_.find(statement_number) == follows_map_.end()) {
-    return res;
+  if (follows_map_.find(statement_number) != follows_map_.end()) {
+    res.emplace(std::to_string(follows_map_.find(statement_number)->second));
   }
-  res.emplace(std::to_string(follows_map_.find(statement_number)->second));
   return res;
 }
 
 /// GetFollowsTStatements
 /// \param statement_number
-/// \return Gets all statements directly or indirectly following a specified statement
+/// \return Gets all statements directly or indirectly following a specified
+/// statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
     int statement_number) const {
-  if (follows_t_map_.find(statement_number) == follows_t_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (follows_t_map_.find(statement_number) != follows_t_map_.end()) {
+    for (auto i : follows_t_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res = follows_t_map_.find(statement_number)
-                                    ->second->GetFollowsTByStatementNumbers();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetFollowsByStatements
@@ -64,10 +59,9 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsTStatements(
 std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
-  if (follows_by_map_.find(statement_number) == follows_by_map_.end()) {
-    return res;
+  if (follows_by_map_.find(statement_number) != follows_by_map_.end()) {
+    res.emplace(std::to_string(follows_by_map_.find(statement_number)->second));
   }
-  res.emplace(std::to_string(follows_by_map_.find(statement_number)->second));
   return res;
 }
 
@@ -83,27 +77,27 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsByStatements() const {
 
 /// GetFollowsTByStatements
 /// \param statement_number
-/// \return Gets all statements directly or indirectly followed by a specified statement
+/// \return Gets all statements directly or indirectly followed by a specified
+/// statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsTByStatements(
     int statement_number) const {
-  if (follows_t_by_map_.find(statement_number) == follows_t_by_map_.end()) {
-    return {};
+  std::unordered_set<std::string> res;
+  if (follows_t_by_map_.find(statement_number) != follows_t_by_map_.end()) {
+    for (auto i : follows_t_by_map_.at(statement_number)) {
+      res.emplace(std::to_string(i));
+    }
   }
-  std::unordered_set<int> res = follows_t_by_map_.find(statement_number)
-                                    ->second->GetFollowsTStatementNumber();
-  std::unordered_set<std::string> s;
-  for (int i : res) {
-    s.emplace(std::to_string(i));
-  }
-  return s;
+  return res;
 }
 
 /// GetFollowsStatements
 /// \return Gets all statements following any statement
 std::unordered_set<std::string> FollowsStorage::GetFollowsStatements() const {
   std::unordered_set<std::string> res;
-  for (auto entry : follows_map_) {
-    res.emplace(std::to_string(entry.first));
+  if (!follows_map_.empty()) {
+    for (auto i : follows_map_) {
+      res.emplace(std::to_string(i.first));
+    }
   }
   return res;
 }

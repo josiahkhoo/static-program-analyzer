@@ -38,8 +38,8 @@ class FollowsStorage {
  private:
   std::unordered_map<int, int> follows_map_;
   std::unordered_map<int, int> follows_by_map_;
-  std::unordered_map<int, std::unique_ptr<FollowsTRelationship>> follows_t_map_;
-  std::unordered_map<int, std::unique_ptr<FollowsTByRelationship>>
+  std::unordered_map<int, std::unordered_set<int>> follows_t_map_;
+  std::unordered_map<int, std::unordered_set<int>>
       follows_t_by_map_;
 };
 
