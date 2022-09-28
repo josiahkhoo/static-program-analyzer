@@ -83,3 +83,23 @@ assign a1, a2, a3; variable v;
 Select a2 such that Follows (a1, a2) pattern a3 (v, _"x + 1"_)
 2, 3, 19
 5000
+18 - (SUCCESS) [MILESTONE 1 REGRESSION] Select stmt numbers of assign that contains a LHS and RHS variable i.e. all assigns
+assign a; variable v,v1;
+Select a such that Uses (a, v) pattern a (v1, _)
+15,17,5,7,9,22,24,11,19,18,8,25
+5000
+19 - (SUCCESS) [MILESTONE 1 REGRESSION] Select RHS variables of assign that contains different LHS RHS variable
+assign a; variable v,v1;
+Select v such that Uses (a, v) pattern a (v1, _)
+y, z, x, i
+5000
+20 - (SUCCESS) [MILESTONE 1 REGRESSION] Select RHS variables of assign that contains different LHS RHS variable
+assign a; variable v,v1;
+Select v such that Modifies (a, v) pattern a (v1, _)
+y, z, x, i
+5000
+21 - (SUCCESS) [MILESTONE 1 REGRESSION] Select variables that are used in separate assign statements
+assign a,a1; variable v;
+Select v such that Modifies (a, v) pattern a1 (v, _)
+i,x,z,y
+5000

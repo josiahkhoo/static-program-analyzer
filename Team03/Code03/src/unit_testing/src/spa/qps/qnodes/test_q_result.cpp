@@ -47,14 +47,14 @@ TEST_CASE("Query Result", "[QResult]") {
 
   SECTION(
       "Join 1 non-empty QResult and 1 non-empty QResult that are disjoint but "
-      "share same entity types returns all combination that cannot be the "
-      "same") {
+      "share same entity types returns all combination") {
     Synonym syn1 = Synonym(EntityType::VARIABLE, "v1");
     Synonym syn2 = Synonym(EntityType::VARIABLE, "v2");
     QResult res1 = QResult({{"x"}, {"y"}}, {syn1});
     QResult res2 = QResult({{"x"}, {"y"}}, {syn2});
 
-    QResult expected = QResult({{"x", "y"}, {"y", "x"}}, {syn1, syn2});
+    QResult expected =
+        QResult({{"x", "x"}, {"x", "y"}, {"y", "x"}, {"y", "y"}}, {syn1, syn2});
     QResult res = res1.Join(res2);
 
     REQUIRE(res == expected);
@@ -62,7 +62,7 @@ TEST_CASE("Query Result", "[QResult]") {
 
   SECTION(
       "Join 1 non-empty QResult and 1 non-empty QResult that are disjoint but "
-      "one is statement and one is assign cannot return same") {
+      "one is statement and one is assign can return the same") {
     Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
     Synonym syn2 = Synonym(EntityType::STATEMENT, "r");
     QResult res1 = QResult({{"3"}, {"4"}}, {syn1});
@@ -70,10 +70,12 @@ TEST_CASE("Query Result", "[QResult]") {
 
     QResult expected = QResult({{"3", "1"},
                                 {"3", "2"},
+                                {"3", "3"},
                                 {"3", "4"},
                                 {"4", "1"},
                                 {"4", "2"},
-                                {"4", "3"}},
+                                {"4", "3"},
+                                {"4", "4"}},
                                {syn1, syn2});
     QResult res = res1.Join(res2);
 

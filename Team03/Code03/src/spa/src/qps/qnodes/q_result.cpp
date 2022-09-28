@@ -6,11 +6,17 @@
 
 QResult::QResult(std::vector<std::vector<std::string>> rows,
                  std::vector<Synonym> synonyms)
-    : rows_(std::move(rows)), synonyms_(std::move(synonyms)) {}
+    : rows_(std::move(rows)),
+      synonyms_(std::move(synonyms)),
+      has_been_queried_(true) {}
+
+QResult::QResult(bool has_been_queried) : has_been_queried_(has_been_queried) {}
 
 std::vector<Synonym> QResult::GetSynonyms() const { return synonyms_; }
 
 std::vector<std::vector<std::string>> QResult::GetRows() const { return rows_; }
+
+bool QResult::HasBeenQueried() const { return has_been_queried_; }
 
 QResult QResult::Join(const QResult& other_result) const {
   // Return either one if one is empty
@@ -64,56 +70,6 @@ QResult QResult::Join(const QResult& other_result) const {
           break;
         }
       }
-      if (!match) {
-        // Break if it doesn't
-        continue;
-      }
-
-      // Check if row1 == row2 clashes on synonyms with the same types
-      std::vector<EntityType> entity_types = {
-          PROCEDURE, STATEMENT, READ, PRINT,    ASSIGN,
-          CALL,      WHILE,     IF,   VARIABLE, CONSTANT};
-      std::unordered_set<EntityType> statement_types = {READ, PRINT, ASSIGN,
-                                                        CALL, WHILE, IF};
-      for (auto type : entity_types) {
-        std::unordered_set<std::string> row_set;
-        std::unordered_set<std::string> different_syns;
-        for (int i = 0; i < GetSynonyms().size(); i++) {
-          EntityType type1 = GetSynonyms().at(i).GetEntityType();
-          if (type1 == type ||
-              (type1 == STATEMENT &&
-               statement_types.find(type) != statement_types.end())) {
-            row_set.insert(row1[i]);
-            different_syns.insert(GetSynonyms().at(i).GetIdentifier());
-          }
-        }
-        for (int i = 0; i < other_result.GetSynonyms().size(); i++) {
-          EntityType type2 = other_result.GetSynonyms().at(i).GetEntityType();
-          if (type2 == type ||
-              (type2 == STATEMENT &&
-               statement_types.find(type) != statement_types.end())) {
-            // On common indexes, skip this check
-            if (different_syns.find(
-                    other_result.GetSynonyms().at(i).GetIdentifier()) !=
-                different_syns.end()) {
-              continue;
-            }
-
-            if (row_set.find(row2[i]) != row_set.end()) {
-              match = false;
-              break;
-            }
-            row_set.insert(row2[i]);
-            different_syns.insert(
-                other_result.GetSynonyms().at(i).GetIdentifier());
-          }
-        }
-        if (!match) {
-          // Break if false match
-          break;
-        }
-      }
-
       if (!match) {
         // Break if it doesn't
         continue;
