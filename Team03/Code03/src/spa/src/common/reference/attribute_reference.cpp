@@ -3,16 +3,14 @@
 #include <cassert>
 #include <utility>
 
-// TODO: Name Mapper
-
 AttributeReference::AttributeReference(std::string identifier)
     : identifier_(identifier), Reference(false) {}
 
 AttributeReference::AttributeReference(int number)
     : number_(number), Reference(false) {}
 
-AttributeReference::AttributeReference(Synonym syn, AttributeName name)
-    : name_(name), Reference(std::move(syn)) {}
+AttributeReference::AttributeReference(Attribute attr)
+    : attr_(attr), Reference(attr) {}
 
 bool AttributeReference::IsLineNumber() const { return number_.has_value(); }
 
@@ -30,9 +28,20 @@ std::string AttributeReference::GetIdentifier() const {
   return identifier_.value();
 }
 
-bool AttributeReference::IsAttributeName() const { return name_.has_value(); }
+bool AttributeReference::IsAttributeName() const { return attr_.has_value(); }
 
-std::string AttributeReference::GetAttributeName() const {
+AttributeName AttributeReference::GetAttributeName() const {
   assert(IsAttributeName());
-  return "name_.value()";
+  return attr_.value().GetAttributeName();
+}
+
+std::string AttributeReference::GetValue() const {
+  if (IsIdentifier())
+    return GetIdentifier();
+  else if (IsLineNumber())
+    return std::to_string(GetLineNumber());
+  else {
+    assert(false);
+    return "";
+  }
 }

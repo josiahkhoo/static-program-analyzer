@@ -4,28 +4,60 @@
 #include <utility>
 
 With::With(AttributeReference attRefL, AttributeReference attRefR)
-    : attRef_left_(std::move(attRefL)), attRef_right_(std::move(attRefR)) {}
+    : lhs_(std::move(attRefL)), rhs_(std::move(attRefR)) {}
 
 std::unordered_set<std::string> With::Fetch(
     const QueryablePkb& queryable_pkb) const {
+  if (GetType() == DOUBLE_SYNONYM) {
+    // E.g. with x.procName = y.procName
+    return queryable_pkb.QueryWithAttribute(
+        lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
+        rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName());
+  } else if (lhs_.IsAttributeName()) {
+    if (rhs_.IsIdentifier()) {
+      // E.g. with x.procName = "name"
+      return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                              lhs_.GetAttributeName(),
+                                              rhs_.GetIdentifier());
+    } else if (rhs_.IsLineNumber()) {
+      // E.g. with x.stmt# = 1
+      return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                              lhs_.GetAttributeName(),
+                                              rhs_.GetLineNumber());
+    }
+  } else if (rhs_.IsAttributeName()) {
+    // E.g. with "name" = x.varName
+    if (lhs_.IsIdentifier()) {
+      return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                              rhs_.GetAttributeName(),
+                                              lhs_.GetIdentifier());
+    } else if (lhs_.IsLineNumber()) {
+      // E.g. with 1 = x.stmt#
+      return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                              rhs_.GetAttributeName(),
+                                              lhs_.GetLineNumber());
+    }
+  }
+  assert(false);
   return {};
 }
 
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
-  return {};
+  return queryable_pkb.QueryWithAttributeValue(
+      rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName(), lhs);
 }
 
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
-  return {};
+  return queryable_pkb.QueryWithAttributeValue(
+      lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(), rhs);
 }
 
 QueryOperation::Type With::GetType() const {
-  if (attRef_right_.IsAttributeName() && attRef_right_.IsAttributeName()) {
+  if (rhs_.IsSynonym() && lhs_.IsSynonym()) {
     return DOUBLE_SYNONYM;
-  } else if (attRef_right_.IsAttributeName() ||
-             attRef_right_.IsAttributeName()) {
+  } else if (rhs_.IsSynonym() || lhs_.IsSynonym()) {
     return SINGLE_SYNONYM;
   } else {
     return NO_SYNONYM;
@@ -34,12 +66,12 @@ QueryOperation::Type With::GetType() const {
 
 Synonym With::GetSynonym() const {
   assert(GetType() == QueryOperation::SINGLE_SYNONYM);
-  return attRef_left_.GetSynonym();
+  return lhs_.GetSynonym();
 }
 
 std::pair<Synonym, Synonym> With::GetSynonymPair() const {
   assert(GetType() == QueryOperation::DOUBLE_SYNONYM);
-  return {attRef_left_.GetSynonym(), attRef_right_.GetSynonym()};
+  return {lhs_.GetSynonym(), rhs_.GetSynonym()};
 }
 
 QueryOperation::IterateSide With::GetIterateSide(
@@ -51,3 +83,5 @@ QueryOperation::IterateSide With::GetIterateSide(
   }
   return LHS;
 }
+
+bool With::IsTrue(const QueryablePkb& queryable_pkb) const { return false; }
