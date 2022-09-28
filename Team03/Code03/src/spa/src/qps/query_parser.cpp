@@ -70,20 +70,20 @@ void QueryParser::ParseSelect() {
 void QueryParser::ParseQueryOperation() {
   // Check for each clause type, append below new clauses
   // Note: Order matters, place stricter clause first i.e. Follows* > Follows
-  st_parsers_.push_back(std::make_unique<FollowsTParser>());
-  st_parsers_.push_back(std::make_unique<FollowsParser>());
-  st_parsers_.push_back(std::make_unique<ParentTParser>());
-  st_parsers_.push_back(std::make_unique<ParentParser>());
-  st_parsers_.push_back(std::make_unique<CallsTParser>());
-  st_parsers_.push_back(std::make_unique<CallsParser>());
-  st_parsers_.push_back(std::make_unique<UsesPParser>());
-  st_parsers_.push_back(std::make_unique<UsesSParser>());
-  st_parsers_.push_back(std::make_unique<ModifiesPParser>());
-  st_parsers_.push_back(std::make_unique<ModifiesSParser>());
+  st_parsers_.push_back(std::make_shared<FollowsTParser>());
+  st_parsers_.push_back(std::make_shared<FollowsParser>());
+  st_parsers_.push_back(std::make_shared<ParentTParser>());
+  st_parsers_.push_back(std::make_shared<ParentParser>());
+  st_parsers_.push_back(std::make_shared<CallsTParser>());
+  st_parsers_.push_back(std::make_shared<CallsParser>());
+  st_parsers_.push_back(std::make_shared<UsesPParser>());
+  st_parsers_.push_back(std::make_shared<UsesSParser>());
+  st_parsers_.push_back(std::make_shared<ModifiesPParser>());
+  st_parsers_.push_back(std::make_shared<ModifiesSParser>());
 
-  pattern_parsers_.push_back(std::make_unique<PatternAssignParser>());
-  pattern_parsers_.push_back(std::make_unique<PatternIfParser>());
-  pattern_parsers_.push_back(std::make_unique<PatternWhileParser>());
+  pattern_parsers_.push_back(std::make_shared<PatternAssignParser>());
+  pattern_parsers_.push_back(std::make_shared<PatternIfParser>());
+  pattern_parsers_.push_back(std::make_shared<PatternWhileParser>());
 
   while (tokens_->IsNotEnd()) {
     bool found_clause = ParseClause();
