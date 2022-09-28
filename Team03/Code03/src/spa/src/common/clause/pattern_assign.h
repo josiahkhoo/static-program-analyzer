@@ -36,6 +36,8 @@ class PatternAssign : public QueryOperation {
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const override;
 
+  [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
+
  private:
   Synonym syn_;
   EntityReference entity_;

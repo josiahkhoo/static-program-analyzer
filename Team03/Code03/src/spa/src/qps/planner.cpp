@@ -160,8 +160,7 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
 
   // Add all no syn to wrap over top node
   for (const auto &no_syn_op : no_syn_ops) {
-    auto new_head = std::make_shared<BooleanNode>();
-    new_head->SetLeftNode(std::make_shared<AbstractionNode>(no_syn_op));
+    auto new_head = std::make_shared<BooleanNode>(no_syn_op);
     new_head->SetRightNode(head);
     head = new_head;
   }

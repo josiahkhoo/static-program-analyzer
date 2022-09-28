@@ -10,10 +10,17 @@
 /// E.g. Synonym = {a1, a2} / Rows = {{1,2}, {1,3}, {2,3}}
 class QResult {
  public:
+  /// Instantiates a QResult that has been queried on before.
   QResult(std::vector<std::vector<std::string>> rows,
           std::vector<Synonym> synonyms);
+
+  /// Instantiates an empty QResult and set a flag whether it has been queried
+  /// on or not.
+  explicit QResult(bool has_been_queried);
+
   [[nodiscard]] std::vector<std::vector<std::string>> GetRows() const;
   [[nodiscard]] std::vector<Synonym> GetSynonyms() const;
+  [[nodiscard]] bool HasBeenQueried() const;
 
   /// Get rows operation.
   /// \param synonyms Only retrieve rows from specified synonyms.
@@ -43,6 +50,7 @@ class QResult {
  private:
   std::vector<std::vector<std::string>> rows_;
   std::vector<Synonym> synonyms_;
+  bool has_been_queried_;
 
   struct VectorHash {
     size_t operator()(const std::vector<std::string>& v) const {

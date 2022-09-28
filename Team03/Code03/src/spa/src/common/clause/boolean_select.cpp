@@ -8,7 +8,12 @@ std::vector<Synonym> BooleanSelect::GetSynonyms() const {
 std::unordered_set<std::string> BooleanSelect::GetResultSet(
     QResult q_result) const {
   std::unordered_set<std::string> result_set;
-  !q_result.GetRows().empty() ? result_set.insert("TRUE")
-                              : result_set.insert("FALSE");
+  if (q_result.HasBeenQueried() && q_result.GetRows().empty()) {
+    // Inserts false if rows are empty and it has been queried on already
+    result_set.insert("FALSE");
+  } else {
+    // Inserts true if rows are non-empty or it has not been queried on
+    result_set.insert("TRUE");
+  }
   return result_set;
 }

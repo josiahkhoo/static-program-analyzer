@@ -23,10 +23,10 @@ procedure p;
 Select p such that Modifies ("Example", "x")
 Example, p, q, s, k
 5000
-6 - (SUCCESS) Retrieve all procedures if s procedure modifies something
+6 - (SUCCESS) Retrieve all procedures if k procedure modifies something
 procedure p;
 Select p such that Modifies ("k", _)
-
+Example,p,q,s,k
 5000
 7 - (SUCCESS) Retrieve all variables modified in procedure p
 variable v;

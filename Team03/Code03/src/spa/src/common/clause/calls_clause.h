@@ -8,9 +8,6 @@ class CallsClause : public Clause {
  public:
   CallsClause(EntityReference lhs, EntityReference rhs);
 
-  [[nodiscard]] std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const override;
-
   [[nodiscard]] std::unordered_set<std::string> FetchPossibleRhs(
       std::string lhs, const QueryablePkb &queryable_pkb) const override;
 
@@ -20,6 +17,14 @@ class CallsClause : public Clause {
   [[nodiscard]] const Reference &GetLeftHandSide() const override;
 
   [[nodiscard]] const Reference &GetRightHandSide() const override;
+
+  [[nodiscard]] std::unordered_set<std::string> FetchRhs(
+      const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] std::unordered_set<std::string> FetchLhs(
+      const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
 
  private:
   EntityReference lhs_;

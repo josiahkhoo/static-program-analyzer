@@ -1,13 +1,11 @@
 #include "boolean_node.h"
 
-#include <cassert>
+BooleanNode::BooleanNode(std::shared_ptr<QueryOperation> no_syn_operation)
+    : no_syn_operation_(no_syn_operation) {}
 
 QResult BooleanNode::Fetch(const QueryablePkb& pkb) {
-  // If left hand side returns something, return right hand side
-  assert(GetLeftNode() != nullptr && GetRightNode() != nullptr);
-  QResult res = GetRightNode()->Fetch(pkb);
-  if (GetLeftNode()->Fetch(pkb).GetRows().empty()) {
-    return {{}, res.GetSynonyms()};
+  if (!no_syn_operation_->IsTrue(pkb)) {
+    return QResult(true);
   }
-  return res;
+  return GetRightNode()->Fetch(pkb);
 }

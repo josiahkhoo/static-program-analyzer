@@ -23,6 +23,15 @@ class Clause : public QueryOperation {
   [[nodiscard]] IterateSide GetIterateSide(
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const override;
+
+  [[nodiscard]] std::unordered_set<std::string> Fetch(
+      const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> FetchRhs(
+      const QueryablePkb &queryable_pkb) const = 0;
+
+  [[nodiscard]] virtual std::unordered_set<std::string> FetchLhs(
+      const QueryablePkb &queryable_pkb) const = 0;
 };
 
 #endif  // SPA_CLAUSE_H
