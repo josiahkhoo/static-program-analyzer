@@ -20,4 +20,4 @@ bool QNode::IsLeaf() const {
   return (left_node_ == nullptr && right_node_ == nullptr);
 }
 
-QResult QNode::Fetch(const QueryablePkb &pkb) { return {{}, {}}; }
+QResult QNode::Fetch(const QueryablePkb &pkb) { return QResult(false); }

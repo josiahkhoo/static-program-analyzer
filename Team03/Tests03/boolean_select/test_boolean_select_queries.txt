@@ -11,7 +11,7 @@ FALSE
 3 - (SUCCESS) No declaration select boolean return false
 
 Select BOOLEAN
-FALSE
+TRUE
 5000
 4 - (SUCCESS) No declaration select boolean with valid stmt no stmt no clause return true
 

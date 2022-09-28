@@ -6,11 +6,17 @@
 
 QResult::QResult(std::vector<std::vector<std::string>> rows,
                  std::vector<Synonym> synonyms)
-    : rows_(std::move(rows)), synonyms_(std::move(synonyms)) {}
+    : rows_(std::move(rows)),
+      synonyms_(std::move(synonyms)),
+      has_been_queried_(true) {}
+
+QResult::QResult(bool has_been_queried) : has_been_queried_(has_been_queried) {}
 
 std::vector<Synonym> QResult::GetSynonyms() const { return synonyms_; }
 
 std::vector<std::vector<std::string>> QResult::GetRows() const { return rows_; }
+
+bool QResult::HasBeenQueried() const { return has_been_queried_; }
 
 QResult QResult::Join(const QResult& other_result) const {
   // Return either one if one is empty
