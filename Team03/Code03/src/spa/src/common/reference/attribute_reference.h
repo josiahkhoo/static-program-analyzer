@@ -22,7 +22,7 @@ class AttributeReference : public Reference {
 
   [[nodiscard]] bool IsIdentifier() const override;
 
-  [[nodiscard]] std::string GetIdentifier() const override;
+  [[nodiscard]] Identifier GetIdentifier() const override;
 
   [[nodiscard]] bool IsAttributeName() const;
 

@@ -150,7 +150,8 @@ bool QueryParser::ParseWith() {
   WithParser withP;
   std::shared_ptr<QueryOperation> op;
   if (withP.MatchParser(queryData)) {
-    withP.Parse(queryData);
+    op = withP.Parse(queryData);
+    query_string_builder_.AddQueryOperation(op);
     return true;
   }
   return false;

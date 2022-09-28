@@ -98,3 +98,18 @@ while w;
 Select w pattern w (_)
 SyntaxError
 5000
+16 - (SYNTAX ERROR) Invalid With missing arg2
+procedure p;
+Select p with p.procName =
+SyntaxError
+5000
+17 - (SYNTAX ERROR) Invalid With missing attribute
+while w;
+Select w with w = "x"
+SyntaxError
+5000
+18 - (SYNTAX ERROR) Invalid With incorrect attribute
+procedure p;
+Select p with p.name = "p"
+SyntaxError
+5000

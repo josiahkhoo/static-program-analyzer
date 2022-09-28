@@ -8,11 +8,11 @@
 TEST_CASE("Extract all string tokens", "[Lexer]") {
   std::istringstream str_stream(
       "1\nh1\n(\n)\n{\n}\n==\n=\n<=\n<\n>=\n>\n+"
-      "\n-\n*\n/\n,\n%\n;\n||\n&&\n!");
+      "\n-\n*\n/\n,\n.\n%\n;\n||\n&&\n!");
   Lexer lex;
   std::vector<Token> tokens = lex.Lex(str_stream);
 
-  REQUIRE(tokens.size() == 23);
+  REQUIRE(tokens.size() == 24);
 
   REQUIRE(tokens[0].GetValue() == "1");
   REQUIRE(tokens[1].GetValue() == "h1");
@@ -34,6 +34,7 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
                                 Token::ASTERISK,
                                 Token::SLASH,
                                 Token::COMMA,
+                                Token::PERIOD,
                                 Token::PERCENT,
                                 Token::SEMICOLON,
                                 Token::OR,

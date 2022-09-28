@@ -1,8 +1,13 @@
 #ifndef SPA_WITH_PARSER_H
 #define SPA_WITH_PARSER_H
 #include "common/clause/uses_s_clause.h"
+#include "common/parser.h"
+#include "common/reference/attribute_reference.h"
+#include "common/reference/identifier.h"
 #include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_operation_parser.h"
+#include "qps/query_string_builder.h"
+#include "qps/token_handler.h"
 
 /// Parser tokens and creates a new With object
 class WithParser : public QueryOperationParser {

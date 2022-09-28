@@ -33,6 +33,7 @@ class Token {
     SEMICOLON,              // ;
     INVERTED_COMMAS,        // "
     UNDERSCORE,             // _
+    HASHTAG,                // #
     OR,                     // ||
     AND,                    // &&
     NOT,                    // !

@@ -22,6 +22,24 @@ std::shared_ptr<QueryOperation> WithParser::Parse(TokenBuilderPair data) {
   AttributeReference aRef1 = QueryParserUtil::ExtractAttrRef(tokens, builder);
   tokens->Expect(Token::EQUAL);
   AttributeReference aRef2 = QueryParserUtil::ExtractAttrRef(tokens, builder);
+
+  // For attrCompare, the two ref comparison must be of the same type
+  // (both NAME, or both INTEGER)
+  if ((aRef1.IsLineNumber() && aRef2.IsIdentifier()) ||
+      (aRef2.IsLineNumber() && aRef1.IsIdentifier())) {
+    throw SemanticException("Ref comparison much be of same type");
+  } else if (aRef1.IsSynonym() && aRef2.IsSynonym()) {
+    if (QueryParserUtil::CheckNameAttribute(aRef1) !=
+        QueryParserUtil::CheckNameAttribute(aRef2))
+      throw SemanticException("Ref comparison much be of same type");
+  } else if (aRef1.IsSynonym() && !aRef2.IsSynonym()) {
+    if (QueryParserUtil::CheckNameAttribute(aRef1) != aRef2.IsIdentifier())
+      throw SemanticException("Ref comparison much be of same type");
+  } else if (aRef2.IsSynonym() && !aRef1.IsSynonym()) {
+    if (QueryParserUtil::CheckNameAttribute(aRef2) != aRef1.IsIdentifier())
+      throw SemanticException("Ref comparison much be of same type");
+  }
+
   std::shared_ptr<With> withCl = std::make_shared<With>(aRef1, aRef2);
   return withCl;
 }

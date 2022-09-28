@@ -8,12 +8,7 @@ With::With(AttributeReference attRefL, AttributeReference attRefR)
 
 std::unordered_set<std::string> With::Fetch(
     const QueryablePkb& queryable_pkb) const {
-  if (GetType() == NO_SYNONYM) {
-    // E.g. with "x" = 1
-    // Returns 1 or 0 if matches
-    bool res = lhs_.GetValue() == rhs_.GetValue();
-    return {std::to_string(res)};
-  } else if (GetType() == DOUBLE_SYNONYM) {
+  if (GetType() == DOUBLE_SYNONYM) {
     // E.g. with x.procName = y.procName
     return queryable_pkb.QueryWithAttribute(
         lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
@@ -43,6 +38,7 @@ std::unordered_set<std::string> With::Fetch(
                                               lhs_.GetLineNumber());
     }
   }
+  // NO_SYNONYM is a boolean query
   assert(false);
   return {};
 }
@@ -89,4 +85,47 @@ QueryOperation::IterateSide With::GetIterateSide(
   return LHS;
 }
 
-bool With::IsTrue(const QueryablePkb& queryable_pkb) const { return false; }
+bool With::IsTrue(const QueryablePkb& queryable_pkb) const {
+  if (GetType() == DOUBLE_SYNONYM) {
+    // E.g. with x.procName = y.procName
+    return !queryable_pkb
+                .QueryWithAttribute(
+                    lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
+                    rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName())
+                .empty();
+  } else if (lhs_.IsAttributeName()) {
+    if (rhs_.IsIdentifier()) {
+      // E.g. with x.procName = "name"
+      return !queryable_pkb
+                  .QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                      lhs_.GetAttributeName(),
+                                      rhs_.GetIdentifier())
+                  .empty();
+    } else if (rhs_.IsLineNumber()) {
+      // E.g. with x.stmt# = 1
+      return !queryable_pkb
+                  .QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                      lhs_.GetAttributeName(),
+                                      rhs_.GetLineNumber())
+                  .empty();
+    }
+  } else if (rhs_.IsAttributeName()) {
+    // E.g. with "name" = x.varName
+    if (lhs_.IsIdentifier()) {
+      return !queryable_pkb
+                  .QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                      rhs_.GetAttributeName(),
+                                      lhs_.GetIdentifier())
+                  .empty();
+    } else if (lhs_.IsLineNumber()) {
+      // E.g. with 1 = x.stmt#
+      return !queryable_pkb
+                  .QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                      rhs_.GetAttributeName(),
+                                      lhs_.GetLineNumber())
+                  .empty();
+    }
+  }
+  // E.g. with "x" = 1
+  return lhs_.GetValue() == rhs_.GetValue();
+}

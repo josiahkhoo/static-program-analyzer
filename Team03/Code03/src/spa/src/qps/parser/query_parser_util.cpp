@@ -1,5 +1,7 @@
 #include "query_parser_util.h"
 
+#include <unordered_map>
+
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
 #include "qps/exceptions/semantic_exception.h"
@@ -208,6 +210,13 @@ bool QueryParserUtil::CheckProcedureClause(
   return result;
 }
 
+// Map of allowed Synonym attributes
+std::unordered_map<EntityType, std::unordered_set<AttributeName>>
+    entityAllowedAttributes = {
+        {PROCEDURE, {PROC_NAME}},
+        {VARIABLE, {VAR_NAME, STMT_NO, VALUE}},
+};
+
 AttributeReference QueryParserUtil::ExtractAttrRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -221,16 +230,27 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
   else if (tokens->MatchKind(Token::NUMBER)) {
     return AttributeReference(ExtractInteger(tokens));
   }
-  // Attribute
+  // Attribute x.'procName'| 'varName' | 'value' | 'stmt#'
   else {
     tokens->Expect(Token::IDENTIFIER);
     Synonym syn = builder.GetSynonym(next.GetValue());
-    tokens->Expect(Token::COMMA);
+    tokens->Expect(Token::PERIOD);
     next = tokens->Peek();
     tokens->Expect(Token::IDENTIFIER);
     AttributeName attrName = GetAttrName(next);
-    Attribute attr = Attribute(syn, attrName);
-    return AttributeReference(attr);
+    if (attrName == STMT_NO) {
+      tokens->Expect(Token::HASHTAG);
+    }
+    // Check if attribute and synonym match
+    if (entityAllowedAttributes.count(syn.GetEntityType())) {
+      std::unordered_set<AttributeName> map =
+          entityAllowedAttributes[syn.GetEntityType()];
+      if (map.count(attrName)) {
+        Attribute attr = Attribute(syn, attrName);
+        return AttributeReference(attr);
+      }
+    }
+    throw SemanticException("Synonym doesn't support attribute");
   }
 }
 
@@ -258,4 +278,9 @@ Integer QueryParserUtil::ExtractInteger(
   Integer integer = stoi(tokens->PeekValue());
   tokens->Forward();
   return integer;
+}
+
+bool QueryParserUtil::CheckNameAttribute(const AttributeReference& attr) {
+  return (attr.GetAttributeName() == VAR_NAME ||
+          attr.GetAttributeName() == PROC_NAME);
 }

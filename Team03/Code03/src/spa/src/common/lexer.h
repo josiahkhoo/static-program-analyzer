@@ -6,9 +6,9 @@
 
 class Lexer {
  public:
-  std::vector<Token> Lex(std::istream &stream) const;
+  std::vector<Token> Lex(std::istream &stream, bool lexPeriod = false) const;
 
-  static std::vector<Token> LexLine(std::string &line) ;
+  std::vector<Token> LexLine(std::string &line, bool lexPeriod = false) const;
 };
 
 #endif  // SPA_LEXER_H

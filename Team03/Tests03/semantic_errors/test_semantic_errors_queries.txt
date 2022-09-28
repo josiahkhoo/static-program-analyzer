@@ -53,3 +53,48 @@ SemanticError
 Select a
 SemanticError
 5000
+12 - (SEMANTIC ERROR) While doesn't have procName
+while w;
+Select w with w.procName = "w"
+SemanticError
+5000
+13 - (SEMANTIC ERROR) Variable doesn't have procName
+variable v;
+Select v with v.procName = "w"
+SemanticError
+5000
+14 - (SEMANTIC ERROR) Procedure doesn't have procName
+procedure p;
+Select p with p.varName = "w"
+SemanticError
+5000
+15 - (SEMANTIC ERROR) Procedure doesn't have stmtNo
+procedure p;
+Select p with p.stmt# = "w"
+SemanticError
+5000
+16 - (SEMANTIC ERROR) Mismatch attrStmtNo and name
+variable v;
+Select v with v.stmt# = "w"
+SemanticError
+5000
+17 - (SEMANTIC ERROR) Mismatch attrValue and name
+variable v;
+Select v with v.value = "w"
+SemanticError
+5000
+18 - (SEMANTIC ERROR) Mismatch attrValue and attrName
+variable v; procedure p;
+Select v with v.value = p.procName
+SemanticError
+5000
+19 - (SEMANTIC ERROR) Mismatch integer and name
+variable v; procedure p;
+Select v with 1 = "2"
+SemanticError
+5000
+20 - (SEMANTIC ERROR) Mismatch procName and attrStmtNo
+variable v; procedure p;
+Select v with p.procName = v.stmt#
+SemanticError
+5000

@@ -7,7 +7,7 @@ std::unordered_map<std::string, AttributeName> attrName_representation = {
     {"procName", PROC_NAME},
     {"varName", VAR_NAME},
     {"value", VALUE},
-    {"stmt#", STMT_NO},
+    {"stmt", STMT_NO},
 };
 
 Attribute::Attribute(Synonym syn, AttributeName name)

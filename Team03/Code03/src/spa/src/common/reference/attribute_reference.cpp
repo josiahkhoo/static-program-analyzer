@@ -1,7 +1,6 @@
 #include "attribute_reference.h"
 
 #include <cassert>
-#include <utility>
 
 AttributeReference::AttributeReference(Identifier identifier)
     : identifier_(identifier), Reference(false) {}
@@ -23,7 +22,7 @@ bool AttributeReference::IsIdentifier() const {
   return identifier_.has_value();
 }
 
-std::string AttributeReference::GetIdentifier() const {
+Identifier AttributeReference::GetIdentifier() const {
   assert(IsIdentifier());
   return identifier_.value();
 }
