@@ -75,56 +75,6 @@ QResult QResult::Join(const QResult& other_result) const {
         continue;
       }
 
-      // Check if row1 == row2 clashes on synonyms with the same types
-      std::vector<EntityType> entity_types = {
-          PROCEDURE, STATEMENT, READ, PRINT,    ASSIGN,
-          CALL,      WHILE,     IF,   VARIABLE, CONSTANT};
-      std::unordered_set<EntityType> statement_types = {READ, PRINT, ASSIGN,
-                                                        CALL, WHILE, IF};
-      for (auto type : entity_types) {
-        std::unordered_set<std::string> row_set;
-        std::unordered_set<std::string> different_syns;
-        for (int i = 0; i < GetSynonyms().size(); i++) {
-          EntityType type1 = GetSynonyms().at(i).GetEntityType();
-          if (type1 == type ||
-              (type1 == STATEMENT &&
-               statement_types.find(type) != statement_types.end())) {
-            row_set.insert(row1[i]);
-            different_syns.insert(GetSynonyms().at(i).GetIdentifier());
-          }
-        }
-        for (int i = 0; i < other_result.GetSynonyms().size(); i++) {
-          EntityType type2 = other_result.GetSynonyms().at(i).GetEntityType();
-          if (type2 == type ||
-              (type2 == STATEMENT &&
-               statement_types.find(type) != statement_types.end())) {
-            // On common indexes, skip this check
-            if (different_syns.find(
-                    other_result.GetSynonyms().at(i).GetIdentifier()) !=
-                different_syns.end()) {
-              continue;
-            }
-
-            if (row_set.find(row2[i]) != row_set.end()) {
-              match = false;
-              break;
-            }
-            row_set.insert(row2[i]);
-            different_syns.insert(
-                other_result.GetSynonyms().at(i).GetIdentifier());
-          }
-        }
-        if (!match) {
-          // Break if false match
-          break;
-        }
-      }
-
-      if (!match) {
-        // Break if it doesn't
-        continue;
-      }
-
       // Add to new_rows if it reaches here
       std::vector<std::string> new_row;
       new_row.reserve(n_cols);
