@@ -5,7 +5,6 @@
 ParentClause::ParentClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
-
 [[nodiscard]] std::unordered_set<std::string> ParentClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
   return queryable_pkb.QueryParentBy(
