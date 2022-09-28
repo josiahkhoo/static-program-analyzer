@@ -69,4 +69,5 @@ QueryOperation::IterateSide PatternAssign::GetIterateSide(
 
 bool PatternAssign::IsTrue(const QueryablePkb &queryable_pkb) const {
   assert(!"Patterns are never no synonyms, this should not get called");
+  return false;
 }
