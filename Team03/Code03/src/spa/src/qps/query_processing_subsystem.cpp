@@ -15,7 +15,7 @@ QueryProcessingSubsystem::QueryProcessingSubsystem(
 
 void QueryProcessingSubsystem::Process(std::string query,
                                        std::list<std::string> &results) {
-  std::vector<Token> tokens = lexer_.LexLine(query, true);
+  std::vector<Token> tokens = lexer_.LexLine(query);
   QueryString q_string;
   try {
     q_string = parser_.Parse(tokens);

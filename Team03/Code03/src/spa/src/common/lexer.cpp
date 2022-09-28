@@ -48,12 +48,12 @@ std::vector<std::string> splitLines(std::istream &stream) {
 }
 
 // Generates given stream of lex into tokens
-std::vector<Token> Lexer::Lex(std::istream &stream, bool lexPeriod) const {
+std::vector<Token> Lexer::Lex(std::istream &stream) const {
   std::vector<Token> tokens;
   std::vector<std::string> lines = splitLines(stream);
 
   for (std::string line : lines) {
-    std::vector<Token> new_tokens = LexLine(line, lexPeriod);
+    std::vector<Token> new_tokens = LexLine(line);
     tokens.insert(tokens.end(), new_tokens.begin(), new_tokens.end());
   }
   Token end_token = Token(Token::END);
@@ -61,7 +61,7 @@ std::vector<Token> Lexer::Lex(std::istream &stream, bool lexPeriod) const {
   return tokens;
 }
 
-std::vector<Token> Lexer::LexLine(std::string &line, bool lexPeriod) const {
+std::vector<Token> Lexer::LexLine(std::string &line) const {
   std::vector<Token> tokens;
   while (!line.empty()) {
     for (auto const &pair : tokenRules) {
