@@ -1,24 +1,26 @@
 #ifndef SPA_ATTRIBUTE_H
 #define SPA_ATTRIBUTE_H
 
-#include "synonym.h"
+#include <unordered_map>
 
-enum AttributeName {
-  PROC_NAME,
-  VAR_NAME,
-  VALUE,
-  STMT_NO,
-};
+#include "synonym.h"
 
 class Attribute {
  public:
+  enum AttributeName {
+    PROC_NAME,
+    VAR_NAME,
+    VALUE,
+    STMT_NO,
+  };
+
+  static std::unordered_map<std::string, AttributeName> attrName_representation;
+
   Attribute(Synonym syn, AttributeName name);
 
   [[nodiscard]] Synonym GetSynonym() const;
 
   [[nodiscard]] AttributeName GetAttributeName() const;
-
-  static AttributeName RetrieveAttributeName(const std::string& name);
 
  private:
   Synonym syn_;

@@ -29,7 +29,7 @@ Identifier AttributeReference::GetIdentifier() const {
 
 bool AttributeReference::IsAttributeName() const { return attr_.has_value(); }
 
-AttributeName AttributeReference::GetAttributeName() const {
+Attribute::AttributeName AttributeReference::GetAttributeName() const {
   assert(IsAttributeName());
   return attr_.value().GetAttributeName();
 }

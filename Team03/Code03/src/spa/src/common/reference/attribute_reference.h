@@ -25,7 +25,7 @@ class AttributeReference : public Reference {
 
   [[nodiscard]] bool IsAttributeName() const;
 
-  [[nodiscard]] AttributeName GetAttributeName() const;
+  [[nodiscard]] Attribute::AttributeName GetAttributeName() const;
 
   [[nodiscard]] std::string GetValue() const;
 

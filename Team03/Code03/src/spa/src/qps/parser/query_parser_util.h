@@ -41,7 +41,7 @@ class QueryParserUtil {
   static std::string GetTerm(const std::shared_ptr<TokenHandler>& tokens,
                              const QueryStringBuilder& builder);
 
-  static AttributeName GetAttrName(const Token& next);
+  static Attribute::AttributeName GetAttrName(const Token& next);
 
   static Identifier ExtractIdentifier(
       const std::shared_ptr<TokenHandler>& tokens);

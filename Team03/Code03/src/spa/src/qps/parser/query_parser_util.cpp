@@ -211,10 +211,15 @@ bool QueryParserUtil::CheckProcedureClause(
 }
 
 // Map of allowed Synonym attributes
-std::unordered_map<EntityType, std::unordered_set<AttributeName>>
+std::unordered_map<EntityType, std::unordered_set<Attribute::AttributeName>>
     entityAllowedAttributes = {
-        {PROCEDURE, {PROC_NAME}},
-        {VARIABLE, {VAR_NAME, STMT_NO, VALUE}},
+        {PROCEDURE, {Attribute::PROC_NAME}},
+        {VARIABLE, {Attribute::VAR_NAME, Attribute::STMT_NO, Attribute::VALUE}},
+        {ASSIGN, {Attribute::STMT_NO, Attribute::VALUE}},
+        {IF, {Attribute::STMT_NO}},
+        {WHILE, {Attribute::STMT_NO}},
+        {CONSTANT, {Attribute::STMT_NO, Attribute::VALUE}},
+        // To add more if there exist
 };
 
 AttributeReference QueryParserUtil::ExtractAttrRef(
@@ -237,13 +242,13 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
     tokens->Expect(Token::PERIOD);
     next = tokens->Peek();
     tokens->Expect(Token::IDENTIFIER);
-    AttributeName attrName = GetAttrName(next);
-    if (attrName == STMT_NO) {
+    Attribute::AttributeName attrName = GetAttrName(next);
+    if (attrName == Attribute::STMT_NO) {
       tokens->Expect(Token::HASHTAG);
     }
     // Check if attribute and synonym match
     if (entityAllowedAttributes.count(syn.GetEntityType())) {
-      std::unordered_set<AttributeName> map =
+      std::unordered_set<Attribute::AttributeName> map =
           entityAllowedAttributes[syn.GetEntityType()];
       if (map.count(attrName)) {
         Attribute attr = Attribute(syn, attrName);
@@ -254,12 +259,12 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
   }
 }
 
-AttributeName QueryParserUtil::GetAttrName(const Token& next) {
-  try {
-    return Attribute::RetrieveAttributeName(next.GetValue());
-  } catch (const std::exception& err) {
-    throw SyntaxException(err.what());
+Attribute::AttributeName QueryParserUtil::GetAttrName(const Token& next) {
+  std::string name = next.GetValue();
+  if (Attribute::attrName_representation.count(name)) {
+    return Attribute::attrName_representation[name];
   }
+  throw SyntaxException("No such attribute name");
 }
 
 Identifier QueryParserUtil::ExtractIdentifier(
@@ -281,6 +286,6 @@ Integer QueryParserUtil::ExtractInteger(
 }
 
 bool QueryParserUtil::CheckNameAttribute(const AttributeReference& attr) {
-  return (attr.GetAttributeName() == VAR_NAME ||
-          attr.GetAttributeName() == PROC_NAME);
+  return (attr.GetAttributeName() == Attribute::VAR_NAME ||
+          attr.GetAttributeName() == Attribute::PROC_NAME);
 }
