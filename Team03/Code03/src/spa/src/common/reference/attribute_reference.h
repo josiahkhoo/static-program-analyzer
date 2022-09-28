@@ -9,7 +9,6 @@
 /// "IDENT"| INTEGER | attrRef
 class AttributeReference : public Reference {
  public:
-
   explicit AttributeReference(Identifier identifier);
 
   explicit AttributeReference(int number);
