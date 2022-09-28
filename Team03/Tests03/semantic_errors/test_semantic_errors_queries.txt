@@ -13,13 +13,43 @@ stmt s;
 Select s pattern s(_,_)
 SemanticError
 5000
-4 - (SEMANTIC ERROR) Parent if arg 1 synonym must be statement synonym
+4 - (SEMANTIC ERROR) Parent arg 1 synonym must be statement synonym
 stmt s; variable v;
 Select s such that Parent(v, s)
 SemanticError
 5000
-5 - (SEMANTIC ERROR) Modifies if arg 2 synonym must be variable synonym
+5 - (SEMANTIC ERROR) Modifies arg 2 synonym must be variable synonym
 stmt s; assign a;
 Select s such that Modifies(s, a)
+SemanticError
+5000
+6 - (SEMANTIC ERROR) Syn 'a' not declared
+print pr;
+Select a such that Follows (29, pr)
+SemanticError
+5000
+7 - (SEMANTIC ERROR) Syn 'a' not declared
+stmt s;
+Select a such that Follows* (s, 38)
+SemanticError
+5000
+8 - (SEMANTIC ERROR) Syn 'x' not declared
+while w; stmt s;
+Select x such that Uses (s,  "x")
+SemanticError
+5000
+9 - (SEMANTIC ERROR) Uses arg 1 synonym must be variable synonym
+assign a; variable v; constant c;
+Select a such that Uses (a, c) pattern a (v,  _)
+SemanticError
+5000
+10 - (SEMANTIC ERROR) Follows arg 1 synonym must be statement synonym
+stmt s; assign a; variable v;
+Select a such that Follows* (a, v) pattern s (v,  _)
+SemanticError
+5000
+11 - (SEMANTIC ERROR) Undeclared synonym
+
+Select a
 SemanticError
 5000
