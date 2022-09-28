@@ -5,16 +5,13 @@
 
 const std::string ParentTParser::CLAUSE_WORD = "Parent";
 
-bool ParentTParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool ParentTParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   return QueryOperationMatcher::MatchTParser(tokens, CLAUSE_WORD);
 }
 
-std::shared_ptr<QueryOperation> ParentTParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> ParentTParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

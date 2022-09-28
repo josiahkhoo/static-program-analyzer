@@ -7,14 +7,12 @@
 
 const std::string PatternAssignParser::CLAUSE_WORD = "pattern";
 
-bool PatternAssignParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool PatternAssignParser::MatchParser(const TokenBuilderPair& data) const {
   return QueryOperationMatcher::MatchParser(data, CLAUSE_WORD, ASSIGN);
 }
 
 std::shared_ptr<QueryOperation> PatternAssignParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+    TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

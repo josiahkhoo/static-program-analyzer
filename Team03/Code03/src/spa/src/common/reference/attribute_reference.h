@@ -2,6 +2,7 @@
 #define SPA_ATTRIBUTE_REFERENCE_H
 
 #include "attribute.h"
+#include "identifier.h"
 #include "reference.h"
 
 /// Represents a reference object for WITH attribute querying
@@ -9,7 +10,7 @@
 class AttributeReference : public Reference {
  public:
 
-  explicit AttributeReference(std::string identifier);
+  explicit AttributeReference(Identifier identifier);
 
   explicit AttributeReference(int number);
 
@@ -30,7 +31,7 @@ class AttributeReference : public Reference {
   [[nodiscard]] std::string GetValue() const;
 
  private:
-  std::optional<std::string> identifier_;
+  std::optional<Identifier> identifier_;
   std::optional<int> number_;
   std::optional<Attribute> attr_;
 };

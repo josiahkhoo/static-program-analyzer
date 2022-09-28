@@ -8,7 +8,12 @@ With::With(AttributeReference attRefL, AttributeReference attRefR)
 
 std::unordered_set<std::string> With::Fetch(
     const QueryablePkb& queryable_pkb) const {
-  if (GetType() == DOUBLE_SYNONYM) {
+  if (GetType() == NO_SYNONYM) {
+    // E.g. with "x" = 1
+    // Returns 1 or 0 if matches
+    bool res = lhs_.GetValue() == rhs_.GetValue();
+    return {std::to_string(res)};
+  } else if (GetType() == DOUBLE_SYNONYM) {
     // E.g. with x.procName = y.procName
     return queryable_pkb.QueryWithAttribute(
         lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),

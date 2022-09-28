@@ -10,13 +10,18 @@ enum AttributeName {
   STMT_NO,
 };
 
-class Attribute : public Synonym {
+class Attribute {
  public:
-  Attribute(EntityType entity_type, std::string identifier, AttributeName name);
+  Attribute(Synonym syn, AttributeName name);
+
+  [[nodiscard]] Synonym GetSynonym() const;
 
   [[nodiscard]] AttributeName GetAttributeName() const;
 
+  static AttributeName RetrieveAttributeName(const std::string& name);
+
  private:
+  Synonym syn_;
   AttributeName name_;
 };
 

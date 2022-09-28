@@ -5,9 +5,7 @@
 
 const std::string ModifiesPParser::CLAUSE_WORD = "Modifies";
 
-bool ModifiesPParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool ModifiesPParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
@@ -19,8 +17,7 @@ bool ModifiesPParser::MatchParser(
   return QueryParserUtil::CheckProcedureClause(tokens, builder);
 }
 
-std::shared_ptr<QueryOperation> ModifiesPParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> ModifiesPParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

@@ -18,7 +18,9 @@
 #include "qps/parser/operations/pattern_while_parser.h"
 #include "qps/parser/operations/uses_p_parser.h"
 #include "qps/parser/operations/uses_s_parser.h"
+#include "qps/parser/operations/with_parser.h"
 #include "qps/parser/query_parser_util.h"
+#include "qps/parser/token_builder_pair.h"
 
 QueryParser::QueryParser() = default;
 
@@ -88,8 +90,9 @@ void QueryParser::ParseQueryOperation() {
   while (tokens_->IsNotEnd()) {
     bool found_clause = ParseClause();
     bool found_pattern = ParsePattern();
+    bool found_with = ParseWith();
     // No operation detected, exit
-    if (!(found_clause || found_pattern)) {
+    if (!(found_clause || found_pattern || found_with)) {
       break;
     }
   }
@@ -110,10 +113,7 @@ bool QueryParser::ParseClause() {
 }
 
 void QueryParser::ParseIndividualClause() {
-  std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>
-      queryData =
-          std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>(
-              tokens_, query_string_builder_);
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
   for (const auto& clause_parser : st_parsers_) {
@@ -128,10 +128,7 @@ void QueryParser::ParseIndividualClause() {
 }
 
 bool QueryParser::ParsePattern() {
-  std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>
-      queryData =
-          std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>(
-              tokens_, query_string_builder_);
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
   for (const auto& clause_parser : pattern_parsers_) {
@@ -142,6 +139,18 @@ bool QueryParser::ParsePattern() {
   }
   if (op != nullptr) {
     query_string_builder_.AddQueryOperation(op);
+    return true;
+  }
+  return false;
+}
+
+bool QueryParser::ParseWith() {
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
+
+  WithParser withP;
+  std::shared_ptr<QueryOperation> op;
+  if (withP.MatchParser(queryData)) {
+    withP.Parse(queryData);
     return true;
   }
   return false;

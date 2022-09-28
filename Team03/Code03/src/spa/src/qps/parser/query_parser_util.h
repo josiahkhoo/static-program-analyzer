@@ -2,6 +2,8 @@
 #define SPA_QUERY_PARSER_UTIL_H
 
 #include "common/parser.h"
+#include "common/reference/attribute_reference.h"
+#include "common/reference/identifier.h"
 #include "qps/query_string_builder.h"
 #include "qps/token_handler.h"
 
@@ -20,11 +22,9 @@ class QueryParserUtil {
       const QueryStringBuilder& builder);
   static EntityType ExtractEntityType(
       const std::shared_ptr<TokenHandler>& tokens);
-
-  static std::string GetExpression(const std::shared_ptr<TokenHandler>& tokens,
-                                   const QueryStringBuilder& builder);
-  static std::string GetTerm(const std::shared_ptr<TokenHandler>& tokens,
-                             const QueryStringBuilder& builder);
+  static AttributeReference ExtractAttrRef(
+      const std::shared_ptr<TokenHandler>& tokens,
+      const QueryStringBuilder& builder);
   static void CheckFollowsParentRef(const StatementReference& stmtRef);
   static void CheckPatternSyn(const Synonym& synonym);
   static void CheckEntityRhs(const EntityReference& entRef);
@@ -34,7 +34,17 @@ class QueryParserUtil {
                                    const QueryStringBuilder& builder);
 
  private:
-  static bool isMathOperator(Token& next);
+  static std::string GetExpression(const std::shared_ptr<TokenHandler>& tokens,
+                                   const QueryStringBuilder& builder);
+
+  static std::string GetTerm(const std::shared_ptr<TokenHandler>& tokens,
+                             const QueryStringBuilder& builder);
+
+  static AttributeName GetAttrName(const Token& next);
+
+  static Identifier ExtractIdentifier(
+      const std::shared_ptr<TokenHandler>& tokens);
+  static int ExtractInteger(const std::shared_ptr<TokenHandler>& tokens);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H

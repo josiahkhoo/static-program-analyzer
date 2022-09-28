@@ -9,14 +9,11 @@
 
 const std::string PatternIfParser::CLAUSE_WORD = "pattern";
 
-bool PatternIfParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool PatternIfParser::MatchParser(const TokenBuilderPair& data) const {
   return QueryOperationMatcher::MatchParser(data, CLAUSE_WORD, IF);
 }
 
-std::shared_ptr<QueryOperation> PatternIfParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> PatternIfParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

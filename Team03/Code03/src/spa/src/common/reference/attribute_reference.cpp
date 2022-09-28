@@ -3,14 +3,14 @@
 #include <cassert>
 #include <utility>
 
-AttributeReference::AttributeReference(std::string identifier)
+AttributeReference::AttributeReference(Identifier identifier)
     : identifier_(identifier), Reference(false) {}
 
 AttributeReference::AttributeReference(int number)
     : number_(number), Reference(false) {}
 
 AttributeReference::AttributeReference(Attribute attr)
-    : attr_(attr), Reference(attr) {}
+    : attr_(attr), Reference(attr.GetSynonym()) {}
 
 bool AttributeReference::IsLineNumber() const { return number_.has_value(); }
 
