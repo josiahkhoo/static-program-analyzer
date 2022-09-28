@@ -8,7 +8,7 @@ class Lexer {
  public:
   std::vector<Token> Lex(std::istream &stream) const;
 
-  std::vector<Token> LexLine(std::string &line) const;
+  static std::vector<Token> LexLine(std::string &line) ;
 };
 
 #endif  // SPA_LEXER_H
