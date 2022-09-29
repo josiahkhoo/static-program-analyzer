@@ -1,5 +1,9 @@
 #include "query_parser_util.h"
 
+#include <unordered_map>
+
+#include "common/reference/identifier.h"
+#include "common/reference/integer.h"
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
@@ -11,14 +15,15 @@ StatementReference QueryParserUtil::ExtractStmtRef(
     // Checks current declared synonyms to do matching
     Synonym synonym = builder.GetSynonym(tokens->PeekValue());
     statement_reference = StatementReference(synonym);
+    tokens->Forward();
   } else if (tokens->MatchKind(Token::UNDERSCORE)) {
     statement_reference = StatementReference();
+    tokens->Forward();
   } else if (tokens->MatchKind(Token::NUMBER)) {
-    statement_reference = StatementReference(stoi(tokens->PeekValue()));
+    statement_reference = StatementReference(ExtractInteger(tokens));
   } else {
     throw SyntaxException("Expected different stmtRef");
   }
-  tokens->Forward();
   return statement_reference;
 }
 
@@ -28,15 +33,13 @@ EntityReference QueryParserUtil::ExtractEntityRef(
   EntityReference entity_reference;
   // Wildcard
   if (tokens->MatchKind(Token::UNDERSCORE)) {
-    tokens->Forward();
     entity_reference = EntityReference();
+    tokens->Forward();
   }
   // Identifier
   else if (tokens->MatchKind(Token::INVERTED_COMMAS)) {
-    tokens->Forward();
-    entity_reference = EntityReference(tokens->PeekValue());
-    tokens->Forward();
-    tokens->Expect(Token::INVERTED_COMMAS);
+    Identifier ident = ExtractIdentifier(tokens);
+    entity_reference = EntityReference(ident);
   }
   // Synonym
   else if (tokens->MatchKind(Token::IDENTIFIER)) {
@@ -57,7 +60,7 @@ Expression QueryParserUtil::ExtractExpression(
     exp.has_front_wildcard = true;
     tokens->Forward();
   }
-  // Pattern to match
+  // Pattern to match - Expression
   if (tokens->MatchKind(Token::INVERTED_COMMAS)) {
     tokens->Forward();
     exp.to_match = GetExpression(tokens, builder);
@@ -104,12 +107,12 @@ EntityType QueryParserUtil::ExtractEntityType(
 std::string QueryParserUtil::GetExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
-  std::string res;
-  Token next = tokens->Peek();
   // Start of expression must be term
-  if (isMathOperator(next)) {
+  if (tokens->IsMathOperator()) {
     throw SyntaxException("Invalid expression");
   }
+  std::string res;
+  Token next = tokens->Peek();
   while (next.IsNot(Token::INVERTED_COMMAS) &&
          next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
     res.append(GetTerm(tokens, builder));
@@ -127,7 +130,7 @@ std::string QueryParserUtil::GetTerm(
   // var_name, const_value, operator
   if (next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER)) {
     res.append(next.GetValue());
-  } else if (isMathOperator(next)) {
+  } else if (tokens->IsMathOperator()) {
     res.append(next.GetValue());
     tokens->Forward();
     res.append(GetTerm(tokens, builder));
@@ -148,12 +151,6 @@ std::string QueryParserUtil::GetTerm(
     throw SyntaxException("Invalid expression");
   }
   return res;
-}
-
-bool QueryParserUtil::isMathOperator(Token& next) {
-  return next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
-         next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
-         next.Is(Token::PERCENT);
 }
 
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
@@ -211,4 +208,84 @@ bool QueryParserUtil::CheckProcedureClause(
   tokens->Back();  // go back to BRACKET
   tokens->Back();  // go back to WORD
   return result;
+}
+
+// Map of allowed Synonym attributes
+std::unordered_map<EntityType, std::unordered_set<Attribute::AttributeName>>
+    entityAllowedAttributes = {
+        {PROCEDURE, {Attribute::PROC_NAME}},
+        {VARIABLE, {Attribute::VAR_NAME, Attribute::STMT_NO, Attribute::VALUE}},
+        {ASSIGN, {Attribute::STMT_NO, Attribute::VALUE}},
+        {IF, {Attribute::STMT_NO}},
+        {WHILE, {Attribute::STMT_NO}},
+        {CONSTANT, {Attribute::STMT_NO, Attribute::VALUE}},
+        // To add more if there exist
+};
+
+AttributeReference QueryParserUtil::ExtractAttrRef(
+    const std::shared_ptr<TokenHandler>& tokens,
+    const QueryStringBuilder& builder) {
+  Token next = tokens->Peek();
+  // "Identifier"
+  if (tokens->MatchKind(Token::INVERTED_COMMAS)) {
+    Identifier identifier = ExtractIdentifier(tokens);
+    return AttributeReference(identifier);
+  }
+  // Integer
+  else if (tokens->MatchKind(Token::NUMBER)) {
+    return AttributeReference(ExtractInteger(tokens));
+  }
+  // Attribute x.'procName'| 'varName' | 'value' | 'stmt#'
+  else {
+    tokens->Expect(Token::IDENTIFIER);
+    Synonym syn = builder.GetSynonym(next.GetValue());
+    tokens->Expect(Token::PERIOD);
+    next = tokens->Peek();
+    tokens->Expect(Token::IDENTIFIER);
+    Attribute::AttributeName attrName = GetAttrName(next);
+    if (attrName == Attribute::STMT_NO) {
+      tokens->Expect(Token::HASHTAG);
+    }
+    // Check if attribute and synonym match
+    if (entityAllowedAttributes.count(syn.GetEntityType())) {
+      std::unordered_set<Attribute::AttributeName> map =
+          entityAllowedAttributes[syn.GetEntityType()];
+      if (map.count(attrName)) {
+        Attribute attr = Attribute(syn, attrName);
+        return AttributeReference(attr);
+      }
+    }
+    throw SemanticException("Synonym doesn't support attribute");
+  }
+}
+
+Attribute::AttributeName QueryParserUtil::GetAttrName(const Token& next) {
+  std::string name = next.GetValue();
+  if (Attribute::attrName_representation.count(name)) {
+    return Attribute::attrName_representation[name];
+  }
+  throw SyntaxException("No such attribute name");
+}
+
+Identifier QueryParserUtil::ExtractIdentifier(
+    const std::shared_ptr<TokenHandler>& tokens) {
+  tokens->Expect(Token::INVERTED_COMMAS);
+  Identifier ident = tokens->PeekValue();
+  tokens->Forward();
+  tokens->Expect(Token::INVERTED_COMMAS);
+  return ident;
+}
+
+Integer QueryParserUtil::ExtractInteger(
+    const std::shared_ptr<TokenHandler>& tokens) {
+  tokens->Expect(Token::NUMBER);
+  tokens->Back();
+  Integer integer = stoi(tokens->PeekValue());
+  tokens->Forward();
+  return integer;
+}
+
+bool QueryParserUtil::CheckNameAttribute(const AttributeReference& attr) {
+  return (attr.GetAttributeName() == Attribute::VAR_NAME ||
+          attr.GetAttributeName() == Attribute::PROC_NAME);
 }

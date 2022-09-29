@@ -28,10 +28,12 @@ class Token {
     ASTERISK,               // *
     SLASH,                  // /
     COMMA,                  // ,
+    PERIOD,                 // .
     PERCENT,                // %
     SEMICOLON,              // ;
     INVERTED_COMMAS,        // "
     UNDERSCORE,             // _
+    HASHTAG,                // #
     OR,                     // ||
     AND,                    // &&
     NOT,                    // !

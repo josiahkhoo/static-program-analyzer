@@ -3,7 +3,7 @@
 #include <istream>
 #include <regex>
 
-std::vector<std::pair<Token::Kind, std::string>> rules = {
+std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
     {Token::WHITESPACE, "^(\\s+)"},
     {Token::NUMBER, "^(\\d+)"},
     {Token::IDENTIFIER, "^([A-Za-z]\\w*([0-9])?)\\b"},
@@ -22,10 +22,12 @@ std::vector<std::pair<Token::Kind, std::string>> rules = {
     {Token::ASTERISK, "^(\\*)"},
     {Token::SLASH, "^(\\/)"},
     {Token::COMMA, "^(,)"},
+    {Token::PERIOD, "^(\\.)"},
     {Token::PERCENT, "^(%)"},
     {Token::SEMICOLON, "^(;)"},
     {Token::INVERTED_COMMAS, "^(\")"},
     {Token::UNDERSCORE, "^(_)"},
+    {Token::HASHTAG, "^(#)"},
     {Token::OR, "^(\\|\\|)"},
     {Token::AND, "^(&&)"},
     {Token::NOT_EQUAL, "^(!=)"},
@@ -62,7 +64,7 @@ std::vector<Token> Lexer::Lex(std::istream &stream) const {
 std::vector<Token> Lexer::LexLine(std::string &line) const {
   std::vector<Token> tokens;
   while (!line.empty()) {
-    for (auto const &pair : rules) {
+    for (auto const &pair : tokenRules) {
       std::smatch matched_regex;
       if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
         if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {

@@ -13,14 +13,15 @@ class QueryOperationMatcher {
   /// Checks if current tokens match clause/operation grammar word
   [[nodiscard]] static bool MatchParser(
       const std::shared_ptr<TokenHandler>& tokens, const std::string& word);
-  /// Checks if current tokens match T clause/operation grammar word
-  [[nodiscard]] static bool MatchTParser(
-      const std::shared_ptr<TokenHandler>& tokens, const std::string& word);
-  /// Checks if current tokens match entity type clause/operation grammar word
-  [[nodiscard]] static bool MatchEntityParser(
+  /// Checks if current tokens match entity type and clause/operation grammar
+  /// word
+  [[nodiscard]] static bool MatchParser(
       const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
           data,
       const std::string& word, const EntityType& type);
+  /// Checks if current tokens match T clause/operation grammar word
+  [[nodiscard]] static bool MatchTParser(
+      const std::shared_ptr<TokenHandler>& tokens, const std::string& word);
 };
 
 #endif  // SPA_QUERY_OPERATION_MATCHER_H

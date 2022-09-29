@@ -3,11 +3,10 @@
 #include "common/clause/pattern_while.h"
 #include "qps/query_parser.h"
 
-QueryParser qp = QueryParser();
-
 /// =============== ASSIGN TEST CASES =============== ///
 
 TEST_CASE("Pattern ASSIGN Single-Syn", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
                                 Token(Token::SEMICOLON),
@@ -46,6 +45,7 @@ TEST_CASE("Pattern ASSIGN Single-Syn", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
                                 Token(Token::SEMICOLON),
@@ -87,6 +87,7 @@ TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   SECTION("Only wildcard") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                   Token(Token::IDENTIFIER, "a"),
@@ -179,6 +180,7 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   SECTION("Short string") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                   Token(Token::IDENTIFIER, "a"),
@@ -288,6 +290,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("invalid Pattern ASSIGN semantics", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),
                                 Token(Token::SEMICOLON),
@@ -312,6 +315,7 @@ TEST_CASE("invalid Pattern ASSIGN semantics", "[QPS Pattern Parser]") {
 /// =============== IF TEST CASES =============== ///
 
 TEST_CASE("Pattern IF Single-Syn", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
                                 Token(Token::SEMICOLON),
@@ -336,6 +340,7 @@ TEST_CASE("Pattern IF Single-Syn", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("Pattern IF Double-Syn", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
                                 Token(Token::SEMICOLON),
@@ -366,6 +371,7 @@ TEST_CASE("Pattern IF Double-Syn", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
                                 Token(Token::SEMICOLON),
@@ -385,6 +391,7 @@ TEST_CASE("invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("invalid Pattern IF: not wildcard,_", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
                                 Token(Token::SEMICOLON),
@@ -406,6 +413,7 @@ TEST_CASE("invalid Pattern IF: not wildcard,_", "[QPS Pattern Parser]") {
 /// =============== WHILE TEST CASES =============== ///
 
 TEST_CASE("Pattern WHILE Single-Syn", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "while"),
                                 Token(Token::IDENTIFIER, "w"),
                                 Token(Token::SEMICOLON),
@@ -428,6 +436,7 @@ TEST_CASE("Pattern WHILE Single-Syn", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("Pattern WHILE Single-Syn Ident", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "while"),
                                 Token(Token::IDENTIFIER, "w"),
                                 Token(Token::SEMICOLON),
@@ -455,6 +464,7 @@ TEST_CASE("Pattern WHILE Single-Syn Ident", "[QPS Pattern Parser]") {
 }
 
 TEST_CASE("invalid Pattern WHILE: not wildcard", "[QPS Pattern Parser]") {
+  QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "while"),
                                 Token(Token::IDENTIFIER, "w"),
                                 Token(Token::SEMICOLON),

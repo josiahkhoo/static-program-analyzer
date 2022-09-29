@@ -5,9 +5,7 @@
 
 const std::string UsesPParser::CLAUSE_WORD = "Uses";
 
-bool UsesPParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool UsesPParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
@@ -19,8 +17,7 @@ bool UsesPParser::MatchParser(
   return QueryParserUtil::CheckProcedureClause(tokens, builder);
 }
 
-std::shared_ptr<QueryOperation> UsesPParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> UsesPParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
