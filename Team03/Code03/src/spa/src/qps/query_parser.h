@@ -18,6 +18,7 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
   QueryStringBuilder query_string_builder_;
   std::vector<std::shared_ptr<QueryOperationParser>> st_parsers_;
   std::vector<std::shared_ptr<QueryOperationParser>> pattern_parsers_;
+  Token last_query_operation_ = Token(Token::Kind::WHITESPACE);
 
   void ParseDeclaration();
 
@@ -25,11 +26,11 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
 
   void ParseQueryOperation();
 
-  bool ParseClause();
+  bool ParseClause(bool isAnd = false);
 
   void ParseIndividualClause();
 
-  bool ParsePattern();
+  bool ParsePattern(bool isAnd = false);
 
   void CheckLeftoverTokens();
 };

@@ -7,9 +7,6 @@
 
 /// Parser tokens and creates a new Pattern ASSIGN object
 class PatternAssignParser : public QueryOperationParser {
- private:
-  static const std::string CLAUSE_WORD;
-
  public:
   [[nodiscard]] bool MatchParser(
       const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&

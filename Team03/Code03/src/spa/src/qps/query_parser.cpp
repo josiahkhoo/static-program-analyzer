@@ -86,21 +86,41 @@ void QueryParser::ParseQueryOperation() {
   pattern_parsers_.push_back(std::make_shared<PatternWhileParser>());
 
   while (tokens_->IsNotEnd()) {
-    bool found_clause = ParseClause();
-    bool found_pattern = ParsePattern();
-    // No operation detected, exit
-    if (!(found_clause || found_pattern)) {
+    bool found_clause = false;
+    bool found_pattern = false;
+    if (tokens_->MatchString("and")) {
+      if (last_query_operation_.GetValue() == "such") {
+        tokens_->Forward();
+        found_clause = ParseClause(true);
+      } else if (last_query_operation_.GetValue() == "pattern") {
+        tokens_->Forward();
+        found_pattern = ParsePattern(true);
+      } else {
+        throw SyntaxException("Unexpected 'and' as first query operation");
+      }
+    } else {
+      found_clause = ParseClause();
+      found_pattern = ParsePattern();
+    }
+    if (found_clause) {
+      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "such");
+    } else if (found_pattern) {
+      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "pattern");
+    } else {
+      // No operation detected, exit
       break;
     }
   }
 }
 
-bool QueryParser::ParseClause() {
-  if (tokens_->CheckEnd() || !tokens_->MatchString("such")) {
-    return false;
+bool QueryParser::ParseClause(bool isAnd) {
+  if (!isAnd) {
+    if (tokens_->CheckEnd() || !tokens_->MatchString("such")) {
+      return false;
+    }
+    tokens_->Forward();
+    tokens_->Expect("that");
   }
-  tokens_->Forward();
-  tokens_->Expect("that");
   ParseIndividualClause();
   // No clause found
   if (query_string_builder_.IsOperationsEmpty()) {
@@ -127,7 +147,13 @@ void QueryParser::ParseIndividualClause() {
   }
 }
 
-bool QueryParser::ParsePattern() {
+bool QueryParser::ParsePattern(bool isAnd) {
+  if (!isAnd) {
+    if (tokens_->CheckEnd() || !tokens_->MatchString("pattern")) {
+      return false;
+    }
+    tokens_->Forward();
+  }
   std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>
       queryData =
           std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>(

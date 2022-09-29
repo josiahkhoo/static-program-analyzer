@@ -20,7 +20,7 @@ class QueryOperationMatcher {
   [[nodiscard]] static bool MatchEntityParser(
       const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
           data,
-      const std::string& word, const EntityType& type);
+      const EntityType& type);
 };
 
 #endif  // SPA_QUERY_OPERATION_MATCHER_H

@@ -26,20 +26,16 @@ bool QueryOperationMatcher::MatchTParser(
 bool QueryOperationMatcher::MatchEntityParser(
     const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
         data,
-    const std::string& word, const EntityType& type) {
+    const EntityType& type) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
   bool res = false;
-  if (MatchParser(tokens, word)) {
-    tokens->Forward();
-    Synonym synonym = builder.GetSynonym(tokens->PeekValue());
-    // Check if ASSIGN, IF, WHILE
-    QueryParserUtil::CheckPatternSyn(synonym);
-    if (synonym.IsEntityType(type)) {
-      res = true;
-    }
-    tokens->Back();
+  Synonym synonym = builder.GetSynonym(tokens->PeekValue());
+  // Check if ASSIGN, IF, WHILE
+  QueryParserUtil::CheckPatternSyn(synonym);
+  if (synonym.IsEntityType(type)) {
+    res = true;
   }
   return res;
 }
