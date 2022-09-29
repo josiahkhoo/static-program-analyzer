@@ -172,7 +172,7 @@ class QueryablePkb {
   /// Query entities that matches attribute some value / stmt# / identifier
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWithAttributeValue(
       EntityType lhs_type, Attribute::AttributeName lhs_name,
-      std::string value) const = 0;
+      Attribute::AttributeName rhs_name, std::string value) const = 0;
 };
 
 #endif  // SPA_QUERYABLE_PKB_H

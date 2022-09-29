@@ -253,7 +253,7 @@ class QueryablePkbStub : public QueryablePkb {
 
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
       EntityType lhs_type, Attribute::AttributeName lhs_name,
-      std::string value) const override {
+      Attribute::AttributeName rhs_name, std::string value) const override {
     return {"QueryWithAttributeValue"};
   }
 };
@@ -735,7 +735,7 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
         EntityType lhs_type, Attribute::AttributeName lhs_name,
-        std::string value) const override {
+        Attribute::AttributeName rhs_name, std::string value) const override {
       return {};
     }
   };
@@ -1020,7 +1020,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
         EntityType lhs_type, Attribute::AttributeName lhs_name,
-        std::string value) const override {
+        Attribute::AttributeName rhs_name, std::string value) const override {
       return {};
     }
   };

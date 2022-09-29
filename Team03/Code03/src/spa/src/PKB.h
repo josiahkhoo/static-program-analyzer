@@ -207,7 +207,7 @@ class PKB : public QueryablePkb, public StorablePkb {
       EntityType rhs_type, Attribute::AttributeName rhs_name) const override;
   std::unordered_set<std::string> QueryWithAttributeValue(
       EntityType lhs_type, Attribute::AttributeName lhs_name,
-      std::string value) const override;
+      Attribute::AttributeName rhs_name, std::string value) const override;
 
  private:
   EntityManager entity_manager_;

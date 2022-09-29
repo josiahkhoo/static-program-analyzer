@@ -675,31 +675,25 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
   return pattern_manager_.GetPatternVariablesFromIf(statement_number);
 }
 
-/// Query entities that matches attribute identifier
-/// Treats x.procName = "name" &  with "name" = x.procName the same
 std::unordered_set<std::string> PKB::QueryWithAttribute(
     EntityType type, Attribute::AttributeName name,
     std::string identifier) const {
   return {};
 }
 
-/// Query entities that matches attribute number value or stmt#
-/// Treats x.value = 1 &  with 2 = x.stmt# the same
 std::unordered_set<std::string> PKB::QueryWithAttribute(
     EntityType type, Attribute::AttributeName name, int number) const {
   return {};
 }
 
-/// Query entities that matches attribute another attribute
 std::unordered_set<std::string> PKB::QueryWithAttribute(
     EntityType lhs_type, Attribute::AttributeName lhs_name, EntityType rhs_type,
     Attribute::AttributeName rhs_name) const {
   return {};
 }
 
-/// Query entities that matches attribute some value / stmt# / identifier
 std::unordered_set<std::string> PKB::QueryWithAttributeValue(
     EntityType lhs_type, Attribute::AttributeName lhs_name,
-    std::string value) const {
+    Attribute::AttributeName rhs_name, std::string value) const {
   return {};
 }

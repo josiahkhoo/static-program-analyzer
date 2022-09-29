@@ -8,12 +8,7 @@ With::With(AttributeReference attRefL, AttributeReference attRefR)
 
 std::unordered_set<std::string> With::Fetch(
     const QueryablePkb& queryable_pkb) const {
-  if (GetType() == DOUBLE_SYNONYM) {
-    // E.g. with x.procName = y.procName
-    return queryable_pkb.QueryWithAttribute(
-        lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
-        rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName());
-  } else if (lhs_.IsAttributeName()) {
+  if (lhs_.IsAttributeName()) {
     if (rhs_.IsIdentifier()) {
       // E.g. with x.procName = "name"
       return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
@@ -45,14 +40,18 @@ std::unordered_set<std::string> With::Fetch(
 
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
+  // E.g. with x.procName = y.varName
   return queryable_pkb.QueryWithAttributeValue(
-      rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName(), lhs);
+      rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName(),
+      lhs_.GetAttributeName(), lhs);
 }
 
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
+  // E.g. with x.procName = y.varName
   return queryable_pkb.QueryWithAttributeValue(
-      lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(), rhs);
+      lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
+      rhs_.GetAttributeName(), rhs);
 }
 
 QueryOperation::Type With::GetType() const {
