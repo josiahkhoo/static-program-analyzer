@@ -85,14 +85,7 @@ QueryOperation::IterateSide With::GetIterateSide(
 }
 
 bool With::IsTrue(const QueryablePkb& queryable_pkb) const {
-  if (GetType() == DOUBLE_SYNONYM) {
-    // E.g. with x.procName = y.procName
-    return !queryable_pkb
-                .QueryWithAttribute(
-                    lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
-                    rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName())
-                .empty();
-  } else if (lhs_.IsAttributeName()) {
+  if (lhs_.IsAttributeName()) {
     if (rhs_.IsIdentifier()) {
       // E.g. with x.procName = "name"
       return !queryable_pkb
