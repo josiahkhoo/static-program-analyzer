@@ -20,6 +20,7 @@ std::unordered_map<Token::Kind, std::string> token_representation = {
     {Token::ASTERISK, "*"},
     {Token::SLASH, "/"},
     {Token::COMMA, ","},
+    {Token::PERIOD, "."},
     {Token::PERCENT, "%"},
     {Token::SEMICOLON, ";"},
     {Token::OR, "||"},

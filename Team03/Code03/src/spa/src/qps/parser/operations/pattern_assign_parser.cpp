@@ -5,14 +5,12 @@
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/parser/query_parser_util.h"
 
-bool PatternAssignParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
-  return QueryOperationMatcher::MatchEntityParser(data, ASSIGN);
+bool PatternAssignParser::MatchParser(const TokenBuilderPair& data) const {
+  return QueryOperationMatcher::MatchParser(data, ASSIGN);
 }
 
 std::shared_ptr<QueryOperation> PatternAssignParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+    TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

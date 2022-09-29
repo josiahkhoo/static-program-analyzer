@@ -56,3 +56,10 @@ void TokenHandler::Forward() { token_pos_++; }
 void TokenHandler::Back() { token_pos_--; }
 
 bool TokenHandler::IsNotEnd() { return (token_pos_ < tokens_.size() - 1); }
+
+bool TokenHandler::IsMathOperator() {
+  Token next = Peek();
+  return next.Is(Token::PLUS) || next.Is(Token::MINUS) ||
+         next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
+         next.Is(Token::PERCENT);
+}

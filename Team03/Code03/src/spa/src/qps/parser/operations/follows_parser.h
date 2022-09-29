@@ -11,12 +11,8 @@ class FollowsParser : public QueryOperationParser {
   static const std::string CLAUSE_WORD;
 
  public:
-  [[nodiscard]] bool MatchParser(
-      const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-          data) const override;
-  std::shared_ptr<QueryOperation> Parse(
-      std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data)
-      override;
+  [[nodiscard]] bool MatchParser(const TokenBuilderPair& data) const override;
+  std::shared_ptr<QueryOperation> Parse(TokenBuilderPair data) override;
 };
 
 #endif  // SPA_FOLLOW_PARSER_H

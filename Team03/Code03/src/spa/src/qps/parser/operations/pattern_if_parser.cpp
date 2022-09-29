@@ -7,14 +7,11 @@
 #include "qps/parser/query_operation_matcher.h"
 #include "qps/parser/query_parser_util.h"
 
-bool PatternIfParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
-  return QueryOperationMatcher::MatchEntityParser(data, IF);
+bool PatternIfParser::MatchParser(const TokenBuilderPair& data) const {
+  return QueryOperationMatcher::MatchParser(data, IF);
 }
 
-std::shared_ptr<QueryOperation> PatternIfParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> PatternIfParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

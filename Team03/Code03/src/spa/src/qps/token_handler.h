@@ -23,6 +23,7 @@ class TokenHandler {
   void Forward();
   void Back();
   bool IsNotEnd();
+  bool IsMathOperator();
 };
 
 #endif  // SPA_TOKEN_HANDLER_H

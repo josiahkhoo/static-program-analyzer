@@ -18,7 +18,9 @@
 #include "qps/parser/operations/pattern_while_parser.h"
 #include "qps/parser/operations/uses_p_parser.h"
 #include "qps/parser/operations/uses_s_parser.h"
+#include "qps/parser/operations/with_parser.h"
 #include "qps/parser/query_parser_util.h"
+#include "qps/parser/token_builder_pair.h"
 
 QueryParser::QueryParser() = default;
 
@@ -88,6 +90,7 @@ void QueryParser::ParseQueryOperation() {
   while (tokens_->IsNotEnd()) {
     bool found_clause = false;
     bool found_pattern = false;
+    bool found_with = false;
     if (tokens_->MatchString("and")) {
       if (last_query_operation_.GetValue() == "such") {
         tokens_->Forward();
@@ -95,17 +98,23 @@ void QueryParser::ParseQueryOperation() {
       } else if (last_query_operation_.GetValue() == "pattern") {
         tokens_->Forward();
         found_pattern = ParsePattern(true);
+      } else if (last_query_operation_.GetValue() == "with") {
+        tokens_->Forward();
+        found_pattern = ParseWith(true);
       } else {
         throw SyntaxException("Unexpected 'and' as first query operation");
       }
     } else {
       found_clause = ParseClause();
       found_pattern = ParsePattern();
+      found_with = ParseWith();
     }
     if (found_clause) {
       last_query_operation_ = Token(Token::Kind::IDENTIFIER, "such");
     } else if (found_pattern) {
       last_query_operation_ = Token(Token::Kind::IDENTIFIER, "pattern");
+    } else if (found_with) {
+      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "with");
     } else {
       // No operation detected, exit
       break;
@@ -130,10 +139,7 @@ bool QueryParser::ParseClause(bool isAnd) {
 }
 
 void QueryParser::ParseIndividualClause() {
-  std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>
-      queryData =
-          std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>(
-              tokens_, query_string_builder_);
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
   for (const auto& clause_parser : st_parsers_) {
@@ -154,10 +160,7 @@ bool QueryParser::ParsePattern(bool isAnd) {
     }
     tokens_->Forward();
   }
-  std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>
-      queryData =
-          std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>(
-              tokens_, query_string_builder_);
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
   std::shared_ptr<QueryOperation> op;
   for (const auto& clause_parser : pattern_parsers_) {
@@ -171,6 +174,22 @@ bool QueryParser::ParsePattern(bool isAnd) {
     return true;
   }
   return false;
+}
+
+bool QueryParser::ParseWith(bool isAnd) {
+  if (!isAnd) {
+    if (tokens_->CheckEnd() || !tokens_->MatchString("with")) {
+      return false;
+    }
+    tokens_->Forward();
+  }
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
+
+  WithParser withP;
+  std::shared_ptr<QueryOperation> op;
+  op = withP.Parse(queryData);
+  query_string_builder_.AddQueryOperation(op);
+  return true;
 }
 
 void QueryParser::CheckLeftoverTokens() {

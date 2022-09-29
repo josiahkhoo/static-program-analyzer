@@ -32,6 +32,8 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
 
   bool ParsePattern(bool isAnd = false);
 
+  bool ParseWith(bool isAnd = false);
+
   void CheckLeftoverTokens();
 };
 

@@ -5,16 +5,13 @@
 
 const std::string FollowsTParser::CLAUSE_WORD = "Follows";
 
-bool FollowsTParser::MatchParser(
-    const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
-        data) const {
+bool FollowsTParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   return QueryOperationMatcher::MatchTParser(tokens, CLAUSE_WORD);
 }
 
-std::shared_ptr<QueryOperation> FollowsTParser::Parse(
-    std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&> data) {
+std::shared_ptr<QueryOperation> FollowsTParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;

@@ -674,3 +674,26 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
     int statement_number) const {
   return pattern_manager_.GetPatternVariablesFromIf(statement_number);
 }
+
+std::unordered_set<std::string> PKB::QueryWithAttribute(
+    EntityType type, Attribute::AttributeName name,
+    std::string identifier) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryWithAttribute(
+    EntityType type, Attribute::AttributeName name, int number) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryWithAttribute(
+    EntityType lhs_type, Attribute::AttributeName lhs_name, EntityType rhs_type,
+    Attribute::AttributeName rhs_name) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryWithAttributeValue(
+    EntityType lhs_type, Attribute::AttributeName lhs_name,
+    Attribute::AttributeName rhs_name, std::string value) const {
+  return {};
+}

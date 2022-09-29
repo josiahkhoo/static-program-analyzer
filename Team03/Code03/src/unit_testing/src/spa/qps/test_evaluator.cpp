@@ -232,6 +232,30 @@ class QueryablePkbStub : public QueryablePkb {
       int statement_number) const {
     return {"QueryPatternVariablesFromIf"};
   }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+      EntityType type, Attribute::AttributeName name,
+      std::string identifier) const override {
+    return {"QueryWithAttributeIdentifier"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+      EntityType type, Attribute::AttributeName name,
+      int number) const override {
+    return {"QueryWithAttributeNumber"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+      EntityType lhs_type, Attribute::AttributeName lhs_name,
+      EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
+    return {"QueryWithAttributeAttribute"};
+  }
+
+  [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
+      EntityType lhs_type, Attribute::AttributeName lhs_name,
+      Attribute::AttributeName rhs_name, std::string value) const override {
+    return {"QueryWithAttributeValue"};
+  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
@@ -690,6 +714,30 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
     QueryPatternVariablesFromAssign(int statement_number) const override {
       return {};
     }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType type, Attribute::AttributeName name,
+        std::string identifier) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType type, Attribute::AttributeName name,
+        int number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType lhs_type, Attribute::AttributeName lhs_name,
+        EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
+        EntityType lhs_type, Attribute::AttributeName lhs_name,
+        Attribute::AttributeName rhs_name, std::string value) const override {
+      return {};
+    }
   };
 
   Evaluator eval = Evaluator();
@@ -949,6 +997,30 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
 
     [[nodiscard]] std::unordered_set<std::string>
     QueryPatternVariablesFromAssign(int statement_number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType type, Attribute::AttributeName name,
+        std::string identifier) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType type, Attribute::AttributeName name,
+        int number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
+        EntityType lhs_type, Attribute::AttributeName lhs_name,
+        EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
+        EntityType lhs_type, Attribute::AttributeName lhs_name,
+        Attribute::AttributeName rhs_name, std::string value) const override {
       return {};
     }
   };
