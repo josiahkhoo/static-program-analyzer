@@ -8,6 +8,8 @@
 class PrintEntity : public StatementEntity {
  public:
   explicit PrintEntity(const TNode &node, int line_number);
+
+  [[nodiscard]] std::string GetVariableName() const;
 };
 
 #endif  // SPA_PRINT_ENTITY_H
