@@ -5,12 +5,12 @@ CallsTClause::CallsTClause(EntityReference lhs, EntityReference rhs)
 
 [[nodiscard]] std::unordered_set<std::string> CallsTClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryCallsT(lhs);
+  return queryable_pkb.QueryCallsTBy(lhs);
 }
 
 [[nodiscard]] std::unordered_set<std::string> CallsTClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryCallsTBy(rhs);
+  return queryable_pkb.QueryCallsT(rhs);
 }
 
 const Reference &CallsTClause::GetLeftHandSide() const { return lhs_; }
@@ -21,7 +21,7 @@ std::unordered_set<std::string> CallsTClause::FetchRhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsIdentifier()) {
     // E.g. Calls*("first", p)
-    return queryable_pkb.QueryCallsT(GetLeftHandSide().GetIdentifier());
+    return queryable_pkb.QueryCallsTBy(GetLeftHandSide().GetIdentifier());
   }
   // E.g. Calls*(_, p)
   return queryable_pkb.QueryAllCallsBy();
@@ -31,7 +31,7 @@ std::unordered_set<std::string> CallsTClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsIdentifier()) {
     // E.g. Calls*(p, "first")
-    return queryable_pkb.QueryCallsTBy(GetRightHandSide().GetIdentifier());
+    return queryable_pkb.QueryCallsT(GetRightHandSide().GetIdentifier());
   }
   // E.g. Calls*(p, _)
   return queryable_pkb.QueryAllCalls();

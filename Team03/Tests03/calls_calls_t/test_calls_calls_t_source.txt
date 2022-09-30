@@ -29,7 +29,7 @@ procedure p {
 procedure q {
   if (x==1) then {
     z = x + 1;
-    calls s; }
+    call s; }
   else {
     x = z + x; } }
 
