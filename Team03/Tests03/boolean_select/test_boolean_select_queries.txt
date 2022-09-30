@@ -3,10 +3,10 @@ while w;
 Select BOOLEAN
 TRUE
 5000
-2 - (SUCCESS) Empty result set return false
+2 - (SUCCESS) Multi non-empty result set return true
 while w1, w2, w3;
 Select BOOLEAN
-FALSE
+TRUE
 5000
 3 - (SUCCESS) No declaration select boolean return false
 

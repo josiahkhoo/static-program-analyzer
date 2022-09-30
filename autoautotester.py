@@ -44,7 +44,7 @@ test_array = (
     ("Uses Procedure with Calls", "uses_p_with_call"),
     ("Modifies Statement with Calls", "modifies_s_with_call"),
     ("Modifies Procedure with Calls", "modifies_p_with_call"),
-    # ("Boolean select", "boolean_select"),
+    ("Boolean select", "boolean_select"),
     ("Calls / Calls T", "calls_calls_t"),
     ("If Patterns only", "if_patterns_only"),
     ("While Patterns only", "while_patterns_only")
