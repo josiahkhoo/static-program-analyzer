@@ -38,22 +38,22 @@ procedure q;
 Select q such that Calls*("Example", q)
 q, p, s
 5000
-3 - (SUCCESS) Retrieve all procedures that are called * by something
+9 - (SUCCESS) Retrieve all procedures that are called * by something
 procedure q;
 Select q such that Calls*(_, q)
 q, p, s
 5000
-4 - (SUCCESS) Retrieve all procedures that call * s
+10 - (SUCCESS) Retrieve all procedures that call * s
 procedure p;
-Select p such that Calls(p, "s")
-Example, p
+Select p such that Calls*(p, "s")
+Example, p, q
 5000
-5 - (SUCCESS) Retrieve all procedures that call * something
+11 - (SUCCESS) Retrieve all procedures that call * something
 procedure p;
 Select p such that Calls*(p, _)
 Example, p, q
 5000
-6 - (SUCCESS) Return all procedures if there is any procedure that call * something
+12 - (SUCCESS) Return all procedures if there is any procedure that call * something
 procedure p;
 Select p such that Calls(_, _)
 Example, p, q, s, r

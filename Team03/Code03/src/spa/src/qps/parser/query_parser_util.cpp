@@ -175,7 +175,7 @@ void QueryParserUtil::CheckEntityRhs(const EntityReference& entRef) {
 }
 
 void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
-  if (!entRef.IsEntityType(PROCEDURE)) {
+  if (entRef.IsSynonym() && !entRef.IsEntityType(PROCEDURE)) {
     throw SemanticException("Expected procedure reference");
   }
 }
