@@ -196,6 +196,8 @@ class PKB : public QueryablePkb, public StorablePkb {
       std::string ident) const override;
   std::unordered_set<std::string> QueryPatternVariablesFromIf(
       int statement_number) const override;
+
+  // With query methods
   std::unordered_set<std::string> QueryWithAttribute(
       EntityType type, Attribute::AttributeName name,
       std::string identifier) const override;
