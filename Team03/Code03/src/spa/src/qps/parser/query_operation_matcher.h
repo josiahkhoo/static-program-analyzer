@@ -18,7 +18,7 @@ class QueryOperationMatcher {
   [[nodiscard]] static bool MatchParser(
       const std::pair<std::shared_ptr<TokenHandler>, const QueryStringBuilder&>&
           data,
-      const std::string& word, const EntityType& type);
+      const EntityType& type);
   /// Checks if current tokens match T clause/operation grammar word
   [[nodiscard]] static bool MatchTParser(
       const std::shared_ptr<TokenHandler>& tokens, const std::string& word);

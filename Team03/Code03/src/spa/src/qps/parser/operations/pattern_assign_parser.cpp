@@ -5,10 +5,8 @@
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/parser/query_parser_util.h"
 
-const std::string PatternAssignParser::CLAUSE_WORD = "pattern";
-
 bool PatternAssignParser::MatchParser(const TokenBuilderPair& data) const {
-  return QueryOperationMatcher::MatchParser(data, CLAUSE_WORD, ASSIGN);
+  return QueryOperationMatcher::MatchParser(data, ASSIGN);
 }
 
 std::shared_ptr<QueryOperation> PatternAssignParser::Parse(
@@ -16,8 +14,6 @@ std::shared_ptr<QueryOperation> PatternAssignParser::Parse(
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
-  // Starting clause word
-  tokens->Expect(CLAUSE_WORD);
   Token next = tokens->Peek();
   tokens->Expect(Token::IDENTIFIER);
   Synonym synonym = builder.GetSynonym(next.GetValue());

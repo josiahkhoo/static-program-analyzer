@@ -113,3 +113,8 @@ procedure p;
 Select p with p.name = "p"
 SyntaxError
 5000
+19 - (SYNTAX ERROR) Invalid And first query operation
+assign a, a1, a2;
+Select a and Follows(a, a1) such that Follows(a1, a2)
+SyntaxError
+5000
