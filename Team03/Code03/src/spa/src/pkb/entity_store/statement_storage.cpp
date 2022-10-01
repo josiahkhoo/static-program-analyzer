@@ -51,7 +51,8 @@ std::unordered_set<std::string> StatementStorage::GetCallStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetCallStatements(std::string proc) {
+std::unordered_set<std::string> StatementStorage::GetCallStatements(
+    std::string proc) {
   std::unordered_set<std::string> res;
   for (auto stmt : call_statement_num_to_proc_map_) {
     if (stmt.second == proc) {
@@ -69,7 +70,8 @@ std::unordered_set<std::string> StatementStorage::GetReadStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetReadStatements(std::string var) {
+std::unordered_set<std::string> StatementStorage::GetReadStatements(
+    std::string var) {
   std::unordered_set<std::string> res;
   for (auto stmt : read_statement_num_to_var_map_) {
     if (stmt.second == var) {
@@ -87,7 +89,8 @@ std::unordered_set<std::string> StatementStorage::GetPrintStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetPrintStatements(std::string var) {
+std::unordered_set<std::string> StatementStorage::GetPrintStatements(
+    std::string var) {
   std::unordered_set<std::string> res;
   for (auto stmt : print_statement_num_to_var_map_) {
     if (stmt.second == var) {

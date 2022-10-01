@@ -688,28 +688,37 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(
     EntityType type, Attribute::AttributeName name,
     std::string identifier) const {
   std::unordered_set<std::string> result;
-  if (type == EntityType::PROCEDURE && name == Attribute::AttributeName::PROC_NAME) {
-    std::unordered_set<std::string> procedures = entity_manager_.GetProcedures();
+  if (type == EntityType::PROCEDURE &&
+      name == Attribute::AttributeName::PROC_NAME) {
+    std::unordered_set<std::string> procedures =
+        entity_manager_.GetProcedures();
     if (procedures.find(identifier) != procedures.end()) {
       result.emplace(identifier);
     }
-  } else if (type == EntityType::CALL && name == Attribute::AttributeName::PROC_NAME) {
-    std::unordered_set<std::string> statements = entity_manager_.GetCallStatements(identifier);
+  } else if (type == EntityType::CALL &&
+             name == Attribute::AttributeName::PROC_NAME) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetCallStatements(identifier);
     for (const std::string& stmt : statements) {
       result.emplace(stmt);
     }
-  } else if (type == EntityType::VARIABLE && name == Attribute::AttributeName::VAR_NAME) {
+  } else if (type == EntityType::VARIABLE &&
+             name == Attribute::AttributeName::VAR_NAME) {
     std::unordered_set<std::string> variables = entity_manager_.GetVariables();
     if (variables.find(identifier) != variables.end()) {
       result.emplace(identifier);
     }
-  } else if (type == EntityType::READ && name == Attribute::AttributeName::VAR_NAME) {
-    std::unordered_set<std::string> statements = entity_manager_.GetReadStatements(identifier);
+  } else if (type == EntityType::READ &&
+             name == Attribute::AttributeName::VAR_NAME) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetReadStatements(identifier);
     for (const std::string& stmt : statements) {
       result.emplace(stmt);
     }
-  } else if (type == EntityType::PRINT && name == Attribute::AttributeName::VAR_NAME) {
-    std::unordered_set<std::string> statements = entity_manager_.GetPrintStatements(identifier);
+  } else if (type == EntityType::PRINT &&
+             name == Attribute::AttributeName::VAR_NAME) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetPrintStatements(identifier);
     for (const std::string& stmt : statements) {
       result.emplace(stmt);
     }
@@ -730,38 +739,52 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(
     if (constants.find(std::to_string(number)) != constants.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::STATEMENT && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetStatements();
+  } else if (type == EntityType::STATEMENT &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::READ && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetReadStatements();
+  } else if (type == EntityType::READ &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetReadStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::PRINT && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetPrintStatements();
+  } else if (type == EntityType::PRINT &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetPrintStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::CALL && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetCallStatements();
+  } else if (type == EntityType::CALL &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetCallStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::WHILE && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetWhileStatements();
+  } else if (type == EntityType::WHILE &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetWhileStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::IF && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetIfStatements();
+  } else if (type == EntityType::IF &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetIfStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }
-  } else if (type == EntityType::ASSIGN && name == Attribute::AttributeName::STMT_NO) {
-    std::unordered_set<std::string> statements = entity_manager_.GetAssignStatements();
+  } else if (type == EntityType::ASSIGN &&
+             name == Attribute::AttributeName::STMT_NO) {
+    std::unordered_set<std::string> statements =
+        entity_manager_.GetAssignStatements();
     if (statements.find(std::to_string(number)) != statements.end()) {
       result.emplace(std::to_string(number));
     }

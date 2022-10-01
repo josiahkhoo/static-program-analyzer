@@ -63,7 +63,8 @@ std::unordered_set<std::string> EntityManager::GetCallStatements() const {
   return statement_store_.GetCallStatements();
 }
 
-std::unordered_set<std::string> EntityManager::GetCallStatements(std::string proc) const {
+std::unordered_set<std::string> EntityManager::GetCallStatements(
+    std::string proc) const {
   return statement_store_.GetCallStatements(proc);
 }
 
@@ -71,7 +72,8 @@ std::unordered_set<std::string> EntityManager::GetReadStatements() const {
   return statement_store_.GetReadStatements();
 }
 
-std::unordered_set<std::string> EntityManager::GetReadStatements(std::string var) const {
+std::unordered_set<std::string> EntityManager::GetReadStatements(
+    std::string var) const {
   return statement_store_.GetReadStatements(var);
 }
 
@@ -79,7 +81,8 @@ std::unordered_set<std::string> EntityManager::GetPrintStatements() const {
   return statement_store_.GetPrintStatements();
 }
 
-std::unordered_set<std::string> EntityManager::GetPrintStatements(std::string var) const {
+std::unordered_set<std::string> EntityManager::GetPrintStatements(
+    std::string var) const {
   return statement_store_.GetPrintStatements(var);
 }
 
