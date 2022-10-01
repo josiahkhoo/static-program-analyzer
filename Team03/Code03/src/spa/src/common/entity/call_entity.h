@@ -7,6 +7,8 @@
 class CallEntity : public StatementEntity {
  public:
   explicit CallEntity(const TNode &node, int line_number);
+
+  [[nodiscard]] std::string GetProcedureName() const;
 };
 
 #endif  // SPA_CALL_ENTITY_H

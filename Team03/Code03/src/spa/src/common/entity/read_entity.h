@@ -8,6 +8,8 @@
 class ReadEntity : public StatementEntity {
  public:
   explicit ReadEntity(const TNode &node, int line_number);
+
+  [[nodiscard]] std::string GetVariableName() const;
 };
 
 #endif  // SPA_READ_ENTITY_H
