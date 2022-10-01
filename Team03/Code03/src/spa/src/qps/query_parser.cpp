@@ -92,15 +92,17 @@ void QueryParser::ParseQueryOperation() {
     bool found_pattern = false;
     bool found_with = false;
     if (tokens_->MatchString("and")) {
-      if (last_query_operation_.GetValue() == "such") {
+      if (last_query_operation_) {
+        std::string last_query_op_str =
+            last_query_operation_.value().GetValue();
         tokens_->Forward();
-        found_clause = ParseClause(true);
-      } else if (last_query_operation_.GetValue() == "pattern") {
-        tokens_->Forward();
-        found_pattern = ParsePattern(true);
-      } else if (last_query_operation_.GetValue() == "with") {
-        tokens_->Forward();
-        found_pattern = ParseWith(true);
+        if (last_query_op_str == "such") {
+          found_clause = ParseClause(true);
+        } else if (last_query_op_str == "pattern") {
+          found_pattern = ParsePattern(true);
+        } else if (last_query_op_str == "with") {
+          found_pattern = ParseWith(true);
+        }
       } else {
         throw SyntaxException("Unexpected 'and' as first query operation");
       }

@@ -18,7 +18,7 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
   QueryStringBuilder query_string_builder_;
   std::vector<std::shared_ptr<QueryOperationParser>> st_parsers_;
   std::vector<std::shared_ptr<QueryOperationParser>> pattern_parsers_;
-  Token last_query_operation_ = Token(Token::Kind::WHITESPACE);
+  std::optional<Token> last_query_operation_ = std::optional<Token>();
 
   void ParseDeclaration();
 
