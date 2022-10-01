@@ -27,6 +27,7 @@ QueryParser::QueryParser() = default;
 QueryString QueryParser::Parse(std::vector<Token> tokens) {
   tokens_ = std::make_shared<TokenHandler>(TokenHandler(tokens));
   query_string_builder_ = QueryStringBuilder();
+  last_query_operation_ = std::optional<Token>();
   ParseDeclaration();
   ParseSelect();
   ParseQueryOperation();
