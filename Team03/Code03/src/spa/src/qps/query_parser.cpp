@@ -122,12 +122,21 @@ void QueryParser::ParseQueryOperation() {
   }
 }
 
-bool QueryParser::ParseClause(bool isAnd) {
+bool QueryParser::CheckClauseKeyWord(bool isAnd, const std::string& keyword) {
   if (!isAnd) {
-    if (tokens_->CheckEnd() || !tokens_->MatchString("such")) {
+    if (tokens_->CheckEnd() || !tokens_->MatchString(keyword)) {
       return false;
     }
     tokens_->Forward();
+  }
+  return true;
+}
+
+bool QueryParser::ParseClause(bool isAnd) {
+  if (!CheckClauseKeyWord(isAnd, "such")) {
+    return false;
+  }
+  if (!isAnd) {
     tokens_->Expect("that");
   }
   ParseIndividualClause();
@@ -154,11 +163,8 @@ void QueryParser::ParseIndividualClause() {
 }
 
 bool QueryParser::ParsePattern(bool isAnd) {
-  if (!isAnd) {
-    if (tokens_->CheckEnd() || !tokens_->MatchString("pattern")) {
-      return false;
-    }
-    tokens_->Forward();
+  if (!CheckClauseKeyWord(isAnd, "pattern")) {
+    return false;
   }
   TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
@@ -177,11 +183,8 @@ bool QueryParser::ParsePattern(bool isAnd) {
 }
 
 bool QueryParser::ParseWith(bool isAnd) {
-  if (!isAnd) {
-    if (tokens_->CheckEnd() || !tokens_->MatchString("with")) {
-      return false;
-    }
-    tokens_->Forward();
+  if (!CheckClauseKeyWord(isAnd, "with")) {
+    return false;
   }
   TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 

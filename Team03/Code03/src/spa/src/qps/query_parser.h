@@ -26,6 +26,8 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
 
   void ParseQueryOperation();
 
+  bool CheckClauseKeyWord(bool isAnd, const std::string& s);
+
   bool ParseClause(bool isAnd = false);
 
   void ParseIndividualClause();
