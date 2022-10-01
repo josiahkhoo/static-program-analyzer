@@ -111,13 +111,7 @@ void QueryParser::ParseQueryOperation() {
       found_pattern = ParsePattern();
       found_with = ParseWith();
     }
-    if (found_clause) {
-      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "such");
-    } else if (found_pattern) {
-      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "pattern");
-    } else if (found_with) {
-      last_query_operation_ = Token(Token::Kind::IDENTIFIER, "with");
-    } else {
+    if (!(found_clause || found_pattern || found_with)) {
       // No operation detected, exit
       break;
     }
@@ -146,6 +140,7 @@ bool QueryParser::ParseClause(bool isAnd) {
   if (query_string_builder_.IsOperationsEmpty()) {
     throw SyntaxException("No operations or declarations declared");
   }
+  last_query_operation_ = Token(Token::Kind::IDENTIFIER, "such");
   return true;
 }
 
@@ -179,6 +174,7 @@ bool QueryParser::ParsePattern(bool isAnd) {
   }
   if (op != nullptr) {
     query_string_builder_.AddQueryOperation(op);
+    last_query_operation_ = Token(Token::Kind::IDENTIFIER, "pattern");
     return true;
   }
   return false;
@@ -194,6 +190,7 @@ bool QueryParser::ParseWith(bool isAnd) {
   std::shared_ptr<QueryOperation> op;
   op = withP.Parse(queryData);
   query_string_builder_.AddQueryOperation(op);
+  last_query_operation_ = Token(Token::Kind::IDENTIFIER, "with");
   return true;
 }
 
