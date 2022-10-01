@@ -33,9 +33,15 @@ class StatementStorage {
 
   std::unordered_set<std::string> GetCallStatements();
 
+  std::unordered_set<std::string> GetCallStatements(std::string proc);
+
   std::unordered_set<std::string> GetReadStatements();
 
+  std::unordered_set<std::string> GetReadStatements(std::string var);
+
   std::unordered_set<std::string> GetPrintStatements();
+
+  std::unordered_set<std::string> GetPrintStatements(std::string var);
 
   std::unordered_set<std::string> GetAssignStatements();
 

@@ -70,11 +70,20 @@ class EntityManager {
   // get stored call statements in StatementStorage
   std::unordered_set<std::string> GetCallStatements() const;
 
+  // get stored call statements calling proc in StatementStorage
+  std::unordered_set<std::string> GetCallStatements(std::string proc) const;
+
   // get stored read statements in StatementStorage
   std::unordered_set<std::string> GetReadStatements() const;
 
+  // get stored read statements reading var in StatementStorage
+  std::unordered_set<std::string> GetReadStatements(std::string var) const;
+
   // get stored print statements in StatementStorage
   std::unordered_set<std::string> GetPrintStatements() const;
+
+  // get stored print statements printing var in StatementStorage
+  std::unordered_set<std::string> GetPrintStatements(std::string var) const;
 
   // get stored assign statements in StatementStorage
   std::unordered_set<std::string> GetAssignStatements() const;
