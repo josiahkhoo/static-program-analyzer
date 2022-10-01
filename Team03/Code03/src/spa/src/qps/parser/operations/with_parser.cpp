@@ -16,8 +16,6 @@ std::shared_ptr<QueryOperation> WithParser::Parse(TokenBuilderPair data) {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
-  // Starting clause word
-  tokens->Expect(CLAUSE_WORD);
   Token next = tokens->Peek();
   AttributeReference aRef1 = QueryParserUtil::ExtractAttrRef(tokens, builder);
   tokens->Expect(Token::EQUAL);
