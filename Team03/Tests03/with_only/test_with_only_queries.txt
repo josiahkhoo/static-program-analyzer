@@ -1,0 +1,18 @@
+1 - (SUCCESS) Retrieve all procedures that calls procedure MyProc
+procedure p, q;
+Select p such that Calls(p, q) with q.procName = "MyProc"
+Example, p
+5000
+
+// For each below, test every entity where applicable
+// Follows
+
+// Parent
+
+// ModifiesS
+
+// ModifiesP
+
+// UsesS
+
+// UsesP
