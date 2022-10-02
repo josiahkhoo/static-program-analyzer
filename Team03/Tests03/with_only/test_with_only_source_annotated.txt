@@ -1,0 +1,43 @@
+procedure Example {
+  x = 2; // Stmt 1 - Assign
+  z = 3; // Stmt 2 - Assign
+  i = 5; // Stmt 3 - Assign
+  while (i!=0) { // Stmt 4 - While
+    x = x - 1; // Stmt 5 - Assign
+    if (x==1) then { // Stmt 6 - If
+      z = x + 1; } // Stmt 7 - Assign
+    else { 
+      y = z + x; } // Stmt 8 - Assign
+    z = z + x + i; // Stmt 9 - Assign
+    call q; // Stmt 10 - Call
+    i = i - 1; } // Stmt 11 - Assign
+  call p; } // Stmt 12 - Call
+
+procedure p {
+  if (x<0) then { // Stmt 13 - If
+    while (i>0) { // Stmt 14 - While
+      x = z * 3 + 2 * y; // Stmt 15 - Assign
+      call q; // Stmt 16 - Call
+      i = i - 1; } // Stmt 17 - Assign
+    x = x + 1; // Stmt 18 - Assign
+    z = x + z; // Stmt 19 - Assign
+    print z; } // Stmt 20 - Print
+  else {
+    z = 1; } // Stmt 21 - Assign
+  z = z + x + i; } // Stmt 22 - Assign
+
+procedure q {
+  if (x==1) then { // Stmt 23 - If
+    z = x + 1; // Stmt 24 - Assign
+    call s; } // Stmt 25 - Call
+  else {
+    x = z + x; } } // Stmt 26 - Assign
+
+procedure s {
+  read x; // Stmt 27 - Read
+  print y; } // Stmt 28 - Print
+  
+procedure r {
+  read x; // Stmt 29 - Read
+  read y; // Stmt 30 - Read
+  read z; } // Stmt 31 - Read

@@ -1,13 +1,85 @@
-1 - (SUCCESS) Retrieve all procedures that calls procedure MyProc
-procedure p, q;
-Select p such that Calls(p, q) with q.procName = "MyProc"
-Example, p
+1 - (SUCCESS) Retrieve Procedure with Procedure Name
+procedure p;
+Select p with p.procName = "p"
+p
+5000
+
+2 - (SUCCESS) Retrieve Call with Call Name
+call c;
+Select c with c.procName = "q"
+10, 16
+5000
+
+3 - (SUCCESS) Retrieve Variable with Variable Name
+variable v;
+Select v with v.varName = "x"
+x
+5000
+
+4 - (SUCCESS) Retrieve Read with Variable Name
+read r;
+Select r with r.varName = "x"
+27, 29
+5000
+
+5 - (SUCCESS) Retrieve Print with Variable Name
+print p;
+Select p with p.varName = "y"
+28
+5000
+
+6 - (SUCCESS) Retrieve Constant with Constant Value
+constant c;
+Select c with c.value = 1
+1
+5000
+
+7 - (SUCCESS) Retrieve Statement with Statement Number
+stmt s;
+Select s with s.stmt# = 3
+3
+5000
+
+8 - (SUCCESS) Retrieve Read with Statement Number
+read r;
+Select r with r.stmt# = 30
+30
+5000
+
+9 - (SUCCESS) Retrieve Print with Statement Number
+print p;
+Select p with p.stmt# = 20
+20
+5000
+
+10 - (SUCCESS) Retrieve Call with Statement Number
+call c;
+Select c with c.stmt# = 25
+25
+5000
+
+11 - (SUCCESS) Retrieve While with Statement Number
+while w;
+Select w with w.stmt# = 4
+4
+5000
+
+12 - (SUCCESS) Retrieve If with Statement Number
+if i;
+Select i with i.stmt# = 13
+13
+5000
+
+13 - (SUCCESS) Retrieve Assign with Statement Number
+assign a;
+Select a with a.stmt# = 19
+19
 5000
 
 // For each below, test every entity where applicable
-// Follows
+// FollowsT
 
-// Parent
+// ParentT
 
 // ModifiesS
 
@@ -16,3 +88,7 @@ Example, p
 // UsesS
 
 // UsesP
+
+// Calls
+
+// CallsT
