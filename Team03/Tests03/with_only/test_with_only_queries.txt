@@ -3,133 +3,111 @@ procedure p;
 Select p with p.procName = "p"
 p
 5000
-
 2 - (SUCCESS) Retrieve Call with Call Name
 call c;
 Select c with c.procName = "q"
 10, 16
 5000
-
 3 - (SUCCESS) Retrieve Variable with Variable Name
 variable v;
 Select v with v.varName = "x"
 x
 5000
-
 4 - (SUCCESS) Retrieve Read with Variable Name
 read r;
 Select r with r.varName = "x"
 27, 29
 5000
-
 5 - (SUCCESS) Retrieve Print with Variable Name
 print p;
 Select p with p.varName = "y"
 28
 5000
-
 6 - (SUCCESS) Retrieve Constant with Constant Value
 constant c;
 Select c with c.value = 1
 1
 5000
-
 7 - (SUCCESS) Retrieve Statement with Statement Number
 stmt s;
 Select s with s.stmt# = 3
 3
 5000
-
 8 - (SUCCESS) Retrieve Read with Statement Number
 read r;
 Select r with r.stmt# = 30
 30
 5000
-
 9 - (SUCCESS) Retrieve Print with Statement Number
 print p;
 Select p with p.stmt# = 20
 20
 5000
-
 10 - (SUCCESS) Retrieve Call with Statement Number
 call c;
 Select c with c.stmt# = 25
 25
 5000
-
 11 - (SUCCESS) Retrieve While with Statement Number
 while w;
 Select w with w.stmt# = 4
 4
 5000
-
 12 - (SUCCESS) Retrieve If with Statement Number
 if i;
 Select i with i.stmt# = 13
 13
 5000
-
 13 - (SUCCESS) Retrieve Assign with Statement Number
 assign a;
 Select a with a.stmt# = 19
 19
 5000
-
 14 - (SUCCESS) Retrieve specific call stmt that follows another stmt
 call c;
 Select c such that Follows(_, c) with c.stmt# = 16
 16
 5000
-
 15 - (SUCCESS) Select specific assign that follows stmt 1
 assign a;
 Select a such that Follows*(1, a) with a.stmt# = 3
 3
 5000
-
 16 - (SUCCESS) Retrieve all parents of a call stmt with a specific name
 call c; stmt s;
 Select s such that Parent(s, c) with c.procName = "q"
 4, 14
 5000
-
 17 - (SUCCESS) Retrieve specific assign within a nested if-while condition
 assign a;
 Select a such that Parent*(13, a) with a.stmt# = 17
 17
 5000
-
 18 - (SUCCESS) Retrieve specific variable modified in procedure q
 variable v;
 Select v such that Modifies ("q", v) with v.varName = "x"
 x
 5000
-
 19 - (SUCCESS) Retrieve specific variables modified in statement 13
 variable v;
 Select v such that Modifies (13, v) with v.varName = "i"
 i
 5000
-
 20 - (SUCCESS) Retrieve variable that procedure q uses with a specific name
 variable v;
 Select v such that Uses ("q", v) with v.varName = "z"
 z
 5000
-
 21 - (SUCCESS) Retrieve variable with specific name used in stmt 4 while
 variable v;
 Select v such that Uses (4, v) with v.varName = "i"
 i
 5000
-
 22 - (SUCCESS) Retrieve procedure with specific name that calls another procedure
 procedure p, q;
 Select p such that Calls(p, q) with p.procName = "Example"
 Example
 5000
-
 23 - (SUCCESS) Retrieve procedure with specific that is called * by "Example"
 procedure q;
 Select q such that Calls*("Example", q) with q.procName = "s"
