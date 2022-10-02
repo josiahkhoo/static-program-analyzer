@@ -34,7 +34,10 @@ procedure q {
     x = z + x; } }
 
 procedure s {
-  print x; }
+  read x;
+  print y; }
 
 procedure r {
-  x = 0; }
+  read x;
+  read y;
+  read z; }

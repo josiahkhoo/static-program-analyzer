@@ -76,19 +76,62 @@ Select a with a.stmt# = 19
 19
 5000
 
-// For each below, test every entity where applicable
-// FollowsT
+14 - (SUCCESS) Retrieve specific call stmt that follows another stmt
+call c;
+Select c such that Follows(_, c) with c.stmt# = 16
+16
+5000
 
-// ParentT
+15 - (SUCCESS) Select specific assign that follows stmt 1
+assign a;
+Select a such that Follows*(1, a) with a.stmt# = 3
+3
+5000
 
-// ModifiesS
+16 - (SUCCESS) Retrieve all parents of a call stmt with a specific name
+call c; stmt s;
+Select s such that Parent(s, c) with c.procName = "q"
+4, 14
+5000
 
-// ModifiesP
+17 - (SUCCESS) Retrieve specific assign within a nested if-while condition
+assign a;
+Select a such that Parent*(13, a) with a.stmt# = 17
+17
+5000
 
-// UsesS
+18 - (SUCCESS) Retrieve specific variable modified in procedure q
+variable v;
+Select v such that Modifies ("q", v) with v.varName = "x"
+x
+5000
 
-// UsesP
+19 - (SUCCESS) Retrieve specific variables modified in statement 13
+variable v;
+Select v such that Modifies (13, v) with v.varName = "i"
+i
+5000
 
-// Calls
+20 - (SUCCESS) Retrieve variable that procedure q uses with a specific name
+variable v;
+Select v such that Uses ("q", v) with v.varName = "z"
+z
+5000
 
-// CallsT
+21 - (SUCCESS) Retrieve variable with specific name used in stmt 4 while
+variable v;
+Select v such that Uses (4, v) with v.varName = "i"
+i
+5000
+
+22 - (SUCCESS) Retrieve procedure with specific name that calls another procedure
+procedure p, q;
+Select p such that Calls(p, q) with p.procName = "Example"
+Example
+5000
+
+23 - (SUCCESS) Retrieve procedure with specific that is called * by "Example"
+procedure q;
+Select q such that Calls*("Example", q) with q.procName = "s"
+s
+5000
