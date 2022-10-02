@@ -41,17 +41,29 @@ std::unordered_set<std::string> With::Fetch(
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  return queryable_pkb.QueryWithAttributeValue(
-      rhs_.GetSynonym().GetEntityType(), rhs_.GetAttributeName(),
-      lhs_.GetAttributeName(), lhs);
+  if (lhs_.IsLineNumber()) {
+    return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                            rhs_.GetAttributeName(), stoi(lhs));
+  } else if (lhs_.IsIdentifier()) {
+    return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
+                                            rhs_.GetAttributeName(), lhs);
+  }
+  assert(false);
+  return {};
 }
 
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  return queryable_pkb.QueryWithAttributeValue(
-      lhs_.GetSynonym().GetEntityType(), lhs_.GetAttributeName(),
-      rhs_.GetAttributeName(), rhs);
+  if (rhs_.IsLineNumber()) {
+    return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                            lhs_.GetAttributeName(), stoi(rhs));
+  } else if (rhs_.IsIdentifier()) {
+    return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
+                                            lhs_.GetAttributeName(), rhs);
+  }
+  assert(false);
+  return {};
 }
 
 QueryOperation::Type With::GetType() const {
