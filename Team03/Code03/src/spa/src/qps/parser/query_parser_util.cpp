@@ -214,12 +214,15 @@ bool QueryParserUtil::CheckProcedureClause(
 std::unordered_map<EntityType, std::unordered_set<Attribute::AttributeName>>
     entityAllowedAttributes = {
         {PROCEDURE, {Attribute::PROC_NAME}},
-        {VARIABLE, {Attribute::VAR_NAME, Attribute::STMT_NO, Attribute::VALUE}},
-        {ASSIGN, {Attribute::STMT_NO, Attribute::VALUE}},
+        {CALL, {Attribute::PROC_NAME, Attribute::STMT_NO}},
+        {VARIABLE, {Attribute::VAR_NAME}},
+        {READ, {Attribute::VAR_NAME, Attribute::STMT_NO}},
+        {PRINT, {Attribute::VAR_NAME, Attribute::STMT_NO}},
+        {CONSTANT, {Attribute::VALUE}},
+        {STATEMENT, {Attribute::STMT_NO}},
         {IF, {Attribute::STMT_NO}},
         {WHILE, {Attribute::STMT_NO}},
-        {CONSTANT, {Attribute::STMT_NO, Attribute::VALUE}},
-        // To add more if there exist
+        {ASSIGN, {Attribute::STMT_NO}},
 };
 
 AttributeReference QueryParserUtil::ExtractAttrRef(
