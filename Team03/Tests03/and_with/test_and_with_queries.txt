@@ -5,7 +5,7 @@ Select a such that Follows*(14, a) and Parent*(i, a) and Modifies(a, "x")
 5000
 2 - (SUCCESS) Retrieve procedures that that is called by procedure 'Example' and uses variable 'z' and modifies variable 'x'
 procedure p;
-Select p such that Calls("Example", p) such that Uses(p, "z") and Modifies*(p, "x")
+Select p such that Calls("Example", p) such that Uses(p, "z") and Modifies(p, "x")
 p, q
 5000
 3 - (SUCCESS) Retrieve call statements that uses any variable and followed by statement 11 that is in a while loop
