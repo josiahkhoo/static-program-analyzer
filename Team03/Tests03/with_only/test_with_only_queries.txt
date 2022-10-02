@@ -261,7 +261,7 @@ SemanticError
 53 - (SUCCESS) Retrieve variables where the name is the name of procedures that call procedure q - return nothing
 variable v; procedure p;
 Select v such that Calls(p, "q") with v.varName = p.procName
-???
+
 5000
 54 - (SUCCESS) Retrieve the procedures where their names are constant values - return SemanticError
 procedure p; constant c;
