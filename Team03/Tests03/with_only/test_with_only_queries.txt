@@ -263,12 +263,17 @@ variable v; procedure p;
 Select v such that Calls(p, "q") with v.varName = p.procName
 
 5000
-54 - (SUCCESS) Retrieve the procedures where their names are constant values - return SemanticError
+54 - (SUCCESS) Retrieve variables where the name is the name of procedures that called by procedure p (i.e. q) - return nothing
+variable v; procedure p;
+Select v such that Calls("p", p) with v.varName = p.procName
+q
+5000
+55 - (SUCCESS) Retrieve the procedures where their names are constant values - return SemanticError
 procedure p; constant c;
 Select p with p.procName = c.value
 SemanticError
 5000
-55 - (SUCCESS) Retrieve the constants where their values are names of procedures that modify x - return SemanticError
+56 - (SUCCESS) Retrieve the constants where their values are names of procedures that modify x - return SemanticError
 constant c; procedure p;
 Select c such that Modifies(p, "x") with c.value = p.procName
 SemanticError
