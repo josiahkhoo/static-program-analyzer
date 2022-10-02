@@ -98,7 +98,7 @@ variable v;
 Select v such that Uses ("q", v) with v.varName = "z"
 z
 5000
-21 - (SUCCESS) Retrieve variable with specific name used in stmt 4 while
+21 - (SUCCESS) Retrieve variable with specific name used in stmt 4
 variable v;
 Select v such that Uses (4, v) with v.varName = "i"
 i
@@ -108,7 +108,7 @@ procedure p, q;
 Select p such that Calls(p, q) with p.procName = "Example"
 Example
 5000
-23 - (SUCCESS) Retrieve procedure with specific that is called * by "Example"
+23 - (SUCCESS) Retrieve procedure with specific name that is called * by "Example"
 procedure q;
 Select q such that Calls*("Example", q) with q.procName = "s"
 s
@@ -191,5 +191,55 @@ Select i with i.stmt# = 1000
 39 - (SUCCESS) Retrieve Assign with Statement Number - return nothing
 assign a;
 Select a with a.stmt# = 1000
+
+5000
+40 - (SUCCESS) Retrieve specific call stmt that is followed by another stmt
+call c;
+Select c such that Follows(c, _) with c.stmt# = 16
+16
+5000
+41 - (SUCCESS) Select specific assign that is followed by stmt 1 - return nothing
+assign a;
+Select a such that Follows*(a, 1) with a.stmt# = 3
+
+5000
+42 - (SUCCESS) Retrieve call stmt with a specific name that is a parent of another stmt - return nothing
+call c; stmt s;
+Select s such that Parent(c, s) with c.procName = "q"
+
+5000
+43 - (SUCCESS) Retrieve a specific nested parent assign stmt of an assign stmt within a nested if-while condition - return nothing
+assign a;
+Select a such that Parent*(a, 7) with a.stmt# = 4
+
+5000
+44 - (SUCCESS) Retrieve specific variable that modifies procedure q - return SemanticError
+variable v;
+Select v such that Modifies (v, "q") with v.varName = "x"
+SemanticError
+5000
+45 - (SUCCESS) Retrieve specific variables that modifies statement 13 - return SemanticError
+variable v;
+Select v such that Modifies (v, 13) with v.varName = "i"
+SemanticError
+5000
+46 - (SUCCESS) Retrieve variable with a specific name that uses procedure q - return SemanticError
+variable v;
+Select v such that Uses (v, "q") with v.varName = "z"
+SemanticError
+5000
+47 - (SUCCESS) Retrieve variable with specific name that uses stmt 4 - return SemanticError
+variable v;
+Select v such that Uses (v, 4) with v.varName = "i"
+SemanticError
+5000
+48 - (SUCCESS) Retrieve procedure with specific name that is called by another procedure - return nothing
+procedure p, q;
+Select p such that Calls(q, p) with p.procName = "Example"
+
+5000
+49 - (SUCCESS) Retrieve procedure with specific name that calls * "Example" - return nothing
+procedure q;
+Select q such that Calls*(q, "Example") with q.procName = "s"
 
 5000
