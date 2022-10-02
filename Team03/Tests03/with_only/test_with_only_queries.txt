@@ -128,3 +128,68 @@ stmt s; print p;
 Select p such that Uses(s, "y") with p.stmt# = s.stmt#
 28
 5000
+27 - (SUCCESS) Retrieve Procedure with Procedure Name - return nothing
+procedure p;
+Select p with p.procName = "MyProc"
+
+5000
+28 - (SUCCESS) Retrieve Call with Call Name - return nothing
+call c;
+Select c with c.procName = "MyCall"
+
+5000
+29 - (SUCCESS) Retrieve Variable with Variable Name - return nothing
+variable v;
+Select v with v.varName = "MyVar"
+
+5000
+30 - (SUCCESS) Retrieve Read with Variable Name - return nothing
+read r;
+Select r with r.varName = "MyVar"
+
+5000
+31 - (SUCCESS) Retrieve Print with Variable Name - return nothing
+print p;
+Select p with p.varName = "MyVar"
+
+5000
+32 - (SUCCESS) Retrieve Constant with Constant Value - return nothing
+constant c;
+Select c with c.value = 1000
+
+5000
+33 - (SUCCESS) Retrieve Statement with Statement Number - return nothing
+stmt s;
+Select s with s.stmt# = 1000
+
+5000
+34 - (SUCCESS) Retrieve Read with Statement Number - return nothing
+read r;
+Select r with r.stmt# = 1000
+
+5000
+35 - (SUCCESS) Retrieve Print with Statement Number - return nothing
+print p;
+Select p with p.stmt# = 1000
+
+5000
+36 - (SUCCESS) Retrieve Call with Statement Number - return nothing
+call c;
+Select c with c.stmt# = 1000
+
+5000
+37 - (SUCCESS) Retrieve While with Statement Number - return nothing
+while w;
+Select w with w.stmt# = 1000
+
+5000
+38 - (SUCCESS) Retrieve If with Statement Number - return nothing
+if i;
+Select i with i.stmt# = 1000
+
+5000
+39 - (SUCCESS) Retrieve Assign with Statement Number - return nothing
+assign a;
+Select a with a.stmt# = 1000
+
+5000
