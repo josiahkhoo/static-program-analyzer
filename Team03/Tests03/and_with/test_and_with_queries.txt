@@ -1,0 +1,134 @@
+1 - (SUCCESS) Retrieve assignment statement that follows after 14 in the same nesting level and is in an 'if' that modifies 'x'
+assign a; if i;
+Select a such that Follows*(14, a) and Parent*(i, a) and Modifies(a, "x")
+18
+5000
+2 - (SUCCESS) Retrieve procedures that that is called by procedure 'Example' and uses variable 'z' and modifies variable 'x'
+procedure p;
+Select p such that Calls("Example", p) such that Uses(p, "z") and Modifies(p, "x")
+p, q
+5000
+3 - (SUCCESS) Retrieve call statements that uses any variable and followed by statement 11 that is in a while loop
+call c; while w;
+Select c such that Uses(c, _) and Follows*(c, 11) such that Parent(w, c)
+10
+5000
+4 - (SUCCESS) Retrieve assignment statements with lhs 'z' and rhs containing '1' and 'x'
+assign a;
+Select a pattern a(_, _"x"_) and a("z", _) and a(_, _"1"_)
+7, 24
+5000
+5 - (SUCCESS) Retrieve assignment statements with lhs 'i' and rhs '1' and 'i'
+assign a; variable v;
+Select a pattern a(v, _"1"_) and a(_, _) pattern a("i", _"i"_)
+11
+5000
+6 - (SUCCESS) Retrieve assignment statements with lhs 'x' and rhs 'z' and '2'
+assign a; variable v;
+Select a pattern a(v, _) pattern a("x", _"2"_) and a(v, _"z"_)
+15
+5000
+7 - (SUCCESS) If procedure 'Example' calls 'p', retrieve statements that uses a variable and is an if or while loop that has 2 assignment statements
+assign a, a1; stmt s; variable v;
+Select s such that Uses(s, v) and Calls("Example", "p") pattern a("z", _"x"_) and a1("i", _) such that Follows*(a, a1) and Parent(s, a1)
+4
+5000
+8 - (SUCCESS) Retrieve while statements that uses variable 'i' and has an if statement that uses 'x' in its loop
+while w; if i; variable v;
+Select w pattern w("i", _) and i("x", _, _) such that Parent*(w, i) and Uses(w, v) pattern i(_, _, _) and w (_, _)
+4
+5000
+9 - (SUCCESS) Is 1 = 1 and 1 = 2?
+Select BOOLEAN with 1 = 1 and 1 = 2
+FALSE
+5000
+10 - (SUCCESS) Retrieve procedure that has procName "p"
+procedure p; print pn; variable v; call c;
+Select p with p.procName = pn.varName and pn.varName = c.procName and c.procName = v.varName and v.varName = "p"
+p
+5000
+11 - (SUCCESS) Retrieve constants if the constant value of 2 = 1
+stmt s; constant c;
+Select c with c.value = s.stmt# and s.stmt# = 1 with c.value = 2
+
+5000
+12 - (SUCCESS) Retrieve assignment statement with statement number 1
+assign a, a1;
+Select a with 1 = a.stmt# with a1.stmt# = 1 and a.stmt# = a1.stmt#
+1
+5000
+13 - (SEMANTIC ERROR) with attribute of number cannot be compared to variable name
+stmt s; call c; read r; print pn;
+Select s with c.stmt# = c.stmt# with r.varName = pn.stmt# and pn.stmt# = r.stmt# and r.stmt# = r.varName
+SemanticError
+5000
+14 - (SUCCESS) Retrieve call statements procedure name that are called from "Example" and in a while loop
+procedure p; call c; while w;
+Select c.procName with c.procName = p.procName such that Calls ("Example", p) and Parent (w, c)
+q
+5000
+15 - (SUCCESS) Retrieve call statements procedure name that are called from "Example" and in a while loop
+procedure p; call c; variable v;
+Select v.varName such that Calls ("Example", p) with c.procName = p.procName and p.procName = v.varName
+p
+5000
+16 - (SUCCESS) Retrieve procedures that directly call procedure q and modify variable y
+procedure p, q; variable v;
+Select p such that Calls(p, q) and Modifies(p, v) with q.procName = "q" and v.varName = "y"
+Example
+5000
+17 - (SUCCESS) Retrieve assignment that uses variable z and is after stmt 22
+assign a; stmt s; variable v;
+Select a with s.stmt# = 22 and v.varName = "z" such that Uses(a, v) and Follows*(s, a)
+25
+5000
+18 - (SUCCESS) Is there an assigment statement that is under both while and if
+assign a, a1; while w; if i; stmt s, s1;
+Select BOOLEAN such that Parent*(s, a) such that Parent*(s1, a1) with s.stmt# = w.stmt# with s1.stmt# = i.stmt# and a.stmt# = a1.stmt#
+TRUE
+5000
+19 - (SUCCESS) Retrieve all assignment with rhs '1' and 'x'
+stmt s; while w; assign a;
+Select a pattern a(_, "1") and a(_, "x") with w.stmt# = s.stmt# and s.stmt# = a.stmt#
+5, 7, 18, 24
+5000
+20 - (SUCCESS) Retrieve all assignment with rhs '1' and 'x'
+stmt s; while w; assign a;
+Select a with w.stmt# = s.stmt# and s.stmt# = a.stmt# pattern a(_, "1") and a(_, "x")
+5, 7, 18, 24
+5000
+21 - (SUCCESS) If procedure "Example" calls procedure "q", retrieve statements under both the first while and if
+stmt s; while w; if i;
+Select s such that Calls ("Example", "q") and Parent*(i, s) and Parent*(w, s) pattern w("i", _) and i("x",_,_) with w.stmt# = 4 and i.stmt# = 6
+7, 8
+5000
+22 - (SUCCESS) Retrieve an assignment statement that has z and x on rhs and is nested in two if or while
+assign a1, a2; stmt s, s1;
+Select a2 pattern a1 (_, _"z"_) and a2 (_, _"x"_) such that Parent* (s1, a2) and Parent* (s, s1) with a1.stmt# = a2.stmt# and s1.stmt# = s1.stmt#
+8
+5000
+23 - (SUCCESS) Retrieve an assignment statement that modifies and uses the same variable, under an if or while and there are statements that follows it and is also a const value
+stmt s; variable v; assign a; constant c;
+Select s.stmt# with s.stmt# = a.stmt# and c.value = s.stmt# pattern a(v, _) and a(_, v) such that Follows* (s, _) and Parent* (_, s)
+5
+5000
+24 - (SUCCESS) Retrieve an assignment statement that is some constant value that modifies 'x'
+variable v; assign a; stmt s; constant c;
+Select s such that Modifies(s, v) pattern a(v, _) with s.stmt# = a.stmt# and v.varName = "x" and a.stmt# = c.value
+2
+5000
+25 - (SUCCESS) Retrieve variable that is in an assignment that has rhs "x" and is in 'if' or 'while' whose stmt no is some constant
+variable v; assign a; stmt s; constant c;
+Select v.varName pattern a(_, _"x"_) with s.stmt# = c.value such that Modifies(a, v) and Parent*(s, a) and Uses(a, _)
+x, z
+5000
+26 - (SUCCESS) If there is an if statement that uses 'x' and while statement that uses 'i', retrieve assignment statement that uses a variable and modifies 'y'
+variable v; assign a, a1, a2; stmt s; constant c; while w; if i;
+Select a with a.stmt# = s.stmt# such that Uses(s, v) pattern a("y", _) and i("x", _, _) and w("i", _)
+8
+5000
+27 - (SUCCESS) Retrieve all constants that is an assignment statement number if all clauses is true
+procedure p; constant c; assign a;
+Select c.value such that Calls(_, _) and Follows(_, _) with p.procName = "p" and c.value = a.stmt# such that Parent(_, _) pattern a(_, _) such that Modifies(p, _) and Uses(p, _)
+1, 2, 3, 5
+5000

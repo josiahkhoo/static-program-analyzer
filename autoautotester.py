@@ -47,7 +47,9 @@ test_array = (
     ("Boolean select", "boolean_select"),
     ("Calls / Calls T", "calls_calls_t"),
     ("If Patterns only", "if_patterns_only"),
-    ("While Patterns only", "while_patterns_only")
+    ("While Patterns only", "while_patterns_only"),
+    # ("With only", "with_only"),
+    # ("And and With", "and_with")
 )
 
 overall_passed_test_cases = 0
