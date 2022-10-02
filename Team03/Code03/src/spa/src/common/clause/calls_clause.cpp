@@ -41,7 +41,7 @@ bool CallsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
     auto possible_rhs =
         queryable_pkb.QueryCalls(GetRightHandSide().GetIdentifier());
-    if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
+    if (possible_rhs.find(GetLeftHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
       return true;
     }
