@@ -243,3 +243,33 @@ procedure q;
 Select q such that Calls*(q, "Example") with q.procName = "s"
 
 5000
+50 - (SUCCESS) Retrieve all assign stmts that are followed by other stmts, and their stmt nums is a constant value
+assign a; constant c;
+Select a such that Follows(a, _) with a.stmt# = c.value
+1, 2, 3, 5
+5000
+51 - (SUCCESS) Retrieve a constant where the value is the stmt num of the stmt that follows line 1 (i.e. 2)
+constant c; stmt s;
+Select c such that Follows(1, s) with c.value = s.stmt#
+2
+5000
+52 - (SUCCESS) Retrieve a stmt where the stmt num is the name of a variable that is used by line 18 - return SemanticError
+stmt s; variable v;
+Select s such that Uses (18, v) with s.stmt# = v.varName
+SemanticError
+5000
+53 - (SUCCESS) Retrieve variables where the name is the name of procedures that call procedure q - return nothing
+variable v; procedure p;
+Select v such that Calls(p, "q") with v.varName = p.procName
+???
+5000
+54 - (SUCCESS) Retrieve the procedures where their names are constant values - return SemanticError
+procedure p; constant c;
+Select p with p.procName = c.value
+SemanticError
+5000
+55 - (SUCCESS) Retrieve the constants where their values are names of procedures that modify x - return SemanticError
+constant c; procedure p;
+Select c such that Modifies(p, "x") with c.value = p.procName
+SemanticError
+5000
