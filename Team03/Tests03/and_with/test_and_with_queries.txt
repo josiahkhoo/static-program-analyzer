@@ -108,9 +108,9 @@ assign a1, a2; stmt s, s1;
 Select a2 pattern a1 (_, _"z"_) and a2 (_, _"x"_) such that Parent* (s1, a2) and Parent* (s, s1) with a1.stmt# = a2.stmt# and s1.stmt# = s1.stmt#
 8
 5000
-23 - (SUCCESS) Retrieve an assignment statement that modifies and uses the same variable, under an if or while and there are statements that follows it and is also a const value
+23 - (SUCCESS) Retrieve an assignment statement that modifies a variable and uses '1', under an if or while and there are statements that follows it and is also a const value
 stmt s; variable v; assign a; constant c;
-Select s.stmt# with s.stmt# = a.stmt# and c.value = s.stmt# pattern a(v, _) and a(_, v) such that Follows* (s, _) and Parent* (_, s)
+Select s.stmt# with s.stmt# = a.stmt# and c.value = s.stmt# pattern a(v, _) and a(_, _"1"_) such that Follows* (s, _) and Parent* (_, s)
 5
 5000
 24 - (SUCCESS) Retrieve an assignment statement that is some constant value that modifies 'x'
@@ -121,7 +121,7 @@ Select s such that Modifies(s, v) pattern a(v, _) with s.stmt# = a.stmt# and v.v
 25 - (SUCCESS) Retrieve variable that is in an assignment that has rhs "x" and is in 'if' or 'while' whose stmt no is some constant
 variable v; assign a; stmt s; constant c;
 Select v.varName pattern a(_, _"x"_) with s.stmt# = c.value such that Modifies(a, v) and Parent*(s, a) and Uses(a, _)
-x, z
+x, z, y
 5000
 26 - (SUCCESS) If there is an if statement that uses 'x' and while statement that uses 'i', retrieve assignment statement that uses a variable and modifies 'y'
 variable v; assign a, a1, a2; stmt s; constant c; while w; if i;
