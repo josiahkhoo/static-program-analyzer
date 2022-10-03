@@ -39,6 +39,7 @@ Select w pattern w("i", _) and i("x", _, _) such that Parent*(w, i) and Uses(w, 
 4
 5000
 9 - (SUCCESS) Is 1 = 1 and 1 = 2?
+
 Select BOOLEAN with 1 = 1 and 1 = 2
 FALSE
 5000
