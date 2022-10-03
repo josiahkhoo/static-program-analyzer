@@ -65,7 +65,7 @@ void QueryParser::ParseSelect() {
     query_string_builder_.AddSelect(std::make_shared<BooleanSelect>());
   } else {
     Synonym synonym = query_string_builder_.GetSynonym(syn_token);
-    if (tokens_->MatchKind(Token::PERIOD)) {
+    if (!tokens_->CheckEnd() && tokens_->MatchKind(Token::PERIOD)) {
       tokens_->Forward();
       std::string attribute_name_str = tokens_->PeekValue();
       Attribute::AttributeName attr_name =
