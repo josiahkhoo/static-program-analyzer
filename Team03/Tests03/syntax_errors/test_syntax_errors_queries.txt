@@ -118,3 +118,13 @@ assign a, a1, a2;
 Select a and Follows(a, a1) such that Follows(a1, a2)
 SyntaxError
 5000
+20 - (SYNTAX ERROR) Invalid And after such that
+constant c;
+Select c such that Parent(_, _) such that and Follows(_, _)
+SyntaxError
+5000
+21 - (SYNTAX ERROR) Invalid such that after And
+constant c;
+Select c such that Parent(_, _) and such that Follows(_, _)
+SyntaxError
+5000
