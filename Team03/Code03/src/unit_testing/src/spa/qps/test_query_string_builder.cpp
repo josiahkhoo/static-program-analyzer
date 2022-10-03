@@ -14,8 +14,8 @@ TEST_CASE("Test with 'Select' builder", "[QueryStringBuilder]") {
   QueryStringBuilder qsb = QueryStringBuilder();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   qsb.AddDeclaration(syn);
   qsb.AddSelect(s);

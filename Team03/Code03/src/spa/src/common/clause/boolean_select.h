@@ -5,7 +5,8 @@
 
 class BooleanSelect : public Select {
  public:
-  [[nodiscard]] std::vector<Synonym> GetSynonyms() const override;
+  [[nodiscard]] std::vector<SynonymWithMaybeAttribute> GetSynonyms()
+      const override;
   [[nodiscard]] std::unordered_set<std::string> GetResultSet(
       QResult q_result) const override;
 };

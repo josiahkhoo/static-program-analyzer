@@ -64,9 +64,11 @@ void QueryParser::ParseSelect() {
   if (syn_token == "BOOLEAN") {
     query_string_builder_.AddSelect(std::make_shared<BooleanSelect>());
   } else {
-    Synonym synonym = query_string_builder_.GetSynonym(syn_token);
-    query_string_builder_.AddSelect(
-        std::make_shared<SynonymSelect>(std::vector{synonym}));
+    Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
+        query_string_builder_.GetSynonym(syn_token)};
+    query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
+        std::vector<Select::SynonymWithMaybeAttribute>{
+            synonym_with_maybe_attribute}));
   }
 }
 
