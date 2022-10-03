@@ -1,5 +1,6 @@
 #include "query_parser.h"
 
+#include "common/clause/attribute_select.h"
 #include "common/clause/boolean_select.h"
 #include "common/clause/select.h"
 #include "common/clause/synonym_select.h"
@@ -64,11 +65,24 @@ void QueryParser::ParseSelect() {
   if (syn_token == "BOOLEAN") {
     query_string_builder_.AddSelect(std::make_shared<BooleanSelect>());
   } else {
-    Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
-        query_string_builder_.GetSynonym(syn_token)};
-    query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
-        std::vector<Select::SynonymWithMaybeAttribute>{
-            synonym_with_maybe_attribute}));
+    Synonym synonym = query_string_builder_.GetSynonym(syn_token);
+    if (tokens_->MatchKind(Token::PERIOD)) {
+      tokens_->Forward();
+      std::string attribute_name_str = tokens_->PeekValue();
+      Attribute::AttributeName attr_name =
+          Attribute::attrName_representation.find(attribute_name_str)->second;
+      Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
+          synonym, attr_name};
+      query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
+          std::vector<Select::SynonymWithMaybeAttribute>{
+              synonym_with_maybe_attribute}));
+    } else {
+      Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
+          synonym};
+      query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
+          std::vector<Select::SynonymWithMaybeAttribute>{
+              synonym_with_maybe_attribute}));
+    }
   }
 }
 
