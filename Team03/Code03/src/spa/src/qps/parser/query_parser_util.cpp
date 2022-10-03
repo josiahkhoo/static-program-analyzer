@@ -287,8 +287,3 @@ Integer QueryParserUtil::ExtractInteger(
   tokens->Forward();
   return integer;
 }
-
-bool QueryParserUtil::CheckNameAttribute(const AttributeReference& attr) {
-  return (attr.GetAttributeName() == Attribute::VAR_NAME ||
-          attr.GetAttributeName() == Attribute::PROC_NAME);
-}

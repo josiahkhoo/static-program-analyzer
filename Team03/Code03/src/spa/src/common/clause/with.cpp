@@ -41,10 +41,10 @@ std::unordered_set<std::string> With::Fetch(
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (lhs_.IsLineNumber()) {
+  if (lhs_.IsAttributeTypeInteger()) {
     return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
                                             rhs_.GetAttributeName(), stoi(lhs));
-  } else if (lhs_.IsIdentifier()) {
+  } else if (lhs_.IsAttributeTypeName()) {
     return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
                                             rhs_.GetAttributeName(), lhs);
   }
@@ -55,10 +55,10 @@ std::unordered_set<std::string> With::FetchPossibleRhs(
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (rhs_.IsLineNumber()) {
+  if (rhs_.IsAttributeTypeInteger()) {
     return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
                                             lhs_.GetAttributeName(), stoi(rhs));
-  } else if (rhs_.IsIdentifier()) {
+  } else if (rhs_.IsAttributeTypeName()) {
     return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
                                             lhs_.GetAttributeName(), rhs);
   }

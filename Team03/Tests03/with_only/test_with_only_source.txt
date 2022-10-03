@@ -40,4 +40,5 @@ procedure s {
 procedure r {
   read x;
   read y;
-  read z; }
+  read z;
+  read q; }
