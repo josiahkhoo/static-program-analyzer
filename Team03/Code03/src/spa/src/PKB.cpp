@@ -679,6 +679,19 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
  * While Pattern Query Methods
  * ==================================== */
 
+std::string PKB::QueryWithAttributeFromStatement(EntityType type,
+                                                 int statement_number) const {
+  std::string result;
+  if (type == EntityType::CALL) {
+    result = entity_manager_.GetCallStatementProcedure(statement_number);
+  } else if (type == EntityType::PRINT) {
+    result = entity_manager_.GetPrintStatementVariable(statement_number);
+  } else if (type == EntityType::READ) {
+    result = entity_manager_.GetReadStatementVariable(statement_number);
+  }
+  return result;
+}
+
 /// QueryWithAttribute
 /// \param type Entity type
 /// \param name Attribute proc_name or var_name

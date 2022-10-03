@@ -62,6 +62,16 @@ std::unordered_set<std::string> StatementStorage::GetCallStatements(
   return res;
 }
 
+std::string StatementStorage::GetCallStatementProcedure(
+    int statement_number) const {
+  std::string result;
+  if (call_statement_num_to_proc_map_.find(statement_number) !=
+      call_statement_num_to_proc_map_.end()) {
+    result = call_statement_num_to_proc_map_.at(statement_number);
+  }
+  return result;
+}
+
 std::unordered_set<std::string> StatementStorage::GetReadStatements() {
   std::unordered_set<std::string> res;
   for (auto stmt : read_statement_num_to_var_map_) {
@@ -81,6 +91,16 @@ std::unordered_set<std::string> StatementStorage::GetReadStatements(
   return res;
 }
 
+std::string StatementStorage::GetReadStatementVariable(
+    int statement_number) const {
+  std::string result;
+  if (read_statement_num_to_var_map_.find(statement_number) !=
+      read_statement_num_to_var_map_.end()) {
+    result = read_statement_num_to_var_map_.at(statement_number);
+  }
+  return result;
+}
+
 std::unordered_set<std::string> StatementStorage::GetPrintStatements() {
   std::unordered_set<std::string> res;
   for (auto stmt : print_statement_num_to_var_map_) {
@@ -98,6 +118,16 @@ std::unordered_set<std::string> StatementStorage::GetPrintStatements(
     }
   }
   return res;
+}
+
+std::string StatementStorage::GetPrintStatementVariable(
+    int statement_number) const {
+  std::string result;
+  if (print_statement_num_to_var_map_.find(statement_number) !=
+      print_statement_num_to_var_map_.end()) {
+    result = print_statement_num_to_var_map_.at(statement_number);
+  }
+  return result;
 }
 
 std::unordered_set<std::string> StatementStorage::GetAssignStatements() {
