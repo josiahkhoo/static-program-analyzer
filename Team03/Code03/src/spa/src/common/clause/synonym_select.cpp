@@ -1,5 +1,7 @@
 #include "synonym_select.h"
 
+#include <algorithm>
+#include <iterator>
 #include <numeric>
 #include <utility>
 
