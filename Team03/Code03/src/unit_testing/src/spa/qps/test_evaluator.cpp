@@ -3,6 +3,8 @@
 #include "common/clause/pattern_if.h"
 #include "common/clause/pattern_while.h"
 #include "common/clause/synonym_select.h"
+#include "common/clause/with.h"
+#include "common/reference/attribute_reference.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/qnodes/entity_node.h"
@@ -106,61 +108,61 @@ class QueryablePkbStub : public QueryablePkb {
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
       EntityType type) const override {
-    return {};
+    return {"QueryAllModifies"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
       EntityType type) const override {
-    return {};
+    return {"QueryAllModifiesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
       int statement_number, EntityType type) const override {
-    return {};
+    return {"QueryModifiesS"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesSBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesP"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesPBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllCalls() const override {
-    return {};
+    return {"QueryAllCalls"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy()
       const override {
-    return {};
+    return {"QueryAllCallsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCalls(
       std::string identifier) const override {
-    return {};
+    return {"QueryCalls"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsTBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
@@ -472,6 +474,56 @@ TEST_CASE("Query 'Select Pattern(String)Assign Follows'", "[Evaluator]") {
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result.empty());
+}
+
+TEST_CASE("Query 'Select With Name'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  Attribute attr = Attribute(syn, Attribute::PROC_NAME);
+  AttributeReference attrRef1 = AttributeReference(attr);
+  AttributeReference attrRef2 = AttributeReference("name");
+
+  std::shared_ptr<With> withCl = std::make_shared<With>(attrRef1, attrRef2);
+
+  QueryString qs = QueryString(s, {syn}, {withCl});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected = pkb.QueryWithAttribute(
+      attrRef1.GetSynonym().GetEntityType(), attrRef1.GetAttributeName(),
+      attrRef2.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select With Integer'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  Attribute attr = Attribute(syn, Attribute::VALUE);
+  AttributeReference attrRef1 = AttributeReference(attr);
+  AttributeReference attrRef2 = AttributeReference(1);
+
+  std::shared_ptr<With> withCl = std::make_shared<With>(attrRef1, attrRef2);
+
+  QueryString qs = QueryString(s, {syn}, {withCl});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected = pkb.QueryWithAttribute(
+      attrRef1.GetSynonym().GetEntityType(), attrRef1.GetAttributeName(),
+      attrRef2.GetLineNumber());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
 }
 
 TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
