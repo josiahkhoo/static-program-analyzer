@@ -37,7 +37,8 @@ TEST_CASE("Assign Follows And", "[QPS And Parser]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   Synonym syn2 = Synonym(EntityType::ASSIGN, "a2");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -49,7 +50,7 @@ TEST_CASE("Assign Follows And", "[QPS And Parser]") {
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
   REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 2);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0]);
@@ -104,7 +105,8 @@ TEST_CASE("Assign PatternAssign And", "[QPS And Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
   std::shared_ptr<PatternAssign> ptrnAssign1 =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1]);
   REQUIRE(ptrnAssign1->GetExpression().has_front_wildcard);
@@ -195,7 +197,8 @@ TEST_CASE("Assign Follows And PatternAssign", "[QPS And Parser]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   Synonym syn2 = Synonym(EntityType::ASSIGN, "a2");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -207,7 +210,7 @@ TEST_CASE("Assign Follows And PatternAssign", "[QPS And Parser]") {
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
   REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0]);
@@ -268,7 +271,8 @@ TEST_CASE("Assign PatternAssign Follows And", "[QPS And Parser]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   Synonym syn2 = Synonym(EntityType::ASSIGN, "a2");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -280,7 +284,7 @@ TEST_CASE("Assign PatternAssign Follows And", "[QPS And Parser]") {
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
   REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0]);
@@ -342,7 +346,8 @@ TEST_CASE("Assign PatternAssign And Follows", "[QPS And Parser]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -351,7 +356,7 @@ TEST_CASE("Assign PatternAssign And Follows", "[QPS And Parser]") {
   REQUIRE(res.GetSynonyms().size() == 2);
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0]);
@@ -456,7 +461,8 @@ TEST_CASE("Assign Variable Follows And WITH And PatternAssign And WITH",
   Synonym syn3 = Synonym(EntityType::VARIABLE, "v");
   Synonym syn4 = Synonym(EntityType::VARIABLE, "v1");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -470,7 +476,7 @@ TEST_CASE("Assign Variable Follows And WITH And PatternAssign And WITH",
   REQUIRE(res.GetSynonyms()[2] == syn2);
   REQUIRE(res.GetSynonyms()[3] == syn3);
   REQUIRE(res.GetSynonyms()[4] == syn4);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 7);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0]);
@@ -551,7 +557,8 @@ TEST_CASE("Assign Follows And And And", "[QPS And Parser]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   Synonym syn2 = Synonym(EntityType::ASSIGN, "a2");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -565,7 +572,7 @@ TEST_CASE("Assign Follows And And And", "[QPS And Parser]") {
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
   REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 4);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0]);

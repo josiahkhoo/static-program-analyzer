@@ -4,19 +4,19 @@
 
 TEST_CASE("Test with 'Assign a; Select a'", "[QueryString]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   QueryString qs = QueryString(s, {syn}, {});
 
   REQUIRE(qs.GetSynonyms().size() == 1);
-  REQUIRE(qs.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(qs.GetSelect()->GetSynonyms()[0].synonym == syn);
 }
 
 TEST_CASE("Test with 'Assign a; Select a such that Follows(1, a)'",
           "[QueryString]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsClause> f =
