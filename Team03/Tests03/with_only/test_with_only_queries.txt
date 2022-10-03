@@ -278,3 +278,8 @@ constant c; procedure p;
 Select c such that Modifies(p, "x") with c.value = p.procName
 SemanticError
 5000
+57 - (SUCCESS) Retrieve call statements call a procedure which is also a variable name
+variable v; call c;
+Select c with c.procName = v.varName
+10, 16
+5000

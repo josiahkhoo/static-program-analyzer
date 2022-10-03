@@ -1,6 +1,7 @@
 #include "with.h"
 
 #include <cassert>
+#include <regex>
 #include <utility>
 
 With::With(AttributeReference attRefL, AttributeReference attRefR)
@@ -41,29 +42,37 @@ std::unordered_set<std::string> With::Fetch(
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (lhs_.IsAttributeTypeInteger()) {
+  if (IsNumber(lhs) &&
+      (lhs_.GetAttributeName() == Attribute::AttributeName::PROC_NAME ||
+       lhs_.GetAttributeName() == Attribute::AttributeName::VAR_NAME)) {
+    lhs = queryable_pkb.QueryWithAttributeFromStatement(
+        lhs_.GetSynonym().GetEntityType(), stoi(lhs));
+  }
+  if (IsNumber(lhs)) {
     return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
                                             rhs_.GetAttributeName(), stoi(lhs));
-  } else if (lhs_.IsAttributeTypeName()) {
+  } else {
     return queryable_pkb.QueryWithAttribute(rhs_.GetSynonym().GetEntityType(),
                                             rhs_.GetAttributeName(), lhs);
   }
-  assert(false);
-  return {};
 }
 
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (rhs_.IsAttributeTypeInteger()) {
+  if (IsNumber(rhs) &&
+      (rhs_.GetAttributeName() == Attribute::AttributeName::PROC_NAME ||
+       rhs_.GetAttributeName() == Attribute::AttributeName::VAR_NAME)) {
+    rhs = queryable_pkb.QueryWithAttributeFromStatement(
+        rhs_.GetSynonym().GetEntityType(), stoi(rhs));
+  }
+  if (IsNumber(rhs)) {
     return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
                                             lhs_.GetAttributeName(), stoi(rhs));
-  } else if (rhs_.IsAttributeTypeName()) {
+  } else {
     return queryable_pkb.QueryWithAttribute(lhs_.GetSynonym().GetEntityType(),
                                             lhs_.GetAttributeName(), rhs);
   }
-  assert(false);
-  return {};
 }
 
 QueryOperation::Type With::GetType() const {
@@ -136,4 +145,8 @@ bool With::IsTrue(const QueryablePkb& queryable_pkb) const {
   }
   // E.g. with "x" = 1
   return lhs_.GetValue() == rhs_.GetValue();
+}
+
+bool With::IsNumber(const std::string& token) const {
+  return std::regex_match(token, std::regex("(\\+|-)?[0-9]*(\\.?([0-9]+))$"));
 }
