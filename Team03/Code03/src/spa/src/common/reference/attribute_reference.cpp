@@ -34,6 +34,16 @@ Attribute::AttributeName AttributeReference::GetAttributeName() const {
   return attr_.value().GetAttributeName();
 }
 
+bool AttributeReference::IsAttributeTypeName() const {
+  assert(IsAttributeName());
+  return attr_.value().IsName();
+}
+
+bool AttributeReference::IsAttributeTypeInteger() const {
+  assert(IsAttributeName());
+  return attr_.value().IsInteger();
+}
+
 std::string AttributeReference::GetValue() const {
   if (IsIdentifier())
     return GetIdentifier();

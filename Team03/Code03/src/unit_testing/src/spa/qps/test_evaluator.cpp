@@ -3,6 +3,8 @@
 #include "common/clause/pattern_if.h"
 #include "common/clause/pattern_while.h"
 #include "common/clause/synonym_select.h"
+#include "common/clause/with.h"
+#include "common/reference/attribute_reference.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/qnodes/entity_node.h"
@@ -106,61 +108,61 @@ class QueryablePkbStub : public QueryablePkb {
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
       EntityType type) const override {
-    return {};
+    return {"QueryAllModifies"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
       EntityType type) const override {
-    return {};
+    return {"QueryAllModifiesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
       int statement_number, EntityType type) const override {
-    return {};
+    return {"QueryModifiesS"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesSBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesP"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier, EntityType type) const override {
-    return {};
+    return {"QueryModifiesPBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllCalls() const override {
-    return {};
+    return {"QueryAllCalls"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllCallsBy()
       const override {
-    return {};
+    return {"QueryAllCallsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCalls(
       std::string identifier) const override {
-    return {};
+    return {"QueryCalls"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
       std::string identifier) const override {
-    return {};
+    return {"QueryCallsTBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
@@ -233,6 +235,11 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryPatternVariablesFromIf"};
   }
 
+  [[nodiscard]] std::string QueryWithAttributeFromStatement(
+      EntityType type, int statement_number) const {
+    return {"QueryWithAttributeFromStatement"};
+  };
+
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
       EntityType type, Attribute::AttributeName name,
       std::string identifier) const override {
@@ -244,18 +251,6 @@ class QueryablePkbStub : public QueryablePkb {
       int number) const override {
     return {"QueryWithAttributeNumber"};
   }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-      EntityType lhs_type, Attribute::AttributeName lhs_name,
-      EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
-    return {"QueryWithAttributeAttribute"};
-  }
-
-  [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
-      EntityType lhs_type, Attribute::AttributeName lhs_name,
-      Attribute::AttributeName rhs_name, std::string value) const override {
-    return {"QueryWithAttributeValue"};
-  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
@@ -263,8 +258,8 @@ TEST_CASE("Query 'Select'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root = p.Plan(qs);
 
@@ -280,8 +275,8 @@ TEST_CASE("Query 'Select Follows'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsClause> f =
@@ -303,8 +298,8 @@ TEST_CASE("Query 'Select FollowsBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsClause> f =
@@ -326,8 +321,8 @@ TEST_CASE("Query 'Select FollowsT'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   std::shared_ptr<FollowsTClause> f =
@@ -349,8 +344,8 @@ TEST_CASE("Query 'Select FollowsTBy'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(syn);
   StatementReference statement_ref_2 = StatementReference(1);
   std::shared_ptr<FollowsTClause> f =
@@ -372,8 +367,8 @@ TEST_CASE("Query 'Select AllPatternAssign'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference();
   Expression exp;
   exp.to_match = "b";
@@ -395,8 +390,8 @@ TEST_CASE("Query 'Select Pattern(String)Assign'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -419,8 +414,8 @@ TEST_CASE("Query 'Select Pattern(String)If'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::IF, "i");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   std::shared_ptr<PatternIf> ptn = std::make_shared<PatternIf>(syn, entity_ref);
 
@@ -440,8 +435,8 @@ TEST_CASE("Query 'Select Pattern(String)While'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::WHILE, "w");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   std::shared_ptr<PatternWhile> ptn =
       std::make_shared<PatternWhile>(syn, entity_ref);
@@ -462,8 +457,8 @@ TEST_CASE("Query 'Select Pattern(String)Assign Follows'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -484,6 +479,56 @@ TEST_CASE("Query 'Select Pattern(String)Assign Follows'", "[Evaluator]") {
   std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
 
   REQUIRE(result.empty());
+}
+
+TEST_CASE("Query 'Select With Name'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  Attribute attr = Attribute(syn, Attribute::PROC_NAME);
+  AttributeReference attrRef1 = AttributeReference(attr);
+  AttributeReference attrRef2 = AttributeReference("name");
+
+  std::shared_ptr<With> withCl = std::make_shared<With>(attrRef1, attrRef2);
+
+  QueryString qs = QueryString(s, {syn}, {withCl});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected = pkb.QueryWithAttribute(
+      attrRef1.GetSynonym().GetEntityType(), attrRef1.GetAttributeName(),
+      attrRef2.GetIdentifier());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("Query 'Select With Integer'", "[Evaluator]") {
+  Evaluator eval = Evaluator();
+  Planner p = Planner();
+
+  Synonym syn = Synonym(EntityType::ASSIGN, "a");
+  std::shared_ptr<SynonymSelect> s =
+      std::make_shared<SynonymSelect>(std::vector{syn});
+  Attribute attr = Attribute(syn, Attribute::VALUE);
+  AttributeReference attrRef1 = AttributeReference(attr);
+  AttributeReference attrRef2 = AttributeReference(1);
+
+  std::shared_ptr<With> withCl = std::make_shared<With>(attrRef1, attrRef2);
+
+  QueryString qs = QueryString(s, {syn}, {withCl});
+  std::shared_ptr<QNode> root = p.Plan(qs);
+
+  QueryablePkbStub pkb = QueryablePkbStub();
+  std::unordered_set<std::string> expected = pkb.QueryWithAttribute(
+      attrRef1.GetSynonym().GetEntityType(), attrRef1.GetAttributeName(),
+      attrRef2.GetLineNumber());
+  std::unordered_set<std::string> result = eval.Execute(pkb, root, s);
+
+  REQUIRE(result == expected);
 }
 
 TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
@@ -715,6 +760,11 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
       return {};
     }
 
+    [[nodiscard]] std::string QueryWithAttributeFromStatement(
+        EntityType type, int statement_number) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
         EntityType type, Attribute::AttributeName name,
         std::string identifier) const override {
@@ -726,26 +776,14 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
         int number) const override {
       return {};
     }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType lhs_type, Attribute::AttributeName lhs_name,
-        EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
-        EntityType lhs_type, Attribute::AttributeName lhs_name,
-        Attribute::AttributeName rhs_name, std::string value) const override {
-      return {};
-    }
   };
 
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -1000,6 +1038,11 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
       return {};
     }
 
+    [[nodiscard]] std::string QueryWithAttributeFromStatement(
+        EntityType type, int statement_number) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
         EntityType type, Attribute::AttributeName name,
         std::string identifier) const override {
@@ -1011,26 +1054,14 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
         int number) const override {
       return {};
     }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType lhs_type, Attribute::AttributeName lhs_name,
-        EntityType rhs_type, Attribute::AttributeName rhs_name) const override {
-      return {};
-    }
-
-    [[nodiscard]] std::unordered_set<std::string> QueryWithAttributeValue(
-        EntityType lhs_type, Attribute::AttributeName lhs_name,
-        Attribute::AttributeName rhs_name, std::string value) const override {
-      return {};
-    }
   };
 
   Evaluator eval = Evaluator();
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   EntityReference entity_ref = EntityReference("id");
   Expression exp;
   exp.to_match = "b";
@@ -1062,8 +1093,8 @@ TEST_CASE("Union check'", "[Evaluator]") {
 
   Planner p = Planner();
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   QueryString qs = QueryString(s, {syn}, {});
   std::shared_ptr<QNode> root_1 = p.Plan(qs);
   std::shared_ptr<QNode> root_2 = p.Plan(qs);

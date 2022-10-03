@@ -64,9 +64,11 @@ void QueryParser::ParseSelect() {
   if (syn_token == "BOOLEAN") {
     query_string_builder_.AddSelect(std::make_shared<BooleanSelect>());
   } else {
-    Synonym synonym = query_string_builder_.GetSynonym(syn_token);
-    query_string_builder_.AddSelect(
-        std::make_shared<SynonymSelect>(std::vector{synonym}));
+    Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
+        query_string_builder_.GetSynonym(syn_token)};
+    query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
+        std::vector<Select::SynonymWithMaybeAttribute>{
+            synonym_with_maybe_attribute}));
   }
 }
 
@@ -157,6 +159,8 @@ void QueryParser::ParseIndividualClause() {
   }
   if (op != nullptr) {
     query_string_builder_.AddQueryOperation(op);
+  } else {
+    throw SyntaxException("Expected a such-that clause");
   }
 }
 
@@ -177,8 +181,9 @@ bool QueryParser::ParsePattern(bool isAnd) {
     query_string_builder_.AddQueryOperation(op);
     last_query_operation_ = Token(Token::Kind::IDENTIFIER, "pattern");
     return true;
+  } else {
+    throw SyntaxException("Expected a pattern clause");
   }
-  return false;
 }
 
 bool QueryParser::ParseWith(bool isAnd) {
@@ -190,9 +195,13 @@ bool QueryParser::ParseWith(bool isAnd) {
   WithParser withP;
   std::shared_ptr<QueryOperation> op;
   op = withP.Parse(queryData);
-  query_string_builder_.AddQueryOperation(op);
-  last_query_operation_ = Token(Token::Kind::IDENTIFIER, "with");
-  return true;
+  if (op != nullptr) {
+    query_string_builder_.AddQueryOperation(op);
+    last_query_operation_ = Token(Token::Kind::IDENTIFIER, "with");
+    return true;
+  } else {
+    throw SyntaxException("Expected a with clause");
+  }
 }
 
 void QueryParser::CheckLeftoverTokens() {
