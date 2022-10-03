@@ -235,6 +235,11 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryPatternVariablesFromIf"};
   }
 
+  [[nodiscard]] std::string QueryWithAttributeFromStatement(
+      EntityType type, int statement_number) const {
+    return {"QueryWithAttributeFromStatement"};
+  };
+
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
       EntityType type, Attribute::AttributeName name,
       std::string identifier) const override {
@@ -755,6 +760,11 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
       return {};
     }
 
+    [[nodiscard]] std::string QueryWithAttributeFromStatement(
+        EntityType type, int statement_number) const override {
+      return {};
+    }
+
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
         EntityType type, Attribute::AttributeName name,
         std::string identifier) const override {
@@ -1025,6 +1035,11 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
 
     [[nodiscard]] std::unordered_set<std::string>
     QueryPatternVariablesFromAssign(int statement_number) const override {
+      return {};
+    }
+
+    [[nodiscard]] std::string QueryWithAttributeFromStatement(
+        EntityType type, int statement_number) const override {
       return {};
     }
 

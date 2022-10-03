@@ -68,6 +68,11 @@ std::unordered_set<std::string> EntityManager::GetCallStatements(
   return statement_store_.GetCallStatements(proc);
 }
 
+std::string EntityManager::GetCallStatementProcedure(
+    int statement_number) const {
+  return statement_store_.GetCallStatementProcedure(statement_number);
+}
+
 std::unordered_set<std::string> EntityManager::GetReadStatements() const {
   return statement_store_.GetReadStatements();
 }
@@ -77,6 +82,11 @@ std::unordered_set<std::string> EntityManager::GetReadStatements(
   return statement_store_.GetReadStatements(var);
 }
 
+std::string EntityManager::GetReadStatementVariable(
+    int statement_number) const {
+  return statement_store_.GetReadStatementVariable(statement_number);
+}
+
 std::unordered_set<std::string> EntityManager::GetPrintStatements() const {
   return statement_store_.GetPrintStatements();
 }
@@ -84,6 +94,11 @@ std::unordered_set<std::string> EntityManager::GetPrintStatements() const {
 std::unordered_set<std::string> EntityManager::GetPrintStatements(
     std::string var) const {
   return statement_store_.GetPrintStatements(var);
+}
+
+std::string EntityManager::GetPrintStatementVariable(
+    int statement_number) const {
+  return statement_store_.GetPrintStatementVariable(statement_number);
 }
 
 std::unordered_set<std::string> EntityManager::GetAssignStatements() const {

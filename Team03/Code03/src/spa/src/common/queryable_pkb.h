@@ -153,6 +153,11 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string>
   QueryPatternVariablesFromIf(int statement_number) const = 0;
 
+  /// Query VarName, VarName, ProcName from given Print, Read, Call statement
+  /// number respectively
+  [[nodiscard]] virtual std::string QueryWithAttributeFromStatement(
+      EntityType type, int statement_number) const = 0;
+
   /// Query entities that matches attribute identifier
   /// Treats x.procName = "name" &  with "name" = x.procName the same
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWithAttribute(
