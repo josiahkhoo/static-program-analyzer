@@ -5,7 +5,7 @@ p
 5000
 2 - (SUCCESS) Retrieve Call with Call Name
 call c;
-Select c with c.procName = "q"
+Select c with "q" = c.procName
 10, 16
 5000
 3 - (SUCCESS) Retrieve Variable with Variable Name
