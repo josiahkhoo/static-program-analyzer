@@ -1,0 +1,280 @@
+1 - (SUCCESS) Retrieve Procedure with Procedure Name
+procedure p;
+Select p with p.procName = "p"
+p
+5000
+2 - (SUCCESS) Retrieve Call with Call Name
+call c;
+Select c with c.procName = "q"
+10, 16
+5000
+3 - (SUCCESS) Retrieve Variable with Variable Name
+variable v;
+Select v with v.varName = "x"
+x
+5000
+4 - (SUCCESS) Retrieve Read with Variable Name
+read r;
+Select r with r.varName = "x"
+27, 29
+5000
+5 - (SUCCESS) Retrieve Print with Variable Name
+print p;
+Select p with p.varName = "y"
+28
+5000
+6 - (SUCCESS) Retrieve Constant with Constant Value
+constant c;
+Select c with c.value = 1
+1
+5000
+7 - (SUCCESS) Retrieve Statement with Statement Number
+stmt s;
+Select s with s.stmt# = 3
+3
+5000
+8 - (SUCCESS) Retrieve Read with Statement Number
+read r;
+Select r with r.stmt# = 30
+30
+5000
+9 - (SUCCESS) Retrieve Print with Statement Number
+print p;
+Select p with p.stmt# = 20
+20
+5000
+10 - (SUCCESS) Retrieve Call with Statement Number
+call c;
+Select c with c.stmt# = 25
+25
+5000
+11 - (SUCCESS) Retrieve While with Statement Number
+while w;
+Select w with w.stmt# = 4
+4
+5000
+12 - (SUCCESS) Retrieve If with Statement Number
+if i;
+Select i with i.stmt# = 13
+13
+5000
+13 - (SUCCESS) Retrieve Assign with Statement Number
+assign a;
+Select a with a.stmt# = 19
+19
+5000
+14 - (SUCCESS) Retrieve specific call stmt that follows another stmt
+call c;
+Select c such that Follows(_, c) with c.stmt# = 16
+16
+5000
+15 - (SUCCESS) Select specific assign that follows stmt 1
+assign a;
+Select a such that Follows*(1, a) with a.stmt# = 3
+3
+5000
+16 - (SUCCESS) Retrieve all parents of a call stmt with a specific name
+call c; stmt s;
+Select s such that Parent(s, c) with c.procName = "q"
+4, 14
+5000
+17 - (SUCCESS) Retrieve specific assign within a nested if-while condition
+assign a;
+Select a such that Parent*(13, a) with a.stmt# = 17
+17
+5000
+18 - (SUCCESS) Retrieve specific variable modified in procedure q
+variable v;
+Select v such that Modifies ("q", v) with v.varName = "x"
+x
+5000
+19 - (SUCCESS) Retrieve specific variables modified in statement 13
+variable v;
+Select v such that Modifies (13, v) with v.varName = "i"
+i
+5000
+20 - (SUCCESS) Retrieve variable that procedure q uses with a specific name
+variable v;
+Select v such that Uses ("q", v) with v.varName = "z"
+z
+5000
+21 - (SUCCESS) Retrieve variable with specific name used in stmt 4
+variable v;
+Select v such that Uses (4, v) with v.varName = "i"
+i
+5000
+22 - (SUCCESS) Retrieve procedure with specific name that calls another procedure
+procedure p, q;
+Select p such that Calls(p, q) with p.procName = "Example"
+Example
+5000
+23 - (SUCCESS) Retrieve procedure with specific name that is called * by "Example"
+procedure q;
+Select q such that Calls*("Example", q) with q.procName = "s"
+s
+5000
+24 - (SUCCESS) Double synonym - Retrieve all read stmts that contain variables modified by procedure q (i.e. x, z)
+read r; variable v;
+Select r such that Modifies ("q", v) with r.varName = v.varName
+27, 29, 31
+5000
+25 - (SUCCESS) Double synonym - Retrieve all call stmts that contain procedure names used by procedure Example (i.e. p, q)
+procedure p; call c;
+Select c such that Calls("Example", p) with c.procName = proc.procName
+10, 12, 16
+5000
+26 - (SUCCESS) Double synonym - Retrieve all print stmts that are in the set of statements that use variable y (i.e. 15, 28)
+stmt s; print p;
+Select p such that Uses(s, "y") with p.stmt# = s.stmt#
+28
+5000
+27 - (SUCCESS) Retrieve Procedure with Procedure Name - return nothing
+procedure p;
+Select p with p.procName = "MyProc"
+
+5000
+28 - (SUCCESS) Retrieve Call with Call Name - return nothing
+call c;
+Select c with c.procName = "MyCall"
+
+5000
+29 - (SUCCESS) Retrieve Variable with Variable Name - return nothing
+variable v;
+Select v with v.varName = "MyVar"
+
+5000
+30 - (SUCCESS) Retrieve Read with Variable Name - return nothing
+read r;
+Select r with r.varName = "MyVar"
+
+5000
+31 - (SUCCESS) Retrieve Print with Variable Name - return nothing
+print p;
+Select p with p.varName = "MyVar"
+
+5000
+32 - (SUCCESS) Retrieve Constant with Constant Value - return nothing
+constant c;
+Select c with c.value = 1000
+
+5000
+33 - (SUCCESS) Retrieve Statement with Statement Number - return nothing
+stmt s;
+Select s with s.stmt# = 1000
+
+5000
+34 - (SUCCESS) Retrieve Read with Statement Number - return nothing
+read r;
+Select r with r.stmt# = 1000
+
+5000
+35 - (SUCCESS) Retrieve Print with Statement Number - return nothing
+print p;
+Select p with p.stmt# = 1000
+
+5000
+36 - (SUCCESS) Retrieve Call with Statement Number - return nothing
+call c;
+Select c with c.stmt# = 1000
+
+5000
+37 - (SUCCESS) Retrieve While with Statement Number - return nothing
+while w;
+Select w with w.stmt# = 1000
+
+5000
+38 - (SUCCESS) Retrieve If with Statement Number - return nothing
+if i;
+Select i with i.stmt# = 1000
+
+5000
+39 - (SUCCESS) Retrieve Assign with Statement Number - return nothing
+assign a;
+Select a with a.stmt# = 1000
+
+5000
+40 - (SUCCESS) Retrieve specific call stmt that is followed by another stmt
+call c;
+Select c such that Follows(c, _) with c.stmt# = 16
+16
+5000
+41 - (SUCCESS) Select specific assign that is followed by stmt 1 - return nothing
+assign a;
+Select a such that Follows*(a, 1) with a.stmt# = 3
+
+5000
+42 - (SUCCESS) Retrieve call stmt with a specific name that is a parent of another stmt - return nothing
+call c; stmt s;
+Select s such that Parent(c, s) with c.procName = "q"
+
+5000
+43 - (SUCCESS) Retrieve a specific nested parent assign stmt of an assign stmt within a nested if-while condition - return nothing
+assign a;
+Select a such that Parent*(a, 7) with a.stmt# = 4
+
+5000
+44 - (SUCCESS) Retrieve specific variable that modifies procedure q - return SemanticError
+variable v;
+Select v such that Modifies (v, "q") with v.varName = "x"
+SemanticError
+5000
+45 - (SUCCESS) Retrieve specific variables that modifies statement 13 - return SemanticError
+variable v;
+Select v such that Modifies (v, 13) with v.varName = "i"
+SemanticError
+5000
+46 - (SUCCESS) Retrieve variable with a specific name that uses procedure q - return SemanticError
+variable v;
+Select v such that Uses (v, "q") with v.varName = "z"
+SemanticError
+5000
+47 - (SUCCESS) Retrieve variable with specific name that uses stmt 4 - return SemanticError
+variable v;
+Select v such that Uses (v, 4) with v.varName = "i"
+SemanticError
+5000
+48 - (SUCCESS) Retrieve procedure with specific name that is called by another procedure - return nothing
+procedure p, q;
+Select p such that Calls(q, p) with p.procName = "Example"
+
+5000
+49 - (SUCCESS) Retrieve procedure with specific name that calls * "Example" - return nothing
+procedure q;
+Select q such that Calls*(q, "Example") with q.procName = "s"
+
+5000
+50 - (SUCCESS) Retrieve all assign stmts that are followed by other stmts, and their stmt nums is a constant value
+assign a; constant c;
+Select a such that Follows(a, _) with a.stmt# = c.value
+1, 2, 3, 5
+5000
+51 - (SUCCESS) Retrieve a constant where the value is the stmt num of the stmt that follows line 1 (i.e. 2)
+constant c; stmt s;
+Select c such that Follows(1, s) with c.value = s.stmt#
+2
+5000
+52 - (SUCCESS) Retrieve a stmt where the stmt num is the name of a variable that is used by line 18 - return SemanticError
+stmt s; variable v;
+Select s such that Uses (18, v) with s.stmt# = v.varName
+SemanticError
+5000
+53 - (SUCCESS) Retrieve variables where the name is the name of procedures that call procedure q - return nothing
+variable v; procedure p;
+Select v such that Calls(p, "q") with v.varName = p.procName
+
+5000
+54 - (SUCCESS) Retrieve variables where the name is the name of procedures that called by procedure p (i.e. q) - return nothing
+variable v; procedure p;
+Select v such that Calls("p", p) with v.varName = p.procName
+q
+5000
+55 - (SUCCESS) Retrieve the procedures where their names are constant values - return SemanticError
+procedure p; constant c;
+Select p with p.procName = c.value
+SemanticError
+5000
+56 - (SUCCESS) Retrieve the constants where their values are names of procedures that modify x - return SemanticError
+constant c; procedure p;
+Select c such that Modifies(p, "x") with c.value = p.procName
+SemanticError
+5000
