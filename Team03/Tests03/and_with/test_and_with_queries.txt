@@ -78,9 +78,9 @@ procedure p, q; variable v;
 Select p such that Calls(p, q) and Modifies(p, v) with q.procName = "q" and v.varName = "y"
 Example
 5000
-17 - (SUCCESS) Retrieve assignment that uses variable z and is after stmt 22
+17 - (SUCCESS) Retrieve assignment that uses variable z and is inside the if stmt 23
 assign a; stmt s; variable v;
-Select a with s.stmt# = 22 and v.varName = "z" such that Uses(a, v) and Follows*(s, a)
+Select a with s.stmt# = 23 and v.varName = "z" such that Uses(a, v) and Parent*(s, a)
 25
 5000
 18 - (SUCCESS) Is there an assigment statement that is under both while and if
@@ -89,13 +89,13 @@ Select BOOLEAN such that Parent*(s, a) such that Parent*(s1, a1) with s.stmt# = 
 TRUE
 5000
 19 - (SUCCESS) Retrieve all assignment with rhs '1' and 'x'
-stmt s; while w; assign a;
-Select a pattern a(_, "1") and a(_, "x") with w.stmt# = s.stmt# and s.stmt# = a.stmt#
+assign a; while w; stmt s;
+Select a pattern a(_, _"1"_) and a(_, _"x"_) with w.stmt# = s.stmt#
 5, 7, 18, 24
 5000
 20 - (SUCCESS) Retrieve all assignment with rhs '1' and 'x'
 stmt s; while w; assign a;
-Select a with w.stmt# = s.stmt# and s.stmt# = a.stmt# pattern a(_, "1") and a(_, "x")
+Select a with s.stmt# = a.stmt# pattern a(_, _"1"_) and a(_, _"x"_)
 5, 7, 18, 24
 5000
 21 - (SUCCESS) If procedure "Example" calls procedure "q", retrieve statements under both the first while and if
@@ -116,7 +116,7 @@ Select s.stmt# with s.stmt# = a.stmt# and c.value = s.stmt# pattern a(v, _) and 
 24 - (SUCCESS) Retrieve an assignment statement that is some constant value that modifies 'x'
 variable v; assign a; stmt s; constant c;
 Select s such that Modifies(s, v) pattern a(v, _) with s.stmt# = a.stmt# and v.varName = "x" and a.stmt# = c.value
-2
+1, 5
 5000
 25 - (SUCCESS) Retrieve variable that is in an assignment that has rhs "x" and is in 'if' or 'while' whose stmt no is some constant
 variable v; assign a; stmt s; constant c;
