@@ -1,5 +1,0 @@
-4 - (SUCCESS) Retrieve Read with Variable Name
-read r;
-Select r with r.varName = "x"
-2
-5000
