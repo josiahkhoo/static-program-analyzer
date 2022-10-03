@@ -18,7 +18,7 @@ procedure p {
     while (i>0) {
       x = z * 3 + 2 * y;
       call q;
-      i = i - 1; }
+      i = i - 4; }
     x = x + 1;
     z = x + z;
     print z; }
@@ -28,17 +28,9 @@ procedure p {
 
 procedure q {
   if (x==1) then {
-    z = x + 1;
-    call s; }
+    z = x + 1; }
   else {
     x = z + x; } }
 
 procedure s {
-  read x;
-  print y; }
-
-procedure r {
-  read x;
-  read y;
-  read z;
-  read q; }
+  print p; }
