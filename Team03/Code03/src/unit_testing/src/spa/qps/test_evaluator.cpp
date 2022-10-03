@@ -486,8 +486,8 @@ TEST_CASE("Query 'Select With Name'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   Attribute attr = Attribute(syn, Attribute::PROC_NAME);
   AttributeReference attrRef1 = AttributeReference(attr);
   AttributeReference attrRef2 = AttributeReference("name");
@@ -511,8 +511,8 @@ TEST_CASE("Query 'Select With Integer'", "[Evaluator]") {
   Planner p = Planner();
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
   Attribute attr = Attribute(syn, Attribute::VALUE);
   AttributeReference attrRef1 = AttributeReference(attr);
   AttributeReference attrRef2 = AttributeReference(1);

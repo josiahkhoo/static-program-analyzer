@@ -1,6 +1,7 @@
 #ifndef SPA_SELECT_H
 #define SPA_SELECT_H
 
+#include <optional>
 #include <unordered_set>
 #include <vector>
 

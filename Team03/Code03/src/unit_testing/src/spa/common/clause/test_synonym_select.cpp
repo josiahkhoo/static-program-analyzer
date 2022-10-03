@@ -15,8 +15,8 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
       "synonym") {
     QResult q_result =
         QResult({{"123"}}, {Synonym(EntityType::VARIABLE, "v1")});
-    SynonymSelect ss = SynonymSelect({{Select::SynonymWithMaybeAttribute(
-        Synonym(EntityType::VARIABLE, "v"))}});
+    SynonymSelect ss = SynonymSelect({Select::SynonymWithMaybeAttribute(
+        Synonym(EntityType::VARIABLE, "v"))});
     std::unordered_set<std::string> res = ss.GetResultSet(q_result);
     REQUIRE(res.empty());
   }

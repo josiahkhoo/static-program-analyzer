@@ -1,6 +1,5 @@
 #include "query_parser.h"
 
-#include "common/clause/attribute_select.h"
 #include "common/clause/boolean_select.h"
 #include "common/clause/select.h"
 #include "common/clause/synonym_select.h"
