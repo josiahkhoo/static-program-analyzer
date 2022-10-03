@@ -1,0 +1,25 @@
+14 - (SUCCESS) Retrieve call statements procedure name that are called from "Example" and in a while loop
+procedure p; call c; while w;
+Select c.procName with c.procName = p.procName such that Calls ("Example", p) and Parent (w, c)
+q
+5000
+15 - (SUCCESS) Retrieve call statements procedure name that are called from "Example" and in a while loop
+procedure p; call c; variable v;
+Select v.varName such that Calls ("Example", p) with c.procName = p.procName and p.procName = v.varName
+p
+5000
+23 - (SUCCESS) Retrieve an assignment statement that modifies a variable and uses '1', under an if or while and there are statements that follows it and is also a const value
+stmt s; variable v; assign a; constant c;
+Select s.stmt# with s.stmt# = a.stmt# and c.value = s.stmt# pattern a(v, _) and a(_, _"1"_) such that Follows* (s, _) and Parent* (_, s)
+5
+5000
+25 - (SUCCESS) Retrieve variable that is in an assignment that has rhs "x" and is in 'if' or 'while' whose stmt no is some constant
+variable v; assign a; stmt s; constant c;
+Select v.varName pattern a(_, _"x"_) with s.stmt# = c.value such that Modifies(a, v) and Parent*(s, a) and Uses(a, _)
+x, z, y
+5000
+27 - (SUCCESS) Retrieve all constants that is an assignment statement number if all clauses is true
+procedure p; constant c; assign a;
+Select c.value such that Calls(_, _) and Follows(_, _) with p.procName = "p" and c.value = a.stmt# such that Parent(_, _) pattern a(_, _) such that Modifies(p, _) and Uses(p, _)
+1, 2, 3, 5
+5000

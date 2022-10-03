@@ -5,7 +5,7 @@ p
 5000
 2 - (SUCCESS) Retrieve Call with Call Name
 call c;
-Select c with c.procName = "q"
+Select c with "q" = c.procName
 10, 16
 5000
 3 - (SUCCESS) Retrieve Variable with Variable Name
@@ -120,7 +120,7 @@ Select r such that Modifies ("q", v) with r.varName = v.varName
 5000
 25 - (SUCCESS) Double synonym - Retrieve all call stmts that contain procedure names used by procedure Example (i.e. p, q)
 procedure p; call c;
-Select c such that Calls("Example", p) with c.procName = proc.procName
+Select c such that Calls("Example", p) with c.procName = p.procName
 10, 12, 16
 5000
 26 - (SUCCESS) Double synonym - Retrieve all print stmts that are in the set of statements that use variable y (i.e. 15, 28)
@@ -277,4 +277,9 @@ SemanticError
 constant c; procedure p;
 Select c such that Modifies(p, "x") with c.value = p.procName
 SemanticError
+5000
+57 - (SUCCESS) Retrieve call statements call a procedure which is also a variable name
+variable v; call c;
+Select c with c.procName = v.varName
+10, 16
 5000

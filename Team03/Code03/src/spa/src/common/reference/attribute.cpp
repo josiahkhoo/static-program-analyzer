@@ -16,3 +16,9 @@ Attribute::Attribute(Synonym syn, AttributeName name)
 Synonym Attribute::GetSynonym() const { return syn_; }
 
 Attribute::AttributeName Attribute::GetAttributeName() const { return name_; }
+
+bool Attribute::IsName() const {
+  return name_ == VAR_NAME || name_ == PROC_NAME;
+}
+
+bool Attribute::IsInteger() const { return name_ == VALUE || name_ == STMT_NO; }

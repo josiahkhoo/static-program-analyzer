@@ -32,6 +32,8 @@ class With : public QueryOperation {
  private:
   AttributeReference lhs_;
   AttributeReference rhs_;
+
+  bool IsNumber(const std::string& token) const;
 };
 
 #endif  // SPA_WITH_H

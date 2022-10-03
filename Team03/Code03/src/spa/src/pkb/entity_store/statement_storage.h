@@ -33,9 +33,21 @@ class StatementStorage {
 
   std::unordered_set<std::string> GetCallStatements();
 
+  std::unordered_set<std::string> GetCallStatements(std::string proc);
+
+  std::string GetCallStatementProcedure(int statement_number) const;
+
   std::unordered_set<std::string> GetReadStatements();
 
+  std::unordered_set<std::string> GetReadStatements(std::string var);
+
+  std::string GetReadStatementVariable(int statement_number) const;
+
   std::unordered_set<std::string> GetPrintStatements();
+
+  std::unordered_set<std::string> GetPrintStatements(std::string var);
+
+  std::string GetPrintStatementVariable(int statement_number) const;
 
   std::unordered_set<std::string> GetAssignStatements();
 
@@ -47,13 +59,15 @@ class StatementStorage {
   void Clear();
 
  private:
-  static std::unordered_set<std::string> statementList;
-  static std::unordered_set<std::string> callStatementList;
-  static std::unordered_set<std::string> readStatementList;
-  static std::unordered_set<std::string> printStatementList;
-  static std::unordered_set<std::string> assignStatementList;
-  static std::unordered_set<std::string> ifStatementList;
-  static std::unordered_set<std::string> whileStatementList;
+  std::unordered_set<int> statement_list_;
+
+  std::unordered_set<int> assign_statement_list_;
+  std::unordered_set<int> if_statement_list_;
+  std::unordered_set<int> while_statement_list_;
+
+  std::unordered_map<int, std::string> call_statement_num_to_proc_map_;
+  std::unordered_map<int, std::string> read_statement_num_to_var_map_;
+  std::unordered_map<int, std::string> print_statement_num_to_var_map_;
 };
 
 #endif  // SPA_STATEMENT_STORAGE_H
