@@ -78,7 +78,11 @@ QueryOperation::Type With::GetType() const {
 
 Synonym With::GetSynonym() const {
   assert(GetType() == QueryOperation::SINGLE_SYNONYM);
-  return lhs_.GetSynonym();
+  if (lhs_.IsSynonym()) {
+    return lhs_.GetSynonym();
+  } else {
+    return rhs_.GetSynonym();
+  }
 }
 
 std::pair<Synonym, Synonym> With::GetSynonymPair() const {
