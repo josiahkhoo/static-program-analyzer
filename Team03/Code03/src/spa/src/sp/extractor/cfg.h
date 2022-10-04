@@ -25,10 +25,6 @@ class CFG {
   [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetPrevNodes(
       CFGNode cfg_node) const;
 
-  bool operator==(const CFG &rhs) const;
-
-  bool operator!=(const CFG &rhs) const;
-
  private:
   std::unordered_map<std::shared_ptr<CFGNode>,
                      std::vector<std::shared_ptr<CFGNode>>>
