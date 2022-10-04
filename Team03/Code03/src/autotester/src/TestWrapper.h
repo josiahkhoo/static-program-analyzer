@@ -7,8 +7,8 @@
 
 // include your other headers here
 #include "AbstractWrapper.h"
-#include "PKB.h"
 #include "common/lexer.h"
+#include "pkb/pkb.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/query_parser.h"
