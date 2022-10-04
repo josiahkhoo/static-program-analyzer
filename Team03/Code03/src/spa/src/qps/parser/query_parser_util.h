@@ -33,6 +33,7 @@ class QueryParserUtil {
   static void CheckVariableEntity(const EntityReference& entity_ref);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
                                    const QueryStringBuilder& builder);
+  static AttributeName GetAttrName(const Token& next);
 
  private:
   static std::string GetExpression(const std::shared_ptr<TokenHandler>& tokens,
@@ -40,8 +41,6 @@ class QueryParserUtil {
 
   static std::string GetTerm(const std::shared_ptr<TokenHandler>& tokens,
                              const QueryStringBuilder& builder);
-
-  static AttributeName GetAttrName(const Token& next);
 
   static Identifier ExtractIdentifier(
       const std::shared_ptr<TokenHandler>& tokens);

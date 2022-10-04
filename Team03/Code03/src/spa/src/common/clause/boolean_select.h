@@ -11,4 +11,4 @@ class BooleanSelect : public Select {
       const QResult &q_result, const QueryablePkb &pkb) const override;
 };
 
-#endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_COMMON_CLAUSE_BOOLEAN_SELECT_H_
+#endif  // SPA_BOOLEAN_SELECT_H
