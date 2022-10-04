@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "abstraction_extractor_impl.h"
+#include "cfg_extractor.h"
 #include "common/t_node.h"
 #include "design_extractor.h"
 #include "design_extractor_result.h"
@@ -12,6 +13,7 @@
 class DesignExtractorImpl : public DesignExtractor {
  public:
   DesignExtractorImpl(const EntityExtractor &entity_extractor,
+                      const CFGExtractor &cfg_extractor,
                       const AbstractionExtractor &abstraction_extractor);
 
   [[nodiscard]] DesignExtractorResult Extract(TNode ast) const override;
@@ -19,6 +21,7 @@ class DesignExtractorImpl : public DesignExtractor {
  public:
  private:
   const EntityExtractor &entity_extractor_;
+  const CFGExtractor &cfg_extractor_;
   const AbstractionExtractor &abstraction_extractor_;
 };
 
