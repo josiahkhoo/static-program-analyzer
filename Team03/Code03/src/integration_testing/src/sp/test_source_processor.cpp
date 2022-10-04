@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "PKB.h"
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "cstdlib"
+#include "pkb/pkb.h"
 #include "qps/query_parser.h"
 #include "qps/query_processing_subsystem.h"
 #include "sp/extractor/abstraction/calls_abstraction_extractor.h"

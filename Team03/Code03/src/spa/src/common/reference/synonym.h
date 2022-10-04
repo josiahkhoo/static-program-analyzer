@@ -2,6 +2,7 @@
 #define SPA_SYNONYM_H
 
 #include "common/entity/entity_type.h"
+#include "common/reference/attribute_name.h"
 #include "string"
 
 class Synonym {
@@ -12,7 +13,10 @@ class Synonym {
 
   [[nodiscard]] std::string GetIdentifier();
 
-  bool IsEntityType(EntityType type) const;
+  [[nodiscard]] bool IsEntityType(EntityType type) const;
+
+  [[nodiscard]] bool IsValueNotEqualToAttribute(
+      AttributeName attribute_name) const;
 
   bool operator==(const Synonym &rhs) const;
 
