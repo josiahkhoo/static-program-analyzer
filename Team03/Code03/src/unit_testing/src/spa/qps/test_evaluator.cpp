@@ -4,6 +4,7 @@
 #include "common/clause/pattern_while.h"
 #include "common/clause/synonym_select.h"
 #include "common/clause/with.h"
+#include "common/reference/attribute_name.h"
 #include "common/reference/attribute_reference.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
@@ -241,14 +242,13 @@ class QueryablePkbStub : public QueryablePkb {
   };
 
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name,
+      EntityType type, AttributeName name,
       std::string identifier) const override {
     return {"QueryWithAttributeIdentifier"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name,
-      int number) const override {
+      EntityType type, AttributeName name, int number) const override {
     return {"QueryWithAttributeNumber"};
   }
 };
@@ -488,7 +488,7 @@ TEST_CASE("Query 'Select With Name'", "[Evaluator]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
       std::vector{Select::SynonymWithMaybeAttribute(syn)});
-  Attribute attr = Attribute(syn, Attribute::PROC_NAME);
+  Attribute attr = Attribute(syn, AttributeName::PROC_NAME);
   AttributeReference attrRef1 = AttributeReference(attr);
   AttributeReference attrRef2 = AttributeReference("name");
 
@@ -513,7 +513,7 @@ TEST_CASE("Query 'Select With Integer'", "[Evaluator]") {
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
       std::vector{Select::SynonymWithMaybeAttribute(syn)});
-  Attribute attr = Attribute(syn, Attribute::VALUE);
+  Attribute attr = Attribute(syn, AttributeName::VALUE);
   AttributeReference attrRef1 = AttributeReference(attr);
   AttributeReference attrRef2 = AttributeReference(1);
 
@@ -766,14 +766,13 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType type, Attribute::AttributeName name,
+        EntityType type, AttributeName name,
         std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType type, Attribute::AttributeName name,
-        int number) const override {
+        EntityType type, AttributeName name, int number) const override {
       return {};
     }
   };
@@ -1044,14 +1043,13 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType type, Attribute::AttributeName name,
+        EntityType type, AttributeName name,
         std::string identifier) const override {
       return {};
     }
 
     [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-        EntityType type, Attribute::AttributeName name,
-        int number) const override {
+        EntityType type, AttributeName name, int number) const override {
       return {};
     }
   };

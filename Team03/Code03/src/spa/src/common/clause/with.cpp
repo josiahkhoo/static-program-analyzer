@@ -42,9 +42,7 @@ std::unordered_set<std::string> With::Fetch(
 std::unordered_set<std::string> With::FetchPossibleRhs(
     std::string lhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (IsNumber(lhs) &&
-      (lhs_.GetAttributeName() == Attribute::AttributeName::PROC_NAME ||
-       lhs_.GetAttributeName() == Attribute::AttributeName::VAR_NAME)) {
+  if (!lhs_.GetSynonym().IsValueEqualToAttribute(lhs_.GetAttributeName())) {
     lhs = queryable_pkb.QueryWithAttributeFromStatement(
         lhs_.GetSynonym().GetEntityType(), stoi(lhs));
   }
@@ -60,9 +58,7 @@ std::unordered_set<std::string> With::FetchPossibleRhs(
 std::unordered_set<std::string> With::FetchPossibleLhs(
     std::string rhs, const QueryablePkb& queryable_pkb) const {
   // E.g. with x.procName = y.varName
-  if (IsNumber(rhs) &&
-      (rhs_.GetAttributeName() == Attribute::AttributeName::PROC_NAME ||
-       rhs_.GetAttributeName() == Attribute::AttributeName::VAR_NAME)) {
+  if (!rhs_.GetSynonym().IsValueEqualToAttribute(rhs_.GetAttributeName())) {
     rhs = queryable_pkb.QueryWithAttributeFromStatement(
         rhs_.GetSynonym().GetEntityType(), stoi(rhs));
   }

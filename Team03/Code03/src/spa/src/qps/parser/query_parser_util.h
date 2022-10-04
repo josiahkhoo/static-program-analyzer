@@ -2,6 +2,7 @@
 #define SPA_QUERY_PARSER_UTIL_H
 
 #include "common/parser.h"
+#include "common/reference/attribute_name.h"
 #include "common/reference/attribute_reference.h"
 #include "common/reference/identifier.h"
 #include "qps/query_string_builder.h"
@@ -40,7 +41,7 @@ class QueryParserUtil {
   static std::string GetTerm(const std::shared_ptr<TokenHandler>& tokens,
                              const QueryStringBuilder& builder);
 
-  static Attribute::AttributeName GetAttrName(const Token& next);
+  static AttributeName GetAttrName(const Token& next);
 
   static Identifier ExtractIdentifier(
       const std::shared_ptr<TokenHandler>& tokens);
