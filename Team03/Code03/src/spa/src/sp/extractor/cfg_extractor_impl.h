@@ -8,6 +8,6 @@ class CFGExtractorImpl : public CFGExtractor {
  public:
   CFGExtractorImpl();
 
-  [[nodiscard]] CFG Extract(const TNode &ast) const override;
+  [[nodiscard]] std::vector<CFG> Extract(const TNode &ast) const override;
 };
 #endif  // SPA_CFG_EXTRACTOR_IMPL_H
