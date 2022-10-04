@@ -8,7 +8,8 @@
 
 class CFG {
  public:
-  CFG(std::unordered_map<std::shared_ptr<CFGNode>,
+  CFG(std::string proc_name,
+      std::unordered_map<std::shared_ptr<CFGNode>,
                          std::vector<std::shared_ptr<CFGNode>>>
           forward_map,
       std::unordered_map<std::shared_ptr<CFGNode>,
@@ -18,9 +19,11 @@ class CFG {
 
   [[nodiscard]] std::shared_ptr<CFGNode> GetNode(int stmt_no) const;
 
-  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetNextNodes(CFGNode cfg_node) const;
+  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetNextNodes(
+      CFGNode cfg_node) const;
 
-  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetPrevNodes(CFGNode cfg_node) const;
+  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetPrevNodes(
+      CFGNode cfg_node) const;
 
   bool operator==(const CFG &rhs) const;
 
