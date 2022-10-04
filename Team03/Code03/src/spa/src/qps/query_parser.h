@@ -3,6 +3,7 @@
 
 #include "common/parser.h"
 #include "qps/parser/query_operation_parser.h"
+#include "qps/parser/query_select_parser.h"
 #include "qps/query_string.h"
 #include "qps/query_string_builder.h"
 #include "qps/token_handler.h"
@@ -16,6 +17,7 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
  private:
   std::shared_ptr<TokenHandler> tokens_;
   QueryStringBuilder query_string_builder_;
+  std::vector<std::shared_ptr<QuerySelectParser>> select_parsers_;
   std::vector<std::shared_ptr<QueryOperationParser>> st_parsers_;
   std::vector<std::shared_ptr<QueryOperationParser>> pattern_parsers_;
   std::optional<Token> last_query_operation_ = std::optional<Token>();
