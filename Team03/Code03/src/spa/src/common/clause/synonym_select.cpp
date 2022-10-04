@@ -25,7 +25,7 @@ std::unordered_set<std::string> SynonymSelect::GetResultSet(
     auto syn = synonyms_[i];
     if (syn.maybe_attribute.has_value()) {
       auto attribute = syn.maybe_attribute.value();
-      if (!syn.synonym.IsValueEqualToAttribute(attribute)) {
+      if (syn.synonym.IsValueNotEqualToAttribute(attribute)) {
         std::transform(rows.begin(), rows.end(), rows.begin(),
                        [&syn, &i, &pkb](std::vector<std::string>& row) {
                          // Replace entry in row with attribute

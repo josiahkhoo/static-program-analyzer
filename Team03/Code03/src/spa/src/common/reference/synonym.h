@@ -15,7 +15,7 @@ class Synonym {
 
   [[nodiscard]] bool IsEntityType(EntityType type) const;
 
-  [[nodiscard]] bool IsValueEqualToAttribute(
+  [[nodiscard]] bool IsValueNotEqualToAttribute(
       AttributeName attribute_name) const;
 
   bool operator==(const Synonym &rhs) const;

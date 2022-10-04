@@ -19,13 +19,13 @@ bool Synonym::operator==(const Synonym &rhs) const {
 
 bool Synonym::operator!=(const Synonym &rhs) const { return !(rhs == *this); }
 
-bool Synonym::IsValueEqualToAttribute(AttributeName attribute_name) const {
+bool Synonym::IsValueNotEqualToAttribute(AttributeName attribute_name) const {
   if ((entity_type_ == READ || entity_type_ == PRINT) &&
       attribute_name == AttributeName::VAR_NAME) {
-    return false;
+    return true;
   }
   if (entity_type_ == CALL && attribute_name == AttributeName::PROC_NAME) {
-    return false;
+    return true;
   }
-  return true;
+  return false;
 }
