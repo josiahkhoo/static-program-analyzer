@@ -27,6 +27,10 @@ class AttributeReference : public Reference {
 
   [[nodiscard]] Attribute::AttributeName GetAttributeName() const;
 
+  [[nodiscard]] bool IsAttributeTypeName() const;
+
+  [[nodiscard]] bool IsAttributeTypeInteger() const;
+
   [[nodiscard]] std::string GetValue() const;
 
  private:

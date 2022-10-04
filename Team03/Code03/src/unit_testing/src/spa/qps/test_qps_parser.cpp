@@ -20,11 +20,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::STATEMENT, "s");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Read Select' query") {
@@ -37,11 +38,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::READ, "r");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Print Select' query") {
@@ -54,11 +56,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::PRINT, "p");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Call Select' query") {
@@ -71,11 +74,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::CALL, "c");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'While Select' query") {
@@ -88,11 +92,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::WHILE, "w");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'If Select' query") {
@@ -105,11 +110,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::IF, "i");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Assign Select' query") {
@@ -124,11 +130,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::ASSIGN, "a");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Variable Select' query") {
@@ -143,11 +150,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::VARIABLE, "v");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Constant Select' query") {
@@ -162,11 +170,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::CONSTANT, "c");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Procedure Select' query") {
@@ -181,11 +190,12 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
 
     Synonym syn = Synonym(EntityType::PROCEDURE, "p");
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn});
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
     REQUIRE(res.GetSynonyms().size() == 1);
     REQUIRE(res.GetSynonyms()[0] == syn);
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   }
 
   SECTION("'Assign Variable Select' query") {
@@ -209,8 +219,9 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
     REQUIRE(res.GetSynonyms()[1] == syn_v);
 
     std::shared_ptr<SynonymSelect> expected_select =
-        std::make_shared<SynonymSelect>(std::vector{syn_v});
-    REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn_v);
+        std::make_shared<SynonymSelect>(
+            std::vector{Select::SynonymWithMaybeAttribute(syn_v)});
+    REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn_v);
   }
 }
 
@@ -247,10 +258,11 @@ TEST_CASE("Every entity type", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::VARIABLE, "variable");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   REQUIRE(res.GetSynonyms().size() == 8);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
 }
 
 TEST_CASE("'Assign Variable Statement Select' query", "[QPS Parser]") {
@@ -273,13 +285,14 @@ TEST_CASE("'Assign Variable Statement Select' query", "[QPS Parser]") {
   Synonym syn_var = Synonym(EntityType::VARIABLE, "v");
   Synonym syn_stmt = Synonym(EntityType::STATEMENT, "s");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn_assign});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn_assign)});
 
   REQUIRE(res.GetSynonyms().size() == 3);
   REQUIRE(res.GetSynonyms()[0] == syn_assign);
   REQUIRE(res.GetSynonyms()[1] == syn_var);
   REQUIRE(res.GetSynonyms()[2] == syn_stmt);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn_assign);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn_assign);
 }
 
 TEST_CASE("'Assign Variable Variable Select' query", "[QPS Parser]") {
@@ -301,13 +314,14 @@ TEST_CASE("'Assign Variable Variable Select' query", "[QPS Parser]") {
   Synonym syn_var1 = Synonym(EntityType::VARIABLE, "Select");
   Synonym syn_var2 = Synonym(EntityType::VARIABLE, "assign");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn_var1});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn_var1)});
 
   REQUIRE(res.GetSynonyms().size() == 3);
   REQUIRE(res.GetSynonyms()[0] == syn_assign);
   REQUIRE(res.GetSynonyms()[1] == syn_var1);
   REQUIRE(res.GetSynonyms()[2] == syn_var2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn_var1);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn_var1);
 }
 
 TEST_CASE("'Assign Select Follow' query", "[QPS Parser]") {
@@ -330,7 +344,8 @@ TEST_CASE("'Assign Select Follow' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -338,7 +353,7 @@ TEST_CASE("'Assign Select Follow' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == f.GetLeftHandSide());
@@ -366,8 +381,8 @@ TEST_CASE("'Assign Select FollowT' query", "[QPS Parser]") {
   QueryString res = qp.Parse(tokens_);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
-  std::shared_ptr<SynonymSelect> s =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+  std::shared_ptr<SynonymSelect> s = std::make_shared<SynonymSelect>(
+      std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -375,7 +390,7 @@ TEST_CASE("'Assign Select FollowT' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == f.GetLeftHandSide());
@@ -403,7 +418,8 @@ TEST_CASE("'Assign Select Parent' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref_1 = StatementReference();
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -411,7 +427,7 @@ TEST_CASE("'Assign Select Parent' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == p.GetLeftHandSide());
@@ -440,7 +456,8 @@ TEST_CASE("'Assign Select ParentT' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref_1 = StatementReference();
   StatementReference statement_ref_2 = StatementReference(syn);
@@ -448,7 +465,7 @@ TEST_CASE("'Assign Select ParentT' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == p.GetLeftHandSide());
@@ -495,7 +512,8 @@ TEST_CASE("'Variable Select UsesSStmt' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::VARIABLE, "v");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(1);
   EntityReference entity_ref = EntityReference(syn);
@@ -503,7 +521,7 @@ TEST_CASE("'Variable Select UsesSStmt' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == u.GetLeftHandSide());
@@ -552,7 +570,8 @@ TEST_CASE("'Variable Select UsesPIdent' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::VARIABLE, "v");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   EntityReference entity_ref_1 = EntityReference("identifier");
   EntityReference entity_ref_2 = EntityReference(syn);
@@ -560,7 +579,7 @@ TEST_CASE("'Variable Select UsesPIdent' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == u.GetLeftHandSide());
@@ -607,7 +626,8 @@ TEST_CASE("'Variable Select ModifiesSStmt' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::VARIABLE, "v");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(1);
   EntityReference entity_ref = EntityReference(syn);
@@ -615,7 +635,7 @@ TEST_CASE("'Variable Select ModifiesSStmt' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == m.GetLeftHandSide());
@@ -665,7 +685,8 @@ TEST_CASE("'Variable Select ModifiesPIdent' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::VARIABLE, "v");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   EntityReference entity_ref_1 = EntityReference("identifier");
   EntityReference entity_ref_2 = EntityReference(syn);
@@ -673,7 +694,7 @@ TEST_CASE("'Variable Select ModifiesPIdent' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == m.GetLeftHandSide());
@@ -703,7 +724,8 @@ TEST_CASE("'Procedure Select Calls' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::PROCEDURE, "p");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   EntityReference entity_ref_1 = EntityReference(syn);
   EntityReference entity_ref_2 =
@@ -712,7 +734,7 @@ TEST_CASE("'Procedure Select Calls' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 2);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == c.GetLeftHandSide());
@@ -743,7 +765,8 @@ TEST_CASE("'Procedure Select CallsT' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::PROCEDURE, "p");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   EntityReference entity_ref_1 = EntityReference(syn);
   EntityReference entity_ref_2 =
@@ -752,7 +775,7 @@ TEST_CASE("'Procedure Select CallsT' query", "[QPS Parser]") {
 
   REQUIRE(res.GetSynonyms().size() == 2);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == c.GetLeftHandSide());
@@ -802,7 +825,8 @@ TEST_CASE("`Assign PatternAssign Follow`", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   FollowsClause f = FollowsClause(statement_ref_1, statement_ref_2);
@@ -844,7 +868,8 @@ TEST_CASE("`Assign Follow PatternAssign`", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
   StatementReference statement_ref_1 = StatementReference(1);
   StatementReference statement_ref_2 = StatementReference(syn);
   FollowsClause f = FollowsClause(statement_ref_1, statement_ref_2);
@@ -1045,11 +1070,12 @@ TEST_CASE("'End-less' query", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   REQUIRE(res.GetSynonyms().size() == 1);
   REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
 }
 
 TEST_CASE("missing Select query", "[QPS Parser]") {
@@ -1094,7 +1120,8 @@ TEST_CASE("'Assign Select Follow Follow' query", "[QPS Parser]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a1");
   Synonym syn2 = Synonym(EntityType::ASSIGN, "a2");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
 
   StatementReference statement_ref = StatementReference(syn);
   StatementReference statement_ref_1 = StatementReference(syn1);
@@ -1106,7 +1133,7 @@ TEST_CASE("'Assign Select Follow Follow' query", "[QPS Parser]") {
   REQUIRE(res.GetSynonyms()[0] == syn);
   REQUIRE(res.GetSynonyms()[1] == syn1);
   REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSelect()->GetSynonyms()[0] == syn);
+  REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 2);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
               ->GetLeftHandSide() == f.GetLeftHandSide());
@@ -1165,7 +1192,8 @@ TEST_CASE("`Assign PatternAssign PatternAssign`", "[QPS Parser]") {
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
-      std::make_shared<SynonymSelect>(std::vector{syn});
+      std::make_shared<SynonymSelect>(
+          std::vector{Select::SynonymWithMaybeAttribute(syn)});
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .has_front_wildcard);

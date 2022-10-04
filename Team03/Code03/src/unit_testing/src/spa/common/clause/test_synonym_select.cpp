@@ -5,7 +5,8 @@
 TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
   SECTION("Return empty when QResult is empty and have synonym") {
     QResult q_result = QResult({}, {Synonym(EntityType::VARIABLE, "v")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v")});
+    SynonymSelect ss = SynonymSelect({Select::SynonymWithMaybeAttribute(
+        Synonym(EntityType::VARIABLE, "v"))});
     std::unordered_set<std::string> res = ss.GetResultSet(q_result);
     REQUIRE(res.empty());
   }
@@ -14,7 +15,8 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
       "synonym") {
     QResult q_result =
         QResult({{"123"}}, {Synonym(EntityType::VARIABLE, "v1")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v")});
+    SynonymSelect ss = SynonymSelect({Select::SynonymWithMaybeAttribute(
+        Synonym(EntityType::VARIABLE, "v"))});
     std::unordered_set<std::string> res = ss.GetResultSet(q_result);
     REQUIRE(res.empty());
   }
@@ -23,8 +25,10 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
       "MULTIPLE synonyms") {
     QResult q_result =
         QResult({{"123"}}, {Synonym(EntityType::VARIABLE, "v1")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1"),
-                                      Synonym(EntityType::VARIABLE, "v2")});
+    SynonymSelect ss = SynonymSelect(
+        {Select::SynonymWithMaybeAttribute(Synonym(EntityType::VARIABLE, "v1")),
+         Select::SynonymWithMaybeAttribute(
+             Synonym(EntityType::VARIABLE, "v2"))});
     std::unordered_set<std::string> res = ss.GetResultSet(q_result);
     REQUIRE(res.empty());
   }

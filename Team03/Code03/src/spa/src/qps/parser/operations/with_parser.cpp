@@ -27,14 +27,13 @@ std::shared_ptr<QueryOperation> WithParser::Parse(TokenBuilderPair data) {
       (aRef2.IsLineNumber() && aRef1.IsIdentifier())) {
     throw SemanticException("Ref comparison much be of same type");
   } else if (aRef1.IsSynonym() && aRef2.IsSynonym()) {
-    if (QueryParserUtil::CheckNameAttribute(aRef1) !=
-        QueryParserUtil::CheckNameAttribute(aRef2))
+    if (aRef1.IsAttributeTypeName() != aRef2.IsAttributeTypeName())
       throw SemanticException("Ref comparison much be of same type");
   } else if (aRef1.IsSynonym() && !aRef2.IsSynonym()) {
-    if (QueryParserUtil::CheckNameAttribute(aRef1) != aRef2.IsIdentifier())
+    if (aRef1.IsAttributeTypeName() != aRef2.IsIdentifier())
       throw SemanticException("Ref comparison much be of same type");
   } else if (aRef2.IsSynonym() && !aRef1.IsSynonym()) {
-    if (QueryParserUtil::CheckNameAttribute(aRef2) != aRef1.IsIdentifier())
+    if (aRef2.IsAttributeTypeName() != aRef1.IsIdentifier())
       throw SemanticException("Ref comparison much be of same type");
   }
 

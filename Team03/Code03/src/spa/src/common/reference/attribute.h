@@ -22,6 +22,10 @@ class Attribute {
 
   [[nodiscard]] AttributeName GetAttributeName() const;
 
+  [[nodiscard]] bool IsName() const;
+
+  [[nodiscard]] bool IsInteger() const;
+
  private:
   Synonym syn_;
   AttributeName name_;
