@@ -30,7 +30,7 @@ CFG CFGExtractorImpl::CreateCFG(const TNode& node) const {
     if (i == stmt_list_size - 1) {
       // Last in stmt_list
       cfg_stmt_nos.emplace_back(curr->GetStatementNumber());
-      
+
     }
   }
 

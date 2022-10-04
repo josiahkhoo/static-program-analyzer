@@ -17,13 +17,13 @@ class CFG {
           reverse_map,
       std::unordered_map<int, std::shared_ptr<CFGNode>> stmt_node_map);
 
-  [[nodiscard]] std::shared_ptr<CFGNode> GetNode(int stmt_no) const;
+  [[nodiscard]] std::shared_ptr<CFGNode> GetNode(int stmt_no);
 
   [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetNextNodes(
-      CFGNode cfg_node) const;
+      const std::shared_ptr<CFGNode>& cfg_node_ptr);
 
   [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetPrevNodes(
-      CFGNode cfg_node) const;
+      const std::shared_ptr<CFGNode>& cfg_node_ptr);
 
  private:
   std::unordered_map<std::shared_ptr<CFGNode>,
