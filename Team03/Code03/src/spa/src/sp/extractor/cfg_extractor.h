@@ -3,9 +3,9 @@
 
 #include <memory>
 
+#include "cfg.h"
 #include "common/cfg_node.h"
 #include "common/t_node.h"
-#include "cfg.h"
 
 class CFGExtractor {
  public:

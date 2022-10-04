@@ -8,6 +8,7 @@ class CFGNode {
   CFGNode(std::vector<int> statement_numbers);
 
   std::vector<int> GetStatementNumbers() const;
+
  private:
   std::vector<int> statement_numbers_;
 };

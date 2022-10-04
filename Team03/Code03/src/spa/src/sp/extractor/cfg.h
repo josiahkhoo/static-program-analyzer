@@ -8,23 +8,33 @@
 
 class CFG {
  public:
-  CFG (std::unordered_map<std::shared_ptr<CFGNode>, std::vector<std::shared_ptr<CFGNode>>> forward_map,
-      std::unordered_map<std::shared_ptr<CFGNode>, std::vector<std::shared_ptr<CFGNode>>> reverse_map,
+  CFG(std::unordered_map<std::shared_ptr<CFGNode>,
+                         std::vector<std::shared_ptr<CFGNode>>>
+          forward_map,
+      std::unordered_map<std::shared_ptr<CFGNode>,
+                         std::vector<std::shared_ptr<CFGNode>>>
+          reverse_map,
       std::unordered_map<int, std::shared_ptr<CFGNode>> stmt_node_map);
 
-  std::shared_ptr<CFGNode> GetNode(int stmt_no);
+  [[nodiscard]] std::shared_ptr<CFGNode> GetNode(int stmt_no) const;
 
-  std::shared_ptr<CFGNode> GetNextNode(CFGNode cfg_node);
+  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetNextNodes(CFGNode cfg_node) const;
 
-  std::shared_ptr<CFGNode> GetPrevNode(CFGNode cfg_node);
+  [[nodiscard]] std::vector<std::shared_ptr<CFGNode>> GetPrevNodes(CFGNode cfg_node) const;
 
   bool operator==(const CFG &rhs) const;
 
   bool operator!=(const CFG &rhs) const;
+
  private:
-  std::unordered_map<std::shared_ptr<CFGNode>, std::vector<std::shared_ptr<CFGNode>>> forward_map_;
-  std::unordered_map<std::shared_ptr<CFGNode>, std::vector<std::shared_ptr<CFGNode>>> reverse_map_;
+  std::unordered_map<std::shared_ptr<CFGNode>,
+                     std::vector<std::shared_ptr<CFGNode>>>
+      forward_map_;
+  std::unordered_map<std::shared_ptr<CFGNode>,
+                     std::vector<std::shared_ptr<CFGNode>>>
+      reverse_map_;
   std::unordered_map<int, std::shared_ptr<CFGNode>> stmt_node_map_;
+  std::string proc_name_;
 };
 
 #endif  // SPA_CFG_H
