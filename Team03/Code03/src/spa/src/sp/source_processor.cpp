@@ -26,7 +26,7 @@ void SourceProcessor::Process(const std::string &filename) {
 void SourceProcessor::StoreDesignExtractorResult(
     const DesignExtractorResult &design_extractor_result,
     StorablePkb &storable_pkb) {
-  storable_pkb_.Store(
+  storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetAssignEntities());
   storable_pkb.Store(
       design_extractor_result.GetEntityExtractorResult().GetCallEntities());
