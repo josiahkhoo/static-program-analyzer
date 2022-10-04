@@ -38,8 +38,10 @@ std::shared_ptr<Select> AttributeSelectParser::Parse(TokenBuilderPair data) {
   Token attribute_token = tokens->Peek();
   tokens->Expect(Token::IDENTIFIER);
 
-  Attribute::AttributeName attr_name =
-      QueryParserUtil::GetAttrName(attribute_token);
+  AttributeName attr_name = QueryParserUtil::GetAttrName(attribute_token);
+  if (attr_name == AttributeName::STMT_NO) {
+    tokens->Expect(Token::HASHTAG);
+  }
   Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {synonym,
                                                                     attr_name};
   std::shared_ptr<SynonymSelect> synSl = std::make_shared<SynonymSelect>(

@@ -49,7 +49,8 @@ test_array = (
     ("If Patterns only", "if_patterns_only"),
     ("While Patterns only", "while_patterns_only"),
     ("With only", "with_only"),
-    ("And and With", "and_with")
+    ("And and With", "and_with"),
+    ("Select attribute", "select_attribute")
 )
 
 overall_passed_test_cases = 0
