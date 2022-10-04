@@ -2,8 +2,8 @@
 #define SPA_DESIGN_EXTRACTOR_RESULT_H
 
 #include "abstraction_extractor_result.h"
-#include "entity_extractor_result.h"
 #include "cfg.h"
+#include "entity_extractor_result.h"
 
 class DesignExtractorResult {
  public:

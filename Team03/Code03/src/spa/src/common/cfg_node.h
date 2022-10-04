@@ -5,7 +5,7 @@
 
 class CFGNode {
  public:
-  CFGNode(std::vector<int> statement_numbers);
+  explicit CFGNode(std::vector<int> statement_numbers);
 
   [[nodiscard]] std::vector<int> GetStatementNumbers() const;
 

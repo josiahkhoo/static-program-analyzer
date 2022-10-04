@@ -1,8 +1,7 @@
 #include "design_extractor_impl.h"
 
 DesignExtractorImpl::DesignExtractorImpl(
-    const EntityExtractor &entity_extractor,
-    const CFGExtractor &cfg_extractor,
+    const EntityExtractor &entity_extractor, const CFGExtractor &cfg_extractor,
     const AbstractionExtractor &abstraction_extractor)
     : entity_extractor_(entity_extractor),
       cfg_extractor_(cfg_extractor),
