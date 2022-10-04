@@ -2,6 +2,7 @@
 #define SPA_ATTRIBUTE_REFERENCE_H
 
 #include "attribute.h"
+#include "common/reference/attribute_name.h"
 #include "identifier.h"
 #include "reference.h"
 
@@ -25,7 +26,7 @@ class AttributeReference : public Reference {
 
   [[nodiscard]] bool IsAttributeName() const;
 
-  [[nodiscard]] Attribute::AttributeName GetAttributeName() const;
+  [[nodiscard]] AttributeName GetAttributeName() const;
 
   [[nodiscard]] bool IsAttributeTypeName() const;
 

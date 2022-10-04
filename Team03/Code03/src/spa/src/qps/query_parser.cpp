@@ -1,8 +1,6 @@
 #include "query_parser.h"
 
-#include "common/clause/boolean_select.h"
 #include "common/clause/select.h"
-#include "common/clause/synonym_select.h"
 #include "common/entity/assign_entity.h"
 #include "qps/exceptions/syntax_exception.h"
 #include "qps/parser/operations/calls_parser.h"
@@ -20,6 +18,9 @@
 #include "qps/parser/operations/uses_s_parser.h"
 #include "qps/parser/operations/with_parser.h"
 #include "qps/parser/query_parser_util.h"
+#include "qps/parser/selects/attribute_select_parser.h"
+#include "qps/parser/selects/boolean_select_parser.h"
+#include "qps/parser/selects/synonym_select_parser.h"
 #include "qps/parser/token_builder_pair.h"
 
 QueryParser::QueryParser() = default;
@@ -59,16 +60,23 @@ void QueryParser::ParseSelect() {
     return;
   }
   tokens_->Expect("Select");
-  std::string syn_token = tokens_->PeekValue();
-  tokens_->Expect(Token::IDENTIFIER);
-  if (syn_token == "BOOLEAN") {
-    query_string_builder_.AddSelect(std::make_shared<BooleanSelect>());
+  TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
+
+  select_parsers_.push_back(std::make_shared<BooleanSelectParser>());
+  select_parsers_.push_back(std::make_shared<AttributeSelectParser>());
+  select_parsers_.push_back(std::make_shared<SynonymSelectParser>());
+
+  std::shared_ptr<Select> op;
+  for (const auto& clause_parser : select_parsers_) {
+    if (clause_parser->MatchParser(queryData)) {
+      op = clause_parser->Parse(queryData);
+      break;
+    }
+  }
+  if (op != nullptr) {
+    query_string_builder_.AddSelect(op);
   } else {
-    Select::SynonymWithMaybeAttribute synonym_with_maybe_attribute = {
-        query_string_builder_.GetSynonym(syn_token)};
-    query_string_builder_.AddSelect(std::make_shared<SynonymSelect>(
-        std::vector<Select::SynonymWithMaybeAttribute>{
-            synonym_with_maybe_attribute}));
+    throw SyntaxException("Expected a Select clause");
   }
 }
 

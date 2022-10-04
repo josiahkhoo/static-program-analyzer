@@ -15,7 +15,7 @@ class SynonymSelect : public Select {
       const override;
 
   [[nodiscard]] std::unordered_set<std::string> GetResultSet(
-      QResult q_result) const override;
+      const QResult &q_result, const QueryablePkb &pkb) const override;
 
  private:
   std::vector<SynonymWithMaybeAttribute> synonyms_;

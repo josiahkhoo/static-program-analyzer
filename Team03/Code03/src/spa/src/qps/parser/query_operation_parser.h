@@ -5,14 +5,11 @@
 #include "qps/parser/token_builder_pair.h"
 #include "qps/query_string_builder.h"
 #include "qps/token_handler.h"
+#include "query_component_parser.h"
 
 /// Interface class for parsing of query operations
-class QueryOperationParser
-    : public Parser<std::shared_ptr<QueryOperation>, TokenBuilderPair> {
+class QueryOperationParser : public QueryComponentParser<QueryOperation> {
  public:
-  /// Checks if tokens match grammar rules of QueryOperation object
-  [[nodiscard]] virtual bool MatchParser(
-      const TokenBuilderPair& data) const = 0;
   /// Converts tokens into QueryOperation object
   std::shared_ptr<QueryOperation> Parse(TokenBuilderPair data) override = 0;
 };

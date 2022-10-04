@@ -21,6 +21,7 @@
 #include "common/entity/variable_entity.h"
 #include "common/entity/while_entity.h"
 #include "common/queryable_pkb.h"
+#include "common/reference/attribute_name.h"
 #include "common/storable_pkb.h"
 #include "pkb/entity_store/entity_manager.h"
 #include "pkb/pattern_store/pattern_manager.h"
@@ -201,11 +202,11 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::string QueryWithAttributeFromStatement(
       EntityType type, int statement_number) const override;
   std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name,
+      EntityType type, AttributeName name,
       std::string identifier) const override;
-  std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name,
-      int number) const override;
+  std::unordered_set<std::string> QueryWithAttribute(EntityType type,
+                                                     AttributeName name,
+                                                     int number) const override;
 
  private:
   EntityManager entity_manager_;

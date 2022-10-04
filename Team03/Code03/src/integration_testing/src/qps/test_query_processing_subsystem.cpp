@@ -1,8 +1,8 @@
 #include <unordered_set>
 
-#include "PKB.h"
 #include "catch.hpp"
 #include "common/lexer.h"
+#include "pkb/pkb.h"
 #include "qps/evaluator.h"
 #include "qps/planner.h"
 #include "qps/query_parser.h"

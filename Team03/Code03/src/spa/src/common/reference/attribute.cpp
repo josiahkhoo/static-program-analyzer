@@ -2,7 +2,9 @@
 
 #include <utility>
 
-std::unordered_map<std::string, Attribute::AttributeName>
+#include "common/reference/attribute_name.h"
+
+std::unordered_map<std::string, AttributeName>
     Attribute::attrName_representation = {
         {"procName", PROC_NAME},
         {"varName", VAR_NAME},
@@ -15,7 +17,7 @@ Attribute::Attribute(Synonym syn, AttributeName name)
 
 Synonym Attribute::GetSynonym() const { return syn_; }
 
-Attribute::AttributeName Attribute::GetAttributeName() const { return name_; }
+AttributeName Attribute::GetAttributeName() const { return name_; }
 
 bool Attribute::IsName() const {
   return name_ == VAR_NAME || name_ == PROC_NAME;
