@@ -14,7 +14,7 @@ std::vector<Select::SynonymWithMaybeAttribute> SynonymSelect::GetSynonyms()
 }
 
 std::unordered_set<std::string> SynonymSelect::GetResultSet(
-    QResult q_result) const {
+    const QResult& q_result, const QueryablePkb& pkb) const {
   auto retrieve_first_op = [](const SynonymWithMaybeAttribute& syn) {
     return syn.synonym;
   };

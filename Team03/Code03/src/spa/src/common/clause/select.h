@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "common/queryable_pkb.h"
 #include "common/reference/attribute.h"
 #include "common/reference/synonym.h"
 #include "qps/qnodes/q_result.h"
@@ -27,7 +28,7 @@ class Select {
       const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> GetResultSet(
-      QResult q_result) const = 0;
+      const QResult &q_result, const QueryablePkb &pkb) const = 0;
 };
 
 #endif  // SPA_SELECT_H
