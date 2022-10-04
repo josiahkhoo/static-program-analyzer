@@ -8,7 +8,7 @@ class BooleanSelect : public Select {
   [[nodiscard]] std::vector<SynonymWithMaybeAttribute> GetSynonyms()
       const override;
   [[nodiscard]] std::unordered_set<std::string> GetResultSet(
-      QResult q_result) const override;
+      const QResult &q_result, const QueryablePkb &pkb) const override;
 };
 
 #endif  // SPA_BOOLEAN_SELECT_H

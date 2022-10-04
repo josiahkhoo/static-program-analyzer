@@ -3,6 +3,7 @@
 
 #include "common/entity/entity_type.h"
 #include "common/reference/attribute.h"
+#include "common/reference/attribute_name.h"
 #include "common/reference/expression.h"
 #include "string"
 #include "unordered_set"
@@ -161,13 +162,12 @@ class QueryablePkb {
   /// Query entities that matches attribute identifier
   /// Treats x.procName = "name" &  with "name" = x.procName the same
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name,
-      std::string identifier) const = 0;
+      EntityType type, AttributeName name, std::string identifier) const = 0;
 
   /// Query entities that matches attribute number value or stmt#
   /// Treats x.value = 1 &  with 2 = x.stmt# the same
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, Attribute::AttributeName name, int number) const = 0;
+      EntityType type, AttributeName name, int number) const = 0;
 };
 
 #endif  // SPA_QUERYABLE_PKB_H

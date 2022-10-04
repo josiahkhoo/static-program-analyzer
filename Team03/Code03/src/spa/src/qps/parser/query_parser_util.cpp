@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 
+#include "common/reference/attribute_name.h"
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
 #include "qps/exceptions/semantic_exception.h"
@@ -211,18 +212,18 @@ bool QueryParserUtil::CheckProcedureClause(
 }
 
 // Map of allowed Synonym attributes
-std::unordered_map<EntityType, std::unordered_set<Attribute::AttributeName>>
+std::unordered_map<EntityType, std::unordered_set<AttributeName>>
     entityAllowedAttributes = {
-        {PROCEDURE, {Attribute::PROC_NAME}},
-        {CALL, {Attribute::PROC_NAME, Attribute::STMT_NO}},
-        {VARIABLE, {Attribute::VAR_NAME}},
-        {READ, {Attribute::VAR_NAME, Attribute::STMT_NO}},
-        {PRINT, {Attribute::VAR_NAME, Attribute::STMT_NO}},
-        {CONSTANT, {Attribute::VALUE}},
-        {STATEMENT, {Attribute::STMT_NO}},
-        {IF, {Attribute::STMT_NO}},
-        {WHILE, {Attribute::STMT_NO}},
-        {ASSIGN, {Attribute::STMT_NO}},
+        {PROCEDURE, {AttributeName::PROC_NAME}},
+        {CALL, {AttributeName::PROC_NAME, AttributeName::STMT_NO}},
+        {VARIABLE, {AttributeName::VAR_NAME}},
+        {READ, {AttributeName::VAR_NAME, AttributeName::STMT_NO}},
+        {PRINT, {AttributeName::VAR_NAME, AttributeName::STMT_NO}},
+        {CONSTANT, {AttributeName::VALUE}},
+        {STATEMENT, {AttributeName::STMT_NO}},
+        {IF, {AttributeName::STMT_NO}},
+        {WHILE, {AttributeName::STMT_NO}},
+        {ASSIGN, {AttributeName::STMT_NO}},
 };
 
 AttributeReference QueryParserUtil::ExtractAttrRef(
@@ -245,13 +246,13 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
     tokens->Expect(Token::PERIOD);
     next = tokens->Peek();
     tokens->Expect(Token::IDENTIFIER);
-    Attribute::AttributeName attrName = GetAttrName(next);
-    if (attrName == Attribute::STMT_NO) {
+    AttributeName attrName = GetAttrName(next);
+    if (attrName == AttributeName::STMT_NO) {
       tokens->Expect(Token::HASHTAG);
     }
     // Check if attribute and synonym match
     if (entityAllowedAttributes.count(syn.GetEntityType())) {
-      std::unordered_set<Attribute::AttributeName> map =
+      std::unordered_set<AttributeName> map =
           entityAllowedAttributes[syn.GetEntityType()];
       if (map.count(attrName)) {
         Attribute attr = Attribute(syn, attrName);
@@ -262,7 +263,7 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
   }
 }
 
-Attribute::AttributeName QueryParserUtil::GetAttrName(const Token& next) {
+AttributeName QueryParserUtil::GetAttrName(const Token& next) {
   std::string name = next.GetValue();
   if (Attribute::attrName_representation.count(name)) {
     return Attribute::attrName_representation[name];

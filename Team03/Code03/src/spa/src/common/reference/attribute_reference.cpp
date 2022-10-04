@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "common/reference/attribute_name.h"
+
 AttributeReference::AttributeReference(Identifier identifier)
     : identifier_(identifier), Reference(false) {}
 
@@ -29,7 +31,7 @@ Identifier AttributeReference::GetIdentifier() const {
 
 bool AttributeReference::IsAttributeName() const { return attr_.has_value(); }
 
-Attribute::AttributeName AttributeReference::GetAttributeName() const {
+AttributeName AttributeReference::GetAttributeName() const {
   assert(IsAttributeName());
   return attr_.value().GetAttributeName();
 }

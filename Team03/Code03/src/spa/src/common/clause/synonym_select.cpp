@@ -14,14 +14,28 @@ std::vector<Select::SynonymWithMaybeAttribute> SynonymSelect::GetSynonyms()
 }
 
 std::unordered_set<std::string> SynonymSelect::GetResultSet(
-    QResult q_result) const {
-  auto retrieve_first_op = [](const SynonymWithMaybeAttribute& syn) {
-    return syn.synonym;
-  };
+    const QResult& q_result, const QueryablePkb& pkb) const {
   std::vector<Synonym> synonyms;
-  std::transform(synonyms_.begin(), synonyms_.end(),
-                 std::back_inserter(synonyms), retrieve_first_op);
+  std::transform(
+      synonyms_.begin(), synonyms_.end(), std::back_inserter(synonyms),
+      [](const SynonymWithMaybeAttribute& syn) { return syn.synonym; });
   std::vector<std::vector<std::string>> rows = q_result.GetRows(synonyms);
+  // Check if its an attribute is needed instead of the syn itself
+  for (int i = 0; i < synonyms_.size(); i++) {
+    auto syn = synonyms_[i];
+    if (syn.maybe_attribute.has_value()) {
+      auto attribute = syn.maybe_attribute.value();
+      if (syn.synonym.IsValueNotEqualToAttribute(attribute)) {
+        std::transform(rows.begin(), rows.end(), rows.begin(),
+                       [&syn, &i, &pkb](std::vector<std::string>& row) {
+                         // Replace entry in row with attribute
+                         row[i] = pkb.QueryWithAttributeFromStatement(
+                             syn.synonym.GetEntityType(), stoi(row[i]));
+                         return row;
+                       });
+      }
+    }
+  }
   std::unordered_set<std::string> result_set;
   for (auto row : rows) {
     // Concat inside of rows with space
