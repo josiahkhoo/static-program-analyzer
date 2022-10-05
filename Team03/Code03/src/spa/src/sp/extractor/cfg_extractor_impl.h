@@ -12,5 +12,17 @@ class CFGExtractorImpl : public CFGExtractor {
 
  private:
   [[nodiscard]] CFG CreateCFG(const TNode &node) const;
+  std::vector<std::shared_ptr<CFGNode>> RecursivelyTraverseAST(
+      int start, std::vector<std::shared_ptr<TNode>> &children,
+      std::vector<std::shared_ptr<CFGNode>> const &key_node_ptrs,
+      std::shared_ptr<CFGNode> const &while_ptr,
+      std::vector<int> cfg_stmt_nos,
+      std::unordered_map<std::shared_ptr<CFGNode>,
+                         std::unordered_set<std::shared_ptr<CFGNode>>>
+          &forward_map,
+      std::unordered_map<std::shared_ptr<CFGNode>,
+                         std::unordered_set<std::shared_ptr<CFGNode>>>
+          &reverse_map,
+      std::unordered_map<int, std::shared_ptr<CFGNode>> &stmt_node_map) const;
 };
 #endif  // SPA_CFG_EXTRACTOR_IMPL_H
