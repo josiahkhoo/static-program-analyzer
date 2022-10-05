@@ -324,7 +324,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     auto next_nodes7 = first_cfg.GetNextNodes(node7);
     REQUIRE(next_nodes7.empty());
    }
-   
+
   SECTION("Extract statements nested if node 2") {
      std::string input = "procedure p "
          "{ "
@@ -1305,108 +1305,161 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes7.empty());
   }
 
-//  SECTION("Extract statements before and after if node") {
-//    std::string input =
-//        "procedure p "
-//        "{"
-//        "if (i == 0) {"
-//        "while (z == 0) {"
-//        "while (x == 0) {"
-//        "x = 1;"
-//        "}"
-//        "s = 1;"
-//        "}"
-//        "s = 1;"
-//        "}"
-//        "s = 1;"
-//        "}";
-//    std::vector<Token> tokens = lexer.LexLine(input);
-//    tokens.emplace_back(Token::END);
-//    auto ast = parser.Parse(tokens);
-//    std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
-//    CFG first_cfg = res[0];
-//
-//    //Compare statement numbers for each node
-//    auto node1 = first_cfg.GetNode(1);
-//    std::vector<int> v1 = {1};
-//    REQUIRE(node1->GetStatementNumbers() == v1);
-//    auto node2 = first_cfg.GetNode(2);
-//    std::vector<int> v2 = {2};
-//    REQUIRE(node2->GetStatementNumbers() == v2);
-//    auto node3 = first_cfg.GetNode(3);
-//    std::vector<int> v3 = {3};
-//    REQUIRE(node3->GetStatementNumbers() == v3);
-//    auto node4 = first_cfg.GetNode(4);
-//    std::vector<int> v4 = {4};
-//    REQUIRE(node4->GetStatementNumbers() == v4);
-//    auto node5 = first_cfg.GetNode(5);
-//    std::vector<int> v5 = {5};
-//    REQUIRE(node5->GetStatementNumbers() == v5);
-//    auto node6 = first_cfg.GetNode(6);
-//    std::vector<int> v6 = {6};
-//    REQUIRE(node6->GetStatementNumbers() == v6);
-//    auto node7 = first_cfg.GetNode(7);
-//    std::vector<int> v7 = {7};
-//    REQUIRE(node7->GetStatementNumbers() == v7);
-//
-//    // Compare each next CFGNode
-//    auto next_nodes1 = first_cfg.GetNextNodes(node1);
-//    std::vector<CFGNode> res_nodes1;
-//    for (auto & node : next_nodes1) {
-//      res_nodes1.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes1.size() == 2);
-//    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) != res_nodes1.end());
-//    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({7})) != res_nodes1.end());
-//
-//    auto next_nodes2 = first_cfg.GetNextNodes(node2);
-//    std::vector<CFGNode> res_nodes2;
-//    for (auto & node : next_nodes2) {
-//      res_nodes2.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes2.size() == 2);
-//    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) != res_nodes2.end());
-//    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6})) != res_nodes2.end());
-//
-//    auto next_nodes3 = first_cfg.GetNextNodes(node3);
-//    std::vector<CFGNode> res_nodes3;
-//    for (auto & node : next_nodes3) {
-//      res_nodes3.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes3.size() == 2);
-//    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) != res_nodes3.end());
-//    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) != res_nodes3.end());
-//
-//    auto next_nodes4 = first_cfg.GetNextNodes(node4);
-//    std::vector<CFGNode> res_nodes4;
-//    for (auto & node : next_nodes4) {
-//      res_nodes4.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes4.size() == 1);
-//    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) != res_nodes4.end());
-//
-//    auto next_nodes5 = first_cfg.GetNextNodes(node5);
-//    std::vector<CFGNode> res_nodes5;
-//    for (auto & node : next_nodes5) {
-//      res_nodes5.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes5.size() == 1);
-//    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({2})) != res_nodes5.end());
-//
-//    auto next_nodes6 = first_cfg.GetNextNodes(node6);
-//    std::vector<CFGNode> res_nodes6;
-//    for (auto & node : next_nodes6) {
-//      res_nodes6.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes6.size() == 1);
-//    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({1})) != res_nodes6.end());
-//
-//    auto next_nodes7 = first_cfg.GetNextNodes(node7);
-//    std::vector<CFGNode> res_nodes7;
-//    for (auto & node : next_nodes7) {
-//      res_nodes7.emplace_back(*node);
-//    }
-//    REQUIRE(res_nodes7.empty());
-//  }
-//
+  SECTION("Extract statements if-while nested node") {
+    std::string input =
+        "procedure p "
+        "{"
+        "if (i == 0) then {"
+          "x = 1;"
+        "} else {"
+          "while (x == 0) {"
+            "x = 2;"
+          "}"
+        "}"
+        "z = 1;"
+        "}";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    auto ast = parser.Parse(tokens);
+    std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
+    CFG first_cfg = res[0];
+
+    //Compare statement numbers for each node
+    auto node1 = first_cfg.GetNode(1);
+    std::vector<int> v1 = {1};
+    REQUIRE(node1->GetStatementNumbers() == v1);
+    auto node2 = first_cfg.GetNode(2);
+    std::vector<int> v2 = {2};
+    REQUIRE(node2->GetStatementNumbers() == v2);
+    auto node3 = first_cfg.GetNode(3);
+    std::vector<int> v3 = {3};
+    REQUIRE(node3->GetStatementNumbers() == v3);
+    auto node4 = first_cfg.GetNode(4);
+    std::vector<int> v4 = {4};
+    REQUIRE(node4->GetStatementNumbers() == v4);
+    auto node5 = first_cfg.GetNode(5);
+    std::vector<int> v5 = {5};
+    REQUIRE(node5->GetStatementNumbers() == v5);
+
+    // Compare each next CFGNode
+    auto next_nodes1 = first_cfg.GetNextNodes(node1);
+    std::vector<CFGNode> res_nodes1;
+    for (auto & node : next_nodes1) {
+      res_nodes1.emplace_back(*node);
+    }
+    REQUIRE(res_nodes1.size() == 2);
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) != res_nodes1.end());
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) != res_nodes1.end());
+
+    auto next_nodes2 = first_cfg.GetNextNodes(node2);
+    std::vector<CFGNode> res_nodes2;
+    for (auto & node : next_nodes2) {
+      res_nodes2.emplace_back(*node);
+    }
+    REQUIRE(res_nodes2.size() == 1);
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({5})) != res_nodes2.end());
+
+    auto next_nodes3 = first_cfg.GetNextNodes(node3);
+    std::vector<CFGNode> res_nodes3;
+    for (auto & node : next_nodes3) {
+      res_nodes3.emplace_back(*node);
+    }
+    REQUIRE(res_nodes3.size() == 2);
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) != res_nodes3.end());
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) != res_nodes3.end());
+
+    auto next_nodes4 = first_cfg.GetNextNodes(node4);
+    std::vector<CFGNode> res_nodes4;
+    for (auto & node : next_nodes4) {
+      res_nodes4.emplace_back(*node);
+    }
+    REQUIRE(res_nodes4.size() == 1);
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) != res_nodes4.end());
+
+    auto next_nodes5 = first_cfg.GetNextNodes(node5);
+    std::vector<CFGNode> res_nodes5;
+    for (auto & node : next_nodes5) {
+      res_nodes5.emplace_back(*node);
+    }
+    REQUIRE(res_nodes5.empty());
+  }
+
+  SECTION("Extract statements while-if nested node") {
+    std::string input =
+        "procedure p "
+        "{"
+        "while (i == 0) {"
+          "if (x == 0) then {"
+            "x = 1;"
+          "} else {"
+            "x = 2;"
+          "}"
+        "}"
+        "z = 1;"
+        "}";
+    std::vector<Token> tokens = lexer.LexLine(input);
+    tokens.emplace_back(Token::END);
+    auto ast = parser.Parse(tokens);
+    std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
+    CFG first_cfg = res[0];
+
+    //Compare statement numbers for each node
+    auto node1 = first_cfg.GetNode(1);
+    std::vector<int> v1 = {1};
+    REQUIRE(node1->GetStatementNumbers() == v1);
+    auto node2 = first_cfg.GetNode(2);
+    std::vector<int> v2 = {2};
+    REQUIRE(node2->GetStatementNumbers() == v2);
+    auto node3 = first_cfg.GetNode(3);
+    std::vector<int> v3 = {3};
+    REQUIRE(node3->GetStatementNumbers() == v3);
+    auto node4 = first_cfg.GetNode(4);
+    std::vector<int> v4 = {4};
+    REQUIRE(node4->GetStatementNumbers() == v4);
+    auto node5 = first_cfg.GetNode(5);
+    std::vector<int> v5 = {5};
+    REQUIRE(node5->GetStatementNumbers() == v5);
+
+    // Compare each next CFGNode
+    auto next_nodes1 = first_cfg.GetNextNodes(node1);
+    std::vector<CFGNode> res_nodes1;
+    for (auto & node : next_nodes1) {
+      res_nodes1.emplace_back(*node);
+    }
+    REQUIRE(res_nodes1.size() == 2);
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) != res_nodes1.end());
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({5})) != res_nodes1.end());
+
+    auto next_nodes2 = first_cfg.GetNextNodes(node2);
+    std::vector<CFGNode> res_nodes2;
+    for (auto & node : next_nodes2) {
+      res_nodes2.emplace_back(*node);
+    }
+    REQUIRE(res_nodes2.size() == 2);
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) != res_nodes2.end());
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) != res_nodes2.end());
+
+    auto next_nodes3 = first_cfg.GetNextNodes(node3);
+    std::vector<CFGNode> res_nodes3;
+    for (auto & node : next_nodes3) {
+      res_nodes3.emplace_back(*node);
+    }
+    REQUIRE(res_nodes3.size() == 1);
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({1})) != res_nodes3.end());
+
+    auto next_nodes4 = first_cfg.GetNextNodes(node4);
+    std::vector<CFGNode> res_nodes4;
+    for (auto & node : next_nodes4) {
+      res_nodes4.emplace_back(*node);
+    }
+    REQUIRE(res_nodes4.size() == 1);
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({1})) != res_nodes4.end());
+
+    auto next_nodes5 = first_cfg.GetNextNodes(node5);
+    std::vector<CFGNode> res_nodes5;
+    for (auto & node : next_nodes5) {
+      res_nodes5.emplace_back(*node);
+    }
+    REQUIRE(res_nodes5.empty());
+  }
 }

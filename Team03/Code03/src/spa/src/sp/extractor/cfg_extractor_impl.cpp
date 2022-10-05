@@ -89,13 +89,13 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
           }
         }
       }
-      if (while_ptr != nullptr && i == stmt_list_size - 1) {
-        std::cout << "linking " << curr_ptr->GetStatementNumbers()[0] << " to " << while_ptr->GetStatementNumbers()[0] << std::endl;
-        forward_map[curr_ptr].emplace(while_ptr);
-      }
 
       // If current node is while
       if (curr->GetType() == TNode::While) {
+        if (while_ptr != nullptr && i == stmt_list_size - 1) {
+          std::cout << "linking " << curr_ptr->GetStatementNumbers()[0] << " to " << while_ptr->GetStatementNumbers()[0] << std::endl;
+          forward_map[curr_ptr].emplace(while_ptr);
+        }
         std::cout << "Processing while\n";
         // Goes in while children statements
         auto while_children = curr->GetChildren()[1]->GetChildren();
