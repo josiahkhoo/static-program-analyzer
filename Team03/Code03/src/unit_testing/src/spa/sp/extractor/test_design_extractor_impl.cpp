@@ -18,8 +18,9 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
   std::vector<CFG> cfgs = {};
   When(Method(mock_cfg_extractor, Extract)).Return(cfgs);
 
-  DesignExtractorImpl extractor_under_test = DesignExtractorImpl(
-      mock_entity_extractor.get(), mock_cfg_extractor.get(), mock_abstraction_extractor.get());
+  DesignExtractorImpl extractor_under_test =
+      DesignExtractorImpl(mock_entity_extractor.get(), mock_cfg_extractor.get(),
+                          mock_abstraction_extractor.get());
 
   TNode test_node = TNode(1, TNode::Program, 0, "");
   SECTION("Calls entity extractor and abstraction extractor") {
