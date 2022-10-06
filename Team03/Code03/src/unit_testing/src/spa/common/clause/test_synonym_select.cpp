@@ -164,4 +164,22 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
     REQUIRE(res.find("y 12") != res.end());
     REQUIRE(res.find("z 13") != res.end());
   }
+  SECTION(
+      "Return results when QResult is non-empty and contains selected MULTIPLE "
+      "synonyms that are the same") {
+    Mock<QueryablePkb> queryable_pkb_stub;
+    QResult q_result = QResult(
+        {{"v11", "v21", "v31"}, {"v12", "v22", "v32"}, {"v13", "v23", "v33"}},
+        {Synonym(EntityType::VARIABLE, "v1"),
+         Synonym(EntityType::VARIABLE, "v2"),
+         Synonym(EntityType::VARIABLE, "v3")});
+    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1"),
+                                      Synonym(EntityType::VARIABLE, "v1")});
+    std::unordered_set<std::string> res =
+        ss.GetResultSet(q_result, queryable_pkb_stub.get());
+    REQUIRE(res.size() == 3);
+    REQUIRE(res.find("v11 v11") != res.end());
+    REQUIRE(res.find("v12 v12") != res.end());
+    REQUIRE(res.find("v13 v13") != res.end());
+  }
 }
