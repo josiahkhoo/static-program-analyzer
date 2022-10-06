@@ -77,8 +77,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       if_pattern_abstraction_extractor, while_pattern_abstraction_extractor,
       uses_abstraction_extractor, modifies_abstraction_extractor);
 
-  DesignExtractorImpl design_extractor =
-      DesignExtractorImpl(entity_extractor, cfg_extractor, abstraction_extractor);
+  DesignExtractorImpl design_extractor = DesignExtractorImpl(
+      entity_extractor, cfg_extractor, abstraction_extractor);
 
   SourceProcessor source_processor_under_test =
       SourceProcessor(lexer, simple_parser, design_extractor, pkb);
