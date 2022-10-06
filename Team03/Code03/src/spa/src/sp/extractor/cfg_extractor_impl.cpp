@@ -26,10 +26,19 @@ CFG CFGExtractorImpl::CreateCFG(const TNode& node) const {
 
   auto stmt_list_children = node.GetChildren()[0]->GetChildren();
   std::vector<int> cfg_stmt_nos;
+  std::shared_ptr<CFGNode> while_ptr = nullptr;
 
-  RecursivelyTraverseAST(0, stmt_list_children, {}, nullptr, cfg_stmt_nos,
+  RecursivelyTraverseAST(0, stmt_list_children, {}, while_ptr, cfg_stmt_nos,
                          forward_map, reverse_map, stmt_node_map);
 
+  //Creation of reverse map using forward map
+  for (auto & key : forward_map) {
+    auto first = key.first;
+    auto second = key.second;
+    for (auto & s : second) {
+      reverse_map[s].emplace(first);
+    }
+  }
   CFG cfg = CFG(proc_name, forward_map, reverse_map, stmt_node_map);
   return cfg;
 }
@@ -37,7 +46,7 @@ CFG CFGExtractorImpl::CreateCFG(const TNode& node) const {
 std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
     int start, std::vector<std::shared_ptr<TNode>>& children,
     std::vector<std::shared_ptr<CFGNode>> const &key_node_ptrs,
-    std::shared_ptr<CFGNode> const &while_ptr, std::vector<int> cfg_stmt_nos,
+    std::shared_ptr<CFGNode> &while_ptr, std::vector<int> cfg_stmt_nos,
     std::unordered_map<std::shared_ptr<CFGNode>,
                        std::unordered_set<std::shared_ptr<CFGNode>>>
         &forward_map,
@@ -92,16 +101,18 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
 
       // If current node is while
       if (curr->GetType() == TNode::While) {
+        std::cout << "Processing while\n";
         if (while_ptr != nullptr && i == stmt_list_size - 1) {
           std::cout << "linking " << curr_ptr->GetStatementNumbers()[0] << " to " << while_ptr->GetStatementNumbers()[0] << std::endl;
           forward_map[curr_ptr].emplace(while_ptr);
         }
-        std::cout << "Processing while\n";
         // Goes in while children statements
         auto while_children = curr->GetChildren()[1]->GetChildren();
         std::cout << "Recursing while children\n";
-        RecursivelyTraverseAST(0, while_children, {curr_ptr}, curr_ptr, {},
+        auto new_while_ptr = curr_ptr;
+        RecursivelyTraverseAST(0, while_children, {curr_ptr}, new_while_ptr, {},
                                forward_map, reverse_map, stmt_node_map);
+//
         // Continue out of while if while is not the last in og stmt list
         if (i != stmt_list_size - 1) {
           std::cout << "Recursing statement after while\n";
@@ -121,6 +132,11 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         // Goes in 'then' branch children statements
         auto then_children = curr->GetChildren()[1]->GetChildren();
         std::cout<< "Recursing then branch\n";
+        //If there is statements after if, save while_ptr for later and unbind while ptr from children
+        auto after_if_while_ptr = while_ptr;
+        if (i != stmt_list_size - 1) {
+          while_ptr = nullptr;
+        }
         auto last_if_node_ptrs =
             RecursivelyTraverseAST(0, then_children, {curr_ptr}, while_ptr, {},
                                    forward_map, reverse_map, stmt_node_map);
@@ -143,7 +159,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
           start = i + 1;
           auto last_ptrs2 = RecursivelyTraverseAST(
               start, children, new_combined_ptrs,
-              while_ptr, {}, forward_map, reverse_map, stmt_node_map);
+              after_if_while_ptr, {}, forward_map, reverse_map, stmt_node_map);
           return last_ptrs2;
         }
         return new_combined_ptrs;
@@ -166,9 +182,6 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
       if (!key_node_ptrs.empty()) {
         std::cout << "Processing last statement\n";
         for (auto& ptr : key_node_ptrs) {
-          if (ptr == nullptr) {
-            std::cout << "null\n";
-          }
           std::cout << "linking " << ptr->GetStatementNumbers()[0] << " to " << cfg_node_ptr->GetStatementNumbers()[0] << std::endl;
           forward_map[ptr].emplace(cfg_node_ptr);
         }

@@ -15,7 +15,7 @@ class CFGExtractorImpl : public CFGExtractor {
   std::vector<std::shared_ptr<CFGNode>> RecursivelyTraverseAST(
       int start, std::vector<std::shared_ptr<TNode>> &children,
       std::vector<std::shared_ptr<CFGNode>> const &key_node_ptrs,
-      std::shared_ptr<CFGNode> const &while_ptr,
+      std::shared_ptr<CFGNode> &while_ptr,
       std::vector<int> cfg_stmt_nos,
       std::unordered_map<std::shared_ptr<CFGNode>,
                          std::unordered_set<std::shared_ptr<CFGNode>>>
