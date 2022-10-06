@@ -1,7 +1,5 @@
 #include "cfg_extractor_impl.h"
 
-#include <iostream>
-
 CFGExtractorImpl::CFGExtractorImpl() = default;
 
 std::vector<CFG> CFGExtractorImpl::Extract(const TNode& ast) const {
@@ -83,24 +81,16 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         // prev nodes
         if (!key_node_ptrs.empty()) {
           for (auto& key_node_ptr : key_node_ptrs) {
-            std::cout << "linking " << key_node_ptr->GetStatementNumbers()[0]
-                      << " to " << prev_ptr->GetStatementNumbers()[0]
-                      << std::endl;
             forward_map[key_node_ptr].emplace(prev_ptr);
           }
         }
         // Links prev node to curr node
-        std::cout << "linking " << prev_ptr->GetStatementNumbers()[0] << " to "
-                  << curr_ptr->GetStatementNumbers()[0] << std::endl;
         forward_map[prev_ptr].emplace(curr_ptr);
       } else {
         // if there is past nodes that need linking but no stmts before it, it
         // must be a while or if node hence link prev node to curr node
         if (!key_node_ptrs.empty()) {
           for (auto& key_node_ptr : key_node_ptrs) {
-            std::cout << "linking " << key_node_ptr->GetStatementNumbers()[0]
-                      << " to " << curr_ptr->GetStatementNumbers()[0]
-                      << std::endl;
             forward_map[key_node_ptr].emplace(curr_ptr);
           }
         }
@@ -108,24 +98,18 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
 
       // If current node is while
       if (curr->GetType() == TNode::While) {
-        std::cout << "Processing while\n";
         // Check if this while node has a parent while node
         if (while_ptr != nullptr && i == stmt_list_size - 1) {
-          std::cout << "linking " << curr_ptr->GetStatementNumbers()[0]
-                    << " to " << while_ptr->GetStatementNumbers()[0]
-                    << std::endl;
           forward_map[curr_ptr].emplace(while_ptr);
         }
         // Goes in while children statements
         auto while_children = curr->GetChildren()[1]->GetChildren();
-        std::cout << "Recursing while children\n";
         auto new_while_ptr = curr_ptr;
         RecursivelyTraverseAST(0, while_children, {curr_ptr}, new_while_ptr, {},
                                forward_map, reverse_map, stmt_node_map);
 
         // Continue out of while if while is not the last in og stmt list
         if (i != stmt_list_size - 1) {
-          std::cout << "Recursing statement after while\n";
           start = i + 1;
           auto last_ptr =
               RecursivelyTraverseAST(start, children, {curr_ptr}, while_ptr, {},
@@ -139,7 +123,6 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
 
       // If current node is If
       if (curr->GetType() == TNode::IfElseThen) {
-        std::cout << "Processing if\n";
         // If there is statements after if, save while_ptr for later and unbind
         // while ptr from children
         auto after_if_while_ptr = while_ptr;
@@ -148,26 +131,22 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         }
         // Goes in 'then' branch children statements
         auto then_children = curr->GetChildren()[1]->GetChildren();
-        std::cout << "Recursing then branch\n";
         auto last_if_node_ptrs =
             RecursivelyTraverseAST(0, then_children, {curr_ptr}, while_ptr, {},
                                    forward_map, reverse_map, stmt_node_map);
 
         // Goes in 'else' branch children statements
         auto else_children = curr->GetChildren()[2]->GetChildren();
-        std::cout << "Recursing else branch\n";
         auto last_else_node_ptrs =
             RecursivelyTraverseAST(0, else_children, {curr_ptr}, while_ptr, {},
                                    forward_map, reverse_map, stmt_node_map);
 
         // Combine last statement pointers for if and else branch
-        std::cout << "out of then and else branch\n";
         std::vector<std::shared_ptr<CFGNode>> combined_ptrs = last_if_node_ptrs;
         combined_ptrs.insert(combined_ptrs.end(), last_else_node_ptrs.begin(),
                              last_else_node_ptrs.end());
         // Continue out of if and is not the last in og stmt_list
         if (i != stmt_list_size - 1) {
-          std::cout << "Recursing statement after if\n";
           start = i + 1;
           auto last_ptrs2 = RecursivelyTraverseAST(
               start, children, combined_ptrs, after_if_while_ptr, {},
@@ -192,21 +171,14 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
 
       // link prev pointers to curr node if there is
       if (!key_node_ptrs.empty()) {
-        std::cout << "Processing last statement\n";
         for (auto& ptr : key_node_ptrs) {
-          std::cout << "linking " << ptr->GetStatementNumbers()[0] << " to "
-                    << cfg_node_ptr->GetStatementNumbers()[0] << std::endl;
           forward_map[ptr].emplace(cfg_node_ptr);
         }
       }
       // If under a while and is last statement, link back to while
       if (while_ptr != nullptr) {
-        std::cout << "linking " << cfg_node_ptr->GetStatementNumbers()[0]
-                  << " to " << while_ptr->GetStatementNumbers()[0] << std::endl;
         forward_map[cfg_node_ptr].emplace(while_ptr);
       } else {
-        std::cout << "linking " << cfg_node_ptr->GetStatementNumbers()[0]
-                  << " to empty" << std::endl;
         forward_map[cfg_node_ptr] = {};
       }
       return {cfg_node_ptr};
