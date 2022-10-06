@@ -8,6 +8,8 @@ class SynonymSelectParser : public QuerySelectParser {
  public:
   [[nodiscard]] bool MatchParser(const TokenBuilderPair& data) const override;
   std::shared_ptr<Select> Parse(TokenBuilderPair data) override;
+  static Select::SynonymWithMaybeAttribute ParseSynonym(const std::shared_ptr<TokenHandler>& sharedPtr,
+                    const QueryStringBuilder& builder);
 };
 
 #endif  // SPA_SYNONYM_SELECT_PARSER_H

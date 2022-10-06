@@ -3,6 +3,7 @@
 
 #include <optional>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "common/queryable_pkb.h"
@@ -15,10 +16,10 @@ class Select {
  public:
   struct SynonymWithMaybeAttribute {
     SynonymWithMaybeAttribute(Synonym synonym)
-        : synonym(synonym), maybe_attribute(std::nullopt) {}
+        : synonym(std::move(synonym)), maybe_attribute(std::nullopt) {}
 
     SynonymWithMaybeAttribute(Synonym synonym, AttributeName attribute)
-        : synonym(synonym), maybe_attribute(attribute) {}
+        : synonym(std::move(synonym)), maybe_attribute(attribute) {}
 
     Synonym synonym;
     std::optional<AttributeName> maybe_attribute;
