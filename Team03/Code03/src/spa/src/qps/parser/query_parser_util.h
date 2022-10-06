@@ -5,6 +5,7 @@
 #include "common/reference/attribute_name.h"
 #include "common/reference/attribute_reference.h"
 #include "common/reference/identifier.h"
+#include "common/reference/integer.h"
 #include "qps/query_string_builder.h"
 #include "qps/token_handler.h"
 
@@ -44,7 +45,7 @@ class QueryParserUtil {
 
   static Identifier ExtractIdentifier(
       const std::shared_ptr<TokenHandler>& tokens);
-  static int ExtractInteger(const std::shared_ptr<TokenHandler>& tokens);
+  static Integer ExtractInteger(const std::shared_ptr<TokenHandler>& tokens);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H
