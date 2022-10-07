@@ -58,6 +58,9 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     auto node4 = first_cfg.GetNode(5);
     std::vector<int> v4 = {5};
     REQUIRE(node4->GetStatementNumbers() == v4);
+    auto node5 = first_cfg.GetNode(2);
+    std::vector<int> v5 = {1, 2};
+    REQUIRE(node5->GetStatementNumbers() == v5);
 
     // Compare each next CFGNode
     auto next_nodes1 = first_cfg.GetNextNodes(node1);
@@ -83,6 +86,22 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     auto next_nodes4 = first_cfg.GetNextNodes(node4);
     REQUIRE(next_nodes4.empty());
+
+    auto next_nodes5 = first_cfg.GetNextNodes(node5);
+    std::vector<CFGNode> res_nodes5;
+    for (auto& node : next_nodes5) {
+      res_nodes5.emplace_back(*node);
+    }
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({3})) !=
+            res_nodes5.end());
+
+    auto prev_nodes4 = first_cfg.GetPrevNodes(node4);
+    std::vector<CFGNode> res_prev_nodes4;
+    for (auto& node : prev_nodes4) {
+      res_prev_nodes4.emplace_back(*node);
+    }
+    REQUIRE(std::find(res_prev_nodes4.begin(), res_prev_nodes4.end(), CFGNode({3})) !=
+            res_prev_nodes4.end());
   }
 
   SECTION("Extract starting if node") {
