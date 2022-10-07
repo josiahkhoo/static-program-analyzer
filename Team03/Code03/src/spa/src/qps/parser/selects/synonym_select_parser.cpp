@@ -54,12 +54,7 @@ Select::SynonymWithMaybeAttribute SynonymSelectParser::ParseSynonym(
   // Get attribute name if exist
   if (!tokens->CheckEnd() && tokens->MatchKind(Token::PERIOD)) {
     tokens->Expect(Token::PERIOD);
-    Token attribute_token = tokens->Peek();
-    tokens->Expect(Token::IDENTIFIER);
-    AttributeName attr_name = QueryParserUtil::GetAttrName(attribute_token);
-    if (attr_name == AttributeName::STMT_NO) {
-      tokens->Expect(Token::HASHTAG);
-    }
+    AttributeName attr_name = QueryParserUtil::ExtractAttrName(synonym, tokens);
     return {synonym, attr_name};
   } else {
     return {synonym};

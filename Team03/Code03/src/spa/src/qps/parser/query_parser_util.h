@@ -27,6 +27,8 @@ class QueryParserUtil {
   static AttributeReference ExtractAttrRef(
       const std::shared_ptr<TokenHandler>& tokens,
       const QueryStringBuilder& builder);
+  static AttributeName ExtractAttrName(
+      Synonym synonym, const std::shared_ptr<TokenHandler>& tokens);
   static void CheckFollowsParentRef(const StatementReference& stmtRef);
   static void CheckPatternSyn(const Synonym& synonym);
   static void CheckEntityRhs(const EntityReference& entRef);
@@ -34,7 +36,6 @@ class QueryParserUtil {
   static void CheckVariableEntity(const EntityReference& entity_ref);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
                                    const QueryStringBuilder& builder);
-  static AttributeName GetAttrName(const Token& next);
 
  private:
   static std::string GetExpression(const std::shared_ptr<TokenHandler>& tokens,
