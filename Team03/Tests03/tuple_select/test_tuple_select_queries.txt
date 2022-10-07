@@ -23,14 +23,14 @@ procedure p, p1;
 Select <p, p1>
 Example Example, Example p, Example q, Example s, p Example, p p, p q, p s, q Example, q p, q q, q s, s Example, s p, s q, s s
 5000
-6 - (SUCCESS) Select all variables that are used and modified in the same statement
-variable v, v1; stmt s;
-Select <v, v1> such that Uses(s, v) and Modifies(s, v1) with v.varName = v1.varName
+6 - (SUCCESS) Select all variables that are used and modified in the same assignment
+variable v, v1; stmt a;
+Select <v, v1> such that Uses(a, v) and Modifies(a, v1) with v.varName = v1.varName
 x x, z z, i i
 5000
-7 - (SUCCESS) Select all variables that are used and modified in the same statement and the statement
-variable v, v1; stmt s;
-Select <v, v1, s> such that Uses(s, v) and Modifies(s, v1) with v.varName = v1.varName
+7 - (SUCCESS) Select all variables that are used and modified in the same assignment and the assignment
+variable v, v1; assign a;
+Select <v, v1, a> such that Uses(a, v) and Modifies(a, v1) with v.varName = v1.varName
 x x 5, x x 18, x x 25, z z 9, z z 19, z z 22, i i 11, i i 17
 5000
 8 - (SUCCESS) Select the same synonym declaration multiple times
@@ -48,7 +48,7 @@ print p; variable v; assign a;
 Select <p, p.varName, p.stmt#> such that Follows(_, p) and Modifies(a, v) pattern a (v, _)
 20 z 20
 5000
-11 - (SYNTAX ERROR) Select invalid attribute but valid keyword within tuple
+11 - (SEMANTIC ERROR) Select invalid attribute but valid keyword within tuple
 print p;
 Select <p.procName>
 SemanticError
@@ -57,4 +57,9 @@ SemanticError
 print p;
 Select <p.timothychua>
 SyntaxError
+5000
+13 - (SUCCESS) Select all variables that are used and modified in the same statement and the statement
+variable v, v1; stmt s;
+Select <v, v1, s> such that Uses(s, v) and Modifies(s, v1) with v.varName = v1.varName
+x x 5, x x 18, x x 25, z z 9, z z 19, z z 22, i i 11, i i 17, i i 12, i i 13, i i 14, i i 4, x x 10, x x 12, x x 13, x x 16, x x 23, x x 4, z z 10, z z 12, z z 13, z z 16, z z 23, z z 4, z z 6
 5000

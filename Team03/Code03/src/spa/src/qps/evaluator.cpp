@@ -1,7 +1,5 @@
 #include "evaluator.h"
 
-#include <algorithm>
-
 Evaluator::Evaluator() = default;
 
 std::unordered_set<std::string> Evaluator::Execute(

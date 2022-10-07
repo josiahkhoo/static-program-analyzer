@@ -6,8 +6,6 @@
 bool SynonymSelectParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
-  QueryStringBuilder builder = data.second;
-
   if (tokens->CheckEnd()) {
     return false;
   }
