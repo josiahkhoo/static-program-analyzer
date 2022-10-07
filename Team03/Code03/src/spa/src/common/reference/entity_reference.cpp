@@ -8,7 +8,7 @@
 EntityReference::EntityReference() : Reference(true) {}
 
 EntityReference::EntityReference(Synonym synonym)
-    : Reference(synonym) {}
+    : Reference(std::move(synonym)) {}
 
 EntityReference::EntityReference(Identifier identifier)
     : identifier_(identifier), Reference(false) {}
