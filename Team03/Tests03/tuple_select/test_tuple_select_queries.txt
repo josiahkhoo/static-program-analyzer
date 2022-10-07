@@ -53,7 +53,7 @@ print p;
 Select <p.procName>
 SyntaxError
 5000
-11 - (SYNTAX ERROR) Select completely invalid attribute within tuple
+12 - (SYNTAX ERROR) Select completely invalid attribute within tuple
 print p;
 Select <p.timothychua>
 SyntaxError
