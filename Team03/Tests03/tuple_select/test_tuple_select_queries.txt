@@ -38,3 +38,23 @@ procedure p;
 Select <p, p, p>
 Example Example Example, p p p, q q q, s s s
 5000
+9 - (SUCCESS) Select all call statements and the procedure name getting called
+call c;
+Select <c, c.procName>
+10 q, 12 p, 16 q
+5000
+10 - (SUCCESS) Select all print statements and corresponding variable and statement number where the print is a child statement and variable being printed is both modified and used
+print p; variable v; assign a;
+Select <p, p.varName, p.stmt#> such that Follows(_, p) and Modifies(a, v) pattern a (v, _)
+20 z 20
+5000
+11 - (SYNTAX ERROR) Select invalid attribute but valid keyword within tuple
+print p;
+Select <p.procName>
+SyntaxError
+5000
+11 - (SYNTAX ERROR) Select completely invalid attribute within tuple
+print p;
+Select <p.timothychua>
+SyntaxError
+5000
