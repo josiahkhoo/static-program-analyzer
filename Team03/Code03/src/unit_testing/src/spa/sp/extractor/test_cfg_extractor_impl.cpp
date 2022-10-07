@@ -100,8 +100,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     for (auto& node : prev_nodes4) {
       res_prev_nodes4.emplace_back(*node);
     }
-    REQUIRE(std::find(res_prev_nodes4.begin(), res_prev_nodes4.end(), CFGNode({3})) !=
-            res_prev_nodes4.end());
+    REQUIRE(std::find(res_prev_nodes4.begin(), res_prev_nodes4.end(),
+                      CFGNode({3})) != res_prev_nodes4.end());
   }
 
   SECTION("Extract starting if node") {
