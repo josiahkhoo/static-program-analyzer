@@ -51,7 +51,7 @@ Select <p, p.varName, p.stmt#> such that Follows(_, p) and Modifies(a, v) patter
 11 - (SYNTAX ERROR) Select invalid attribute but valid keyword within tuple
 print p;
 Select <p.procName>
-SyntaxError
+SemanticError
 5000
 12 - (SYNTAX ERROR) Select completely invalid attribute within tuple
 print p;
