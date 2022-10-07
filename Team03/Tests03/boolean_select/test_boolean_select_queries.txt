@@ -28,3 +28,8 @@ FALSE
 Select BOOLEAN such that Follows(_, _)
 TRUE
 5000
+7 - (SUCCESS) Name procedure as BOOLEAN and select all procedures
+procedure BOOLEAN;
+Select BOOLEAN
+Example, p, q, s
+5000
