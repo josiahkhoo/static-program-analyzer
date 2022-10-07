@@ -2,6 +2,7 @@
 #define SPA_CFG_H
 
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 
