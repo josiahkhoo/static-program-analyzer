@@ -1,7 +1,7 @@
 1 - (SUCCESS) Select all pairs of statements that follow each other
 stmt s, s1;
 Select <s, s1> such that Follows(s, s1)
-1 2, 2 3, 3 4, 4 12, 5 6, 6 7, 9 10, 10 11, 13 22, 14 18, 18 19, 19 20, 15 16, 16 17
+1 2, 2 3, 3 4, 4 12, 5 6, 6 9, 9 10, 10 11, 13 22, 14 18, 18 19, 19 20, 15 16, 16 17
 5000
 2 - (SUCCESS) Select all pairs of procedures and variables that it modifies
 procedure p; variable v;
@@ -21,7 +21,7 @@ SyntaxError
 5 - (SUCCESS) Select all pairs of procedures
 procedure p, p1;
 Select <p, p1>
-Example Example, Example p, Example s, p Example, p p, p q, p s, q Example, q p, q q, q s, s Example, s p, s q, s s
+Example Example, Example p, Example q, Example s, p Example, p p, p q, p s, q Example, q p, q q, q s, s Example, s p, s q, s s
 5000
 6 - (SUCCESS) Select all variables that are used and modified in the same statement
 variable v, v1; stmt s;
