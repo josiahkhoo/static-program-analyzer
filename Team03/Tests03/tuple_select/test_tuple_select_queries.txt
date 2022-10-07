@@ -1,0 +1,60 @@
+1 - (SUCCESS) Select all pairs of statements that follow each other
+stmt s, s1;
+Select <s, s1> such that Follows(s, s1)
+1 2, 2 3, 3 4, 4 12, 5 6, 6 7, 9 10, 10 11, 13 22, 14 18, 18 19, 19 20, 15 16, 16 17
+5000
+2 - (SUCCESS) Select all pairs of procedures and variables that it modifies
+procedure p; variable v;
+Select <p, v> such that Modifies(p, v)
+Example x, Example z, Example i, Example y, p x, p i, p z, q z, q x
+5000
+3 - (SUCCESS) Select all procedures using tuple syntax
+procedure p;
+Select <p>
+Example, p, q, s
+5000
+4 - (SYNTAX ERROR) Select empty returns syntax error
+
+Select <>
+SyntaxError
+5000
+5 - (SUCCESS) Select all pairs of procedures
+procedure p, p1;
+Select <p, p1>
+Example Example, Example p, Example s, p Example, p p, p q, p s, q Example, q p, q q, q s, s Example, s p, s q, s s
+5000
+6 - (SUCCESS) Select all variables that are used and modified in the same statement
+variable v, v1; stmt s;
+Select <v, v1> such that Uses(s, v) and Modifies(s, v1) with v.varName = v1.varName
+x x, z z, i i
+5000
+7 - (SUCCESS) Select all variables that are used and modified in the same statement and the statement
+variable v, v1; stmt s;
+Select <v, v1, s> such that Uses(s, v) and Modifies(s, v1) with v.varName = v1.varName
+x x 5, x x 18, x x 25, z z 9, z z 19, z z 22, i i 11, i i 17
+5000
+8 - (SUCCESS) Select the same synonym declaration multiple times
+procedure p;
+Select <p, p, p>
+Example Example Example, p p p, q q q, s s s
+5000
+9 - (SUCCESS) Select all call statements and the procedure name getting called
+call c;
+Select <c, c.procName>
+10 q, 12 p, 16 q
+5000
+10 - (SUCCESS) Select all print statements and corresponding variable and statement number where the print is a child statement and variable being printed is both modified and used
+print p; variable v; assign a;
+Select <p, p.varName, p.stmt#> such that Follows(_, p) and Modifies(a, v) pattern a (v, _)
+20 z 20
+5000
+11 - (SYNTAX ERROR) Select invalid attribute but valid keyword within tuple
+print p;
+Select <p.procName>
+SyntaxError
+5000
+12 - (SYNTAX ERROR) Select completely invalid attribute within tuple
+print p;
+Select <p.timothychua>
+SyntaxError
+5000
