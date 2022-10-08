@@ -159,7 +159,6 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
     // If statement is last in stmt_list and is not while or if
     if (i == stmt_list_size - 1) {
       // Create CFGNode
-      // CFGNode cfg_node = CFGNode(cfg_stmt_nos);
       auto cfg_node_ptr = std::make_shared<CFGNode>(cfg_stmt_nos);
 
       // Add to stmt_node_map
