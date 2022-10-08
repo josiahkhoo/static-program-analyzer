@@ -17,6 +17,7 @@
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/while_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
+#include "sp/extractor/cfg_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 #include "sp/extractor/entity/assign_entity_node_extractor.h"
 #include "sp/extractor/entity/call_entity_node_extractor.h"
@@ -57,6 +58,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
 
+  CFGExtractorImpl cfg_extractor = CFGExtractorImpl();
+
   FollowsAbstractionExtractor follows_abstraction_extractor;
   FollowsTAbstractionExtractor follows_t_abstraction_extractor;
   ParentAbstractionExtractor parent_abstraction_extractor;
@@ -74,8 +77,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       if_pattern_abstraction_extractor, while_pattern_abstraction_extractor,
       uses_abstraction_extractor, modifies_abstraction_extractor);
 
-  DesignExtractorImpl design_extractor =
-      DesignExtractorImpl(entity_extractor, abstraction_extractor);
+  DesignExtractorImpl design_extractor = DesignExtractorImpl(
+      entity_extractor, cfg_extractor, abstraction_extractor);
 
   SourceProcessor source_processor_under_test =
       SourceProcessor(lexer, simple_parser, design_extractor, pkb);

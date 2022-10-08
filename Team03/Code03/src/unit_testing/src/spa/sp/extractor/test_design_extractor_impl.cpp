@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include "sp/extractor/cfg_extractor_impl.h"
 #include "sp/extractor/design_extractor_impl.h"
 
 using namespace fakeit;
@@ -13,9 +14,13 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
   AbstractionExtractorResult aer = AbstractionExtractorResult(
       {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {});
   When(Method(mock_abstraction_extractor, Extract)).Return(aer);
+  Mock<CFGExtractorImpl> mock_cfg_extractor;
+  std::vector<CFG> cfgs = {};
+  When(Method(mock_cfg_extractor, Extract)).Return(cfgs);
 
-  DesignExtractorImpl extractor_under_test = DesignExtractorImpl(
-      mock_entity_extractor.get(), mock_abstraction_extractor.get());
+  DesignExtractorImpl extractor_under_test =
+      DesignExtractorImpl(mock_entity_extractor.get(), mock_cfg_extractor.get(),
+                          mock_abstraction_extractor.get());
 
   TNode test_node = TNode(1, TNode::Program, 0, "");
   SECTION("Calls entity extractor and abstraction extractor") {
