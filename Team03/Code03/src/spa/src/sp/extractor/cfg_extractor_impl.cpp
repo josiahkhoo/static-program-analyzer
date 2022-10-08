@@ -62,8 +62,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
     if (curr->GetType() == TNode::While ||
         curr->GetType() == TNode::IfElseThen) {
       // Create CFGNode for While or If stmt
-      auto curr_node = CFGNode({curr_stmt_no});
-      auto curr_ptr = std::make_shared<CFGNode>(curr_node);
+      auto curr_ptr = std::make_shared<CFGNode>(std::vector<int>{curr_stmt_no});
 
       // Add to stmt_node_map
       stmt_node_map[curr_stmt_no] = curr_ptr;
