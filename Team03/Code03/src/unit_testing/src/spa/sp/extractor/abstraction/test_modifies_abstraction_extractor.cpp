@@ -716,4 +716,4 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     REQUIRE((std::find(modifies_p_vector.begin(), modifies_p_vector.end(),
                        z10) != modifies_p_vector.end()));
   }
-};
+}

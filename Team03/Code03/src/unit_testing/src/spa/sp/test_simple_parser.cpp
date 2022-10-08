@@ -12,7 +12,7 @@ bool deepEqual(TNode node1, TNode node2) {
   if (node1.GetChildren().size() != node2.GetChildren().size()) {
     return false;
   }
-  for (int i = 0; i < node1.GetChildren().size(); i++) {
+  for (int i = 0; i < (int)node1.GetChildren().size(); i++) {
     if (!deepEqual(*node1.GetChildren()[i], *node2.GetChildren()[i])) {
       return false;
     }

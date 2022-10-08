@@ -914,4 +914,4 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     REQUIRE((std::find(uses_p_vector.begin(), uses_p_vector.end(), z10) !=
              uses_p_vector.end()));
   }
-};
+}
