@@ -36,7 +36,7 @@ std::unordered_set<std::string> NextTClause::FetchLhs(
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next*(s, 1)
     return queryable_pkb.QueryNextTBy(GetRightHandSide().GetLineNumber(),
-                                     EntityType::STATEMENT);
+                                      EntityType::STATEMENT);
   }
   // E.g. Next*(s, _)
   return queryable_pkb.QueryAllNext();
@@ -55,13 +55,13 @@ bool NextTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
              GetRightHandSide().IsWildCard()) {
     return !queryable_pkb
                 .QueryNextT(GetLeftHandSide().GetLineNumber(),
-                           EntityType::STATEMENT)
+                            EntityType::STATEMENT)
                 .empty();
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsLineNumber()) {
     return !queryable_pkb
                 .QueryNextTBy(GetRightHandSide().GetLineNumber(),
-                             EntityType::STATEMENT)
+                              EntityType::STATEMENT)
                 .empty();
   }
   return !queryable_pkb.QueryAllNextRelations().empty();
