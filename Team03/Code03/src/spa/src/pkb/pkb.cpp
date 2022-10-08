@@ -606,13 +606,9 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
  * Next Query Methods
  * ==================================== */
 
-std::unordered_set<std::string> PKB::QueryAllNext() const {
-  return {};
-}
+std::unordered_set<std::string> PKB::QueryAllNext() const { return {}; }
 
-std::unordered_set<std::string> PKB::QueryAllNextBy() const {
-  return {};
-}
+std::unordered_set<std::string> PKB::QueryAllNextBy() const { return {}; }
 
 std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
   return {};
