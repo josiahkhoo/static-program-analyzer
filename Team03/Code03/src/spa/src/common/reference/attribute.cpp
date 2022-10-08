@@ -23,7 +23,7 @@ std::unordered_map<EntityType, std::unordered_set<AttributeName>>
 };
 
 Attribute::Attribute(Synonym syn, AttributeName name)
-    : name_(name), syn_(std::move(syn)) {}
+    : syn_(std::move(syn)), name_(name) {}
 
 Synonym Attribute::GetSynonym() const { return syn_; }
 

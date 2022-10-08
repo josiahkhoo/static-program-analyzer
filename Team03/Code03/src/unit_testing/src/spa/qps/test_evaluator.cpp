@@ -121,7 +121,7 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
-      int statement_number, EntityType type) const override {
+      int statement_number) const override {
     return {"QueryModifiesS"};
   }
 
@@ -131,12 +131,12 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {"QueryModifiesP"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
-      std::string identifier, EntityType type) const override {
+      std::string identifier) const override {
     return {"QueryModifiesPBy"};
   }
 

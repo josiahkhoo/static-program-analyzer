@@ -15,6 +15,8 @@ class QNode {
  public:
   explicit QNode();
 
+  virtual ~QNode() = default;
+
   void SetLeftNode(std::shared_ptr<QNode> left_node);
 
   void SetRightNode(std::shared_ptr<QNode> right_node);

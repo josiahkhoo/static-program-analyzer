@@ -5,13 +5,13 @@
 #include "common/reference/attribute_name.h"
 
 AttributeReference::AttributeReference(Identifier identifier)
-    : identifier_(identifier), Reference(false) {}
+    : Reference(false), identifier_(identifier) {}
 
 AttributeReference::AttributeReference(Integer number)
-    : number_(number), Reference(false) {}
+    : Reference(false), number_(number) {}
 
 AttributeReference::AttributeReference(Attribute attr)
-    : attr_(attr), Reference(attr.GetSynonym()) {}
+    : Reference(attr.GetSynonym()), attr_(attr) {}
 
 bool AttributeReference::IsLineNumber() const { return number_.has_value(); }
 

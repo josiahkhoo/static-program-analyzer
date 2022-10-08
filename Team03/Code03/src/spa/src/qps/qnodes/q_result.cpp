@@ -28,8 +28,8 @@ QResult QResult::Join(const QResult& other_result) const {
 
   // Get all common synonyms
   std::vector<std::pair<int, int>> common_indexes;
-  for (int i = 0; i < GetSynonyms().size(); i++) {
-    for (int j = 0; j < other_result.GetSynonyms().size(); j++) {
+  for (int i = 0; i < (int)GetSynonyms().size(); i++) {
+    for (int j = 0; j < (int)other_result.GetSynonyms().size(); j++) {
       if (GetSynonyms().at(i) == other_result.GetSynonyms().at(j)) {
         common_indexes.emplace_back(i, j);
       }
@@ -43,7 +43,7 @@ QResult QResult::Join(const QResult& other_result) const {
   for (const auto& syn : GetSynonyms()) {
     new_syns.emplace_back(syn);
   }
-  for (int i = 0; i < other_result.GetSynonyms().size(); i++) {
+  for (int i = 0; i < (int)other_result.GetSynonyms().size(); i++) {
     bool match = false;
     for (auto [_, idx] : common_indexes) {
       if (idx == i) {
@@ -81,7 +81,7 @@ QResult QResult::Join(const QResult& other_result) const {
       for (const auto& entry : row1) {
         new_row.emplace_back(entry);
       }
-      for (int i = 0; i < row2.size(); i++) {
+      for (int i = 0; i < (int)row2.size(); i++) {
         bool match_idx = false;
         for (auto [_, idx] : common_indexes) {
           if (idx == i) {
@@ -106,7 +106,7 @@ std::vector<std::vector<std::string>> QResult::GetRows(
   // Retrieve index of synonym table
   std::vector<int> indexes;
   for (const auto& syn : synonyms) {
-    for (int i = 0; i < GetSynonyms().size(); i++) {
+    for (int i = 0; i < (int)GetSynonyms().size(); i++) {
       if (GetSynonyms().at(i) == syn) {
         indexes.emplace_back(i);
       }

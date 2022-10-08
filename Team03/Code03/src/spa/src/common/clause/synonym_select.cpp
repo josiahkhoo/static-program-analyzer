@@ -21,7 +21,7 @@ std::unordered_set<std::string> SynonymSelect::GetResultSet(
       [](const SynonymWithMaybeAttribute& syn) { return syn.synonym; });
   std::vector<std::vector<std::string>> rows = q_result.GetRows(synonyms);
   // Check if its an attribute is needed instead of the syn itself
-  for (int i = 0; i < synonyms_.size(); i++) {
+  for (int i = 0; i < (int)synonyms_.size(); i++) {
     auto syn = synonyms_[i];
     if (syn.maybe_attribute.has_value()) {
       auto attribute = syn.maybe_attribute.value();

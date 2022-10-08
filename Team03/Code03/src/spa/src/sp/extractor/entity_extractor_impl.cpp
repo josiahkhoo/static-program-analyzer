@@ -138,4 +138,4 @@ void EntityExtractorImpl::RecursivelyExtractNode(
           statement_entities, variable_entities, while_entities);
     }
   }
-};
+}

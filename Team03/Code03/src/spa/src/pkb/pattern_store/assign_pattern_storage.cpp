@@ -12,7 +12,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
     std::string pattern, bool front_wildcard, bool back_wildcard) const {
   std::string::size_type pattern_start_pos = 0;
   std::string::size_type pattern_end_pos = 0;
-  for (int i = 0; i < pattern.size(); i++) {
+  for (int i = 0; i < (int)pattern.size(); i++) {
     if (pattern[i] == '(') {
       pattern_start_pos++;
     } else {
@@ -45,7 +45,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_start_pos = 0;
-        for (int j = 0; j < i.second.second.size(); j++) {
+        for (int j = 0; j < (int)i.second.second.size(); j++) {
           if (i.second.second[j] == '(') {
             string_start_pos++;
           } else {
@@ -96,7 +96,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
     bool back_wildcard) const {
   std::string::size_type pattern_start_pos = 0;
   std::string::size_type pattern_end_pos = 0;
-  for (int i = 0; i < pattern.size(); i++) {
+  for (int i = 0; i < (int)pattern.size(); i++) {
     if (pattern[i] == '(') {
       pattern_start_pos++;
     } else {
@@ -131,7 +131,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
     for (auto i : patterns_map_) {
       if (i.second.second.length() >= pattern.length()) {
         std::string::size_type string_start_pos = 0;
-        for (int j = 0; j < i.second.second.size(); j++) {
+        for (int j = 0; j < (int)i.second.second.size(); j++) {
           if (i.second.second[j] == '(') {
             string_start_pos++;
           } else {

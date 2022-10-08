@@ -5,6 +5,7 @@
 
 class HasNodePointer {
  public:
+  virtual ~HasNodePointer() = default;
   /// Retrieves a node pointer associated with the implemented class.
   /// \return Node pointer.
   [[nodiscard]] virtual const TNode *GetNodePointer() const = 0;

@@ -5,33 +5,33 @@
 
 TNode::TNode(int id, TNode::Type type, std::string string_val,
              std::vector<std::shared_ptr<TNode>> children)
-    : unique_id_(id),
-      type_(type),
-      maybe_string_(string_val),
-      children_(std::move(children)) {}
+    : type_(type),
+      unique_id_(id),
+      children_(std::move(children)),
+      maybe_string_(string_val) {}
 
 TNode::TNode(int id, TNode::Type type,
              std::vector<std::shared_ptr<TNode>> children)
-    : unique_id_(id), type_(type), children_(std::move(children)) {}
+    : type_(type), unique_id_(id), children_(std::move(children)) {}
 
 TNode::TNode(int id, TNode::Type type, int statement_number,
              std::vector<std::shared_ptr<TNode>> children)
-    : unique_id_(id),
-      type_(type),
+    : type_(type),
       statement_number_(statement_number),
+      unique_id_(id),
       children_(std::move(children)) {}
 
 TNode::TNode(int id, TNode::Type type, int statement_number, int int_val)
-    : unique_id_(id),
-      type_(type),
+    : type_(type),
       statement_number_(statement_number),
+      unique_id_(id),
       maybe_int_(int_val) {}
 
 TNode::TNode(int id, TNode::Type type, int statement_number,
              std::string string_val)
-    : unique_id_(id),
-      type_(type),
+    : type_(type),
       statement_number_(statement_number),
+      unique_id_(id),
       maybe_string_(string_val) {}
 
 int TNode::GetStatementNumber() const {

@@ -63,6 +63,7 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
           .ConstantEntities(&constant_entities)
           .IfEntities(&if_entities)
           .ProcedureEntities(&procedure_entities)
+          .PrintEntities(&print_entities)
           .ReadEntities(&read_entities)
           .StatementEntities(&statement_entities)
           .VariableEntities(&variable_entities)

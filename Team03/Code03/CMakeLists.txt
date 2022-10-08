@@ -14,6 +14,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 if (NOT MSVC)
+    set(CMAKE_FLAGS "-Wall -Werror -Wextra -Wpedantic -Wvla -Wextra-semi -Wnull-dereference -Wswitch-enum")
     set(CMAKE_CXX_FLAGS_DEBUG "-g")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif ()
