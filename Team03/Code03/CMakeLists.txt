@@ -14,7 +14,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 if (MSVC)
-    set(CMAKE_CXX_FLAGS "/Wall")
+    set(CMAKE_CXX_FLAGS "/W4")
 endif ()
 
 if (NOT MSVC)
