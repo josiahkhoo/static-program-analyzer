@@ -128,3 +128,33 @@ constant c;
 Select c such that Parent(_, _) and such that Follows(_, _)
 SyntaxError
 5000
+22 - (SYNTAX ERROR) Invalid empty tuple select
+
+Select <>
+SyntaxError
+5000
+23 - (SYNTAX ERROR) Invalid incomplete tuple select
+assign a;
+Select <a,>
+SyntaxError
+5000
+24 - (SYNTAX ERROR) Invalid incomplete multiple tuple select
+assign a;
+Select <a, a.>
+SyntaxError
+5000
+25 - (SYNTAX ERROR) Invalid broken back multiple tuple select
+assign a;
+Select <a, a.stmt#
+SyntaxError
+5000
+27 - (SYNTAX ERROR) Invalid broken front comma tuple select
+assign a, b;
+Select a b> such that Follows (a, b)
+SyntaxError
+5000
+26 - (SYNTAX ERROR) Invalid missing comma tuple select
+assign a, b;
+Select <a b>
+SyntaxError
+5000

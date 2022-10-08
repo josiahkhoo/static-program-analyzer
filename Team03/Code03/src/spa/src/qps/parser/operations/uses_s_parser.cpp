@@ -30,7 +30,7 @@ std::shared_ptr<QueryOperation> UsesSParser::Parse(TokenBuilderPair data) {
   tokens->Expect(Token::COMMA);
   // Get ent
   EntityReference entRef = QueryParserUtil::ExtractEntityRef(tokens, builder);
-  QueryParserUtil::CheckEntityRhs(entRef);
+  QueryParserUtil::CheckVariableEntity(entRef);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<UsesSClause> usesCl =
       std::make_shared<UsesSClause>(stmtRef, entRef);

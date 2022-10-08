@@ -98,3 +98,8 @@ variable v; procedure p;
 Select v with p.procName = v.stmt#
 SemanticError
 5000
+21 - (SEMANTIC ERROR) Tuple print doesn't have procName
+print p;
+Select <p.procName>
+SemanticError
+5000
