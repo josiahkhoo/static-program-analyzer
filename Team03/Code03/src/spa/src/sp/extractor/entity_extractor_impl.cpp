@@ -39,10 +39,18 @@ EntityExtractorResult EntityExtractorImpl::Extract(const TNode &ast) const {
       &print_entities, &procedure_entities, &read_entities, &statement_entities,
       &variable_entities, &while_entities);
 
-  return {assign_entities, call_entities,      constant_entities,
-          if_entities,     print_entities,     procedure_entities,
-          read_entities,   statement_entities, variable_entities,
-          while_entities};
+  return EntityExtractorResult::Builder()
+      .AssignEntities(&assign_entities)
+      .CallEntities(&call_entities)
+      .ConstantEntities(&constant_entities)
+      .IfEntities(&if_entities)
+      .PrintEntities(&print_entities)
+      .ProcedureEntities(&procedure_entities)
+      .ReadEntities(&read_entities)
+      .StatementEntities(&statement_entities)
+      .VariableEntities(&variable_entities)
+      .WhileEntities(&while_entities)
+      .Build();
 }
 
 void EntityExtractorImpl::ExtractNode(
