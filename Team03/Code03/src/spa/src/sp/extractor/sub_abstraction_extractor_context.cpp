@@ -114,3 +114,129 @@ std::unordered_map<std::string, const TNode *>
     &SubAbstractionExtractorContext::GetProcNameNodeUmap() const {
   return proc_name_node_umap_;
 }
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::AssignEntities(
+    const std::vector<AssignEntity> *assign_entities) {
+  assign_entities_ = assign_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::CallEntities(
+    const std::vector<CallEntity> *call_entities) {
+  call_entities_ = call_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::ConstantEntities(
+    const std::vector<ConstantEntity> *constant_entities) {
+  constant_entities_ = constant_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::IfEntities(
+    const std::vector<IfEntity> *if_entities) {
+  if_entities_ = if_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::PrintEntities(
+    const std::vector<PrintEntity> *print_entities) {
+  print_entities_ = print_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::ProcedureEntities(
+    const std::vector<ProcedureEntity> *procedure_entities) {
+  procedure_entities_ = procedure_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::ReadEntities(
+    const std::vector<ReadEntity> *read_entities) {
+  read_entities_ = read_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::StatementEntities(
+    const std::vector<StatementEntity> *statement_entities) {
+  statement_entities_ = statement_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::VariableEntities(
+    const std::vector<VariableEntity> *variable_entities) {
+  variable_entities_ = variable_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::WhileEntities(
+    const std::vector<WhileEntity> *while_entities) {
+  while_entities_ = while_entities;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::TNodeStmtEntUmap(
+    std::unordered_map<TNode, StatementEntity> *t_node_stmt_ent_umap) {
+  t_node_stmt_ent_umap_ = t_node_stmt_ent_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::TNodeVarEntUmap(
+    std::unordered_map<TNode, VariableEntity> *t_node_var_ent_umap) {
+  t_node_var_ent_umap_ = t_node_var_ent_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::TNodeConstEntUmap(
+    std::unordered_map<TNode, ConstantEntity> *t_node_const_ent_umap) {
+  t_node_const_ent_umap_ = t_node_const_ent_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::TNodeProcEntUmap(
+    std::unordered_map<TNode, ProcedureEntity> *t_node_proc_ent_umap) {
+  t_node_proc_ent_umap_ = t_node_proc_ent_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::ProcNodeCallEntUmap(
+
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        *proc_node_call_ent_umap) {
+  proc_node_call_ent_umap_ = proc_node_call_ent_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext::Builder
+SubAbstractionExtractorContext::Builder::ProcNameNodeUmap(
+    std::unordered_map<std::string, const TNode *> *proc_name_node_umap) {
+  proc_name_node_umap_ = proc_name_node_umap;
+  return *this;
+}
+
+SubAbstractionExtractorContext
+SubAbstractionExtractorContext::Builder::Build() {
+  return SubAbstractionExtractorContext(
+      *assign_entities_, *call_entities_, *constant_entities_, *if_entities_,
+      *print_entities_, *procedure_entities_, *read_entities_,
+      *statement_entities_, *variable_entities_, *while_entities_,
+      *t_node_stmt_ent_umap_, *t_node_var_ent_umap_, *t_node_const_ent_umap_,
+      *t_node_proc_ent_umap_, *proc_node_call_ent_umap_, *proc_name_node_umap_);
+}
+
+SubAbstractionExtractorContext::Builder::Builder() {}

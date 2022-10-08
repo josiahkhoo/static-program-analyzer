@@ -64,6 +64,58 @@ class SubAbstractionExtractorContext {
   [[nodiscard]] std::unordered_map<std::string, const TNode *>
       &GetProcNameNodeUmap() const;
 
+  class Builder {
+   public:
+    Builder();
+    Builder AssignEntities(const std::vector<AssignEntity> *assign_entities);
+    Builder CallEntities(const std::vector<CallEntity> *call_entities);
+    Builder ConstantEntities(
+        const std::vector<ConstantEntity> *constant_entities);
+    Builder IfEntities(const std::vector<IfEntity> *if_entities);
+    Builder PrintEntities(const std::vector<PrintEntity> *print_entities);
+    Builder ProcedureEntities(
+        const std::vector<ProcedureEntity> *procedure_entities);
+    Builder ReadEntities(const std::vector<ReadEntity> *read_entities);
+    Builder StatementEntities(
+        const std::vector<StatementEntity> *statement_entities);
+    Builder VariableEntities(
+        const std::vector<VariableEntity> *variable_entities);
+    Builder WhileEntities(const std::vector<WhileEntity> *while_entities);
+    Builder TNodeStmtEntUmap(
+        std::unordered_map<TNode, StatementEntity> *t_node_stmt_ent_umap);
+    Builder TNodeVarEntUmap(
+        std::unordered_map<TNode, VariableEntity> *t_node_var_ent_umap);
+    Builder TNodeConstEntUmap(
+        std::unordered_map<TNode, ConstantEntity> *t_node_const_ent_umap);
+    Builder TNodeProcEntUmap(
+        std::unordered_map<TNode, ProcedureEntity> *t_node_proc_ent_umap);
+    Builder ProcNodeCallEntUmap(
+        std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+            *proc_node_call_ent_umap);
+    Builder ProcNameNodeUmap(
+        std::unordered_map<std::string, const TNode *> *proc_name_node_umap);
+    SubAbstractionExtractorContext Build();
+
+   private:
+    const std::vector<AssignEntity> *assign_entities_;
+    const std::vector<CallEntity> *call_entities_;
+    const std::vector<ConstantEntity> *constant_entities_;
+    const std::vector<IfEntity> *if_entities_;
+    const std::vector<PrintEntity> *print_entities_;
+    const std::vector<ProcedureEntity> *procedure_entities_;
+    const std::vector<ReadEntity> *read_entities_;
+    const std::vector<StatementEntity> *statement_entities_;
+    const std::vector<VariableEntity> *variable_entities_;
+    const std::vector<WhileEntity> *while_entities_;
+    std::unordered_map<TNode, StatementEntity> *t_node_stmt_ent_umap_;
+    std::unordered_map<TNode, VariableEntity> *t_node_var_ent_umap_;
+    std::unordered_map<TNode, ConstantEntity> *t_node_const_ent_umap_;
+    std::unordered_map<TNode, ProcedureEntity> *t_node_proc_ent_umap_;
+    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
+        *proc_node_call_ent_umap_;
+    std::unordered_map<std::string, const TNode *> *proc_name_node_umap_;
+  };
+
  private:
   const std::vector<AssignEntity> &assign_entities_;
   const std::vector<CallEntity> &call_entities_;

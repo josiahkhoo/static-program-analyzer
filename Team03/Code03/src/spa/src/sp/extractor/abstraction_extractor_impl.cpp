@@ -56,12 +56,24 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
   std::unordered_map<std::string, const TNode *> proc_name_node_umap =
       GetProcNameNodeMap(procedure_entities);
 
-  SubAbstractionExtractorContext ctx = SubAbstractionExtractorContext(
-      assign_entities, call_entities, constant_entities, if_entities,
-      print_entities, procedure_entities, read_entities, statement_entities,
-      variable_entities, while_entities, t_node_stmt_ent_umap,
-      t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-      proc_node_call_ent_umap, proc_name_node_umap);
+  SubAbstractionExtractorContext ctx =
+      SubAbstractionExtractorContext::Builder()
+          .AssignEntities(&assign_entities)
+          .CallEntities(&call_entities)
+          .ConstantEntities(&constant_entities)
+          .IfEntities(&if_entities)
+          .ProcedureEntities(&procedure_entities)
+          .ReadEntities(&read_entities)
+          .StatementEntities(&statement_entities)
+          .VariableEntities(&variable_entities)
+          .WhileEntities(&while_entities)
+          .TNodeStmtEntUmap(&t_node_stmt_ent_umap)
+          .TNodeVarEntUmap(&t_node_var_ent_umap)
+          .TNodeConstEntUmap(&t_node_const_ent_umap)
+          .TNodeProcEntUmap(&t_node_procedure_ent_umap)
+          .ProcNodeCallEntUmap(&proc_node_call_ent_umap)
+          .ProcNameNodeUmap(&proc_name_node_umap)
+          .Build();
 
   std::vector<FollowsAbstraction> follows_abstractions =
       follows_abstraction_extractor_.Extract(ctx);
