@@ -3,6 +3,8 @@
 
 #include <optional>
 
+#include "identifier.h"
+#include "integer.h"
 #include "reference.h"
 
 class EntityReference : public Reference {
@@ -10,20 +12,20 @@ class EntityReference : public Reference {
   /// Default constructor creates a wildcard entity reference.
   explicit EntityReference();
 
-  explicit EntityReference(std::string identifier);
+  explicit EntityReference(Identifier identifier);
 
   explicit EntityReference(Synonym synonym);
 
   [[nodiscard]] bool IsLineNumber() const override;
 
-  [[nodiscard]] int GetLineNumber() const override;
+  [[nodiscard]] Integer GetLineNumber() const override;
 
   [[nodiscard]] bool IsIdentifier() const override;
 
-  [[nodiscard]] std::string GetIdentifier() const override;
+  [[nodiscard]] Identifier GetIdentifier() const override;
 
  private:
-  std::optional<std::string> identifier_;
+  std::optional<Identifier> identifier_;
 };
 
 #endif  // SPA_ENTITY_REFERENCE_H

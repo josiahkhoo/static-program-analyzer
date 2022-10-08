@@ -8,6 +8,10 @@
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
+/// Retrieve statement reference from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return StatementReference
 StatementReference QueryParserUtil::ExtractStmtRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -28,6 +32,10 @@ StatementReference QueryParserUtil::ExtractStmtRef(
   return statement_reference;
 }
 
+/// Retrieve entity reference from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return EntityReference
 EntityReference QueryParserUtil::ExtractEntityRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -52,6 +60,10 @@ EntityReference QueryParserUtil::ExtractEntityRef(
   return entity_reference;
 }
 
+/// Retrieve expression from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return Expression
 Expression QueryParserUtil::ExtractExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -75,6 +87,9 @@ Expression QueryParserUtil::ExtractExpression(
   return exp;
 }
 
+/// Retrieve entity type of token
+/// \param tokens
+/// \return EntityType of token
 EntityType QueryParserUtil::ExtractEntityType(
     const std::shared_ptr<TokenHandler>& tokens) {
   EntityType result;
@@ -105,6 +120,10 @@ EntityType QueryParserUtil::ExtractEntityType(
   return result;
 }
 
+/// Retrieve pattern expression: expression
+/// \param tokens
+/// \param builder
+/// \return String Expression
 std::string QueryParserUtil::GetExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -123,6 +142,10 @@ std::string QueryParserUtil::GetExpression(
   return res;
 }
 
+/// Retrieve pattern expression: term
+/// \param tokens
+/// \param builder
+/// \return String Term
 std::string QueryParserUtil::GetTerm(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -154,6 +177,8 @@ std::string QueryParserUtil::GetTerm(
   return res;
 }
 
+/// Verifies statement reference
+/// \param synonym
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   if (stmtRef.IsSynonym() &&
       (stmtRef.IsEntityType(VARIABLE) || stmtRef.IsEntityType(CONSTANT) ||
@@ -162,6 +187,8 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
+/// Verifies synonym is pattern-able
+/// \param synonym
 void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
   if (!(synonym.IsEntityType(ASSIGN) || synonym.IsEntityType(IF) ||
         synonym.IsEntityType(WHILE))) {
@@ -169,25 +196,25 @@ void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
   }
 }
 
-void QueryParserUtil::CheckEntityRhs(const EntityReference& entRef) {
-  if (entRef.IsSynonym() && entRef.GetSynonym().GetEntityType() != VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
-}
-
+/// Verifies entity reference is a Procedure entity
+/// \param entity_ref
 void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
   if (entRef.IsSynonym() && !entRef.IsEntityType(PROCEDURE)) {
     throw SemanticException("Expected procedure reference");
   }
 }
 
-void QueryParserUtil::CheckVariableEntity(const EntityReference& entity_ref) {
-  if (entity_ref.IsSynonym() &&
-      entity_ref.GetSynonym().GetEntityType() != VARIABLE) {
+/// Verifies entity reference is a Variable entity
+/// \param entRef
+void QueryParserUtil::CheckVariableEntity(const EntityReference& entRef) {
+  if (entRef.IsSynonym() && entRef.GetSynonym().GetEntityType() != VARIABLE) {
     throw SemanticException("Synonym is not a variable entity");
   }
 }
 
+/// Checks if clause has a Procedure entity
+/// \param tokens
+/// \param builder
 bool QueryParserUtil::CheckProcedureClause(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -211,21 +238,10 @@ bool QueryParserUtil::CheckProcedureClause(
   return result;
 }
 
-// Map of allowed Synonym attributes
-std::unordered_map<EntityType, std::unordered_set<AttributeName>>
-    entityAllowedAttributes = {
-        {PROCEDURE, {AttributeName::PROC_NAME}},
-        {CALL, {AttributeName::PROC_NAME, AttributeName::STMT_NO}},
-        {VARIABLE, {AttributeName::VAR_NAME}},
-        {READ, {AttributeName::VAR_NAME, AttributeName::STMT_NO}},
-        {PRINT, {AttributeName::VAR_NAME, AttributeName::STMT_NO}},
-        {CONSTANT, {AttributeName::VALUE}},
-        {STATEMENT, {AttributeName::STMT_NO}},
-        {IF, {AttributeName::STMT_NO}},
-        {WHILE, {AttributeName::STMT_NO}},
-        {ASSIGN, {AttributeName::STMT_NO}},
-};
-
+/// Extracts Attribute Reference object from given tokens & query string
+/// \param tokens
+/// \param builder
+/// \return AttributeReference
 AttributeReference QueryParserUtil::ExtractAttrRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -244,33 +260,41 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
     tokens->Expect(Token::IDENTIFIER);
     Synonym syn = builder.GetSynonym(next.GetValue());
     tokens->Expect(Token::PERIOD);
-    next = tokens->Peek();
-    tokens->Expect(Token::IDENTIFIER);
-    AttributeName attrName = GetAttrName(next);
-    if (attrName == AttributeName::STMT_NO) {
-      tokens->Expect(Token::HASHTAG);
-    }
-    // Check if attribute and synonym match
-    if (entityAllowedAttributes.count(syn.GetEntityType())) {
-      std::unordered_set<AttributeName> map =
-          entityAllowedAttributes[syn.GetEntityType()];
-      if (map.count(attrName)) {
-        Attribute attr = Attribute(syn, attrName);
-        return AttributeReference(attr);
-      }
-    }
-    throw SemanticException("Synonym doesn't support attribute");
+    AttributeName attrName = ExtractAttrName(syn, tokens);
+    Attribute attr = Attribute(syn, attrName);
+    return AttributeReference(attr);
   }
 }
 
-AttributeName QueryParserUtil::GetAttrName(const Token& next) {
+/// Extracts Attribute Name object from given tokens
+/// \param tokens
+/// \return AttributeName
+AttributeName QueryParserUtil::ExtractAttrName(
+    Synonym syn, const std::shared_ptr<TokenHandler>& tokens) {
+  Token next = tokens->Peek();
+  tokens->Expect(Token::IDENTIFIER);
   std::string name = next.GetValue();
-  if (Attribute::attrName_representation.count(name)) {
-    return Attribute::attrName_representation[name];
+  // Check attribute name exist
+  if (!Attribute::attrNameRepresentation.count(name)) {
+    throw SyntaxException("No such attribute name");
   }
-  throw SyntaxException("No such attribute name");
+  AttributeName attrName = Attribute::attrNameRepresentation[name];
+  // Checks stmt#
+  if (attrName == AttributeName::STMT_NO) {
+    tokens->Expect(Token::HASHTAG);
+  }
+  // Check if attribute and synonym match
+  std::unordered_set<AttributeName> map =
+      Attribute::entityAllowedAttributes[syn.GetEntityType()];
+  if (!map.count(attrName)) {
+    throw SemanticException("Synonym doesn't support this attribute");
+  }
+  return attrName;
 }
 
+/// Extracts Identifier object from given tokens
+/// \param tokens
+/// \return Identifier
 Identifier QueryParserUtil::ExtractIdentifier(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::INVERTED_COMMAS);
@@ -280,6 +304,9 @@ Identifier QueryParserUtil::ExtractIdentifier(
   return ident;
 }
 
+/// Extracts Integer object from given tokens
+/// \param tokens
+/// \return Integer
 Integer QueryParserUtil::ExtractInteger(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::NUMBER);

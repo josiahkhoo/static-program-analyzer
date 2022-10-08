@@ -5,6 +5,8 @@
 #include <string>
 
 #include "common/entity/entity_type.h"
+#include "identifier.h"
+#include "integer.h"
 #include "synonym.h"
 
 class Reference {
@@ -23,11 +25,11 @@ class Reference {
 
   [[nodiscard]] virtual bool IsLineNumber() const = 0;
 
-  [[nodiscard]] virtual int GetLineNumber() const = 0;
+  [[nodiscard]] virtual Integer GetLineNumber() const = 0;
 
   [[nodiscard]] virtual bool IsIdentifier() const = 0;
 
-  [[nodiscard]] virtual std::string GetIdentifier() const = 0;
+  [[nodiscard]] virtual Identifier GetIdentifier() const = 0;
 
   bool operator==(const Reference &rhs) const;
 

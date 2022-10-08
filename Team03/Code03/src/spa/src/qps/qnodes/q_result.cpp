@@ -103,9 +103,10 @@ QResult QResult::Join(const QResult& other_result) const {
 
 std::vector<std::vector<std::string>> QResult::GetRows(
     const std::vector<Synonym>& synonyms) const {
+  // Retrieve index of synonym table
   std::vector<int> indexes;
-  for (int i = 0; i < GetSynonyms().size(); i++) {
-    for (const auto& syn : synonyms) {
+  for (const auto& syn : synonyms) {
+    for (int i = 0; i < GetSynonyms().size(); i++) {
       if (GetSynonyms().at(i) == syn) {
         indexes.emplace_back(i);
       }

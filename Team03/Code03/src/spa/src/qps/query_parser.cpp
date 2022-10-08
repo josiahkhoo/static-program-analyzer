@@ -18,7 +18,6 @@
 #include "qps/parser/operations/uses_s_parser.h"
 #include "qps/parser/operations/with_parser.h"
 #include "qps/parser/query_parser_util.h"
-#include "qps/parser/selects/attribute_select_parser.h"
 #include "qps/parser/selects/boolean_select_parser.h"
 #include "qps/parser/selects/synonym_select_parser.h"
 #include "qps/parser/token_builder_pair.h"
@@ -63,7 +62,6 @@ void QueryParser::ParseSelect() {
   TokenBuilderPair queryData = TokenBuilderPair(tokens_, query_string_builder_);
 
   select_parsers_.push_back(std::make_shared<BooleanSelectParser>());
-  select_parsers_.push_back(std::make_shared<AttributeSelectParser>());
   select_parsers_.push_back(std::make_shared<SynonymSelectParser>());
 
   std::shared_ptr<Select> op;
