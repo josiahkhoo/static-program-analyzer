@@ -2,13 +2,16 @@
 #define SPA_ATTRIBUTE_H
 
 #include <unordered_map>
+#include <unordered_set>
 
 #include "common/reference/attribute_name.h"
 #include "synonym.h"
 
 class Attribute {
  public:
-  static std::unordered_map<std::string, AttributeName> attrName_representation;
+  static std::unordered_map<std::string, AttributeName> attrNameRepresentation;
+  static std::unordered_map<EntityType, std::unordered_set<AttributeName>>
+      entityAllowedAttributes;
 
   Attribute(Synonym syn, AttributeName name);
 

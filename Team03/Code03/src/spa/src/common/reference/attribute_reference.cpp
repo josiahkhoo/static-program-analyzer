@@ -7,7 +7,7 @@
 AttributeReference::AttributeReference(Identifier identifier)
     : identifier_(identifier), Reference(false) {}
 
-AttributeReference::AttributeReference(int number)
+AttributeReference::AttributeReference(Integer number)
     : number_(number), Reference(false) {}
 
 AttributeReference::AttributeReference(Attribute attr)
@@ -15,7 +15,7 @@ AttributeReference::AttributeReference(Attribute attr)
 
 bool AttributeReference::IsLineNumber() const { return number_.has_value(); }
 
-int AttributeReference::GetLineNumber() const {
+Integer AttributeReference::GetLineNumber() const {
   assert(IsLineNumber());
   return number_.value();
 }
@@ -46,7 +46,7 @@ bool AttributeReference::IsAttributeTypeInteger() const {
   return attr_.value().IsInteger();
 }
 
-std::string AttributeReference::GetValue() const {
+Identifier AttributeReference::GetValue() const {
   if (IsIdentifier())
     return GetIdentifier();
   else if (IsLineNumber())

@@ -12,13 +12,13 @@ class AttributeReference : public Reference {
  public:
   explicit AttributeReference(Identifier identifier);
 
-  explicit AttributeReference(int number);
+  explicit AttributeReference(Integer number);
 
   explicit AttributeReference(Attribute attr);
 
   [[nodiscard]] bool IsLineNumber() const override;
 
-  [[nodiscard]] int GetLineNumber() const override;
+  [[nodiscard]] Integer GetLineNumber() const override;
 
   [[nodiscard]] bool IsIdentifier() const override;
 
@@ -32,11 +32,11 @@ class AttributeReference : public Reference {
 
   [[nodiscard]] bool IsAttributeTypeInteger() const;
 
-  [[nodiscard]] std::string GetValue() const;
+  [[nodiscard]] Identifier GetValue() const;
 
  private:
   std::optional<Identifier> identifier_;
-  std::optional<int> number_;
+  std::optional<Integer> number_;
   std::optional<Attribute> attr_;
 };
 

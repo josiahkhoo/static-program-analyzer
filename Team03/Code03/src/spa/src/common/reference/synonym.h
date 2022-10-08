@@ -3,15 +3,16 @@
 
 #include "common/entity/entity_type.h"
 #include "common/reference/attribute_name.h"
+#include "identifier.h"
 #include "string"
 
 class Synonym {
  public:
-  Synonym(EntityType entity_type, std::string identifier);
+  Synonym(EntityType entity_type, Identifier identifier);
 
   [[nodiscard]] EntityType GetEntityType();
 
-  [[nodiscard]] std::string GetIdentifier();
+  [[nodiscard]] Identifier GetIdentifier() const;
 
   [[nodiscard]] bool IsEntityType(EntityType type) const;
 
@@ -24,7 +25,7 @@ class Synonym {
 
  private:
   EntityType entity_type_;
-  std::string identifier_;
+  Identifier identifier_;
 };
 
 #endif  // SPA_SYNONYM_H

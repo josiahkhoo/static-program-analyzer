@@ -2,12 +2,14 @@
 
 #include <utility>
 
-Synonym::Synonym(EntityType entity_type, std::string identifier)
-    : entity_type_(entity_type), identifier_(std::move(identifier)) {}
+#include "identifier.h"
+
+Synonym::Synonym(EntityType entity_type, Identifier identifier)
+    : entity_type_(entity_type), identifier_(identifier) {}
 
 EntityType Synonym::GetEntityType() { return entity_type_; }
 
-std::string Synonym::GetIdentifier() { return identifier_; }
+Identifier Synonym::GetIdentifier() const { return identifier_; }
 
 bool Synonym::IsEntityType(EntityType type) const {
   return entity_type_ == type;
