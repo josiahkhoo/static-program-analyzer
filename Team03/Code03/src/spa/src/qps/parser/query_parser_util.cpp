@@ -8,6 +8,10 @@
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
+/// Retrieve statement reference from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return StatementReference
 StatementReference QueryParserUtil::ExtractStmtRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -28,6 +32,10 @@ StatementReference QueryParserUtil::ExtractStmtRef(
   return statement_reference;
 }
 
+/// Retrieve entity reference from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return EntityReference
 EntityReference QueryParserUtil::ExtractEntityRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -52,6 +60,10 @@ EntityReference QueryParserUtil::ExtractEntityRef(
   return entity_reference;
 }
 
+/// Retrieve expression from tokens & builder
+/// \param tokens
+/// \param builder
+/// \return Expression
 Expression QueryParserUtil::ExtractExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -75,6 +87,9 @@ Expression QueryParserUtil::ExtractExpression(
   return exp;
 }
 
+/// Retrieve entity type of token
+/// \param tokens
+/// \return EntityType of token
 EntityType QueryParserUtil::ExtractEntityType(
     const std::shared_ptr<TokenHandler>& tokens) {
   EntityType result;
@@ -105,6 +120,10 @@ EntityType QueryParserUtil::ExtractEntityType(
   return result;
 }
 
+/// Retrieve pattern expression: expression
+/// \param tokens
+/// \param builder
+/// \return String Expression
 std::string QueryParserUtil::GetExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -123,6 +142,10 @@ std::string QueryParserUtil::GetExpression(
   return res;
 }
 
+/// Retrieve pattern expression: term
+/// \param tokens
+/// \param builder
+/// \return String Term
 std::string QueryParserUtil::GetTerm(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -154,6 +177,8 @@ std::string QueryParserUtil::GetTerm(
   return res;
 }
 
+/// Verifies statement reference
+/// \param synonym
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   if (stmtRef.IsSynonym() &&
       (stmtRef.IsEntityType(VARIABLE) || stmtRef.IsEntityType(CONSTANT) ||
@@ -162,6 +187,8 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
+/// Verifies synonym is pattern-able
+/// \param synonym
 void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
   if (!(synonym.IsEntityType(ASSIGN) || synonym.IsEntityType(IF) ||
         synonym.IsEntityType(WHILE))) {
@@ -169,46 +196,25 @@ void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
   }
 }
 
-/**
- * Verifies entity reference is a Procedure entity
- * @param entity_ref
- * @return
- */
-void QueryParserUtil::CheckEntityRhs(const EntityReference& entRef) {
-  if (entRef.IsSynonym() && entRef.GetSynonym().GetEntityType() != VARIABLE) {
-    throw SemanticException("Synonym is not a variable entity");
-  }
-}
-
-/**
- * Verifies entity reference is a Procedure entity
- * @param entity_ref
- * @return
- */
+/// Verifies entity reference is a Procedure entity
+/// \param entity_ref
 void QueryParserUtil::CheckProcedureEntity(const EntityReference& entRef) {
   if (entRef.IsSynonym() && !entRef.IsEntityType(PROCEDURE)) {
     throw SemanticException("Expected procedure reference");
   }
 }
 
-/**
- * Verifies entity reference is a Variable entity
- * @param entity_ref
- * @return
- */
-void QueryParserUtil::CheckVariableEntity(const EntityReference& entity_ref) {
-  if (entity_ref.IsSynonym() &&
-      entity_ref.GetSynonym().GetEntityType() != VARIABLE) {
+/// Verifies entity reference is a Variable entity
+/// \param entRef
+void QueryParserUtil::CheckVariableEntity(const EntityReference& entRef) {
+  if (entRef.IsSynonym() && entRef.GetSynonym().GetEntityType() != VARIABLE) {
     throw SemanticException("Synonym is not a variable entity");
   }
 }
 
-/**
- * Checks if clause has a Procedure entity
- * @param tokens
- * @param builder
- * @return
- */
+/// Checks if clause has a Procedure entity
+/// \param tokens
+/// \param builder
 bool QueryParserUtil::CheckProcedureClause(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -232,12 +238,10 @@ bool QueryParserUtil::CheckProcedureClause(
   return result;
 }
 
-/**
- * Extracts Attribute Reference object from given tokens & query string
- * @param tokens
- * @param builder
- * @return AttributeReference
- */
+/// Extracts Attribute Reference object from given tokens & query string
+/// \param tokens
+/// \param builder
+/// \return AttributeReference
 AttributeReference QueryParserUtil::ExtractAttrRef(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
@@ -262,11 +266,9 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
   }
 }
 
-/**
- * Extracts Attribute Name object from given tokens
- * @param tokens
- * @return AttributeName
- */
+/// Extracts Attribute Name object from given tokens
+/// \param tokens
+/// \return AttributeName
 AttributeName QueryParserUtil::ExtractAttrName(
     Synonym syn, const std::shared_ptr<TokenHandler>& tokens) {
   Token next = tokens->Peek();
@@ -290,11 +292,9 @@ AttributeName QueryParserUtil::ExtractAttrName(
   return attrName;
 }
 
-/**
- * Extracts Identifier object from given tokens
- * @param tokens
- * @return Identifier
- */
+/// Extracts Identifier object from given tokens
+/// \param tokens
+/// \return Identifier
 Identifier QueryParserUtil::ExtractIdentifier(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::INVERTED_COMMAS);
@@ -304,11 +304,9 @@ Identifier QueryParserUtil::ExtractIdentifier(
   return ident;
 }
 
-/**
- * Extracts Integer object from given tokens
- * @param tokens
- * @return Integer
- */
+/// Extracts Integer object from given tokens
+/// \param tokens
+/// \return Integer
 Integer QueryParserUtil::ExtractInteger(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::NUMBER);

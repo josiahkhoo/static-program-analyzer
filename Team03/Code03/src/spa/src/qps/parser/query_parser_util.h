@@ -31,9 +31,8 @@ class QueryParserUtil {
       Synonym synonym, const std::shared_ptr<TokenHandler>& tokens);
   static void CheckFollowsParentRef(const StatementReference& stmtRef);
   static void CheckPatternSyn(const Synonym& synonym);
-  static void CheckEntityRhs(const EntityReference& entRef);
   static void CheckProcedureEntity(const EntityReference& entRef);
-  static void CheckVariableEntity(const EntityReference& entity_ref);
+  static void CheckVariableEntity(const EntityReference& entRef);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
                                    const QueryStringBuilder& builder);
 
