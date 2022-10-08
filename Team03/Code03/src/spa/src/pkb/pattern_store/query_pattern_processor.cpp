@@ -1,5 +1,7 @@
 #include "query_pattern_processor.h"
 
+#include <cassert>
+
 std::string QueryPatternProcessor::ProcessAssignPattern(std::string exp) const {
   if (exp.find('(') == std::string::npos) {
     return ProcessAssignPatternHelper(exp);
