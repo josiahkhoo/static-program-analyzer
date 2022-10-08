@@ -105,12 +105,20 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
   auto [modifies_s_abstractions, modifies_p_abstractions] =
       modifies_abstraction_extractor_.Extract(ctx);
 
-  return {follows_abstractions,    follows_t_abstractions,
-          parent_abstractions,     parent_t_abstractions,
-          calls_abstractions,      calls_t_abstractions,
-          uses_s_abstractions,     uses_p_abstractions,
-          modifies_s_abstractions, modifies_p_abstractions,
-          if_pattern_abstractions, while_pattern_abstractions};
+  return AbstractionExtractorResult::Builder()
+      .FollowsAbstractions(&follows_abstractions)
+      .FollowsTAbstractions(&follows_t_abstractions)
+      .ParentAbstractions(&parent_abstractions)
+      .ParentTAbstractions(&parent_t_abstractions)
+      .CallsAbstractions(&calls_abstractions)
+      .CallsTAbstractions(&calls_t_abstractions)
+      .UsesSAbstractions(&uses_s_abstractions)
+      .UsesPAbstractions(&uses_p_abstractions)
+      .ModifiesSAbstractions(&modifies_s_abstractions)
+      .ModifiesPAbstractions(&modifies_p_abstractions)
+      .IfPatternAbstractions(&if_pattern_abstractions)
+      .WhilePatternAbstractions(&while_pattern_abstractions)
+      .Build();
 }
 
 std::unordered_map<TNode, StatementEntity>
