@@ -48,10 +48,23 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-        proc_name_node_umap);
+    std::vector<FollowsAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {p},
+                                      {re1, re2, re3},
+                                      {re1, re2, re3},
+                                      {},
+                                      {},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 2);
     // Check Follows(1,2)
@@ -110,10 +123,23 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {if_ent}, {}, {}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-        proc_name_node_umap);
+    std::vector<FollowsAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {if_ent},
+                                      {},
+                                      {},
+                                      {re1, re2, re3},
+                                      {re1, re2, re3},
+                                      {},
+                                      {},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 2);
     // Check Follows(1,2)
@@ -170,10 +196,23 @@ TEST_CASE("FollowsAbstraction Extractor", "[FollowsAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<FollowsAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {}, {}, {}, {re1, re2, re3}, {re1, re2, re3}, {},
-        {while_entity}, stmt_umap, var_umap, const_umap, proc_umap,
-        proc_node_call_ent_umap, proc_name_node_umap);
+    std::vector<FollowsAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {re1, re2, re3},
+                                      {re1, re2, re3},
+                                      {},
+                                      {while_entity},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 2);
     // Check Follows(1,2)

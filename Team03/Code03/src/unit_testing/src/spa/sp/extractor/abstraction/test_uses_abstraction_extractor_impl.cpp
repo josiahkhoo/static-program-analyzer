@@ -55,13 +55,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -130,13 +130,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -207,13 +207,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -297,13 +297,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -371,13 +371,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -478,13 +478,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -577,13 +577,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -677,13 +677,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {
@@ -824,13 +824,13 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
 
     auto [uses_s_abstractions, uses_p_abstractions] =
         extractor_under_test.Extract(
-            eer.GetAssignEntities(), eer.GetCallEntities(),
-            eer.GetConstantEntities(), eer.GetIfEntities(),
-            eer.GetPrintEntities(), eer.GetProcedureEntities(),
-            eer.GetReadEntities(), eer.GetStatementEntities(),
-            eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
-            var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-            proc_name_node_umap);
+            {eer.GetAssignEntities(), eer.GetCallEntities(),
+             eer.GetConstantEntities(), eer.GetIfEntities(),
+             eer.GetPrintEntities(), eer.GetProcedureEntities(),
+             eer.GetReadEntities(), eer.GetStatementEntities(),
+             eer.GetVariableEntities(), eer.GetWhileEntities(), stmt_umap,
+             var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
+             proc_name_node_umap});
 
     std::vector<std::pair<int, std::string>> uses_s_vector;
     for (auto i : uses_s_abstractions) {

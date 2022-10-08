@@ -2,10 +2,6 @@
 
 #include <unordered_set>
 
-#include "common/abstraction/modifies_p_abstraction.h"
-#include "common/abstraction/uses_p_abstraction.h"
-#include "common/abstraction/while_pattern_abstraction.h"
-
 AbstractionExtractorImpl::AbstractionExtractorImpl(
     const SubAbstractionExtractor<FollowsAbstraction>
         &follows_abstraction_extractor,
@@ -60,85 +56,42 @@ AbstractionExtractorResult AbstractionExtractorImpl::Extract(
   std::unordered_map<std::string, const TNode *> proc_name_node_umap =
       GetProcNameNodeMap(procedure_entities);
 
+  SubAbstractionExtractorContext ctx = SubAbstractionExtractorContext(
+      assign_entities, call_entities, constant_entities, if_entities,
+      print_entities, procedure_entities, read_entities, statement_entities,
+      variable_entities, while_entities, t_node_stmt_ent_umap,
+      t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
+      proc_node_call_ent_umap, proc_name_node_umap);
+
   std::vector<FollowsAbstraction> follows_abstractions =
-      follows_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      follows_abstraction_extractor_.Extract(ctx);
 
   std::vector<FollowsTAbstraction> follows_t_abstractions =
-      follows_t_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      follows_t_abstraction_extractor_.Extract(ctx);
 
   std::vector<ParentAbstraction> parent_abstractions =
-      parent_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      parent_abstraction_extractor_.Extract(ctx);
 
   std::vector<ParentTAbstraction> parent_t_abstractions =
-      parent_t_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      parent_t_abstraction_extractor_.Extract(ctx);
 
   std::vector<CallsAbstraction> calls_abstractions =
-      calls_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      calls_abstraction_extractor_.Extract(ctx);
 
   std::vector<CallsTAbstraction> calls_t_abstractions =
-      calls_t_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      calls_t_abstraction_extractor_.Extract(ctx);
 
   std::vector<IfPatternAbstraction> if_pattern_abstractions =
-      if_pattern_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      if_pattern_abstraction_extractor_.Extract(ctx);
 
   std::vector<WhilePatternAbstraction> while_pattern_abstractions =
-      while_pattern_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      while_pattern_abstraction_extractor_.Extract(ctx);
 
   auto [uses_s_abstractions, uses_p_abstractions] =
-      uses_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      uses_abstraction_extractor_.Extract(ctx);
 
   auto [modifies_s_abstractions, modifies_p_abstractions] =
-      modifies_abstraction_extractor_.Extract(
-          assign_entities, call_entities, constant_entities, if_entities,
-          print_entities, procedure_entities, read_entities, statement_entities,
-          variable_entities, while_entities, t_node_stmt_ent_umap,
-          t_node_var_ent_umap, t_node_const_ent_umap, t_node_procedure_ent_umap,
-          proc_node_call_ent_umap, proc_name_node_umap);
+      modifies_abstraction_extractor_.Extract(ctx);
 
   return {follows_abstractions,    follows_t_abstractions,
           parent_abstractions,     parent_t_abstractions,
