@@ -209,22 +209,22 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffects(
-      int statement_number) const override {
+      int) const override {
     return {"QueryAffects"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsBy(
-      int statement_number) const override {
+      int) const override {
     return {"QueryAffectsBy"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsT(
-      int statement_number) const override {
+      int) const override {
     return {"QueryAffectsT"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsTBy(
-      int statement_number) const override {
+      int) const override {
     return {"QueryAffectsTBy"};
   }
 
