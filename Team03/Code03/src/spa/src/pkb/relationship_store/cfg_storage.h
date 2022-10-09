@@ -11,9 +11,9 @@ class CFGStorage {
  public:
   void AddCFG(CFG cfg);
 
-  std::unordered_set<int> GetStatementsProceedPath(int stmt);
+  std::unordered_set<int> GetStatementsProceedPath(int stmt) const;
 
-  std::unordered_set<int> GetStatementsPrecedePath(int stmt);
+  std::unordered_set<int> GetStatementsPrecedePath(int stmt) const;
 
   void Clear();
 
