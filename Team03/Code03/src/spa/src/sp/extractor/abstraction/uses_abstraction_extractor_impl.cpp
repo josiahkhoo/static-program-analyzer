@@ -2,27 +2,21 @@
 
 std::pair<std::vector<UsesSAbstraction>, std::vector<UsesPAbstraction>>
 UsesAbstractionExtractorImpl::Extract(
-    const std::vector<AssignEntity>& assign_entities,
-    const std::vector<CallEntity>& call_entities,
-    const std::vector<ConstantEntity>& constant_entities,
-    const std::vector<IfEntity>& if_entities,
-    const std::vector<PrintEntity>& print_entities,
-    const std::vector<ProcedureEntity>& procedure_entities,
-    const std::vector<ReadEntity>& read_entities,
-    const std::vector<StatementEntity>& statement_entities,
-    const std::vector<VariableEntity>& variable_entities,
-    const std::vector<WhileEntity>& while_entities,
-    std::unordered_map<TNode, StatementEntity>& t_node_stmt_ent_umap,
-    std::unordered_map<TNode, VariableEntity>& t_node_var_ent_umap,
-    std::unordered_map<TNode, ConstantEntity>& t_node_const_ent_umap,
-    std::unordered_map<TNode, ProcedureEntity>& t_node_proc_ent_umap,
-    std::unordered_map<const TNode*, std::unordered_set<const TNode*>>&
-        proc_node_call_ent_umap,
-    std::unordered_map<std::string, const TNode*>& proc_name_node_umap) const {
+    const SubAbstractionExtractorContext& context) const {
   std::unordered_map<const TNode*, std::unordered_set<const TNode*>>
       proc_var_map;
   std::vector<UsesSAbstraction> uses_s_abstractions;
   std::vector<UsesPAbstraction> uses_p_abstractions;
+
+  auto variable_entities = context.GetVariableEntities();
+  auto call_entities = context.GetCallEntities();
+
+  auto t_node_stmt_ent_umap = context.GetTNodeStmtEntUmap();
+  auto proc_node_call_ent_umap = context.GetProcNodeCallEntUmap();
+  auto t_node_proc_ent_umap = context.GetTNodeProcEntUmap();
+  auto proc_name_node_umap = context.GetProcNameNodeUmap();
+  auto t_node_var_ent_umap = context.GetTNodeVarEntUmap();
+
   for (const auto& variable_entity : variable_entities) {
     auto* curr_node_ptr = const_cast<TNode*>(variable_entity.GetNodePointer());
     auto* var_node_ptr = const_cast<TNode*>(variable_entity.GetNodePointer());

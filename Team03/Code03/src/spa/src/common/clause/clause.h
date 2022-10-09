@@ -10,6 +10,8 @@
 
 class Clause : public QueryOperation {
  public:
+  virtual ~Clause() = default;
+
   [[nodiscard]] virtual const Reference &GetLeftHandSide() const = 0;
 
   [[nodiscard]] virtual const Reference &GetRightHandSide() const = 0;

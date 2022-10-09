@@ -8,6 +8,7 @@
 template <class T, class V>
 class Parser {
  public:
+  virtual ~Parser() = default;
   virtual T Parse(V tokens) = 0;
 };
 

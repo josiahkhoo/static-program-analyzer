@@ -1,5 +1,6 @@
 #include "pkb.h"
 
+#include <cassert>
 #include <stdexcept>
 #include <vector>
 
@@ -508,10 +509,9 @@ std::unordered_set<std::string> PKB::QueryAllModifiesRelations() const {
 
 /// QueryModifiesS
 /// \param statement_number
-/// \param type todo: remove
 /// \return Variables modified in given statement_number
-std::unordered_set<std::string> PKB::QueryModifiesS(int statement_number,
-                                                    EntityType type) const {
+std::unordered_set<std::string> PKB::QueryModifiesS(
+    int statement_number) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetVariablesModifiedByStatement(statement_number);
   return result;
@@ -537,10 +537,9 @@ std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
 
 /// QueryModifiesP
 /// \param identifier
-/// \param type todo: remove
 /// \return Variables modified in given Procedure identifier
-std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
-                                                    EntityType type) const {
+std::unordered_set<std::string> PKB::QueryModifiesP(
+    std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetVariablesModifiedByProcedure(identifier);
   return result;
@@ -548,10 +547,9 @@ std::unordered_set<std::string> PKB::QueryModifiesP(std::string identifier,
 
 /// QueryModifiesPBy
 /// \param identifier
-/// \param type todo: remove
 /// \return Procedures that modifies given Variable identifier
-std::unordered_set<std::string> PKB::QueryModifiesPBy(std::string identifier,
-                                                      EntityType type) const {
+std::unordered_set<std::string> PKB::QueryModifiesPBy(
+    std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetProceduresModifyingVariable(identifier);
   return result;
@@ -622,21 +620,29 @@ std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
 
 std::unordered_set<std::string> PKB::QueryNext(int statement_number,
                                                EntityType type) const {
+  assert(statement_number);
+  assert(type);
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,
                                                  EntityType type) const {
+  assert(statement_number);
+  assert(type);
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
                                                 EntityType type) const {
+  assert(statement_number);
+  assert(type);
   return {};
 }
 
 std::unordered_set<std::string> PKB::QueryNextTBy(int statement_number,
                                                   EntityType type) const {
+  assert(statement_number);
+  assert(type);
   return {};
 }
 
@@ -698,7 +704,7 @@ std::unordered_set<std::string> PKB::QueryAssignPattern(std::string lhs,
 }
 
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
-    int statement_number) const {
+    int) const {
   return {};
 }
 
@@ -711,7 +717,7 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
 /// container
 std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
   return pattern_manager_.GetAllWhilePattern();
-};
+}
 
 /// QueryWhilePattern
 /// \param ident
@@ -739,7 +745,7 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
 /// \return Get all If Statements that use a variable in conditional container
 std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
   return pattern_manager_.GetAllIfPattern();
-};
+}
 
 /// QueryIfPattern
 /// \param ident

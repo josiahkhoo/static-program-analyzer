@@ -48,10 +48,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {}, {}, {p}, {re1, re2, re3}, {re1, re2, re3}, {}, {},
-        stmt_umap, var_umap, const_umap, proc_umap, proc_node_call_ent_umap,
-        proc_name_node_umap);
+    std::vector<ParentTAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {p},
+                                      {re1, re2, re3},
+                                      {re1, re2, re3},
+                                      {},
+                                      {},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.empty());
   }
@@ -137,10 +150,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {if_ent, if_ent2}, {}, {}, {re1, re2, re3, re4, re5},
-        {re1, re2, re3, re4, re5}, {}, {}, stmt_umap, var_umap, const_umap,
-        proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+    std::vector<ParentTAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {if_ent, if_ent2},
+                                      {},
+                                      {},
+                                      {re1, re2, re3, re4, re5},
+                                      {re1, re2, re3, re4, re5},
+                                      {},
+                                      {},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 8);
     // Check Parent(1,2)
@@ -236,10 +262,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {}, {}, {}, {re1, re2, re3, re4}, {re1, re2, re3, re4}, {},
-        {while_entity, while_entity2}, stmt_umap, var_umap, const_umap,
-        proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+    std::vector<ParentTAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {},
+                                      {re1, re2, re3, re4},
+                                      {re1, re2, re3, re4},
+                                      {},
+                                      {while_entity, while_entity2},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 6);
     // Check Parent(1,2)
@@ -341,10 +380,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {if_entity}, {}, {}, {re1, re2, re3, re4, re5},
-        {re1, re2, re3, re4, re5}, {}, {while_entity}, stmt_umap, var_umap,
-        const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+    std::vector<ParentTAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {if_entity},
+                                      {},
+                                      {},
+                                      {re1, re2, re3, re4, re5},
+                                      {re1, re2, re3, re4, re5},
+                                      {},
+                                      {while_entity},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 8);
     // Check Parent(1,2)
@@ -451,10 +503,23 @@ TEST_CASE("ParentTAbstraction Extractor", "[ParentTAbstractionExtractor]") {
         proc_node_call_ent_umap = {};
     std::unordered_map<std::string, const TNode *> proc_name_node_umap = {};
 
-    std::vector<ParentTAbstraction> abstractions = extractor_under_test.Extract(
-        {}, {}, {}, {if_ent}, {}, {}, {re1, re2, re3, re4, re5},
-        {re1, re2, re3, re4, re5}, {}, {while_ent}, stmt_umap, var_umap,
-        const_umap, proc_umap, proc_node_call_ent_umap, proc_name_node_umap);
+    std::vector<ParentTAbstraction> abstractions =
+        extractor_under_test.Extract({{},
+                                      {},
+                                      {},
+                                      {if_ent},
+                                      {},
+                                      {},
+                                      {re1, re2, re3, re4, re5},
+                                      {re1, re2, re3, re4, re5},
+                                      {},
+                                      {while_ent},
+                                      stmt_umap,
+                                      var_umap,
+                                      const_umap,
+                                      proc_umap,
+                                      proc_node_call_ent_umap,
+                                      proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 8);
     // Check Parent(5,6)

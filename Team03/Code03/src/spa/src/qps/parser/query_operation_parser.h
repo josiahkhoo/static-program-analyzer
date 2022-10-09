@@ -10,6 +10,7 @@
 /// Interface class for parsing of query operations
 class QueryOperationParser : public QueryComponentParser<QueryOperation> {
  public:
+  virtual ~QueryOperationParser() = default;
   /// Converts tokens into QueryOperation object
   std::shared_ptr<QueryOperation> Parse(TokenBuilderPair data) override = 0;
 };

@@ -10,10 +10,10 @@ CFG::CFG(std::string proc_name,
                             std::unordered_set<std::shared_ptr<CFGNode>>>
              reverse_map,
          std::unordered_map<int, std::shared_ptr<CFGNode>> stmt_node_map)
-    : proc_name_(std::move(proc_name)),
-      forward_map_(std::move(forward_map)),
+    : forward_map_(std::move(forward_map)),
       reverse_map_(std::move(reverse_map)),
-      stmt_node_map_(std::move(stmt_node_map)) {}
+      stmt_node_map_(std::move(stmt_node_map)),
+      proc_name_(std::move(proc_name)) {}
 
 std::shared_ptr<CFGNode> CFG::GetNode(int stmt_no) {
   return stmt_node_map_[stmt_no];

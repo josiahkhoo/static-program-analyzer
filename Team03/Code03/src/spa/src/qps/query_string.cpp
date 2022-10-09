@@ -7,9 +7,9 @@ QueryString::QueryString() = default;
 QueryString::QueryString(
     std::shared_ptr<Select> select, std::vector<Synonym> synonyms,
     std::vector<std::shared_ptr<QueryOperation>> query_operations)
-    : select_(std::move(select)),
+    : query_operations_(std::move(query_operations)),
       declared_synonyms_(std::move(synonyms)),
-      query_operations_(std::move(query_operations)) {}
+      select_(std::move(select)) {}
 
 std::shared_ptr<Select> QueryString::GetSelect() const { return select_; }
 

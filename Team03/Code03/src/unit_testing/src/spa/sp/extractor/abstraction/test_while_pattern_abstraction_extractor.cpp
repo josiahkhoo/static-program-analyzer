@@ -56,12 +56,12 @@ TEST_CASE("WhilePatternAbstraction Extractor",
             eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
-        eer.GetAssignEntities(), eer.GetCallEntities(),
-        eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
-        eer.GetProcedureEntities(), eer.GetReadEntities(),
-        eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
-        proc_node_call_ent_umap, proc_name_node_umap);
+        {eer.GetAssignEntities(), eer.GetCallEntities(),
+         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
+         eer.GetProcedureEntities(), eer.GetReadEntities(),
+         eer.GetStatementEntities(), eer.GetVariableEntities(),
+         eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+         proc_node_call_ent_umap, proc_name_node_umap});
 
     REQUIRE(abstractions.empty());
   }
@@ -96,12 +96,12 @@ TEST_CASE("WhilePatternAbstraction Extractor",
             eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
-        eer.GetAssignEntities(), eer.GetCallEntities(),
-        eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
-        eer.GetProcedureEntities(), eer.GetReadEntities(),
-        eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
-        proc_node_call_ent_umap, proc_name_node_umap);
+        {eer.GetAssignEntities(), eer.GetCallEntities(),
+         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
+         eer.GetProcedureEntities(), eer.GetReadEntities(),
+         eer.GetStatementEntities(), eer.GetVariableEntities(),
+         eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+         proc_node_call_ent_umap, proc_name_node_umap});
 
     REQUIRE(abstractions.empty());
   }
@@ -136,12 +136,12 @@ TEST_CASE("WhilePatternAbstraction Extractor",
             eer.GetProcedureEntities());
 
     auto abstractions = extractor_under_test.Extract(
-        eer.GetAssignEntities(), eer.GetCallEntities(),
-        eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
-        eer.GetProcedureEntities(), eer.GetReadEntities(),
-        eer.GetStatementEntities(), eer.GetVariableEntities(),
-        eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
-        proc_node_call_ent_umap, proc_name_node_umap);
+        {eer.GetAssignEntities(), eer.GetCallEntities(),
+         eer.GetConstantEntities(), eer.GetIfEntities(), eer.GetPrintEntities(),
+         eer.GetProcedureEntities(), eer.GetReadEntities(),
+         eer.GetStatementEntities(), eer.GetVariableEntities(),
+         eer.GetWhileEntities(), stmt_umap, var_umap, const_umap, proc_umap,
+         proc_node_call_ent_umap, proc_name_node_umap});
 
     REQUIRE(abstractions.size() == 2);
     REQUIRE((abstractions[0].GetLeftHandSide().GetStatementNumber() == 1 &&

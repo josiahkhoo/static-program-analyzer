@@ -159,13 +159,13 @@ class PKB : public QueryablePkb, public StorablePkb {
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllModifiesRelations() const override;
   std::unordered_set<std::string> QueryModifiesS(
-      int statement_number, EntityType type) const override;
+      int statement_number) const override;
   std::unordered_set<std::string> QueryModifiesSBy(
       std::string identifier, EntityType type) const override;
   std::unordered_set<std::string> QueryModifiesP(
-      std::string identifier, EntityType type) const override;
+      std::string identifier) const override;
   std::unordered_set<std::string> QueryModifiesPBy(
-      std::string identifier, EntityType type) const override;
+      std::string identifier) const override;
 
   // Calls query methods
   std::unordered_set<std::string> QueryAllCalls() const override;

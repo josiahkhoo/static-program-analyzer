@@ -4,6 +4,9 @@
 #include "common/pair.h"
 
 template <class T, class U>
-class Abstraction : Pair<T, U> {};
+class Abstraction : Pair<T, U> {
+ public:
+  virtual ~Abstraction() = default;
+};
 
 #endif  // SPA_ABSTRACTION_H

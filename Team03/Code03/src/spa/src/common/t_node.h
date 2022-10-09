@@ -106,6 +106,6 @@ class hash<TNode> {
     return (t_node.GetId() * 200771) + (t_node.GetType() % 300823);
   }
 };
-};  // namespace std
+}  // namespace std
 
 #endif  // SPA_T_NODE_H

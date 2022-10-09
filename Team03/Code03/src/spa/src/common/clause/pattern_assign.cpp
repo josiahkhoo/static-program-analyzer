@@ -62,12 +62,12 @@ QueryOperation::Type PatternAssign::GetType() const {
 }
 
 QueryOperation::IterateSide PatternAssign::GetIterateSide(
-    std::vector<std::vector<std::string>> lhs,
-    std::vector<std::vector<std::string>> rhs) const {
+    std::vector<std::vector<std::string>>,
+    std::vector<std::vector<std::string>>) const {
   return QueryOperation::RHS;
 }
 
-bool PatternAssign::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool PatternAssign::IsTrue(const QueryablePkb &) const {
   assert(!"Patterns are never no synonyms, this should not get called");
   return false;
 }

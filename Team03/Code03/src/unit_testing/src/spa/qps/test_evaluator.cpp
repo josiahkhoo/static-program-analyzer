@@ -16,127 +16,127 @@ using namespace fakeit;
 class QueryablePkbStub : public QueryablePkb {
  public:
   [[nodiscard]] std::unordered_set<std::string> QueryAll(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAll"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllFollows"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllFollowsBy(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllFollowsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryFollows(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryFollows"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryFollowsBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryFollowsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryFollowsT(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryFollowsT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryFollowsTBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryFollowsTBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllParent(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllParent"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllParentBy(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllParentBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryParent(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryParent"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryParentBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryParentBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryParentT(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryParentT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryParentTBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryParentTBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllUses(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllUses"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllUsesBy(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllUsesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesS(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryUsesS"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesSBy(
-      std::string identifier, EntityType type) const override {
+      std::string, EntityType) const override {
     return {"QueryUsesSBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesP(
-      std::string identifier, EntityType type) const override {
+      std::string, EntityType) const override {
     return {"QueryUsesP"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryUsesPBy(
-      std::string identifier, EntityType type) const override {
+      std::string, EntityType) const override {
     return {"QueryUsesPBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllModifies"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesBy(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllModifiesBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesS(
-      int statement_number, EntityType type) const override {
+      int) const override {
     return {"QueryModifiesS"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesSBy(
-      std::string identifier, EntityType type) const override {
+      std::string, EntityType) const override {
     return {"QueryModifiesSBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesP(
-      std::string identifier, EntityType type) const override {
+      std::string) const override {
     return {"QueryModifiesP"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
-      std::string identifier, EntityType type) const override {
+      std::string) const override {
     return {"QueryModifiesPBy"};
   }
 
@@ -150,22 +150,22 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCalls(
-      std::string identifier) const override {
+      std::string) const override {
     return {"QueryCalls"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsBy(
-      std::string identifier) const override {
+      std::string) const override {
     return {"QueryCallsBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsT(
-      std::string identifier) const override {
+      std::string) const override {
     return {"QueryCallsT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
-      std::string identifier) const override {
+      std::string) const override {
     return {"QueryCallsTBy"};
   }
 
@@ -179,22 +179,22 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNext(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryNext"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryNextBy"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextT(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryNextT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextTBy(
-      int statement_number, EntityType type) const override {
+      int, EntityType) const override {
     return {"QueryNextTBy"};
   }
 
@@ -229,12 +229,12 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllAssignPattern(
-      Expression exp) const override {
+      Expression) const override {
     return {"QueryAllAssignPattern"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAssignPattern(
-      std::string lhs, Expression exp) const override {
+      std::string, Expression) const override {
     return {"QueryPatternStr"};
   }
 
@@ -271,12 +271,12 @@ class QueryablePkbStub : public QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllWhilePattern()
       const override {
     return {"QueryAllWhilePattern"};
-  };
+  }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWhilePattern(
-      std::string ident) const override {
+      std::string) const override {
     return {"QueryWhilePattern"};
-  };
+  }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllIfPattern()
       const override {
@@ -284,38 +284,37 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryIfPattern(
-      std::string ident) const override {
+      std::string) const override {
     return {"QueryIfPattern"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromAssign(
-      int statement_number) const override {
+      int) const override {
     return {"QueryPatternVariablesFromAssign"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
-      int statement_number) const {
+      int) const override {
     return {"QueryPatternVariablesFromWhile"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
-      int statement_number) const {
+      int) const override {
     return {"QueryPatternVariablesFromIf"};
   }
 
   [[nodiscard]] std::string QueryWithAttributeFromStatement(
-      EntityType type, int statement_number) const {
+      EntityType, int) const override {
     return {"QueryWithAttributeFromStatement"};
-  };
+  }
 
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, AttributeName name,
-      std::string identifier) const override {
+      EntityType, AttributeName, std::string) const override {
     return {"QueryWithAttributeIdentifier"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryWithAttribute(
-      EntityType type, AttributeName name, int number) const override {
+      EntityType, AttributeName, int) const override {
     return {"QueryWithAttributeNumber"};
   }
 };
@@ -631,7 +630,7 @@ TEST_CASE("Intersect check 'Select Pattern(String)Assign AllFollows'",
   std::unordered_set<std::string> result =
       eval.Execute(queryable_pkb_stub.get(), root, s);
 
-  auto it = result.begin();
+  result.begin();
   REQUIRE_FALSE(result.empty());
   REQUIRE(result.find("4")->size() == 1);
   REQUIRE(result.find("2")->size() == 1);
@@ -671,7 +670,7 @@ TEST_CASE("Intersect check 'Select AllFollows Pattern(String)Assign'",
       eval.Execute(queryable_pkb_stub.get(), root, s);
 
   REQUIRE_FALSE(result.empty());
-  auto it = result.begin();
+  result.begin();
   REQUIRE_FALSE(result.empty());
   REQUIRE(result.find("4")->size() == 1);
   REQUIRE(result.find("2")->size() == 1);

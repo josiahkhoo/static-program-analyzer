@@ -11,7 +11,7 @@ EntityReference::EntityReference(Synonym synonym)
     : Reference(std::move(synonym)) {}
 
 EntityReference::EntityReference(Identifier identifier)
-    : identifier_(identifier), Reference(false) {}
+    : Reference(false), identifier_(identifier) {}
 
 Identifier EntityReference::GetIdentifier() const {
   assert(IsIdentifier());

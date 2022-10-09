@@ -7,14 +7,12 @@ ModifiesPClause::ModifiesPClause(EntityReference lhs, EntityReference rhs)
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesPClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryModifiesP(
-      lhs, GetRightHandSide().GetSynonym().GetEntityType());
+  return queryable_pkb.QueryModifiesP(lhs);
 }
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesPClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryModifiesPBy(
-      rhs, GetLeftHandSide().GetSynonym().GetEntityType());
+  return queryable_pkb.QueryModifiesPBy(rhs);
 }
 
 const Reference &ModifiesPClause::GetLeftHandSide() const { return lhs_; }
@@ -25,9 +23,7 @@ std::unordered_set<std::string> ModifiesPClause::FetchRhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsIdentifier()) {
     // E.g. Modifies("x", a)
-    return queryable_pkb.QueryModifiesP(
-        GetLeftHandSide().GetIdentifier(),
-        GetRightHandSide().GetSynonym().GetEntityType());
+    return queryable_pkb.QueryModifiesP(GetLeftHandSide().GetIdentifier());
   }
   return queryable_pkb.QueryAllModifiesBy(
       GetRightHandSide().GetSynonym().GetEntityType());
@@ -37,9 +33,7 @@ std::unordered_set<std::string> ModifiesPClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsIdentifier()) {
     // E.g. Modifies(a, "x")
-    return queryable_pkb.QueryModifiesPBy(
-        GetRightHandSide().GetIdentifier(),
-        GetLeftHandSide().GetSynonym().GetEntityType());
+    return queryable_pkb.QueryModifiesPBy(GetRightHandSide().GetIdentifier());
   }
   // E.g. Modifies(a, _)
   return queryable_pkb.QueryAllModifies(
@@ -48,8 +42,8 @@ std::unordered_set<std::string> ModifiesPClause::FetchLhs(
 
 bool ModifiesPClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsIdentifier() && GetRightHandSide().IsIdentifier()) {
-    auto possible_rhs = queryable_pkb.QueryModifiesP(
-        GetLeftHandSide().GetIdentifier(), EntityType::VARIABLE);
+    auto possible_rhs =
+        queryable_pkb.QueryModifiesP(GetLeftHandSide().GetIdentifier());
     if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
       return true;
@@ -57,15 +51,11 @@ bool ModifiesPClause::IsTrue(const QueryablePkb &queryable_pkb) const {
     return false;
   } else if (GetLeftHandSide().IsIdentifier() &&
              GetRightHandSide().IsWildCard()) {
-    return !queryable_pkb
-                .QueryModifiesP(GetLeftHandSide().GetIdentifier(),
-                                EntityType::VARIABLE)
+    return !queryable_pkb.QueryModifiesP(GetLeftHandSide().GetIdentifier())
                 .empty();
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsIdentifier()) {
-    return !queryable_pkb
-                .QueryModifiesPBy(GetRightHandSide().GetIdentifier(),
-                                  EntityType::PROCEDURE)
+    return !queryable_pkb.QueryModifiesPBy(GetRightHandSide().GetIdentifier())
                 .empty();
   }
   // Handle for wildcard wildcard

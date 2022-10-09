@@ -109,3 +109,98 @@ bool AbstractionExtractorResult::operator!=(
     const AbstractionExtractorResult &rhs) const {
   return !(rhs == *this);
 }
+
+AbstractionExtractorResult::Builder::Builder() = default;
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::FollowsAbstractions(
+    std::vector<FollowsAbstraction> *follows_abstractions) {
+  follows_abstractions_ = follows_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::FollowsTAbstractions(
+    std::vector<FollowsTAbstraction> *follows_t_abstractions) {
+  follows_t_abstractions_ = follows_t_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::ParentAbstractions(
+    std::vector<ParentAbstraction> *parent_abstractions) {
+  parent_abstractions_ = parent_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::ParentTAbstractions(
+    std::vector<ParentTAbstraction> *parent_t_abstractions) {
+  parent_t_abstractions_ = parent_t_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::CallsAbstractions(
+    std::vector<CallsAbstraction> *calls_abstractions) {
+  calls_abstractions_ = calls_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::CallsTAbstractions(
+    std::vector<CallsTAbstraction> *calls_t_abstractions) {
+  calls_t_abstractions_ = calls_t_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::UsesSAbstractions(
+    std::vector<UsesSAbstraction> *uses_s_abstractions) {
+  uses_s_abstractions_ = uses_s_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::UsesPAbstractions(
+    std::vector<UsesPAbstraction> *uses_p_abstractions) {
+  uses_p_abstractions_ = uses_p_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::ModifiesSAbstractions(
+    std::vector<ModifiesSAbstraction> *modifies_s_abstractions) {
+  modifies_s_abstractions_ = modifies_s_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::ModifiesPAbstractions(
+    std::vector<ModifiesPAbstraction> *modifies_p_abstractions) {
+  modifies_p_abstractions_ = modifies_p_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::IfPatternAbstractions(
+    std::vector<IfPatternAbstraction> *if_pattern_abstractions) {
+  if_pattern_abstractions_ = if_pattern_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult::Builder
+AbstractionExtractorResult::Builder::WhilePatternAbstractions(
+    std::vector<WhilePatternAbstraction> *while_pattern_abstractions) {
+  while_pattern_abstractions_ = while_pattern_abstractions;
+  return *this;
+}
+
+AbstractionExtractorResult AbstractionExtractorResult::Builder::Build() {
+  return {*follows_abstractions_,    *follows_t_abstractions_,
+          *parent_abstractions_,     *parent_t_abstractions_,
+          *calls_abstractions_,      *calls_t_abstractions_,
+          *uses_s_abstractions_,     *uses_p_abstractions_,
+          *modifies_s_abstractions_, *modifies_p_abstractions_,
+          *if_pattern_abstractions_, *while_pattern_abstractions_};
+}

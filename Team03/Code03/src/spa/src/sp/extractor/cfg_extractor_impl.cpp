@@ -53,7 +53,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         reverse_map,
     std::unordered_map<int, std::shared_ptr<CFGNode>>& stmt_node_map) const {
   auto stmt_list_size = children.size();
-  for (int i = start; i < stmt_list_size; i++) {
+  for (int i = start; i < (int)stmt_list_size; i++) {
     // Get current node in AST and statement number
     auto curr = children[i];
     int curr_stmt_no = curr->GetStatementNumber();
@@ -97,7 +97,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
       // If current node is while
       if (curr->GetType() == TNode::While) {
         // Check if this while node has a parent while node
-        if (while_ptr != nullptr && i == stmt_list_size - 1) {
+        if (while_ptr != nullptr && i == (int)stmt_list_size - 1) {
           forward_map[curr_ptr].emplace(while_ptr);
         }
         // Goes in while children statements
@@ -107,7 +107,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
                                forward_map, reverse_map, stmt_node_map);
 
         // Continue out of while if while is not the last in og stmt list
-        if (i != stmt_list_size - 1) {
+        if (i != (int)stmt_list_size - 1) {
           start = i + 1;
           auto last_ptr =
               RecursivelyTraverseAST(start, children, {curr_ptr}, while_ptr, {},
@@ -124,7 +124,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         // If there is statements after if, save while_ptr for later and unbind
         // while ptr from children
         auto after_if_while_ptr = while_ptr;
-        if (i != stmt_list_size - 1) {
+        if (i != (int)stmt_list_size - 1) {
           while_ptr = nullptr;
         }
         // Goes in 'then' branch children statements
@@ -144,7 +144,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
         combined_ptrs.insert(combined_ptrs.end(), last_else_node_ptrs.begin(),
                              last_else_node_ptrs.end());
         // Continue out of if and is not the last in og stmt_list
-        if (i != stmt_list_size - 1) {
+        if (i != (int)stmt_list_size - 1) {
           start = i + 1;
           auto last_ptrs2 = RecursivelyTraverseAST(
               start, children, combined_ptrs, after_if_while_ptr, {},
@@ -157,7 +157,7 @@ std::vector<std::shared_ptr<CFGNode>> CFGExtractorImpl::RecursivelyTraverseAST(
 
     cfg_stmt_nos.emplace_back(curr_stmt_no);
     // If statement is last in stmt_list and is not while or if
-    if (i == stmt_list_size - 1) {
+    if (i == (int)stmt_list_size - 1) {
       // Create CFGNode
       auto cfg_node_ptr = std::make_shared<CFGNode>(cfg_stmt_nos);
 
