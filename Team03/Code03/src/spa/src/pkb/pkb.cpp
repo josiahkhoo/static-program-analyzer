@@ -1,5 +1,6 @@
 #include "pkb.h"
 
+#include <cassert>
 #include <stdexcept>
 #include <vector>
 
