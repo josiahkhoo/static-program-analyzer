@@ -69,4 +69,5 @@ void SourceProcessor::StoreDesignExtractorResult(
                          .GetIfPatternAbstractions());
   storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetWhilePatternAbstractions());
+  storable_pkb.Store(design_extractor_result.GetCFGExtractorResult());
 }

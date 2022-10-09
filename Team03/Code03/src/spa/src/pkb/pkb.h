@@ -26,6 +26,7 @@
 #include "pkb/entity_store/entity_manager.h"
 #include "pkb/pattern_store/pattern_manager.h"
 #include "pkb/relationship_store/relationship_manager.h"
+#include "sp/extractor/cfg.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
  public:
@@ -96,6 +97,9 @@ class PKB : public QueryablePkb, public StorablePkb {
 
   // IfPattern
   void Store(std::vector<IfPatternAbstraction> abstractions) override;
+
+  // CFGs
+  void Store(std::vector<CFG> cfgs) override;
 
   /* ====================================
    * Entity Query Methods

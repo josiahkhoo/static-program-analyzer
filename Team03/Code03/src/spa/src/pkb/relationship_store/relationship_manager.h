@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 #include "calls_storage.h"
+#include "cfg_storage.h"
 #include "follows_storage.h"
 #include "modifies_storage.h"
 #include "parent_storage.h"
@@ -44,6 +45,9 @@ class RelationshipManager {
 
   // store callsT to CallsStorage
   void AddAbstraction(CallsTAbstraction abstraction);
+
+  // store CFG
+  void AddCFG(CFG cfg);
 
   /* ====================================
    * General Relationship Getter Methods
@@ -123,6 +127,7 @@ class RelationshipManager {
   UsesStorage uses_store_;
   ModifiesStorage modifies_store_;
   CallsStorage calls_store_;
+  CFGStorage cfg_store_;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
