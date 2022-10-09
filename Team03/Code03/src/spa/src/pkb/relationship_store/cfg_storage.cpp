@@ -15,7 +15,7 @@ std::unordered_set<int> CFGStorage::GetStatementsProceedPath(int stmt) {
   std::unordered_set<int> result;
   if (stmt_to_cfg_map_.find(stmt) != stmt_to_cfg_map_.end()) {
     for (auto s :
-         stmt_to_cfg_map_.at(stmt)->GetNode(stmt)->GetStatementNumbers()) {
+         stmt_to_cfg_map_.at(stmt)->GetStatementsWithinSameNode(stmt)) {
       if (s > stmt) {
         result.emplace(s);
       }
@@ -38,7 +38,7 @@ std::unordered_set<int> CFGStorage::GetStatementsPrecedePath(int stmt) {
   std::unordered_set<int> result;
   if (stmt_to_cfg_map_.find(stmt) != stmt_to_cfg_map_.end()) {
     for (auto s :
-         stmt_to_cfg_map_.at(stmt)->GetNode(stmt)->GetStatementNumbers()) {
+         stmt_to_cfg_map_.at(stmt)->GetStatementsWithinSameNode(stmt)) {
       if (s < stmt) {
         result.emplace(s);
       }
