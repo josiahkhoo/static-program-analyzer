@@ -1,24 +1,13 @@
 #include "follows_t_abstraction_extractor.h"
 
 std::vector<FollowsTAbstraction> FollowsTAbstractionExtractor::Extract(
-    const std::vector<AssignEntity> &assign_entities,
-    const std::vector<CallEntity> &call_entities,
-    const std::vector<ConstantEntity> &constant_entities,
-    const std::vector<IfEntity> &if_entities,
-    const std::vector<PrintEntity> &print_entities,
-    const std::vector<ProcedureEntity> &procedure_entities,
-    const std::vector<ReadEntity> &read_entities,
-    const std::vector<StatementEntity> &statement_entities,
-    const std::vector<VariableEntity> &variable_entities,
-    const std::vector<WhileEntity> &while_entities,
-    std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap,
-    std::unordered_map<TNode, VariableEntity> &t_node_var_ent_umap,
-    std::unordered_map<TNode, ConstantEntity> &t_node_const_ent_umap,
-    std::unordered_map<TNode, ProcedureEntity> &t_node_proc_ent_umap,
-    std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-        &proc_node_call_ent_umap,
-    std::unordered_map<std::string, const TNode *> &proc_name_node_umap) const {
+    const SubAbstractionExtractorContext &context) const {
   std::vector<FollowsTAbstraction> follows_t_abstractions = {};
+  auto procedure_entities = context.GetProcedureEntities();
+  auto t_node_stmt_ent_umap = context.GetTNodeStmtEntUmap();
+  auto while_entities = context.GetWhileEntities();
+  auto if_entities = context.GetIfEntities();
+
   for (const auto &procedure_entity : procedure_entities) {
     RetrieveFromChildren(
         &follows_t_abstractions,
@@ -53,7 +42,7 @@ void FollowsTAbstractionExtractor::RetrieveFromChildren(
     const std::vector<std::shared_ptr<TNode>> &children,
     std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap) const {
   for (int i = 0; i < (int)children.size() - 1; i++) {
-    for (int j = i + 1; j < children.size(); j++) {
+    for (int j = i + 1; j < (int)children.size(); j++) {
       auto lhs = t_node_stmt_ent_umap.find(*children[i])->second;
       auto rhs = t_node_stmt_ent_umap.find(*children[j])->second;
       follows_t_abstractions->emplace_back(lhs, rhs);

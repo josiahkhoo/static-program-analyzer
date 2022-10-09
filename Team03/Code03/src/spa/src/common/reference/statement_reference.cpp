@@ -6,7 +6,7 @@
 StatementReference::StatementReference() : Reference(true) {}
 
 StatementReference::StatementReference(Integer line_number)
-    : line_number_(line_number), Reference(false) {}
+    : Reference(false), line_number_(line_number) {}
 
 StatementReference::StatementReference(Synonym synonym)
     : Reference(std::move(synonym)) {}

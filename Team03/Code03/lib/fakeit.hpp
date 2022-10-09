@@ -157,7 +157,7 @@ struct FakeitContext;
 
 template <typename C>
 struct MockObject {
-  virtual ~MockObject() THROWS{};
+  virtual ~MockObject() THROWS {}
 
   virtual C &get() = 0;
 
@@ -7352,7 +7352,7 @@ class SequenceVerificationProgress {
 
    public:
     Terminator(smart_ptr<SequenceVerificationExpectation> expectationPtr)
-        : _expectationPtr(expectationPtr){};
+        : _expectationPtr(expectationPtr) {}
 
     operator bool() { return toBool(); }
 
@@ -7360,7 +7360,7 @@ class SequenceVerificationProgress {
   };
 
  public:
-  ~SequenceVerificationProgress() THROWS{};
+  ~SequenceVerificationProgress() THROWS {}
 
   operator bool() const { return Terminator(_expectationPtr); }
 
@@ -7604,7 +7604,7 @@ class VerifyNoOtherInvocationsVerificationProgress {
   }
 
  public:
-  ~VerifyNoOtherInvocationsVerificationProgress() THROWS{};
+  ~VerifyNoOtherInvocationsVerificationProgress() THROWS {}
 
   VerifyNoOtherInvocationsVerificationProgress setFileInfo(
       const char *file, int line, const char *callingMethod) {

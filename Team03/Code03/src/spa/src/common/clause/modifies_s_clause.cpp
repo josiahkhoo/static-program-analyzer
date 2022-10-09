@@ -7,8 +7,7 @@ ModifiesSClause::ModifiesSClause(StatementReference lhs, EntityReference rhs)
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleRhs(
     std::string lhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryModifiesS(
-      std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
+  return queryable_pkb.QueryModifiesS(std::stoi(lhs));
 }
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleLhs(
@@ -25,9 +24,7 @@ std::unordered_set<std::string> ModifiesSClause::FetchRhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Modifies(1, a)
-    return queryable_pkb.QueryModifiesS(
-        GetLeftHandSide().GetLineNumber(),
-        GetRightHandSide().GetSynonym().GetEntityType());
+    return queryable_pkb.QueryModifiesS(GetLeftHandSide().GetLineNumber());
   }
   return queryable_pkb.QueryAllModifiesBy(
       GetRightHandSide().GetSynonym().GetEntityType());
@@ -48,8 +45,8 @@ std::unordered_set<std::string> ModifiesSClause::FetchLhs(
 
 bool ModifiesSClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsIdentifier()) {
-    auto possible_rhs = queryable_pkb.QueryModifiesS(
-        GetLeftHandSide().GetLineNumber(), EntityType::VARIABLE);
+    auto possible_rhs =
+        queryable_pkb.QueryModifiesS(GetLeftHandSide().GetLineNumber());
     if (possible_rhs.find(GetRightHandSide().GetIdentifier()) !=
         possible_rhs.end()) {
       return true;
@@ -57,9 +54,7 @@ bool ModifiesSClause::IsTrue(const QueryablePkb &queryable_pkb) const {
     return false;
   } else if (GetLeftHandSide().IsLineNumber() &&
              GetRightHandSide().IsWildCard()) {
-    return !queryable_pkb
-                .QueryModifiesS(GetLeftHandSide().GetLineNumber(),
-                                EntityType::VARIABLE)
+    return !queryable_pkb.QueryModifiesS(GetLeftHandSide().GetLineNumber())
                 .empty();
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsIdentifier()) {

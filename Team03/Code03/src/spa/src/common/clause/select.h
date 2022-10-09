@@ -25,6 +25,8 @@ class Select {
     std::optional<AttributeName> maybe_attribute;
   };
 
+  virtual ~Select() = default;
+
   [[nodiscard]] virtual std::vector<SynonymWithMaybeAttribute> GetSynonyms()
       const = 0;
 

@@ -2,7 +2,7 @@
 
 #include "q_result.h"
 
-QNode::QNode() : left_node_(nullptr), right_node_(nullptr){};
+QNode::QNode() : left_node_(nullptr), right_node_(nullptr) {}
 
 void QNode::SetLeftNode(std::shared_ptr<QNode> left_node) {
   left_node_ = std::move(left_node);
@@ -20,4 +20,4 @@ bool QNode::IsLeaf() const {
   return (left_node_ == nullptr && right_node_ == nullptr);
 }
 
-QResult QNode::Fetch(const QueryablePkb &pkb) { return QResult(false); }
+QResult QNode::Fetch(const QueryablePkb &) { return QResult(false); }

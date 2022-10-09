@@ -11,6 +11,8 @@
 
 class QueryOperation {
  public:
+  virtual ~QueryOperation() = default;
+
   enum Type { NO_SYNONYM, SINGLE_SYNONYM, DOUBLE_SYNONYM };
 
   enum IterateSide { LHS, RHS };

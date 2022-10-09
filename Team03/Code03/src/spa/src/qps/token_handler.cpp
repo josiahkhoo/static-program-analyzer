@@ -10,14 +10,14 @@ TokenHandler::TokenHandler(std::vector<Token> tokens)
     : tokens_(std::move(tokens)) {}
 
 Token TokenHandler::Peek() {
-  if (token_pos_ >= tokens_.size()) {
+  if (token_pos_ >= int(tokens_.size())) {
     throw SyntaxException("No more tokens");
   }
   return tokens_[token_pos_];
 }
 
 std::string TokenHandler::PeekValue() {
-  if (token_pos_ >= tokens_.size()) {
+  if (token_pos_ >= int(tokens_.size())) {
     throw SyntaxException("No more tokens");
   }
   return tokens_[token_pos_].GetValue();
@@ -33,7 +33,7 @@ bool TokenHandler::MatchString(const std::string& s) {
   return (next.GetValue() == s);
 }
 
-bool TokenHandler::CheckEnd() { return token_pos_ == tokens_.size(); }
+bool TokenHandler::CheckEnd() { return token_pos_ == int(tokens_.size()); }
 
 void TokenHandler::Expect(Token::Kind kind) {
   if (MatchKind(kind)) {
@@ -55,7 +55,7 @@ void TokenHandler::Forward() { token_pos_++; }
 
 void TokenHandler::Back() { token_pos_--; }
 
-bool TokenHandler::IsNotEnd() { return (token_pos_ < tokens_.size() - 1); }
+bool TokenHandler::IsNotEnd() { return (token_pos_ < int(tokens_.size()) - 1); }
 
 bool TokenHandler::IsMathOperator() {
   Token next = Peek();

@@ -6,7 +6,7 @@
 SimpleParser::SimpleParser() = default;
 
 Token SimpleParser::Peek(int pos) {
-  if (pos >= tokens_.size()) {
+  if (pos >= (int)tokens_.size()) {
     throw std::runtime_error("No more tokens left to Peek");
   }
   return tokens_[pos];

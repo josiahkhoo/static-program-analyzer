@@ -43,7 +43,7 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
                                 Token::NOT,
                                 Token::END};
 
-  for (int i = 0; i < tokens.size(); i++) {
+  for (int i = 0; i < (int)tokens.size(); i++) {
     REQUIRE(tokens[i].Is(k[i]));
   }
 }
@@ -74,7 +74,7 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
                                 Token::RIGHT_CURLY_BRACKET,
                                 Token::END};
 
-  for (int i = 0; i < tokens.size(); i++) {
+  for (int i = 0; i < (int)tokens.size(); i++) {
     REQUIRE(tokens[i].Is(k[i]));
   }
 }
@@ -102,7 +102,7 @@ TEST_CASE("Extract query pattern tokens", "[Lexer]") {
                                 Token::UNDERSCORE,
                                 Token::END};
 
-  for (int i = 0; i < tokens.size(); i++) {
+  for (int i = 0; i < (int)tokens.size(); i++) {
     REQUIRE(tokens[i].Is(k[i]));
   }
 }

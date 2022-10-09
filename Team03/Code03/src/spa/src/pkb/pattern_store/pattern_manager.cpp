@@ -37,31 +37,31 @@ std::unordered_set<std::string> PatternManager::GetPattern(
 
 std::unordered_set<std::string> PatternManager::GetAllIfPattern() const {
   return if_pattern_storage_.GetAllIfPattern();
-};
+}
 
 std::unordered_set<std::string> PatternManager::GetIfPattern(
     std::string var_ident) const {
   return if_pattern_storage_.GetIfPattern(var_ident);
-};
+}
 
 std::unordered_set<std::string> PatternManager::GetPatternVariablesFromIf(
     int statement_number) const {
   return if_pattern_storage_.GetPatternVariablesFromIf(statement_number);
-};
+}
 
 std::unordered_set<std::string> PatternManager::GetAllWhilePattern() const {
   return while_pattern_storage_.GetAllWhilePattern();
-};
+}
 
 std::unordered_set<std::string> PatternManager::GetWhilePattern(
     std::string var_ident) const {
   return while_pattern_storage_.GetWhilePattern(var_ident);
-};
+}
 
 std::unordered_set<std::string> PatternManager::GetPatternVariablesFromWhile(
     int statement_number) const {
   return while_pattern_storage_.GetPatternVariablesFromWhile(statement_number);
-};
+}
 
 void PatternManager::Clear() {
   assign_pattern_storage_.Clear();
