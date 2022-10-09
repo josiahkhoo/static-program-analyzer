@@ -187,6 +187,15 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
+/// Verifies statement reference is either a Statement synonym or line number
+/// \param stmtRef
+void QueryParserUtil::CheckNextRef(const StatementReference& stmtRef) {
+  if (!((stmtRef.IsSynonym() && stmtRef.IsEntityType(STATEMENT)) ||
+        stmtRef.IsLineNumber())) {
+    throw SemanticException("Invalid statement reference for Next clause");
+  }
+}
+
 /// Verifies synonym is pattern-able
 /// \param synonym
 void QueryParserUtil::CheckPatternSyn(const Synonym& synonym) {
