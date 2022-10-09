@@ -9,6 +9,8 @@
 #include "qps/parser/operations/follows_t_parser.h"
 #include "qps/parser/operations/modifies_p_parser.h"
 #include "qps/parser/operations/modifies_s_parser.h"
+#include "qps/parser/operations/next_parser.h"
+#include "qps/parser/operations/next_t_parser.h"
 #include "qps/parser/operations/parent_parser.h"
 #include "qps/parser/operations/parent_t_parser.h"
 #include "qps/parser/operations/pattern_assign_parser.h"
@@ -91,6 +93,8 @@ void QueryParser::ParseQueryOperation() {
   st_parsers_.push_back(std::make_shared<UsesSParser>());
   st_parsers_.push_back(std::make_shared<ModifiesPParser>());
   st_parsers_.push_back(std::make_shared<ModifiesSParser>());
+  st_parsers_.push_back(std::make_shared<NextTParser>());
+  st_parsers_.push_back(std::make_shared<NextParser>());
 
   pattern_parsers_.push_back(std::make_shared<PatternAssignParser>());
   pattern_parsers_.push_back(std::make_shared<PatternIfParser>());
