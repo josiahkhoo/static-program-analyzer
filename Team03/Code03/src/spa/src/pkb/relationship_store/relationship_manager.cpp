@@ -63,6 +63,10 @@ void RelationshipManager::AddAbstraction(CallsTAbstraction abstraction) {
   calls_store_.AddRelationship(abstraction);
 }
 
+/// Add CFG
+/// \param cfg
+void RelationshipManager::AddCFG(CFG cfg) { cfg_store_.AddCFG(cfg); }
+
 /** ====================================
  * General Relationship Getter Methods
  * ==================================== */

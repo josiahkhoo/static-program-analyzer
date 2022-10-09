@@ -135,6 +135,12 @@ void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
   }
 }
 
+void PKB::Store(std::vector<CFG> cfgs) {
+  for (const CFG& cfg : cfgs) {
+    relationship_manager_.AddCFG(cfg);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:

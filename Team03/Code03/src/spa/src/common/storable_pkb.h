@@ -21,6 +21,7 @@
 #include "common/entity/procedure_entity.h"
 #include "common/entity/read_entity.h"
 #include "common/entity/while_entity.h"
+#include "sp/extractor/cfg.h"
 
 class StorablePkb {
  public:
@@ -65,6 +66,8 @@ class StorablePkb {
   virtual void Store(std::vector<WhilePatternAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<IfPatternAbstraction> abstractions) = 0;
+
+  virtual void Store(std::vector<CFG> cfgs) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H
