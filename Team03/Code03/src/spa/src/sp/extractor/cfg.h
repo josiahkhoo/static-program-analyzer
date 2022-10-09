@@ -27,6 +27,8 @@ class CFG {
   [[nodiscard]] std::unordered_set<std::shared_ptr<CFGNode>> GetPrevNodes(
       const std::shared_ptr<CFGNode>& cfg_node_ptr);
 
+  [[nodiscard]] std::unordered_set<int> GetStatements();
+
  private:
   std::unordered_map<std::shared_ptr<CFGNode>,
                      std::unordered_set<std::shared_ptr<CFGNode>>>

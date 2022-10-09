@@ -28,3 +28,11 @@ std::unordered_set<std::shared_ptr<CFGNode>> CFG::GetPrevNodes(
     const std::shared_ptr<CFGNode>& cfg_node_ptr) {
   return reverse_map_[cfg_node_ptr];
 }
+
+std::unordered_set<int> CFG::GetStatements() {
+  std::unordered_set<int> statements;
+  for (auto stmt : stmt_node_map_) {
+    statements.emplace(stmt.first);
+  }
+  return statements;
+}
