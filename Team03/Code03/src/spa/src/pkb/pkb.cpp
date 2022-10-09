@@ -609,6 +609,38 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
 }
 
 /* ====================================
+ * Next Query Methods
+ * ==================================== */
+
+std::unordered_set<std::string> PKB::QueryAllNext() const { return {}; }
+
+std::unordered_set<std::string> PKB::QueryAllNextBy() const { return {}; }
+
+std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryNext(int statement_number,
+                                               EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,
+                                                 EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
+                                                EntityType type) const {
+  return {};
+}
+
+std::unordered_set<std::string> PKB::QueryNextTBy(int statement_number,
+                                                  EntityType type) const {
+  return {};
+}
+
+/* ====================================
  * Assign Pattern Query Methods
  * ==================================== */
 
