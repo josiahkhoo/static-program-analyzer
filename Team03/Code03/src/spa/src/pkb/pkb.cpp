@@ -663,6 +663,7 @@ std::unordered_set<std::string> PKB::QueryAllAffectsBy() const { return {}; }
 /// \param statement_number statement
 /// \return Query all assign statements that affects given statement
 std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
+  assert(statement_number);
   return {};
 }
 
@@ -671,6 +672,7 @@ std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
 /// \return Query all assign statements that are affected by given statement
 std::unordered_set<std::string> PKB::QueryAffectsBy(
     int statement_number) const {
+  assert(statement_number);
   return {};
 }
 
@@ -678,6 +680,7 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
 /// \param statement_number statement
 /// \return Query all assign statements that affectsT given statement
 std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
+  assert(statement_number);
   return {};
 }
 
@@ -686,6 +689,7 @@ std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
 /// \return Query all assign statements that are affectedT by given statement
 std::unordered_set<std::string> PKB::QueryAffectsTBy(
     int statement_number) const {
+  assert(statement_number);
   return {};
 }
 
