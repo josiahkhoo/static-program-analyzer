@@ -647,6 +647,53 @@ std::unordered_set<std::string> PKB::QueryNextTBy(int statement_number,
 }
 
 /* ====================================
+ * Affects Query Methods
+ * ==================================== */
+
+/// QueryAllAffects
+/// \return Query all assign statements that affects some other statement
+std::unordered_set<std::string> PKB::QueryAllAffects() const { return {}; }
+
+/// QueryAllAffectsBy
+/// \return Query all assign statements that are affected by some other
+/// statement
+std::unordered_set<std::string> PKB::QueryAllAffectsBy() const { return {}; }
+
+/// QueryAffects
+/// \param statement_number statement
+/// \return Query all assign statements that affects given statement
+std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// QueryAffectsBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affected by given statement
+std::unordered_set<std::string> PKB::QueryAffectsBy(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// QueryAffectsT
+/// \param statement_number statement
+/// \return Query all assign statements that affectsT given statement
+std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// QueryAffectsTBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affectedT by given statement
+std::unordered_set<std::string> PKB::QueryAffectsTBy(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/* ====================================
  * Assign Pattern Query Methods
  * ==================================== */
 
