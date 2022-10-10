@@ -19,8 +19,8 @@ std::shared_ptr<CFGNode> CFG::GetNode(int stmt_no) {
   return stmt_node_map_[stmt_no];
 }
 
-std::vector<int> CFG::GetStatementsWithinSameNode(int stmt_no) {
-  return stmt_node_map_[stmt_no]->GetStatementNumbers();
+int CFG::GetStatementWithinSameNode(int stmt_no) {
+  return stmt_node_map_[stmt_no]->GetStatementNumber();
 }
 
 std::unordered_set<std::shared_ptr<CFGNode>> CFG::GetNextNodes(
