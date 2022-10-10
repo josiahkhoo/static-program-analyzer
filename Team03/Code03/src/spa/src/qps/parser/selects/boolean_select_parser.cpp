@@ -12,7 +12,6 @@ bool BooleanSelectParser::MatchParser(const TokenBuilderPair& data) const {
     try {
       // Check if synonym or is keyword
       Synonym attempt_synonym = builder.GetSynonym(tokens->PeekValue());
-      return false;
     } catch (...) {
       return true;
     }
