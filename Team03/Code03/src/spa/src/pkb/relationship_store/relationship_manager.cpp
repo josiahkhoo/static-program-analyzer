@@ -341,6 +341,68 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
   return calls_store_.GetCallsTByProcedures(proc_name);
 }
 
+/// GetAllNext
+/// \return Query all statements that come next to some statement
+std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
+  return {};
+}
+
+/// GetAllPrevious
+/// \return Query all statements that come previous to some statement
+std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
+  return {};
+}
+
+/// GetNext
+/// \param statement_number statement
+/// \return Query statement(s) that comes next after given statement
+std::unordered_set<std::string> RelationshipManager::GetNext(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// GetPrevious
+/// \param statement_number statement
+/// \return Query statement(s) that comes previous before given statement
+std::unordered_set<std::string> RelationshipManager::GetPrevious(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// GetNextT
+/// \param statement_number statement
+/// \return Query statement(s) that comes nextT after given statement
+std::unordered_set<std::string> RelationshipManager::GetNextT(
+    int statement_number) const {
+  std::unordered_set<int> visited_stmts;
+  std::unordered_set<int> nextT_stmts;
+  NextDFSTraversal(statement_number, visited_stmts, nextT_stmts);
+
+  std::unordered_set<std::string> result;
+  for (auto s : nextT_stmts) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
+}
+
+/// GetPreviousT
+/// \param statement_number statement
+/// \return Query statement(s) that comes previousT before given statement
+std::unordered_set<std::string> RelationshipManager::GetPreviousT(
+    int statement_number) const {
+  std::unordered_set<int> visited_stmts;
+  std::unordered_set<int> previousT_stmts;
+  PreviousDFSTraversal(statement_number, visited_stmts, previousT_stmts);
+
+  std::unordered_set<std::string> result;
+  for (auto s : previousT_stmts) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
+}
+
 /// GetAllAffects
 /// \return Query all assign statements that affects some other statement
 std::unordered_set<std::string> RelationshipManager::GetAllAffects() const {
@@ -368,26 +430,8 @@ std::unordered_set<std::string> RelationshipManager::GetAffects(
 /// \return Query all assign statements that are affected by given statement
 std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
     int statement_number) const {
-  std::unordered_set<std::string> result;
-  std::unordered_set<std::string> vars_modified =
-      GetVariablesModifiedByStatement(statement_number);
-  std::unordered_set<int> next_t_statements =
-      cfg_store_.GetStatementsProceedPath(statement_number);
-  if (vars_modified.empty() == false && next_t_statements.empty() == false) {
-    std::unordered_set<std::string> possible_assign_stmts;
-    for (auto var : vars_modified) {
-      for (auto stmt : GetStatementsUsingVariable(var)) {
-        if (next_t_statements.find(std::stoi(stmt)) !=
-            next_t_statements.end()) {
-          possible_assign_stmts.emplace(stmt);
-        }
-      }
-    }
-    // todo: check that there is a control flow path from s1 to s2 on such that
-    //  v is not modified in any assignment, read, or procedure call statement
-    //  on that path
-  }
-  return result;
+  assert(statement_number);
+  return {};
 }
 
 /// GetAffectsT
@@ -417,11 +461,14 @@ void RelationshipManager::Clear() {
   calls_store_.Clear();
 }
 
-void RelationshipManager::NextDFSTraversal(int statement_number, std::unordered_set<int> &visited_stmts, std::unordered_set<int> &nextT_stmts) {
+void RelationshipManager::NextDFSTraversal(
+    int statement_number, std::unordered_set<int> &visited_stmts,
+    std::unordered_set<int> &nextT_stmts) const {
   // Add current statement to visited
   visited_stmts.emplace(statement_number);
   // Retrieve forward neighbouring stmts of current stmt node
-  std::unordered_set<int> neighbouring_stmts = {}; //todo
+  std::unordered_set<int> neighbouring_stmts =
+      cfg_store_.GetForwardNeighbours(statement_number);
 
   for (auto stmt : neighbouring_stmts) {
     if (nextT_stmts.find(stmt) == nextT_stmts.end()) {
@@ -434,11 +481,14 @@ void RelationshipManager::NextDFSTraversal(int statement_number, std::unordered_
   }
 }
 
-void RelationshipManager::PreviousDFSTraversal(int statement_number, std::unordered_set<int> &visited_stmts, std::unordered_set<int> &previousT_stmts) {
+void RelationshipManager::PreviousDFSTraversal(
+    int statement_number, std::unordered_set<int> &visited_stmts,
+    std::unordered_set<int> &previousT_stmts) const {
   // Add current statement to visited
   visited_stmts.emplace(statement_number);
   // Retrieve backward neighbouring stmts of current stmt node
-  std::unordered_set<int> neighbouring_stmts = {}; //todo
+  std::unordered_set<int> neighbouring_stmts =
+      cfg_store_.GetBackwardNeighbours(statement_number);
 
   for (auto stmt : neighbouring_stmts) {
     if (previousT_stmts.find(stmt) == previousT_stmts.end()) {
@@ -450,5 +500,3 @@ void RelationshipManager::PreviousDFSTraversal(int statement_number, std::unorde
     }
   }
 }
-
-
