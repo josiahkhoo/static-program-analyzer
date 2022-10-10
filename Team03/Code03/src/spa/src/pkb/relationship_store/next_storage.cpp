@@ -16,9 +16,9 @@ void NextStorage::AddRelationship(NextAbstraction abstraction) {
   }
 }
 
-/// GetNextByStatements
+/// GetPrecedingStatements
 /// \return Gets all statements executed immediately before another statement
-std::unordered_set<std::string> NextStorage::GetNextByStatements() const {
+std::unordered_set<std::string> NextStorage::GetPrecedingStatements() const {
   std::unordered_set<std::string> res;
   if (!precedent_to_next_map_.empty()) {
     for (auto i : precedent_to_next_map_) {
@@ -40,11 +40,11 @@ std::unordered_set<std::string> NextStorage::GetNextStatements() const {
   return res;
 }
 
-/// GetNextByStatements
+/// GetPrecedingStatements
 /// \param statement_number
 /// \return Gets all statements that were executed immediately before a
 /// specified statement
-std::unordered_set<std::string> NextStorage::GetNextByStatements(
+std::unordered_set<std::string> NextStorage::GetPrecedingStatements(
     int statement_number) const {
   std::unordered_set<std::string> res;
   if (next_to_precedent_map_.find(statement_number) !=

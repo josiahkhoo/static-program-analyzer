@@ -70,7 +70,7 @@ void RelationshipManager::AddCFG(CFG cfg) { cfg_store_.AddCFG(cfg); }
 /// Add Next Relationship
 /// \param abstraction
 void RelationshipManager::AddAbstraction(NextAbstraction abstraction) {
-//  calls_store_.AddRelationship(abstraction);
+  next_store_.AddRelationship(abstraction);
 }
 
 /** ====================================
@@ -347,33 +347,36 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
   return calls_store_.GetCallsTByProcedures(proc_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryAllNext() const {
-
+std::unordered_set<std::string> RelationshipManager::GetAllPrecedingStatements()
+    const {
+  return next_store_.GetPrecedingStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryAllNextBy() const {
-
+std::unordered_set<std::string> RelationshipManager::GetAllNextStatements()
+    const {
+  return next_store_.GetNextStatements();
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryAllNextRelations() const {
-
+std::unordered_set<std::string> RelationshipManager::GetAllNextRelations()
+    const {
+  return {};  // to implement
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryNext(int statement_number) const {
-
+std::unordered_set<std::string> RelationshipManager::GetPrecedingStatements(
+    int statement_number) const {
+  return next_store_.GetPrecedingStatements(statement_number);
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryNextBy(int statement_number) const {
-
+std::unordered_set<std::string> RelationshipManager::GetNextStatements(
+    int statement_number) const {
+  return next_store_.GetNextStatements(statement_number);
 }
 
-std::unordered_set<std::string> RelationshipManager::QueryNextT(int statement_number) const {
+std::unordered_set<std::string> RelationshipManager::GetPrecedingTStatements(
+    int statement_number) const {}
 
-}
-
-std::unordered_set<std::string> RelationshipManager::QueryNextTBy(int statement_number) const {
-
-}
+std::unordered_set<std::string> RelationshipManager::GetNextTStatements(
+    int statement_number) const {}
 
 /// Clear Storage
 void RelationshipManager::Clear() {

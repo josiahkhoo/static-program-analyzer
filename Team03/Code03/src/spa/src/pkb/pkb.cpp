@@ -616,9 +616,17 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
  * Next Query Methods
  * ==================================== */
 
-std::unordered_set<std::string> PKB::QueryAllNext() const { return {}; }
+std::unordered_set<std::string> PKB::QueryAllNext() const {
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetAllNextStatements();
+  return result;
+}
 
-std::unordered_set<std::string> PKB::QueryAllNextBy() const { return {}; }
+std::unordered_set<std::string> PKB::QueryAllNextBy() const {
+  std::unordered_set<std::string> result =
+      relationship_manager_.GetAllPrecedingStatements();
+  return result;
+}
 
 std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
   return {};
@@ -626,27 +634,34 @@ std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
 
 std::unordered_set<std::string> PKB::QueryNext(int statement_number,
                                                EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsByStatements();
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  }
-//  return result;
-
+  //  assert(statement_number);
+  //  assert(type);
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetNextStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,
                                                  EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
+  //  assert(statement_number);
+  //  assert(type);
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetPrecedingStatements(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
