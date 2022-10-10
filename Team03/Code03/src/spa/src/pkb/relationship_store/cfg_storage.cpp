@@ -14,17 +14,13 @@ void CFGStorage::AddCFG(CFG cfg) {
 std::unordered_set<int> CFGStorage::GetStatementsProceedPath(int stmt) {
   std::unordered_set<int> result;
   if (stmt_to_cfg_map_.find(stmt) != stmt_to_cfg_map_.end()) {
-    for (auto s :
-         stmt_to_cfg_map_.at(stmt)->GetStatementsWithinSameNode(stmt)) {
-      if (s > stmt) {
-        result.emplace(s);
-      }
+    int s = stmt_to_cfg_map_.at(stmt)->GetStatementWithinSameNode(stmt);
+    if (s > stmt) {
+      result.emplace(s);
     }
     for (auto node : stmt_to_cfg_map_.at(stmt)->GetNextNodes(
              stmt_to_cfg_map_.at(stmt)->GetNode(stmt))) {
-      for (auto s : node->GetStatementNumbers()) {
-        result.emplace(s);
-      }
+      result.emplace(node->GetStatementNumber());
     }
   }
   return result;
@@ -37,17 +33,13 @@ std::unordered_set<int> CFGStorage::GetStatementsProceedPath(int stmt) {
 std::unordered_set<int> CFGStorage::GetStatementsPrecedePath(int stmt) {
   std::unordered_set<int> result;
   if (stmt_to_cfg_map_.find(stmt) != stmt_to_cfg_map_.end()) {
-    for (auto s :
-         stmt_to_cfg_map_.at(stmt)->GetStatementsWithinSameNode(stmt)) {
-      if (s < stmt) {
-        result.emplace(s);
-      }
+    int s = stmt_to_cfg_map_.at(stmt)->GetStatementWithinSameNode(stmt);
+    if (s < stmt) {
+      result.emplace(s);
     }
     for (auto node : stmt_to_cfg_map_.at(stmt)->GetPrevNodes(
              stmt_to_cfg_map_.at(stmt)->GetNode(stmt))) {
-      for (auto s : node->GetStatementNumbers()) {
-        result.emplace(s);
-      }
+      result.emplace(node->GetStatementNumber());
     }
   }
   return result;
