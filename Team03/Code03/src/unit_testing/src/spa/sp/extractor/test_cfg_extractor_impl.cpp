@@ -28,12 +28,18 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v = {1, 2};
-    REQUIRE(node1->GetStatementNumbers() == v);
+    REQUIRE(node1->GetStatementNumber() == 1);
+    auto node2 = first_cfg.GetNode(2);
+    REQUIRE(node2->GetStatementNumber() == 2);
 
     // Compare each next CFG
     auto next_nodes1 = first_cfg.GetNextNodes(node1);
-    REQUIRE(next_nodes1.empty());
+    auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
+    REQUIRE(res_nodes1.size() == 1);
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
+            res_nodes1.end());
+    auto next_nodes2 = first_cfg.GetNextNodes(node2);
+    REQUIRE(next_nodes2.empty());
   }
 
   SECTION("Extract if node") {
@@ -56,50 +62,46 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1, 2};
-    REQUIRE(node1->GetStatementNumbers() == v1);
-    auto node2 = first_cfg.GetNode(3);
-    std::vector<int> v2 = {3};
-    REQUIRE(node2->GetStatementNumbers() == v2);
-    auto node3 = first_cfg.GetNode(4);
-    std::vector<int> v3 = {4};
-    REQUIRE(node3->GetStatementNumbers() == v3);
-    auto node4 = first_cfg.GetNode(5);
-    std::vector<int> v4 = {5};
-    REQUIRE(node4->GetStatementNumbers() == v4);
-    auto node5 = first_cfg.GetNode(2);
-    std::vector<int> v5 = {1, 2};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node1->GetStatementNumber() == 1);
+    auto node2 = first_cfg.GetNode(2);
+    REQUIRE(node2->GetStatementNumber() == 2);
+    auto node3 = first_cfg.GetNode(3);
+    REQUIRE(node3->GetStatementNumber() == 3);
+    auto node4 = first_cfg.GetNode(4);
+    REQUIRE(node4->GetStatementNumber() == 4);
+    auto node5 = first_cfg.GetNode(5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
-    auto next_nodes1 = first_cfg.GetNextNodes(node1);
-    std::vector<CFGNode> res_nodes1;
-    for (auto &node : next_nodes1) {
-      res_nodes1.emplace_back(*node);
-    }
-    std::vector<CFGNode> test_nodes1 = {CFGNode({3})};
-    REQUIRE(res_nodes1 == test_nodes1);
+    auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
+            res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({5})) !=
-            res_nodes2.end());
-    auto next_nodes3 = first_cfg.GetNextNodes(node3);
-    REQUIRE(next_nodes3.empty());
+    auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
+            res_nodes3.end());
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
+            res_nodes3.end());
     auto next_nodes4 = first_cfg.GetNextNodes(node4);
     REQUIRE(next_nodes4.empty());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({3})) !=
-            res_nodes5.end());
+    REQUIRE(res_nodes5.empty());
+    auto res_prev_nodes5 = CreateVector(first_cfg.GetPrevNodes(node5));
+    REQUIRE(std::find(res_prev_nodes5.begin(), res_prev_nodes5.end(),
+                      CFGNode(3)) != res_prev_nodes5.end());
     auto res_prev_nodes4 = CreateVector(first_cfg.GetPrevNodes(node4));
     REQUIRE(std::find(res_prev_nodes4.begin(), res_prev_nodes4.end(),
-                      CFGNode({3})) != res_prev_nodes4.end());
+                      CFGNode(3)) != res_prev_nodes4.end());
     auto res_prev_nodes3 = CreateVector(first_cfg.GetPrevNodes(node3));
-    REQUIRE(std::find(res_prev_nodes4.begin(), res_prev_nodes4.end(),
-                      CFGNode({3})) != res_prev_nodes4.end());
+    REQUIRE(std::find(res_prev_nodes3.begin(), res_prev_nodes3.end(),
+                      CFGNode(2)) != res_prev_nodes3.end());
     auto res_prev_nodes2 = CreateVector(first_cfg.GetPrevNodes(node2));
     REQUIRE(std::find(res_prev_nodes2.begin(), res_prev_nodes2.end(),
-                      CFGNode({1, 2})) != res_prev_nodes2.end());
+                      CFGNode(1)) != res_prev_nodes2.end());
+    auto res_prev_nodes1 = CreateVector(first_cfg.GetPrevNodes(node1));
+    REQUIRE(res_prev_nodes1.empty());
   }
 
   SECTION("Extract starting if node") {
@@ -122,35 +124,31 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4, 5};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {4, 5};
-    REQUIRE(node5->GetStatementNumbers() == v4);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
-    std::vector<CFGNode> test_nodes2 = {CFGNode({4, 5})};
-    REQUIRE(res_nodes2 == test_nodes2);
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
+            res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
-    std::vector<CFGNode> test_nodes3 = {CFGNode({4, 5})};
-    REQUIRE(res_nodes3 == test_nodes3);
-    auto next_nodes4 = first_cfg.GetNextNodes(node4);
-    REQUIRE(next_nodes4.empty());
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
+            res_nodes3.end());
+    auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
+            res_nodes4.end());
     auto next_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(next_nodes5.empty());
   }
@@ -179,42 +177,61 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1, 2};
-    REQUIRE(node1->GetStatementNumbers() == v1);
-    auto node2 = first_cfg.GetNode(3);
-    std::vector<int> v2 = {3};
-    REQUIRE(node2->GetStatementNumbers() == v2);
-    auto node3 = first_cfg.GetNode(5);
-    std::vector<int> v3 = {4, 5};
-    REQUIRE(node3->GetStatementNumbers() == v3);
-    auto node4 = first_cfg.GetNode(6);
-    std::vector<int> v4 = {6, 7};
-    REQUIRE(node4->GetStatementNumbers() == v4);
-    auto node5 = first_cfg.GetNode(9);
-    std::vector<int> v5 = {8, 9};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node1->GetStatementNumber() == 1);
+    auto node2 = first_cfg.GetNode(2);
+    REQUIRE(node2->GetStatementNumber() == 2);
+    auto node3 = first_cfg.GetNode(3);
+    REQUIRE(node3->GetStatementNumber() == 3);
+    auto node4 = first_cfg.GetNode(4);
+    REQUIRE(node4->GetStatementNumber() == 4);
+    auto node5 = first_cfg.GetNode(5);
+    REQUIRE(node5->GetStatementNumber() == 5);
+    auto node6 = first_cfg.GetNode(6);
+    REQUIRE(node6->GetStatementNumber() == 6);
+    auto node7 = first_cfg.GetNode(7);
+    REQUIRE(node7->GetStatementNumber() == 7);
+    auto node8 = first_cfg.GetNode(8);
+    REQUIRE(node8->GetStatementNumber() == 8);
+    auto node9 = first_cfg.GetNode(9);
+    REQUIRE(node9->GetStatementNumber() == 9);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 1);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
-    REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4, 5})) !=
-            res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6, 7})) !=
+    REQUIRE(res_nodes2.size() == 1);
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
-    REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({8, 9})) !=
+    REQUIRE(res_nodes3.size() == 2);
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
+            res_nodes3.end());
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(6)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({8, 9})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    auto next_nodes5 = first_cfg.GetNextNodes(node5);
-    REQUIRE(next_nodes5.empty());
+    auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
+    REQUIRE(res_nodes5.size() == 1);
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(8)) !=
+            res_nodes5.end());
+    auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
+    REQUIRE(res_nodes6.size() == 1);
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
+            res_nodes6.end());
+    auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
+    REQUIRE(res_nodes7.size() == 1);
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(8)) !=
+            res_nodes7.end());
+    auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
+    REQUIRE(res_nodes8.size() == 1);
+    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode(9)) !=
+            res_nodes8.end());
+    auto res_nodes9 = CreateVector(first_cfg.GetNextNodes(node9));
+    REQUIRE(res_nodes9.empty());
   }
 
   SECTION("Extract statements nested if node") {
@@ -241,55 +258,48 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(7)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
     auto next_nodes7 = first_cfg.GetNextNodes(node7);
     REQUIRE(next_nodes7.empty());
@@ -319,55 +329,48 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(7)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
     auto next_nodes7 = first_cfg.GetNextNodes(node7);
     REQUIRE(next_nodes7.empty());
@@ -401,71 +404,62 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
     auto node9 = first_cfg.GetNode(9);
-    std::vector<int> v9 = {9};
-    REQUIRE(node9->GetStatementNumbers() == v9);
+    REQUIRE(node9->GetStatementNumber() == 9);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(9)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 2);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(8)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 1);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(9)) !=
             res_nodes7.end());
     auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
     REQUIRE(res_nodes8.size() == 1);
-    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode(9)) !=
             res_nodes8.end());
     auto next_nodes9 = first_cfg.GetNextNodes(node9);
     REQUIRE(next_nodes9.empty());
@@ -498,64 +492,56 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(8)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(8)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 2);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(8)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 1);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(8)) !=
             res_nodes7.end());
     auto next_nodes8 = first_cfg.GetNextNodes(node8);
     REQUIRE(next_nodes8.empty());
@@ -589,71 +575,62 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
     auto node9 = first_cfg.GetNode(9);
-    std::vector<int> v9 = {9};
-    REQUIRE(node9->GetStatementNumbers() == v9);
+    REQUIRE(node9->GetStatementNumber() == 9);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(9)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(8)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 2);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(8)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 1);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(8)) !=
             res_nodes7.end());
     auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
     REQUIRE(res_nodes8.size() == 1);
-    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode(9)) !=
             res_nodes8.end());
     auto next_nodes9 = first_cfg.GetNextNodes(node9);
     REQUIRE(next_nodes9.empty());
@@ -676,27 +653,24 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 1);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(2)) !=
             res_nodes3.end());
   }
 
@@ -717,25 +691,22 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(1)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.empty());
@@ -762,35 +733,46 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1, 2};
-    REQUIRE(node1->GetStatementNumbers() == v1);
-    auto node2 = first_cfg.GetNode(3);
-    std::vector<int> v2 = {3};
-    REQUIRE(node2->GetStatementNumbers() == v2);
-    auto node3 = first_cfg.GetNode(4);
-    std::vector<int> v3 = {4, 5};
-    REQUIRE(node3->GetStatementNumbers() == v3);
-    auto node4 = first_cfg.GetNode(7);
-    std::vector<int> v4 = {6, 7};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node1->GetStatementNumber() == 1);
+    auto node2 = first_cfg.GetNode(2);
+    REQUIRE(node2->GetStatementNumber() == 2);
+    auto node3 = first_cfg.GetNode(3);
+    REQUIRE(node3->GetStatementNumber() == 3);
+    auto node4 = first_cfg.GetNode(4);
+    REQUIRE(node4->GetStatementNumber() == 4);
+    auto node5 = first_cfg.GetNode(5);
+    REQUIRE(node5->GetStatementNumber() == 5);
+    auto node6 = first_cfg.GetNode(6);
+    REQUIRE(node6->GetStatementNumber() == 6);
+    auto node7 = first_cfg.GetNode(7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 1);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
-    REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4, 5})) !=
-            res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6, 7})) !=
+    REQUIRE(res_nodes2.size() == 1);
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
-    REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({3})) !=
+    REQUIRE(res_nodes3.size() == 2);
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
+            res_nodes3.end());
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(6)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
-    REQUIRE(res_nodes4.empty());
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
+            res_nodes4.end());
+    auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(3)) !=
+            res_nodes5.end());
+    auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
+            res_nodes6.end());
+    auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
+    REQUIRE(res_nodes7.empty());
   }
 
   SECTION("Extract statements nested while node") {
@@ -813,41 +795,36 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(5)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(1)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.empty());
@@ -873,41 +850,36 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(5)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(2)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(1)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.empty());
@@ -934,43 +906,38 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(5)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(1)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(2)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.empty());
@@ -999,57 +966,50 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(7)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(6)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(2)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(1)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.empty());
@@ -1076,41 +1036,36 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(5)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.empty());
@@ -1137,41 +1092,36 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(5)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(1)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(1)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.empty());
@@ -1199,48 +1149,42 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(6)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(1)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(1)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -1267,48 +1211,42 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(6)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(1)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -1337,55 +1275,48 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(7)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(1)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.empty());
@@ -1416,57 +1347,50 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(7)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(1)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(1)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(1)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.empty());
@@ -1497,64 +1421,56 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(8)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(7)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 1);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(1)) !=
             res_nodes7.end());
     auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
     REQUIRE(res_nodes8.empty());
@@ -1591,94 +1507,82 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
     auto node9 = first_cfg.GetNode(9);
-    std::vector<int> v9 = {9};
-    REQUIRE(node9->GetStatementNumbers() == v9);
+    REQUIRE(node9->GetStatementNumber() == 9);
     auto node10 = first_cfg.GetNode(10);
-    std::vector<int> v10 = {10};
-    REQUIRE(node10->GetStatementNumbers() == v10);
+    REQUIRE(node10->GetStatementNumber() == 10);
     auto node11 = first_cfg.GetNode(11);
-    std::vector<int> v11 = {11};
-    REQUIRE(node11->GetStatementNumbers() == v11);
+    REQUIRE(node11->GetStatementNumber() == 11);
     auto node12 = first_cfg.GetNode(12);
-    std::vector<int> v12 = {12};
-    REQUIRE(node12->GetStatementNumbers() == v12);
+    REQUIRE(node12->GetStatementNumber() == 12);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({12})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(12)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({11})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(11)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 2);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(8)) !=
             res_nodes7.end());
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(9)) !=
             res_nodes7.end());
     auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
     REQUIRE(res_nodes8.size() == 1);
-    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode({10})) !=
+    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode(10)) !=
             res_nodes8.end());
     auto res_nodes9 = CreateVector(first_cfg.GetNextNodes(node9));
     REQUIRE(res_nodes9.size() == 1);
-    REQUIRE(std::find(res_nodes9.begin(), res_nodes9.end(), CFGNode({10})) !=
+    REQUIRE(std::find(res_nodes9.begin(), res_nodes9.end(), CFGNode(10)) !=
             res_nodes9.end());
     auto res_nodes10 = CreateVector(first_cfg.GetNextNodes(node10));
     REQUIRE(res_nodes10.size() == 1);
-    REQUIRE(std::find(res_nodes10.begin(), res_nodes10.end(), CFGNode({11})) !=
+    REQUIRE(std::find(res_nodes10.begin(), res_nodes10.end(), CFGNode(11)) !=
             res_nodes10.end());
     auto res_nodes11 = CreateVector(first_cfg.GetNextNodes(node11));
     REQUIRE(res_nodes11.size() == 1);
-    REQUIRE(std::find(res_nodes11.begin(), res_nodes11.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes11.begin(), res_nodes11.end(), CFGNode(1)) !=
             res_nodes11.end());
     auto res_nodes12 = CreateVector(first_cfg.GetNextNodes(node12));
     REQUIRE(res_nodes12.empty());
@@ -1714,87 +1618,76 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
     auto node8 = first_cfg.GetNode(8);
-    std::vector<int> v8 = {8};
-    REQUIRE(node8->GetStatementNumbers() == v8);
+    REQUIRE(node8->GetStatementNumber() == 8);
     auto node9 = first_cfg.GetNode(9);
-    std::vector<int> v9 = {9};
-    REQUIRE(node9->GetStatementNumbers() == v9);
+    REQUIRE(node9->GetStatementNumber() == 9);
     auto node10 = first_cfg.GetNode(10);
-    std::vector<int> v10 = {10};
-    REQUIRE(node10->GetStatementNumbers() == v10);
+    REQUIRE(node10->GetStatementNumber() == 10);
     auto node11 = first_cfg.GetNode(11);
-    std::vector<int> v11 = {11};
-    REQUIRE(node11->GetStatementNumbers() == v11);
+    REQUIRE(node11->GetStatementNumber() == 11);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({11})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(11)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(4)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({10})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(10)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(4)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 2);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(7)) !=
             res_nodes6.end());
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({8})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(8)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.size() == 1);
-    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes7.begin(), res_nodes7.end(), CFGNode(9)) !=
             res_nodes7.end());
     auto res_nodes8 = CreateVector(first_cfg.GetNextNodes(node8));
     REQUIRE(res_nodes8.size() == 1);
-    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode({9})) !=
+    REQUIRE(std::find(res_nodes8.begin(), res_nodes8.end(), CFGNode(9)) !=
             res_nodes8.end());
     auto res_nodes9 = CreateVector(first_cfg.GetNextNodes(node9));
     REQUIRE(res_nodes9.size() == 1);
-    REQUIRE(std::find(res_nodes9.begin(), res_nodes9.end(), CFGNode({10})) !=
+    REQUIRE(std::find(res_nodes9.begin(), res_nodes9.end(), CFGNode(10)) !=
             res_nodes9.end());
     auto res_nodes10 = CreateVector(first_cfg.GetNextNodes(node10));
     REQUIRE(res_nodes10.size() == 1);
-    REQUIRE(std::find(res_nodes10.begin(), res_nodes10.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes10.begin(), res_nodes10.end(), CFGNode(1)) !=
             res_nodes10.end());
     auto res_nodes11 = CreateVector(first_cfg.GetNextNodes(node11));
     REQUIRE(res_nodes11.empty());
@@ -1821,48 +1714,42 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(6)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -1889,48 +1776,42 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(6)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(4)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -1960,57 +1841,50 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(7)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(7)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 2);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(5)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.empty());
@@ -2041,57 +1915,50 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = first_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(7)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(7)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(6)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(3)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.size() == 1);
-    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes6.begin(), res_nodes6.end(), CFGNode(3)) !=
             res_nodes6.end());
     auto res_nodes7 = CreateVector(first_cfg.GetNextNodes(node7));
     REQUIRE(res_nodes7.empty());
@@ -2120,50 +1987,44 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(3)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(6)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(6)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 2);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(3)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(4)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -2192,50 +2053,44 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = first_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = first_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = first_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 2);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(6)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 2);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({1})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(1)) !=
             res_nodes2.end());
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 2);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({4})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(4)) !=
             res_nodes3.end());
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(5)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(first_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(2)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(first_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 1);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(2)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(first_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());
@@ -2270,49 +2125,42 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
 
     // Compare statement numbers for each node
     auto node1 = first_cfg.GetNode(1);
-    std::vector<int> v1 = {1};
-    REQUIRE(node1->GetStatementNumbers() == v1);
+    REQUIRE(node1->GetStatementNumber() == 1);
     auto node2 = first_cfg.GetNode(2);
-    std::vector<int> v2 = {2};
-    REQUIRE(node2->GetStatementNumbers() == v2);
+    REQUIRE(node2->GetStatementNumber() == 2);
     auto node3 = first_cfg.GetNode(3);
-    std::vector<int> v3 = {3};
-    REQUIRE(node3->GetStatementNumbers() == v3);
+    REQUIRE(node3->GetStatementNumber() == 3);
     auto node4 = second_cfg.GetNode(4);
-    std::vector<int> v4 = {4};
-    REQUIRE(node4->GetStatementNumbers() == v4);
+    REQUIRE(node4->GetStatementNumber() == 4);
     auto node5 = second_cfg.GetNode(5);
-    std::vector<int> v5 = {5};
-    REQUIRE(node5->GetStatementNumbers() == v5);
+    REQUIRE(node5->GetStatementNumber() == 5);
     auto node6 = second_cfg.GetNode(6);
-    std::vector<int> v6 = {6};
-    REQUIRE(node6->GetStatementNumbers() == v6);
+    REQUIRE(node6->GetStatementNumber() == 6);
     auto node7 = second_cfg.GetNode(7);
-    std::vector<int> v7 = {7};
-    REQUIRE(node7->GetStatementNumbers() == v7);
+    REQUIRE(node7->GetStatementNumber() == 7);
 
     // Compare each next CFGNode
     auto res_nodes1 = CreateVector(first_cfg.GetNextNodes(node1));
     REQUIRE(res_nodes1.size() == 1);
-    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes1.begin(), res_nodes1.end(), CFGNode(2)) !=
             res_nodes1.end());
     auto res_nodes2 = CreateVector(first_cfg.GetNextNodes(node2));
     REQUIRE(res_nodes2.size() == 1);
-    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode({3})) !=
+    REQUIRE(std::find(res_nodes2.begin(), res_nodes2.end(), CFGNode(3)) !=
             res_nodes2.end());
     auto res_nodes3 = CreateVector(first_cfg.GetNextNodes(node3));
     REQUIRE(res_nodes3.size() == 1);
-    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode({2})) !=
+    REQUIRE(std::find(res_nodes3.begin(), res_nodes3.end(), CFGNode(2)) !=
             res_nodes3.end());
     auto res_nodes4 = CreateVector(second_cfg.GetNextNodes(node4));
     REQUIRE(res_nodes4.size() == 1);
-    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode({5})) !=
+    REQUIRE(std::find(res_nodes4.begin(), res_nodes4.end(), CFGNode(5)) !=
             res_nodes4.end());
     auto res_nodes5 = CreateVector(second_cfg.GetNextNodes(node5));
     REQUIRE(res_nodes5.size() == 2);
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({6})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(6)) !=
             res_nodes5.end());
-    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode({7})) !=
+    REQUIRE(std::find(res_nodes5.begin(), res_nodes5.end(), CFGNode(7)) !=
             res_nodes5.end());
     auto res_nodes6 = CreateVector(second_cfg.GetNextNodes(node6));
     REQUIRE(res_nodes6.empty());

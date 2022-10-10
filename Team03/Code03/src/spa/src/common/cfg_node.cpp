@@ -1,14 +1,12 @@
 #include "cfg_node.h"
 
-CFGNode::CFGNode(std::vector<int> statement_numbers)
-    : statement_numbers_(std::move(statement_numbers)) {}
+CFGNode::CFGNode(int statement_number)
+    : statement_number_(std::move(statement_number)) {}
 
-std::vector<int> CFGNode::GetStatementNumbers() const {
-  return statement_numbers_;
-}
+int CFGNode::GetStatementNumber() const { return statement_number_; }
 
 bool CFGNode::operator==(const CFGNode& rhs) const {
-  return this->statement_numbers_ == rhs.statement_numbers_;
+  return this->statement_number_ == rhs.statement_number_;
 }
 
 bool CFGNode::operator!=(const CFGNode& rhs) const { return !(rhs == *this); }
