@@ -101,6 +101,9 @@ class PKB : public QueryablePkb, public StorablePkb {
   // CFGs
   void Store(std::vector<CFG> cfgs) override;
 
+  // Next
+  void Store(std::vector<NextAbstraction> abstractions) override;
+
   /* ====================================
    * Entity Query Methods
    * ==================================== */

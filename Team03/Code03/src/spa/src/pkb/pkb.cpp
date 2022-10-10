@@ -141,6 +141,12 @@ void PKB::Store(std::vector<CFG> cfgs) {
   }
 }
 
+void PKB::Store(std::vector<NextAbstraction> abstractions) {
+  for (const NextAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
+}
+
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
@@ -623,6 +629,17 @@ std::unordered_set<std::string> PKB::QueryNext(int statement_number,
   assert(statement_number);
   assert(type);
   return {};
+//  std::unordered_set<std::string> statements =
+//      relationship_manager_.GetFollowsByStatements();
+//  std::unordered_set<std::string> typed_statements = QueryAll(type);
+//  std::unordered_set<std::string> result;
+//  for (const std::string& statement : statements) {
+//    if (typed_statements.find(statement) != typed_statements.end()) {
+//      result.emplace(statement);
+//    }
+//  }
+//  return result;
+
 }
 
 std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,

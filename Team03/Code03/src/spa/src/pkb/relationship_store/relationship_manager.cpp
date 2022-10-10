@@ -67,6 +67,12 @@ void RelationshipManager::AddAbstraction(CallsTAbstraction abstraction) {
 /// \param cfg
 void RelationshipManager::AddCFG(CFG cfg) { cfg_store_.AddCFG(cfg); }
 
+/// Add Next Relationship
+/// \param abstraction
+void RelationshipManager::AddAbstraction(NextAbstraction abstraction) {
+//  calls_store_.AddRelationship(abstraction);
+}
+
 /** ====================================
  * General Relationship Getter Methods
  * ==================================== */
@@ -339,6 +345,34 @@ std::unordered_set<std::string> RelationshipManager::GetCallsByProcedures(
 std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
     std::string proc_name) const {
   return calls_store_.GetCallsTByProcedures(proc_name);
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryAllNext() const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryAllNextBy() const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryAllNextRelations() const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryNext(int statement_number) const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryNextBy(int statement_number) const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryNextT(int statement_number) const {
+
+}
+
+std::unordered_set<std::string> RelationshipManager::QueryNextTBy(int statement_number) const {
+
 }
 
 /// Clear Storage

@@ -49,6 +49,9 @@ class RelationshipManager {
   // store CFG
   void AddCFG(CFG cfg);
 
+  // store next to NextStorage
+  void AddAbstraction(NextAbstraction abstraction);
+
   /* ====================================
    * General Relationship Getter Methods
    * ==================================== */
@@ -116,6 +119,15 @@ class RelationshipManager {
   std::unordered_set<std::string> GetCallsTByProcedures(
       std::string proc_name) const;
 
+  // Next query methods
+  std::unordered_set<std::string> GetAllNextStatements() const;
+  std::unordered_set<std::string> GetAllNextByStatements() const;
+  std::unordered_set<std::string> GetAllNextRelations() const;
+  std::unordered_set<std::string> GetNextStatements(int statement_number) const;
+  std::unordered_set<std::string> GetNextByStatements(int statement_number) const;
+  std::unordered_set<std::string> GetNextTStatements(int statement_number) const;
+  std::unordered_set<std::string> GetNextTByStatements(int statement_number) const;
+
   /* ====================================
    * Clear All Relationship Storages
    * ==================================== */
@@ -128,6 +140,7 @@ class RelationshipManager {
   ModifiesStorage modifies_store_;
   CallsStorage calls_store_;
   CFGStorage cfg_store_;
+  NextStorage next_store
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
