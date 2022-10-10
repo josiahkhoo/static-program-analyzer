@@ -5,9 +5,17 @@
 bool BooleanSelectParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
+  QueryStringBuilder builder = data.second;
 
+  // Check BOOLEAN keyword
   if (!tokens->CheckEnd() && tokens->MatchString("BOOLEAN")) {
-    return true;
+    try {
+      // Check if synonym or is keyword
+      Synonym attempt_synonym = builder.GetSynonym(tokens->PeekValue());
+      return false;
+    } catch (...) {
+      return true;
+    }
   }
   return false;
 }
