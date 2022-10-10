@@ -1,6 +1,7 @@
 #ifndef SPA_RELATIONSHIP_MANAGER_H
 #define SPA_RELATIONSHIP_MANAGER_H
 
+#include <cassert>
 #include <string>
 #include <unordered_set>
 
