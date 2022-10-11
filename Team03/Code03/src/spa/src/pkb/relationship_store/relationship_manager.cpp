@@ -451,8 +451,8 @@ std::unordered_set<std::string> RelationshipManager::GetAffects(
   std::unordered_set<std::string> modified_list;
 
   if (assigns.find(std::to_string(statement_number)) != assigns.end()) {
-    GetAffectsDFSTraversal(assigns, statement_number, statement_number, cfg_path, true,
-                           affecting_list, modified_list);
+    GetAffectsDFSTraversal(assigns, statement_number, statement_number,
+                           cfg_path, true, affecting_list, modified_list);
   }
 
   std::unordered_set<std::string> result;
@@ -472,8 +472,8 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
   std::vector<int> affected_list;
 
   if (assigns.find(std::to_string(statement_number)) != assigns.end()) {
-    GetAffectsByDFSTraversal(assigns, statement_number, statement_number, cfg_path, true,
-                             affected_list);
+    GetAffectsByDFSTraversal(assigns, statement_number, statement_number,
+                             cfg_path, true, affected_list);
   }
 
   std::unordered_set<std::string> result;
@@ -636,7 +636,8 @@ void RelationshipManager::GetAffectsByDFSTraversal(
   return;
 }
 
-bool RelationshipManager::IsPossibleAffects(std::unordered_set<std::string> assigns, int stmt1, int stmt2) const {
+bool RelationshipManager::IsPossibleAffects(
+    std::unordered_set<std::string> assigns, int stmt1, int stmt2) const {
   if (assigns.find(std::to_string(stmt1)) != assigns.end()) {
     return false;
   }

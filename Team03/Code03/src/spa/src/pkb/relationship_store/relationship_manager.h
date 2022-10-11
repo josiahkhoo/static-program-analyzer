@@ -168,7 +168,8 @@ class RelationshipManager {
                                 std::unordered_set<int>& cfg_path,
                                 bool is_start,
                                 std::vector<int>& affected_list) const;
-  bool IsPossibleAffects(std::unordered_set<std::string> assigns, int stmt1, int stmt2) const;
+  bool IsPossibleAffects(std::unordered_set<std::string> assigns, int stmt1,
+                         int stmt2) const;
   bool IsLastModifiedBroken(int current, int start) const;
 };
 
