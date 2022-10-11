@@ -1,7 +1,5 @@
 #include "query_parser_util.h"
 
-#include <unordered_map>
-
 #include "common/reference/attribute_name.h"
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
@@ -187,12 +185,11 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
-/// Verifies statement reference is either a Statement synonym or line number
+/// Verifies statement reference is an Assign synonym
 /// \param stmtRef
-void QueryParserUtil::CheckNextRef(const StatementReference& stmtRef) {
-  if (!((stmtRef.IsSynonym() && stmtRef.IsEntityType(STATEMENT)) ||
-        stmtRef.IsLineNumber())) {
-    throw SemanticException("Invalid statement reference for Next clause");
+void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
+  if (stmtRef.IsSynonym() && !stmtRef.IsEntityType(ASSIGN)) {
+    throw SemanticException("Invalid statement reference for Affects clause");
   }
 }
 
