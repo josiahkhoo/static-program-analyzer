@@ -103,22 +103,12 @@ print p;
 Select <p.procName>
 SemanticError
 5000
-22 - (SEMANTIC ERROR) Invalid statement reference for Next
-assign a;
-Select a such that Next (1, a)
-SemanticError
-5000
-23 - (SEMANTIC ERROR) Invalid statement reference for Next*
-assign a;
-Select a such that Next* (1, a)
-SemanticError
-5000
-24 - (SEMANTIC ERROR) Invalid statement reference for Affects
+22 - (SEMANTIC ERROR) Invalid statement reference for Affects
 variable v;
 Select v such that Affects (1, v)
 SemanticError
 5000
-25 - (SEMANTIC ERROR) Invalid statement reference for Affects*
+23 - (SEMANTIC ERROR) Invalid statement reference for Affects*
 variable v;
 Select v such that Affects* (1, v)
 SemanticError
