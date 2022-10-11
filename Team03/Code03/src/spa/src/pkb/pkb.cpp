@@ -647,6 +647,53 @@ std::unordered_set<std::string> PKB::QueryNextTBy(int statement_number,
 }
 
 /* ====================================
+ * Affects Query Methods
+ * ==================================== */
+
+/// QueryAllAffects
+/// \return Query all assign statements that affects some other statement
+std::unordered_set<std::string> PKB::QueryAllAffects() const {
+  return relationship_manager_.GetAllAffects();
+}
+
+/// QueryAllAffectsBy
+/// \return Query all assign statements that are affected by some other
+/// statement
+std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
+  return relationship_manager_.GetAllAffectsBy();
+}
+
+/// QueryAffects
+/// \param statement_number statement
+/// \return Query all assign statements that affects given statement
+std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
+  return relationship_manager_.GetAffects(statement_number);
+}
+
+/// QueryAffectsBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affected by given statement
+std::unordered_set<std::string> PKB::QueryAffectsBy(
+    int statement_number) const {
+  return relationship_manager_.GetAffectsBy(statement_number);
+}
+
+/// QueryAffectsT
+/// \param statement_number statement
+/// \return Query all assign statements that affectsT given statement
+std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
+  return relationship_manager_.GetAffectsT(statement_number);
+}
+
+/// QueryAffectsTBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affectedT by given statement
+std::unordered_set<std::string> PKB::QueryAffectsTBy(
+    int statement_number) const {
+  return relationship_manager_.GetAffectsTBy(statement_number);
+}
+
+/* ====================================
  * Assign Pattern Query Methods
  * ==================================== */
 
