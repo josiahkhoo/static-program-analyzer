@@ -618,13 +618,13 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
 
 std::unordered_set<std::string> PKB::QueryAllNext() const {
   std::unordered_set<std::string> result =
-      relationship_manager_.GetAllNextStatements();
+      relationship_manager_.GetAllNext();
   return result;
 }
 
 std::unordered_set<std::string> PKB::QueryAllNextBy() const {
   std::unordered_set<std::string> result =
-      relationship_manager_.GetAllPrecedingStatements();
+      relationship_manager_.GetAllPrevious();
   return result;
 }
 
@@ -637,7 +637,7 @@ std::unordered_set<std::string> PKB::QueryNext(int statement_number,
   //  assert(statement_number);
   //  assert(type);
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetNextStatements(statement_number);
+      relationship_manager_.GetNext(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {
@@ -653,7 +653,7 @@ std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,
   //  assert(statement_number);
   //  assert(type);
   std::unordered_set<std::string> statements =
-      relationship_manager_.GetPrecedingStatements(statement_number);
+      relationship_manager_.GetPrevious(statement_number);
   std::unordered_set<std::string> typed_statements = QueryAll(type);
   std::unordered_set<std::string> result;
   for (const std::string& statement : statements) {

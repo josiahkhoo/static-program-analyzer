@@ -350,31 +350,32 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
 /// GetAllNext
 /// \return Query all statements that come next to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
-  return {};
+  return next_store_.GetNextStatements();
 }
 
 /// GetAllPrevious
 /// \return Query all statements that come previous to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
-  return {};
+  return next_store_.GetPreviousStatements();
 }
 
 /// GetNext
 /// \param statement_number statement
-/// \return Query statement(s) that comes next after given statement
+/// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> RelationshipManager::GetNext(
     int statement_number) const {
-  assert(statement_number);
-  return {};
+  //  assert(statement_number);
+  return next_store_.GetNextStatements(statement_number);
 }
 
 /// GetPrevious
 /// \param statement_number statement
-/// \return Query statement(s) that comes previous before given statement
+/// \return Query statement(s) that immediately comes previous before given
+/// statement
 std::unordered_set<std::string> RelationshipManager::GetPrevious(
     int statement_number) const {
-  assert(statement_number);
-  return {};
+  //  assert(statement_number);
+  return next_store_.GetPreviousStatements(statement_number);
 }
 
 /// GetNextT
@@ -465,6 +466,7 @@ void RelationshipManager::Clear() {
   uses_store_.Clear();
   modifies_store_.Clear();
   calls_store_.Clear();
+  next_store_.Clear();
 }
 
 void RelationshipManager::NextDFSTraversal(

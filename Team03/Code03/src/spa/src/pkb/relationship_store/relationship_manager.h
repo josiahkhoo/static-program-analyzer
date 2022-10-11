@@ -149,6 +149,7 @@ class RelationshipManager {
   ModifiesStorage modifies_store_;
   CallsStorage calls_store_;
   CFGStorage cfg_store_;
+  NextStorage next_store_;
 
   void NextDFSTraversal(int statement_number,
                         std::unordered_set<int>& visited_stmts,

@@ -11,11 +11,11 @@ class NextStorage {
  public:
   void AddRelationship(NextAbstraction abstraction);
 
-  std::unordered_set<std::string> GetPrecedingStatements() const;
+  std::unordered_set<std::string> GetPreviousStatements() const;
 
   std::unordered_set<std::string> GetNextStatements() const;
 
-  std::unordered_set<std::string> GetPrecedingStatements(
+  std::unordered_set<std::string> GetPreviousStatements(
       int statement_number) const;
 
   std::unordered_set<std::string> GetNextStatements(int statement_number) const;
@@ -24,8 +24,8 @@ class NextStorage {
   void Clear();
 
  private:
-  std::unordered_map<int, std::unordered_set<int>> precedent_to_next_map_;
-  std::unordered_map<int, std::unordered_set<int>> next_to_precedent_map_;
+  std::unordered_map<int, std::unordered_set<int>> previous_to_next_map_;
+  std::unordered_map<int, std::unordered_set<int>> next_to_previous_map_;
 };
 
 #endif  // SPA_NEXT_STORAGE_H
