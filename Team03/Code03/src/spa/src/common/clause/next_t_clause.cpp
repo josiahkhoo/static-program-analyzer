@@ -11,7 +11,7 @@ NextTClause::NextTClause(StatementReference lhs, StatementReference rhs)
 
 [[nodiscard]] std::unordered_set<std::string> NextTClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryNextTBy(
+  return queryable_pkb.QueryPreviousT(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
@@ -28,15 +28,15 @@ std::unordered_set<std::string> NextTClause::FetchRhs(
         GetRightHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(_, s)
-  return queryable_pkb.QueryAllNextBy();
+  return queryable_pkb.QueryAllPrevious();
 }
 
 std::unordered_set<std::string> NextTClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next*(s, 1)
-    return queryable_pkb.QueryNextTBy(GetRightHandSide().GetLineNumber(),
-                                      EntityType::STATEMENT);
+    return queryable_pkb.QueryPreviousT(GetRightHandSide().GetLineNumber(),
+                                        EntityType::STATEMENT);
   }
   // E.g. Next*(s, _)
   return queryable_pkb.QueryAllNext();
@@ -60,8 +60,8 @@ bool NextTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsLineNumber()) {
     return !queryable_pkb
-                .QueryNextTBy(GetRightHandSide().GetLineNumber(),
-                              EntityType::STATEMENT)
+                .QueryPreviousT(GetRightHandSide().GetLineNumber(),
+                                EntityType::STATEMENT)
                 .empty();
   }
   return !queryable_pkb.QueryAllNextRelations().empty();
