@@ -30,7 +30,6 @@ class QueryParserUtil {
   static AttributeName ExtractAttrName(
       Synonym synonym, const std::shared_ptr<TokenHandler>& tokens);
   static void CheckFollowsParentRef(const StatementReference& stmtRef);
-  static void CheckNextRef(const StatementReference& stmtRef);
   static void CheckPatternSyn(const Synonym& synonym);
   static void CheckProcedureEntity(const EntityReference& entRef);
   static void CheckVariableEntity(const EntityReference& entRef);
