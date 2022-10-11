@@ -313,7 +313,7 @@ std::unordered_set<std::string> RelationshipManager::GetCallsProcedures(
   return calls_store_.GetCallsProcedures(proc_name);
 }
 
-/// GetCallsProcedures
+/// GetCallsTProcedures
 /// \param proc_name
 /// \return Gets all procedures that directly or indirectly call a specified
 /// procedure
@@ -364,7 +364,6 @@ std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
 /// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> RelationshipManager::GetNext(
     int statement_number) const {
-  //  assert(statement_number);
   return next_store_.GetNextStatements(statement_number);
 }
 
@@ -374,7 +373,6 @@ std::unordered_set<std::string> RelationshipManager::GetNext(
 /// statement
 std::unordered_set<std::string> RelationshipManager::GetPrevious(
     int statement_number) const {
-  //  assert(statement_number);
   return next_store_.GetPreviousStatements(statement_number);
 }
 
