@@ -51,7 +51,7 @@ procedure Seventh {
     if ( i != 2 ) then {    // Stmt 35
         x = a + 1; }        // Stmt 36
     else {
-    a = b; } }              // Stmt 37
+        a = b; } }          // Stmt 37
 
 procedure Eighth {
     x = a;                  // Stmt 38

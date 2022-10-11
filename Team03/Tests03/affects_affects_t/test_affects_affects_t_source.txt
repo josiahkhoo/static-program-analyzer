@@ -51,7 +51,7 @@ procedure Seventh {
     if ( i != 2 ) {
         x = a + 1; }
     else {
-    a = b; } }
+        a = b; } }
 
 procedure Eighth {
     x = a;
