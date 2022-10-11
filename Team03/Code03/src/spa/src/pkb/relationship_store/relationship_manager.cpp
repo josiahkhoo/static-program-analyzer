@@ -347,36 +347,116 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
   return calls_store_.GetCallsTByProcedures(proc_name);
 }
 
-std::unordered_set<std::string> RelationshipManager::GetAllPrecedingStatements()
-    const {
-  return next_store_.GetPrecedingStatements();
+/// GetAllNext
+/// \return Query all statements that come next to some statement
+std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
+  return {};
 }
 
-std::unordered_set<std::string> RelationshipManager::GetAllNextStatements()
-    const {
-  return next_store_.GetNextStatements();
+/// GetAllPrevious
+/// \return Query all statements that come previous to some statement
+std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
+  return {};
 }
 
-std::unordered_set<std::string> RelationshipManager::GetAllNextRelations()
-    const {
-  return {};  // to implement
-}
-
-std::unordered_set<std::string> RelationshipManager::GetPrecedingStatements(
+/// GetNext
+/// \param statement_number statement
+/// \return Query statement(s) that comes next after given statement
+std::unordered_set<std::string> RelationshipManager::GetNext(
     int statement_number) const {
-  return next_store_.GetPrecedingStatements(statement_number);
+  assert(statement_number);
+  return {};
 }
 
-std::unordered_set<std::string> RelationshipManager::GetNextStatements(
+/// GetPrevious
+/// \param statement_number statement
+/// \return Query statement(s) that comes previous before given statement
+std::unordered_set<std::string> RelationshipManager::GetPrevious(
     int statement_number) const {
-  return next_store_.GetNextStatements(statement_number);
+  assert(statement_number);
+  return {};
 }
 
-std::unordered_set<std::string> RelationshipManager::GetPrecedingTStatements(
-    int statement_number) const {}
+/// GetNextT
+/// \param statement_number statement
+/// \return Query statement(s) that comes nextT after given statement
+std::unordered_set<std::string> RelationshipManager::GetNextT(
+    int statement_number) const {
+  std::unordered_set<int> visited_stmts;
+  std::unordered_set<int> nextT_stmts;
+  NextDFSTraversal(statement_number, visited_stmts, nextT_stmts);
 
-std::unordered_set<std::string> RelationshipManager::GetNextTStatements(
-    int statement_number) const {}
+  std::unordered_set<std::string> result;
+  for (auto s : nextT_stmts) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
+}
+
+/// GetPreviousT
+/// \param statement_number statement
+/// \return Query statement(s) that comes previousT before given statement
+std::unordered_set<std::string> RelationshipManager::GetPreviousT(
+    int statement_number) const {
+  std::unordered_set<int> visited_stmts;
+  std::unordered_set<int> previousT_stmts;
+  PreviousDFSTraversal(statement_number, visited_stmts, previousT_stmts);
+
+  std::unordered_set<std::string> result;
+  for (auto s : previousT_stmts) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
+}
+
+/// GetAllAffects
+/// \return Query all assign statements that affects some other statement
+std::unordered_set<std::string> RelationshipManager::GetAllAffects() const {
+  return {};
+}
+
+/// GetAllAffectsBy
+/// \return Query all assign statements that are affected by some other
+/// statement
+std::unordered_set<std::string> RelationshipManager::GetAllAffectsBy() const {
+  return {};
+}
+
+/// GetAffects
+/// \param statement_number statement
+/// \return Query all assign statements that affects given statement
+std::unordered_set<std::string> RelationshipManager::GetAffects(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// GetAffectsBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affected by given statement
+std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// GetAffectsT
+/// \param statement_number statement
+/// \return Query all assign statements that affectsT given statement
+std::unordered_set<std::string> RelationshipManager::GetAffectsT(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
+
+/// GetAffectsTBy
+/// \param statement_number statement
+/// \return Query all assign statements that are affectedT by given statement
+std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
+    int statement_number) const {
+  assert(statement_number);
+  return {};
+}
 
 /// Clear Storage
 void RelationshipManager::Clear() {
@@ -385,4 +465,44 @@ void RelationshipManager::Clear() {
   uses_store_.Clear();
   modifies_store_.Clear();
   calls_store_.Clear();
+}
+
+void RelationshipManager::NextDFSTraversal(
+    int statement_number, std::unordered_set<int> &visited_stmts,
+    std::unordered_set<int> &nextT_stmts) const {
+  // Add current statement to visited
+  visited_stmts.emplace(statement_number);
+  // Retrieve forward neighbouring stmts of current stmt node
+  std::unordered_set<int> neighbouring_stmts =
+      cfg_store_.GetForwardNeighbours(statement_number);
+
+  for (auto stmt : neighbouring_stmts) {
+    if (nextT_stmts.find(stmt) == nextT_stmts.end()) {
+      nextT_stmts.emplace(stmt);
+    }
+    // Visit unvisited nodes
+    if (visited_stmts.find(stmt) == visited_stmts.end()) {
+      NextDFSTraversal(stmt, visited_stmts, nextT_stmts);
+    }
+  }
+}
+
+void RelationshipManager::PreviousDFSTraversal(
+    int statement_number, std::unordered_set<int> &visited_stmts,
+    std::unordered_set<int> &previousT_stmts) const {
+  // Add current statement to visited
+  visited_stmts.emplace(statement_number);
+  // Retrieve backward neighbouring stmts of current stmt node
+  std::unordered_set<int> neighbouring_stmts =
+      cfg_store_.GetBackwardNeighbours(statement_number);
+
+  for (auto stmt : neighbouring_stmts) {
+    if (previousT_stmts.find(stmt) == previousT_stmts.end()) {
+      previousT_stmts.emplace(stmt);
+    }
+    // Visit unvisited nodes
+    if (visited_stmts.find(stmt) == visited_stmts.end()) {
+      PreviousDFSTraversal(stmt, visited_stmts, previousT_stmts);
+    }
+  }
 }
