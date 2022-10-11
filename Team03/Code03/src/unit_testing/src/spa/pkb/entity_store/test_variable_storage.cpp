@@ -11,4 +11,3 @@ TEST_CASE("Variable Storage Management", "[VariableStorage]") {
       variable_storage.GetVariables();
   REQUIRE(variable_list.find("X") != variable_list.end());
 }
-
