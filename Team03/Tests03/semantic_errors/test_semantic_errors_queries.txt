@@ -102,4 +102,13 @@ SemanticError
 print p;
 Select <p.procName>
 SemanticError
+22 - (SEMANTIC ERROR) Invalid statement reference for Affects
+variable v;
+Select v such that Affects (1, v)
+SemanticError
+5000
+23 - (SEMANTIC ERROR) Invalid statement reference for Affects*
+variable v;
+Select v such that Affects* (1, v)
+SemanticError
 5000
