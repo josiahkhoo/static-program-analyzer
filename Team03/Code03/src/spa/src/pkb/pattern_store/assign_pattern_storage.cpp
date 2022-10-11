@@ -176,5 +176,3 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
   }
   return res;
 }
-
-void AssignPatternStorage::Clear() { patterns_map_.clear(); }

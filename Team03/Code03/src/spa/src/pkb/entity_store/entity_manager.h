@@ -100,16 +100,11 @@ class EntityManager {
   // get stored while statements in StatementStorage
   std::unordered_set<std::string> GetWhileStatements() const;
 
-  /* ====================================
-   * Clear All Entity Storages
-   * ==================================== */
-  void Clear();
-
  private:
-  static ProcedureStorage procedure_store_;
-  static StatementStorage statement_store_;
-  static VariableStorage variable_store_;
-  static ConstantStorage constant_store_;
+  ProcedureStorage procedure_store_;
+  StatementStorage statement_store_;
+  VariableStorage variable_store_;
+  ConstantStorage constant_store_;
 };
 
 #endif  // SPA_ENTITY_MANAGER_H

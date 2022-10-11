@@ -19,8 +19,6 @@ class IfPatternStorage {
   std::unordered_set<std::string> GetPatternVariablesFromIf(
       int statement_number) const;
 
-  void Clear();
-
  private:
   std::unordered_map<int, std::unordered_set<std::string>>
       if_stmt_to_vars_patterns_map_;

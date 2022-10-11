@@ -30,9 +30,6 @@ class CallsStorage {
   std::unordered_set<std::string> GetCallsTByProcedures(
       std::string proc_name) const;
 
-  // Empty storage
-  void Clear();
-
  private:
   std::unordered_map<std::string, std::unordered_set<std::string>> calls_map_;
   std::unordered_map<std::string, std::unordered_set<std::string>>

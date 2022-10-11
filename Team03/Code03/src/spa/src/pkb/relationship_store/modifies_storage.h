@@ -34,8 +34,6 @@ class ModifiesStorage {
   std::unordered_set<std::string> GetStatementsModifyingVariable(
       std::string variable_name) const;
 
-  void Clear();
-
  private:
   std::unordered_map<int, std::unordered_set<std::string>>
       stmt_to_var_modifies_map_;

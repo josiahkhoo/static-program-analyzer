@@ -29,34 +29,31 @@ class StatementStorage {
 
   void AddWhileStatement(WhileEntity whileEntity);
 
-  std::unordered_set<std::string> GetStatements();
+  std::unordered_set<std::string> GetStatements() const;
 
-  std::unordered_set<std::string> GetCallStatements();
+  std::unordered_set<std::string> GetCallStatements() const;
 
-  std::unordered_set<std::string> GetCallStatements(std::string proc);
+  std::unordered_set<std::string> GetCallStatements(std::string proc) const;
 
   std::string GetCallStatementProcedure(int statement_number) const;
 
-  std::unordered_set<std::string> GetReadStatements();
+  std::unordered_set<std::string> GetReadStatements() const;
 
-  std::unordered_set<std::string> GetReadStatements(std::string var);
+  std::unordered_set<std::string> GetReadStatements(std::string var) const;
 
   std::string GetReadStatementVariable(int statement_number) const;
 
-  std::unordered_set<std::string> GetPrintStatements();
+  std::unordered_set<std::string> GetPrintStatements() const;
 
-  std::unordered_set<std::string> GetPrintStatements(std::string var);
+  std::unordered_set<std::string> GetPrintStatements(std::string var) const;
 
   std::string GetPrintStatementVariable(int statement_number) const;
 
-  std::unordered_set<std::string> GetAssignStatements();
+  std::unordered_set<std::string> GetAssignStatements() const;
 
-  std::unordered_set<std::string> GetIfStatements();
+  std::unordered_set<std::string> GetIfStatements() const;
 
-  std::unordered_set<std::string> GetWhileStatements();
-
-  // Empty storage
-  void Clear();
+  std::unordered_set<std::string> GetWhileStatements() const;
 
  private:
   std::unordered_set<int> statement_list_;

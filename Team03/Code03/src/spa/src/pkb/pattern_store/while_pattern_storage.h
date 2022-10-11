@@ -19,8 +19,6 @@ class WhilePatternStorage {
   std::unordered_set<std::string> GetPatternVariablesFromWhile(
       int statement_number) const;
 
-  void Clear();
-
  private:
   std::unordered_map<int, std::unordered_set<std::string>>
       while_stmt_to_vars_patterns_map_;
