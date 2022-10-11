@@ -223,3 +223,13 @@ read r, r1;
 Select BOOLEAN such that Next*(r, r1)
 FALSE
 5000
+44 - (SUCCESS) Find all while statements before if statements
+while w; if i;
+Select <w, i> such that Next(w, i)
+3 7
+5000
+45 - (SUCCESS) Find all while statements that is next to if statements
+while w; if i;
+Select <w, i> such that Next(i, w)
+
+5000
