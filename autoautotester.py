@@ -52,7 +52,7 @@ test_array = (
     ("And and With", "and_with"),
     ("Select attribute", "select_attribute"),
     ("Tuple select", "tuple_select"),
-    ("Next / Next T", "next_next_t")
+    # ("Next / Next T", "next_next_t")
 )
 
 overall_passed_test_cases = 0
