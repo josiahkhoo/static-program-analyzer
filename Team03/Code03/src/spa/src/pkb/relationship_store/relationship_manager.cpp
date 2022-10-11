@@ -350,13 +350,25 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
 /// GetAllNext
 /// \return Query all statements that come next to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
-  return next_store_.GetNextStatements();
+  std::unordered_set<std::string> result;
+  for (auto cfg : cfg_store_.GetCfgSet()) {
+    for (auto cfg_node : cfg->GetReverseMap()) {
+      result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+    }
+  }
+  return result;
 }
 
 /// GetAllPrevious
 /// \return Query all statements that come previous to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
-  return next_store_.GetPreviousStatements();
+  std::unordered_set<std::string> result;
+  for (auto cfg : cfg_store_.GetCfgSet()) {
+    for (auto cfg_node : cfg->GetForwardMap()) {
+      result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+    }
+  }
+  return result;
 }
 
 /// GetNext
@@ -364,7 +376,13 @@ std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
 /// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> RelationshipManager::GetNext(
     int statement_number) const {
-  return next_store_.GetNextStatements(statement_number);
+  std::unordered_set<int> statements =
+      cfg_store_.GetForwardNeighbours(statement_number);
+  std::unordered_set<std::string> result;
+  for (auto s : statements) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
 }
 
 /// GetPrevious
@@ -373,7 +391,13 @@ std::unordered_set<std::string> RelationshipManager::GetNext(
 /// statement
 std::unordered_set<std::string> RelationshipManager::GetPrevious(
     int statement_number) const {
-  return next_store_.GetPreviousStatements(statement_number);
+  std::unordered_set<int> statements =
+      cfg_store_.GetBackwardNeighbours(statement_number);
+  std::unordered_set<std::string> result;
+  for (auto s : statements) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
 }
 
 /// GetNextT
@@ -464,7 +488,6 @@ void RelationshipManager::Clear() {
   uses_store_.Clear();
   modifies_store_.Clear();
   calls_store_.Clear();
-  next_store_.Clear();
 }
 
 void RelationshipManager::NextDFSTraversal(

@@ -9,7 +9,6 @@
 #include "cfg_storage.h"
 #include "follows_storage.h"
 #include "modifies_storage.h"
-#include "next_storage.h"
 #include "parent_storage.h"
 #include "uses_storage.h"
 
@@ -149,7 +148,6 @@ class RelationshipManager {
   ModifiesStorage modifies_store_;
   CallsStorage calls_store_;
   CFGStorage cfg_store_;
-  NextStorage next_store_;
 
   void NextDFSTraversal(int statement_number,
                         std::unordered_set<int>& visited_stmts,
