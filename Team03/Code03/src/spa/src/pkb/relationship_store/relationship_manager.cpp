@@ -638,10 +638,10 @@ void RelationshipManager::GetAffectsByDFSTraversal(
 
 bool RelationshipManager::IsPossibleAffects(
     std::unordered_set<std::string> assigns, int stmt1, int stmt2) const {
-  if (assigns.find(std::to_string(stmt1)) != assigns.end()) {
+  if (assigns.find(std::to_string(stmt1)) == assigns.end()) {
     return false;
   }
-  if (assigns.find(std::to_string(stmt2)) != assigns.end()) {
+  if (assigns.find(std::to_string(stmt2)) == assigns.end()) {
     return false;
   }
   std::unordered_set<std::string> modified_vars_in_stmt1 =
