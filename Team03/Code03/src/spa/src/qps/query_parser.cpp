@@ -3,6 +3,8 @@
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
 #include "qps/exceptions/syntax_exception.h"
+#include "qps/parser/operations/affects_parser.h"
+#include "qps/parser/operations/affects_t_parser.h"
 #include "qps/parser/operations/calls_parser.h"
 #include "qps/parser/operations/calls_t_parser.h"
 #include "qps/parser/operations/follows_parser.h"
@@ -95,6 +97,8 @@ void QueryParser::ParseQueryOperation() {
   st_parsers_.push_back(std::make_shared<ModifiesSParser>());
   st_parsers_.push_back(std::make_shared<NextTParser>());
   st_parsers_.push_back(std::make_shared<NextParser>());
+  st_parsers_.push_back(std::make_shared<AffectsTParser>());
+  st_parsers_.push_back(std::make_shared<AffectsParser>());
 
   pattern_parsers_.push_back(std::make_shared<PatternAssignParser>());
   pattern_parsers_.push_back(std::make_shared<PatternIfParser>());
