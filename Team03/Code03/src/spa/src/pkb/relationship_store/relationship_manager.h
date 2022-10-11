@@ -1,6 +1,7 @@
 #ifndef SPA_RELATIONSHIP_MANAGER_H
 #define SPA_RELATIONSHIP_MANAGER_H
 
+#include <cassert>
 #include <string>
 #include <unordered_set>
 
@@ -116,6 +117,22 @@ class RelationshipManager {
   std::unordered_set<std::string> GetCallsTByProcedures(
       std::string proc_name) const;
 
+  // Next query methods
+  std::unordered_set<std::string> GetAllNext() const;
+  std::unordered_set<std::string> GetAllPrevious() const;
+  std::unordered_set<std::string> GetNext(int statement_number) const;
+  std::unordered_set<std::string> GetPrevious(int statement_number) const;
+  std::unordered_set<std::string> GetNextT(int statement_number) const;
+  std::unordered_set<std::string> GetPreviousT(int statement_number) const;
+
+  // Affects query methods
+  std::unordered_set<std::string> GetAllAffects() const;
+  std::unordered_set<std::string> GetAllAffectsBy() const;
+  std::unordered_set<std::string> GetAffects(int statement_number) const;
+  std::unordered_set<std::string> GetAffectsBy(int statement_number) const;
+  std::unordered_set<std::string> GetAffectsT(int statement_number) const;
+  std::unordered_set<std::string> GetAffectsTBy(int statement_number) const;
+
   /* ====================================
    * Clear All Relationship Storages
    * ==================================== */
@@ -128,6 +145,13 @@ class RelationshipManager {
   ModifiesStorage modifies_store_;
   CallsStorage calls_store_;
   CFGStorage cfg_store_;
+
+  void NextDFSTraversal(int statement_number,
+                        std::unordered_set<int>& visited_stmts,
+                        std::unordered_set<int>& nextT_stmts) const;
+  void PreviousDFSTraversal(int statement_number,
+                            std::unordered_set<int>& visited_stmts,
+                            std::unordered_set<int>& previousT_stmts) const;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
