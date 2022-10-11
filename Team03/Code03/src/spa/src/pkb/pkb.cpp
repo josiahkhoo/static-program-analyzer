@@ -141,12 +141,6 @@ void PKB::Store(std::vector<CFG> cfgs) {
   }
 }
 
-void PKB::Store(std::vector<NextAbstraction> abstractions) {
-  for (const NextAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:

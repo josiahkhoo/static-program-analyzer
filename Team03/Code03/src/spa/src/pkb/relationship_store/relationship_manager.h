@@ -50,9 +50,6 @@ class RelationshipManager {
   // store CFG
   void AddCFG(CFG cfg);
 
-  // store next to NextStorage
-  void AddAbstraction(NextAbstraction abstraction);
-
   /* ====================================
    * General Relationship Getter Methods
    * ==================================== */

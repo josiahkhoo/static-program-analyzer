@@ -8,7 +8,6 @@
 #include "common/abstraction/if_pattern_abstraction.h"
 #include "common/abstraction/modifies_p_abstraction.h"
 #include "common/abstraction/modifies_s_abstraction.h"
-#include "common/abstraction/next_abstraction.h"
 #include "common/abstraction/parent_abstraction.h"
 #include "common/abstraction/parent_t_abstraction.h"
 #include "common/abstraction/uses_p_abstraction.h"
@@ -69,8 +68,6 @@ class StorablePkb {
   virtual void Store(std::vector<IfPatternAbstraction> abstractions) = 0;
 
   virtual void Store(std::vector<CFG> cfgs) = 0;
-
-  virtual void Store(std::vector<NextAbstraction> abstractions) = 0;
 };
 
 #endif  // SPA_STORABLE_PKB_H
