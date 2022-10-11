@@ -125,8 +125,10 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
     head = new_head;
   }
 
-  // Add all unused synonyms to RHS of the top node
+  // Add all unused synonyms that are part of the select node to RHS of the top
+  // node
   for (const auto &syn : q_string.GetSynonyms()) {
+    // Check if used
     bool used = false;
     for (const auto &double_syn_op : double_syn_ops) {
       if (syn == double_syn_op->GetSynonymPair().first ||
@@ -139,6 +141,20 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
       // Skip if synonym is used before
       continue;
     }
+
+    // Check if synonym is part of select node
+    bool part_of = false;
+    for (const auto &syn_with_attr : q_string.GetSelect()->GetSynonyms()) {
+      if (syn == syn_with_attr.synonym) {
+        part_of = true;
+        break;
+      }
+    }
+    if (!part_of) {
+      // Skip if synonym is not part of select node
+      continue;
+    }
+
     std::vector<std::shared_ptr<QueryOperation>> curr_syn_ss_ops;
     for (const auto &single_syn_op : single_syn_ops) {
       if (single_syn_op->GetSynonym() == syn) {
