@@ -407,7 +407,7 @@ std::unordered_set<std::string> RelationshipManager::GetPreviousT(
 /// \return Query all assign statements that affects some other statement
 /// Get set of s such that Affects(s, _)
 std::unordered_set<std::string> RelationshipManager::GetAllAffects(
-    const std::unordered_set<std::string>& assigns) const {
+    std::unordered_set<std::string> assigns) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
     std::unordered_set<std::string> stmts_affecting =
