@@ -407,7 +407,7 @@ std::unordered_set<std::string> RelationshipManager::GetPreviousT(
 /// \return Query all assign statements that affects some other statement
 /// Get set of s such that Affects(s, _)
 std::unordered_set<std::string> RelationshipManager::GetAllAffects(
-    std::unordered_set<std::string> assigns) const {
+    const std::unordered_set<std::string>& assigns) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
     std::unordered_set<std::string> stmts_affecting =
@@ -465,7 +465,7 @@ std::unordered_set<std::string> RelationshipManager::GetAffects(
 /// GetAffectsBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affected by given statement
-/// /// Get set of s such that Affects(statement, s)
+/// Get set of s such that Affects(statement, s)
 std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
     std::unordered_set<std::string> assigns, int statement_number) const {
   std::unordered_set<int> cfg_path;
@@ -486,19 +486,51 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
 /// GetAffectsT
 /// \param statement_number statement
 /// \return Query all assign statements that affectsT given statement
+/// Get set of s such that Affects*(s, statement)
 std::unordered_set<std::string> RelationshipManager::GetAffectsT(
     std::unordered_set<std::string> assigns, int statement_number) const {
-  assert(statement_number);
-  return assigns;
+  std::unordered_set<std::string> result;
+
+  std::unordered_set<int> stmts_called;
+  std::unordered_set<int> to_be_called;
+  to_be_called.emplace(statement_number);
+  while (!to_be_called.empty()) {
+    int stmt = *to_be_called.begin();
+    if (stmts_called.find(stmt) == stmts_called.end()) {
+      stmts_called.emplace(stmt);
+      for (auto s : GetAffects(assigns, stmt)) {
+        result.emplace(s);
+        to_be_called.emplace(std::stoi(s));
+      }
+    }
+    to_be_called.erase(stmt);
+  }
+  return result;
 }
 
 /// GetAffectsTBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affectedT by given statement
+/// Get set of s such that Affects*(statement, s)
 std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
     std::unordered_set<std::string> assigns, int statement_number) const {
-  assert(statement_number);
-  return assigns;
+  std::unordered_set<std::string> result;
+
+  std::unordered_set<int> stmts_called;
+  std::unordered_set<int> to_be_called;
+  to_be_called.emplace(statement_number);
+  while (!to_be_called.empty()) {
+    int stmt = *to_be_called.begin();
+    if (stmts_called.find(stmt) == stmts_called.end()) {
+      stmts_called.emplace(stmt);
+      for (auto s : GetAffectsBy(assigns, stmt)) {
+        result.emplace(s);
+        to_be_called.emplace(std::stoi(s));
+      }
+    }
+    to_be_called.erase(stmt);
+  }
+  return result;
 }
 
 /// Clear Storage
