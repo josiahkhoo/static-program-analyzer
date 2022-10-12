@@ -1,10 +1,5 @@
 #include "entity_manager.h"
 
-ProcedureStorage EntityManager::procedure_store_;
-StatementStorage EntityManager::statement_store_;
-VariableStorage EntityManager::variable_store_;
-ConstantStorage EntityManager::constant_store_;
-
 EntityManager::EntityManager() {}
 
 void EntityManager::AddProcedure(ProcedureEntity procedure) {
@@ -111,11 +106,4 @@ std::unordered_set<std::string> EntityManager::GetIfStatements() const {
 
 std::unordered_set<std::string> EntityManager::GetWhileStatements() const {
   return statement_store_.GetWhileStatements();
-}
-
-void EntityManager::Clear() {
-  procedure_store_.Clear();
-  statement_store_.Clear();
-  variable_store_.Clear();
-  constant_store_.Clear();
 }

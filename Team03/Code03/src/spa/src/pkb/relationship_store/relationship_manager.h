@@ -139,11 +139,6 @@ class RelationshipManager {
   std::unordered_set<std::string> GetAffectsTBy(
       std::unordered_set<std::string> assigns, int statement_number) const;
 
-  /* ====================================
-   * Clear All Relationship Storages
-   * ==================================== */
-  void Clear();
-
  private:
   FollowsStorage follows_store_;
   ParentStorage parent_store_;

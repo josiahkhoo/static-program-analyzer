@@ -43,6 +43,9 @@ jobs:
       - name: Run integration tests
         env:
           SAMPLE_SOURCE_PATH: ${{github.workspace}}\\Team03\\Tests03\\Sample_source.txt
+          TEST_FOLDER: ${{github.workspace}}\\Team03\\Tests03
+          OS: win
+
         run: ./Team03/Code03/build/src/integration_testing/${{matrix.build-type}}/integration_testing.exe
 
       - name: Run automated autotester tests

@@ -40,8 +40,6 @@ class PatternManager {
   std::unordered_set<std::string> GetPatternVariablesFromWhile(
       int statement_number) const;
 
-  void Clear();
-
  private:
   AssignPatternStorage assign_pattern_storage_;
   IfPatternStorage if_pattern_storage_;

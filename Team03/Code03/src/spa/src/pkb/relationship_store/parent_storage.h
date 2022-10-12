@@ -30,9 +30,6 @@ class ParentStorage {
   std::unordered_set<std::string> GetParentTByStatements(
       int statement_number) const;
 
-  // Empty storage
-  void Clear();
-
  private:
   std::unordered_map<int, std::unordered_set<int>> parent_map_;
   std::unordered_map<int, std::unordered_set<int>> parent_by_map_;
