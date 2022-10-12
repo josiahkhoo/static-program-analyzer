@@ -499,8 +499,10 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsT(
     if (stmts_called.find(stmt) == stmts_called.end()) {
       stmts_called.emplace(stmt);
       for (auto s : GetAffects(assigns, stmt)) {
-        result.emplace(s);
-        to_be_called.emplace(std::stoi(s));
+        if (stmts_called.find(std::stoi(s)) == stmts_called.end()) {
+          to_be_called.emplace(std::stoi(s));
+          result.emplace(s);
+        }
       }
     }
     to_be_called.erase(stmt);
@@ -524,8 +526,10 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
     if (stmts_called.find(stmt) == stmts_called.end()) {
       stmts_called.emplace(stmt);
       for (auto s : GetAffectsBy(assigns, stmt)) {
-        result.emplace(s);
-        to_be_called.emplace(std::stoi(s));
+        if (stmts_called.find(std::stoi(s)) == stmts_called.end()) {
+          to_be_called.emplace(std::stoi(s));
+          result.emplace(s);
+        }
       }
     }
     to_be_called.erase(stmt);
