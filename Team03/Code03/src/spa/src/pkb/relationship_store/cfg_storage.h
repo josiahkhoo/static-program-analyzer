@@ -15,8 +15,6 @@ class CFGStorage {
 
   std::unordered_set<int> GetBackwardNeighbours(int stmt) const;
 
-  void Clear();
-
  private:
   std::unordered_map<int, std::shared_ptr<CFG>> stmt_to_cfg_map_;
 };

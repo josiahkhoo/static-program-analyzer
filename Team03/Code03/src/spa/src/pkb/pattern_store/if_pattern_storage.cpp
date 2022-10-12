@@ -60,9 +60,3 @@ std::unordered_set<std::string> IfPatternStorage::GetPatternVariablesFromIf(
   }
   return res;
 }
-
-/// Clear Storage
-void IfPatternStorage::Clear() {
-  if_stmt_to_vars_patterns_map_.clear();
-  var_to_if_stmts_patterns_map_.clear();
-}

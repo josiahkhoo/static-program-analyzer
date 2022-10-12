@@ -3,12 +3,12 @@ procedure procedure{
       if = if;
       while = while;
       call = call;
-      read = read;
+      read = read / 10;
       print = print;
       call call;
-      if (if ==0) then {
+      if (if <=0) then {
         then = then;
-      } else {if (then==0) then {
+      } else {if ((then<0) || (then >0)) then {
            else = procedure;}else{
            then = procedure;
         }
