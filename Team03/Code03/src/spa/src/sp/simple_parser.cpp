@@ -120,7 +120,7 @@ std::shared_ptr<TNode> SimpleParser::ParseStatement() {
   } else if (Peek(token_pos_).GetValue() == "if") {
     return ParseIf();
   } else {
-    throw std::runtime_error("Failed to parse statement with Token name " +
+    throw std::runtime_error("Failed to Parse statement with Token name " +
                              Peek(token_pos_).GetValue());
   }
 }

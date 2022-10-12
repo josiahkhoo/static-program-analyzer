@@ -101,11 +101,3 @@ std::unordered_set<std::string> FollowsStorage::GetFollowsStatements() const {
   }
   return res;
 }
-
-/// Clear Storage
-void FollowsStorage::Clear() {
-  follows_map_.clear();
-  follows_by_map_.clear();
-  follows_t_map_.clear();
-  follows_t_by_map_.clear();
-}

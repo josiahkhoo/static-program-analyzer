@@ -452,15 +452,6 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
   return {};
 }
 
-/// Clear Storage
-void RelationshipManager::Clear() {
-  follows_store_.Clear();
-  parent_store_.Clear();
-  uses_store_.Clear();
-  modifies_store_.Clear();
-  calls_store_.Clear();
-}
-
 void RelationshipManager::NextDFSTraversal(
     int statement_number, std::unordered_set<int> &visited_stmts,
     std::unordered_set<int> &nextT_stmts) const {

@@ -18,12 +18,10 @@ TestWrapper::TestWrapper() {
 }
 
 // method for parsing the SIMPLE source
-void TestWrapper::parse(std::string filename) {
-  source_processor_.Process(filename);
-}
+void TestWrapper::parse(std::string filename) { spa_.Parse(filename); }
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results) {
   results.clear();
-  query_processing_subsystem.Process(query, results);
+  spa_.Evaluate(query, results);
 }

@@ -62,9 +62,3 @@ std::unordered_set<std::string> PatternManager::GetPatternVariablesFromWhile(
     int statement_number) const {
   return while_pattern_storage_.GetPatternVariablesFromWhile(statement_number);
 }
-
-void PatternManager::Clear() {
-  assign_pattern_storage_.Clear();
-  if_pattern_storage_.Clear();
-  while_pattern_storage_.Clear();
-}

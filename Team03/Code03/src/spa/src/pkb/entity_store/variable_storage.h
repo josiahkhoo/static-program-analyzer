@@ -13,13 +13,10 @@ class VariableStorage {
 
   void AddVariable(VariableEntity variable);
 
-  std::unordered_set<std::string> GetVariables();
-
-  // Empty storage
-  void Clear();
+  std::unordered_set<std::string> GetVariables() const;
 
  private:
-  static std::unordered_set<std::string> variableList;
+  std::unordered_set<std::string> variableList;
 };
 
 #endif  // SPA_VARIABLE_STORAGE_H
