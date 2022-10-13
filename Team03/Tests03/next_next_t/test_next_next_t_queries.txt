@@ -28,217 +28,217 @@ TRUE
 Select BOOLEAN such that Next (8, 10)
 TRUE
 5000
-6 - (SUCCESS) Test case from wiki
+7 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (1, 2)
 TRUE
 5000
-7 - (SUCCESS) Test case from wiki
+8 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (1, 3)
 TRUE
 5000
-8 - (SUCCESS) Test case from wiki
+9 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (2, 5)
 TRUE
 5000
-9 - (SUCCESS) Test case from wiki
+10 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (4, 3)
 TRUE
 5000
-10 - (SUCCESS) Test case from wiki
+11 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (5, 5)
 TRUE
 5000
-11 - (SUCCESS) Test case from wiki
+12 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (5, 8)
 TRUE
 5000
-12 - (SUCCESS) Test case from wiki
+13 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (5, 12)
 TRUE
 5000
-13 - (SUCCESS) Test case from wiki
+14 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next (6, 4)
 FALSE
 5000
-14 - (SUCCESS) Test case from wiki
+15 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next (7, 10)
 FALSE
 5000
-15 - (SUCCESS) Test case from wiki
+16 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next (8, 9)
 FALSE
 5000
-16 - (SUCCESS) Test case from wiki
+17 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (8, 9)
 FALSE
 5000
-17 - (SUCCESS) Test case from wiki
+18 - (SUCCESS) Test case from wiki
 
 Select BOOLEAN such that Next* (5, 2)
 FALSE
 5000
-18 - (SUCCESS) Find all statements pairs that follows and occurs next to another
+19 - (SUCCESS) Find all statements pairs that follows and occurs next to another
 stmt s1, s2;
 Select <s1, s2> such that Follows(s1,s2) and Next(s1,s2)
 1 2, 2 3, 4 5, 5 6, 3 7, 10 11, 11 12, 13 14, 14 15, 16 17, 17 18
 5000
-19 - (SUCCESS) Find all statements that are next of assign stmt 1
+20 - (SUCCESS) Find all statements that are next of assign stmt 1
 stmt s;
 Select s such that Next(1, s)
 2
 5000
-20 - (SUCCESS) Find all statements that are next of while stmt 3
+21 - (SUCCESS) Find all statements that are next of while stmt 3
 stmt s;
 Select s such that Next(3, s)
 4, 7
 5000
-21 - (SUCCESS) Find all statements that are next of if stmt 7
+22 - (SUCCESS) Find all statements that are next of if stmt 7
 stmt s;
 Select s such that Next(7, s)
 8, 9
 5000
-22 - (SUCCESS) Find all statements that are next of call stmt 5
+23 - (SUCCESS) Find all statements that are next of call stmt 5
 stmt s;
 Select s such that Next(5, s)
 6
 5000
-23 - (SUCCESS) Find all statements that are next of if end stmt 8
+24 - (SUCCESS) Find all statements that are next of if end stmt 8
 stmt s;
 Select s such that Next(8, s)
 10
 5000
-24 - (SUCCESS) Find all statements that are next of else end stmt 9
+25 - (SUCCESS) Find all statements that are next of else end stmt 9
 stmt s;
 Select s such that Next(9, s)
 10
 5000
-25 - (SUCCESS) Find all statements that are next of while end stmt 6
+26 - (SUCCESS) Find all statements that are next of while end stmt 6
 stmt s;
 Select s such that Next(6, s)
 3
 5000
-26 - (SUCCESS) Find all statements that are next of read stmt 13
+27 - (SUCCESS) Find all statements that are next of read stmt 13
 stmt s;
 Select s such that Next(13, s)
 14
 5000
-27 - (SUCCESS) Find all statements that are next of print stmt 18
+28 - (SUCCESS) Find all statements that are next of print stmt 18
 stmt s;
 Select s such that Next(18, s)
 
 5000
-28 - (SUCCESS) Find all statements that come before stmt 10 (if else forks)
+29 - (SUCCESS) Find all statements that come before stmt 10 (if else forks)
 stmt s;
 Select s such that Next(s, 10)
 8, 9
 5000
-29 - (SUCCESS) Find all statements that come before while stmt 3 (should have the end of the while loop and previous statement)
+30 - (SUCCESS) Find all statements that come before while stmt 3 (should have the end of the while loop and previous statement)
 stmt s;
 Select s such that Next(s, 3)
 2, 6
 5000
-30 - (SUCCESS) Find all statements that come before something
+31 - (SUCCESS) Find all statements that come before something
 stmt s;
 Select s such that Next(s, _)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17
 5000
-31 - (SUCCESS) Find all statements that come after something
+32 - (SUCCESS) Find all statements that come after something
 stmt s;
 Select s such that Next(_, s)
 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18
 5000
-32 - (SUCCESS) Are there any statements that come after 18
+33 - (SUCCESS) Are there any statements that come after 18
 
 Select BOOLEAN such that Next(18, _)
 FALSE
 5000
-33 - (SUCCESS) Are there any statements that come before 18
+34 - (SUCCESS) Are there any statements that come before 18
 
 Select BOOLEAN such that Next(_, 18)
 TRUE
 5000
-34 - (SUCCESS) Are there any statements that come after 16
+35 - (SUCCESS) Are there any statements that come after 16
 
 Select BOOLEAN such that Next(16, _)
 TRUE
 5000
-35 - (SUCCESS) Are there any statements that come before 16
+36 - (SUCCESS) Are there any statements that come before 16
 
 Select BOOLEAN such that Next(_, 16)
 FALSE
 5000
-36 - (SUCCESS) Are there any statements that come after each other
+37 - (SUCCESS) Are there any statements that come after each other
 
 Select BOOLEAN such that Next(_, _)
 TRUE
 5000
-37 - (SUCCESS) Find all assign statements that come after each other and assigns to the same variable
+38 - (SUCCESS) Find all assign statements that come after each other and assigns to the same variable
 assign a, a1; variable v;
 Select <a, a1> such that Next*(a, a1) pattern a(v, _) and a1(v, _)
 1 4, 1 8, 1 12, 4 8, 4 12, 2 6, 9 10, 4 4, 6 6, 8 12
 5000
-38 - (SUCCESS) Find all assign statements that next* after while stmt 3
+39 - (SUCCESS) Find all assign statements that next* after while stmt 3
 assign a;
 Select a such that Next*(3, a)
 4, 6, 8, 9, 10, 11, 12
 5000
-39 - (SUCCESS) Find all assign statements that next* before while stmt 3
+40 - (SUCCESS) Find all assign statements that next* before while stmt 3
 assign a;
 Select a such that Next*(a, 3)
 4, 6, 1, 2
 5000
-40 - (SUCCESS) Find all assign statements that next* after if stmt 7
+41 - (SUCCESS) Find all assign statements that next* after if stmt 7
 assign a;
 Select a such that Next*(7, a)
 8, 9, 10, 11, 12
 5000
-41 - (SUCCESS) Find all assign statements that next* before if stmt 7
+42 - (SUCCESS) Find all assign statements that next* before if stmt 7
 assign a;
 Select a such that Next*(a, 7)
 1, 2, 4, 6
 5000
-42 - (SUCCESS) Are there any statements that next* each other
+43 - (SUCCESS) Are there any statements that next* each other
 
 Select BOOLEAN such that Next*(_, _)
 TRUE
 5000
-43 - (SUCCESS) Are there any call statements that next* each other
+44 - (SUCCESS) Are there any call statements that next* each other
 call c, c1;
 Select BOOLEAN such that Next*(c, c1)
 TRUE
 5000
-44 - (SUCCESS) Are there any read statements that next* each other
+45 - (SUCCESS) Are there any read statements that next* each other
 read r, r1;
 Select BOOLEAN such that Next*(r, r1)
 TRUE
 5000
-45 - (SUCCESS) Find all assign statements that come before something
+46 - (SUCCESS) Find all assign statements that come before something
 assign a;
 Select a such that Next(a, _)
 1, 2, 4, 6, 8, 9, 10, 11, 16, 17
 5000
-46 - (SUCCESS) Find all assign statements that come after something
+47 - (SUCCESS) Find all assign statements that come after something
 assign a;
 Select a such that Next(_, a)
 2, 4, 6, 8, 9, 10, 11, 12, 17
 5000
-44 - (SUCCESS) Find all while statements before if statements
+48 - (SUCCESS) Find all while statements before if statements
 while w; if i;
 Select <w, i> such that Next(w, i)
 3 7
 5000
-45 - (SUCCESS) Find all while statements that is next to if statements
+49 - (SUCCESS) Find all while statements that is next to if statements
 while w; if i;
 Select <w, i> such that Next(i, w)
 
