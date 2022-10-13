@@ -166,6 +166,9 @@ std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   }
 }
 
+/// QueryAllFollows
+/// \param type
+/// \return Query all statements following any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetFollowsStatements();
@@ -179,6 +182,9 @@ std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
   return result;
 }
 
+/// QueryAllFollowsBy
+/// \param type
+/// \return Query all statements followed by any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetFollowsByStatements();
@@ -192,10 +198,18 @@ std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
   return result;
 }
 
+/// QueryAllFollows
+/// \param type
+/// \return Gets all statements following or followed by any statement
 std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
   return relationship_manager_.GetFollowsStatements();
 }
 
+/// QueryFollows
+/// \param statement_number
+/// \param type
+/// \return Query all statements directly following a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -210,6 +224,11 @@ std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
   return result;
 }
 
+/// QueryFollowsBy
+/// \param statement_number
+/// \param type
+/// \return Query all statements directly followed by a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
                                                     EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -224,6 +243,11 @@ std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
   return result;
 }
 
+/// QueryFollowsT
+/// \param statement_number
+/// \param type
+/// \return Query all statements directly or indirectly following a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
                                                    EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -238,6 +262,11 @@ std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
   return result;
 }
 
+/// QueryFollowsTBy
+/// \param statement_number
+/// \param type
+/// \return Query all statements directly or indirectly followed by a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
                                                      EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -252,6 +281,8 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
   return result;
 }
 
+/// QueryAllParent
+/// \return Query all statements that are direct parents of any statement
 std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetParentStatements();
@@ -265,6 +296,8 @@ std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
   return result;
 }
 
+/// QueryAllParentBy
+/// \return Query all statements that are direct children of any statement
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetParentByStatements();
@@ -278,6 +311,8 @@ std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
   return result;
 }
 
+/// QueryAllParentsRelations
+/// \return Query all parent and children statements of any statement
 std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
   std::unordered_set<std::string> res =
       relationship_manager_.GetParentStatements();
@@ -287,6 +322,11 @@ std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
   return res;
 }
 
+/// QueryParent
+/// \param statement_number
+/// \param type
+/// \return Query all statements that are direct parents of a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryParent(int statement_number,
                                                  EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -301,6 +341,11 @@ std::unordered_set<std::string> PKB::QueryParent(int statement_number,
   return result;
 }
 
+/// QueryParentBy
+/// \param statement_number
+/// \param type
+/// \return Query all statements that are direct children of a specified
+/// statement
 std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
                                                    EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -315,6 +360,11 @@ std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
   return result;
 }
 
+/// QueryParentT
+/// \param statement_number
+/// \param type
+/// \return Query all statements that are direct or indirect parents of a
+/// specified statement
 std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -329,6 +379,11 @@ std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
   return result;
 }
 
+/// QueryParentTBy
+/// \param statement_number
+/// \param type
+/// \return Query all statements that are direct or indirect children of a
+/// specified statement
 std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
                                                     EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -396,6 +451,10 @@ std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
   return {};
 }
 
+/// QueryUsesS
+/// \param statement_number
+/// \param type
+/// \return Query all variables used by a specified statement
 std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
                                                 EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -410,6 +469,10 @@ std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
   return result;
 }
 
+/// QueryUsesSBy
+/// \param identifier
+/// \param type
+/// \return Query all statements that use a specified variable
 std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -424,6 +487,10 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
   return result;
 }
 
+/// QueryUsesS
+/// \param statement_number
+/// \param type
+/// \return Query all variables used by a specified procedure
 std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
                                                 EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -438,6 +505,10 @@ std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
   return result;
 }
 
+/// QueryUsesPBy
+/// \param identifier
+/// \param type
+/// \return Query all procedures that use a specified variable
 std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
                                                   EntityType type) const {
   std::unordered_set<std::string> statements =
@@ -558,19 +629,24 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(
 /* ====================================
  * Calls Query Methods
  * ==================================== */
-
+/// QueryAllCalls
+/// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCalls() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures();
   return result;
 }
 
+/// QueryAllCallsBy
+/// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsByProcedures();
   return result;
 }
 
+/// QueryAllCallsBy
+/// \return Query all procedures that call or are called by any procedure
 std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures();
@@ -580,12 +656,19 @@ std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
   return result;
 }
 
+/// QueryCalls
+/// \param identifier
+/// \return Gets all procedures that directly call a specified procedure
 std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures(identifier);
   return result;
 }
 
+/// QueryCallsBy
+/// \param identifier
+/// \return Gets all procedures that are directly called by a specified
+/// procedure
 std::unordered_set<std::string> PKB::QueryCallsBy(
     std::string identifier) const {
   std::unordered_set<std::string> result =
@@ -593,12 +676,20 @@ std::unordered_set<std::string> PKB::QueryCallsBy(
   return result;
 }
 
+/// QueryCallsT
+/// \param identifier
+/// \return Gets all procedures that directly or indirectly call a specified
+/// procedure
 std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsTProcedures(identifier);
   return result;
 }
 
+/// QueryCallsTBy
+/// \param identifier
+/// \return Gets all procedures that are directly or indirectly called by a
+/// specified procedure
 std::unordered_set<std::string> PKB::QueryCallsTBy(
     std::string identifier) const {
   std::unordered_set<std::string> result =
@@ -609,41 +700,113 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
 /* ====================================
  * Next Query Methods
  * ==================================== */
-
-std::unordered_set<std::string> PKB::QueryAllNext() const { return {}; }
-
-std::unordered_set<std::string> PKB::QueryAllNextBy() const { return {}; }
-
-std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
-  return {};
+/// QueryAllNext
+/// \return Query all statements that come next to some statement
+std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetAllNext();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
+/// QueryAllPrevious
+/// \return Query all statements that come previous to some statement
+std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetAllPrevious();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
+}
+
+/// QueryAllNext
+/// \return Query all statements that come next or previous to some statement
+std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
+  std::unordered_set<std::string> result = relationship_manager_.GetAllNext();
+  std::unordered_set<std::string> previous =
+      relationship_manager_.GetAllPrevious();
+  result.merge(previous);
+  return result;
+}
+
+/// QueryNext
+/// \param statement_number statement
+/// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> PKB::QueryNext(int statement_number,
                                                EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetNext(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
-std::unordered_set<std::string> PKB::QueryNextBy(int statement_number,
-                                                 EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
+/// QueryPrevious
+/// \param statement_number statement
+/// \return Query statement(s) that immediately comes previous before given
+/// statement
+std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
+                                                   EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetPrevious(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
+/// QueryNextT
+/// \param statement_number statement
+/// \return Query statement(s) that comes nextT after given statement
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
                                                 EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetNextT(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
-std::unordered_set<std::string> PKB::QueryNextTBy(int statement_number,
-                                                  EntityType type) const {
-  assert(statement_number);
-  assert(type);
-  return {};
+/// QueryPreviousT
+/// \param statement_number statement
+/// \return Query statement(s) that comes previousT before given statement
+std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
+                                                    EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetPreviousT(statement_number);
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
+  return result;
 }
 
 /* ====================================
