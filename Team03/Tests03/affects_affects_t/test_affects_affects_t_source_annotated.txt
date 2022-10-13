@@ -62,3 +62,54 @@ procedure Ninth {
     x = a;                  // Stmt 41
     v = x;                  // Stmt 42
     z = v; }                // Stmt 43
+
+procedure Tenth {
+    x = a;                  // Stmt 44
+    print x;                // Stmt 45
+    v = x; }                // Stmt 46
+
+procedure Bumblebee {
+    read x;                 // Stmt 47
+    y = 2 * z;              // Stmt 48
+    call Megatron;          // Stmt 49
+    z = p - y;              // Stmt 50
+    if (q!=1) then {        // Stmt 51
+        z =  x + 24;        // Stmt 52
+        call Ironhide;      // Stmt 53
+    } else {
+        while (z>0) {       // Stmt 54
+            y = x * q - 5;  // Stmt 55
+            z = z - 1;      // Stmt 56
+        }
+        y = x + y * z + p * q;  // Stmt 57
+        call Ironhide;      // Stmt 58
+    }
+    i = x + j + z;          // Stmt 59
+    call Barricade;         // Stmt 60
+}
+
+procedure Megatron {
+    p = x * 10;             // Stmt 61
+    q = y + y * 10;         // Stmt 62
+    while (t == 0) {        // Stmt 63
+        a = 5 * p - 5;      // Stmt 64
+        print y;            // Stmt 65
+    }
+    q = p * 5;              // Stmt 66
+}
+
+procedure Ironhide {
+    i = x * 10;             // Stmt 67
+    j = x + y * 10;         // Stmt 68
+    if (i > j) then {       // Stmt 69
+        read x;             // Stmt 70
+        call Barricade;     // Stmt 71
+    } else {
+        y = i + x + y * z;  // Stmt 72
+    }
+}
+
+procedure Barricade {
+    q = i * x * j + y + p * q;  // Stmt 73
+    print q;                // Stmt 74
+}

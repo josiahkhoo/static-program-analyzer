@@ -151,12 +151,12 @@ Select s such that Next(s, 3)
 30 - (SUCCESS) Find all statements that come before something
 stmt s;
 Select s such that Next(s, _)
-
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17
 5000
 31 - (SUCCESS) Find all statements that come after something
 stmt s;
 Select s such that Next(_, s)
-
+2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18
 5000
 32 - (SUCCESS) Are there any statements that come after 18
 
