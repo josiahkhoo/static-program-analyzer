@@ -181,17 +181,18 @@ class PKB : public QueryablePkb, public StorablePkb {
       std::string identifier) const override;
 
   // Next query methods
-  std::unordered_set<std::string> QueryAllNext() const override;
-  std::unordered_set<std::string> QueryAllNextBy() const override;
+  std::unordered_set<std::string> QueryAllNext(EntityType type) const override;
+  std::unordered_set<std::string> QueryAllPrevious(
+      EntityType type) const override;
   std::unordered_set<std::string> QueryAllNextRelations() const override;
   std::unordered_set<std::string> QueryNext(int statement_number,
                                             EntityType type) const override;
-  std::unordered_set<std::string> QueryNextBy(int statement_number,
-                                              EntityType type) const override;
+  std::unordered_set<std::string> QueryPrevious(int statement_number,
+                                                EntityType type) const override;
   std::unordered_set<std::string> QueryNextT(int statement_number,
                                              EntityType type) const override;
-  std::unordered_set<std::string> QueryNextTBy(int statement_number,
-                                               EntityType type) const override;
+  std::unordered_set<std::string> QueryPreviousT(
+      int statement_number, EntityType type) const override;
 
   // Affects query methods
   std::unordered_set<std::string> QueryAllAffects() const override;

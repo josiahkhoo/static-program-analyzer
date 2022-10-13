@@ -2,9 +2,14 @@
 
 void CFGStorage::AddCFG(CFG cfg) {
   std::shared_ptr<CFG> cfg_ptr = std::make_shared<CFG>(cfg);
+  cfg_set.emplace(cfg_ptr);
   for (auto stmt : cfg.GetStatements()) {
     stmt_to_cfg_map_[stmt] = cfg_ptr;
   }
+}
+
+std::unordered_set<std::shared_ptr<CFG>> CFGStorage::GetCfgSet() const {
+  return cfg_set;
 }
 
 /// GetForwardNeighbours
