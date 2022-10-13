@@ -145,11 +145,3 @@ std::unordered_set<std::string> UsesStorage::GetStatementsUsingVariable(
   }
   return res;
 }
-
-/// Clear Storage
-void UsesStorage::Clear() {
-  stmt_to_var_uses_map_.clear();
-  proc_to_var_uses_map_.clear();
-  var_to_stmt_uses_map_.clear();
-  var_to_proc_uses_map_.clear();
-}

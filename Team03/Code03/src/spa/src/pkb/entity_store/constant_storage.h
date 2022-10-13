@@ -14,13 +14,10 @@ class ConstantStorage {
 
   void AddConstant(ConstantEntity constant);
 
-  std::unordered_set<std::string> GetConstants();
-
-  // Empty storage
-  void Clear();
+  std::unordered_set<std::string> GetConstants() const;
 
  private:
-  static std::unordered_set<std::string> constantList;
+  std::unordered_set<std::string> constantList;
 };
 
 #endif  // SPA_CONSTANT_STORAGE_H

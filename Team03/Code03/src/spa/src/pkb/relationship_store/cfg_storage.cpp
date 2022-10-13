@@ -39,5 +39,3 @@ std::unordered_set<int> CFGStorage::GetBackwardNeighbours(int stmt) const {
   }
   return result;
 }
-
-void CFGStorage::Clear() { stmt_to_cfg_map_.clear(); }

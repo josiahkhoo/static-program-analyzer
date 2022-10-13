@@ -38,6 +38,9 @@ jobs:
       - name: Integration Test
         env:
           SAMPLE_SOURCE_PATH: ${{github.workspace}}/Team03/Tests03/Sample_source.txt
+          TEST_FOLDER: ${{github.workspace}}/Team03/Tests03
+          OS: mac
+
         run: ${{github.workspace}}/build/src/integration_testing/integration_testing
 
       - name: Automated Autotester Test

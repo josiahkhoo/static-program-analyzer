@@ -13,13 +13,10 @@ class ProcedureStorage {
 
   void AddProcedure(ProcedureEntity procedure);
 
-  std::unordered_set<std::string> GetProcedures();
-
-  // Empty storage
-  void Clear();
+  std::unordered_set<std::string> GetProcedures() const;
 
  private:
-  static std::unordered_set<std::string> procedureList;
+  std::unordered_set<std::string> procedureList;
 };
 
 #endif  // SPA_PROCEDURE_STORAGE_H

@@ -106,11 +106,3 @@ std::unordered_set<std::string> CallsStorage::GetCallsTByProcedures(
   std::unordered_set<std::string> res = calls_t_map_.find(proc_name)->second;
   return res;
 }
-
-/// Clear Storage
-void CallsStorage::Clear() {
-  calls_map_.clear();
-  calls_by_map_.clear();
-  calls_t_map_.clear();
-  calls_t_by_map_.clear();
-}

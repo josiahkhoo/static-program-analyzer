@@ -39,6 +39,7 @@
 #include "sp/extractor/entity_extractor_impl.h"
 #include "sp/simple_parser.h"
 #include "sp/source_processor.h"
+#include "spa.h"
 
 class TestWrapper : public AbstractWrapper {
  public:
@@ -55,66 +56,7 @@ class TestWrapper : public AbstractWrapper {
   virtual void evaluate(std::string query, std::list<std::string>& results);
 
  private:
-  // Common dependencies:
-  Lexer lexer_;
-
-  // PKB dependencies:
-  // Temp:
-  PKB pkb_;
-
-  // SP dependencies:
-  SimpleParser simple_parser_;
-
-  AssignEntityNodeExtractor assign_entity_node_extractor_;
-  CallEntityNodeExtractor call_entity_node_extractor_;
-  ConstantEntityNodeExtractor constant_entity_node_extractor_;
-  IfEntityNodeExtractor if_entity_node_extractor_;
-  PrintEntityNodeExtractor print_entity_node_extractor_;
-  ProcedureEntityNodeExtractor procedure_entity_node_extractor_;
-  ReadEntityNodeExtractor read_entity_node_extractor_;
-  StatementEntityNodeExtractor statement_entity_node_extractor_;
-  VariableEntityNodeExtractor variable_entity_node_extractor_;
-  WhileEntityNodeExtractor while_entity_node_extractor_;
-  EntityExtractorImpl entity_extractor_ = EntityExtractorImpl(
-      assign_entity_node_extractor_, call_entity_node_extractor_,
-      constant_entity_node_extractor_, if_entity_node_extractor_,
-      print_entity_node_extractor_, procedure_entity_node_extractor_,
-      read_entity_node_extractor_, statement_entity_node_extractor_,
-      variable_entity_node_extractor_, while_entity_node_extractor_);
-
-  CFGExtractorImpl cfg_extractor_ = CFGExtractorImpl();
-
-  FollowsAbstractionExtractor follows_abstraction_extractor_;
-  FollowsTAbstractionExtractor follows_t_abstraction_extractor_;
-  ParentAbstractionExtractor parent_abstraction_extractor_;
-  ParentTAbstractionExtractor parent_t_abstraction_extractor_;
-  CallsAbstractionExtractor calls_abstraction_extractor_;
-  CallsTAbstractionExtractor calls_t_abstraction_extractor_;
-  UsesAbstractionExtractorImpl uses_abstraction_extractor_;
-  ModifiesAbstractionExtractorImpl modifies_abstraction_extractor_;
-  IfPatternAbstractionExtractor if_pattern_abstraction_extractor_;
-  WhilePatternAbstractionExtractor while_pattern_abstraction_extractor_;
-  AbstractionExtractorImpl abstraction_extractor_ = AbstractionExtractorImpl(
-      follows_abstraction_extractor_, follows_t_abstraction_extractor_,
-      parent_abstraction_extractor_, parent_t_abstraction_extractor_,
-      calls_abstraction_extractor_, calls_t_abstraction_extractor_,
-      if_pattern_abstraction_extractor_, while_pattern_abstraction_extractor_,
-      uses_abstraction_extractor_, modifies_abstraction_extractor_);
-
-  DesignExtractorImpl design_extractor_ = DesignExtractorImpl(
-      entity_extractor_, cfg_extractor_, abstraction_extractor_);
-
-  SourceProcessor source_processor_ =
-      SourceProcessor(lexer_, simple_parser_, design_extractor_, pkb_);
-
-  // QPS dependencies:
-  QueryParser query_parser_;
-  Planner planner_;
-  Evaluator evaluator_;
-
-  QueryProcessingSubsystem query_processing_subsystem =
-      QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                               pkb_);
+  SPA spa_;
 };
 
 #endif
