@@ -50,7 +50,8 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
         {Synonym(EntityType::VARIABLE, "v1"),
          Synonym(EntityType::VARIABLE, "v2"),
          Synonym(EntityType::VARIABLE, "v3")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1")});
+    SynonymSelect ss = SynonymSelect({Select::SynonymWithMaybeAttribute(
+        Synonym(EntityType::VARIABLE, "v1"))});
     std::unordered_set<std::string> res =
         ss.GetResultSet(q_result, queryable_pkb_stub.get());
     REQUIRE(res.size() == 3);
@@ -67,8 +68,10 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
         {Synonym(EntityType::VARIABLE, "v1"),
          Synonym(EntityType::VARIABLE, "v2"),
          Synonym(EntityType::VARIABLE, "v3")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1"),
-                                      Synonym(EntityType::VARIABLE, "v2")});
+    SynonymSelect ss = SynonymSelect(
+        {Select::SynonymWithMaybeAttribute(Synonym(EntityType::VARIABLE, "v1")),
+         Select::SynonymWithMaybeAttribute(
+             Synonym(EntityType::VARIABLE, "v2"))});
     std::unordered_set<std::string> res =
         ss.GetResultSet(q_result, queryable_pkb_stub.get());
     REQUIRE(res.size() == 3);
@@ -88,8 +91,10 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
                                {Synonym(EntityType::VARIABLE, "v1"),
                                 Synonym(EntityType::VARIABLE, "v2"),
                                 Synonym(EntityType::VARIABLE, "v3")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1"),
-                                      Synonym(EntityType::VARIABLE, "v2")});
+    SynonymSelect ss = SynonymSelect(
+        {Select::SynonymWithMaybeAttribute(Synonym(EntityType::VARIABLE, "v1")),
+         Select::SynonymWithMaybeAttribute(
+             Synonym(EntityType::VARIABLE, "v2"))});
     std::unordered_set<std::string> res =
         ss.GetResultSet(q_result, queryable_pkb_stub.get());
     REQUIRE(res.size() == 2);
@@ -156,7 +161,7 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
     SynonymSelect ss = SynonymSelect(
         {Select::SynonymWithMaybeAttribute(Synonym(EntityType::READ, "r"),
                                            AttributeName::VAR_NAME),
-         Synonym(EntityType::READ, "r1")});
+         Select::SynonymWithMaybeAttribute(Synonym(EntityType::READ, "r1"))});
     std::unordered_set<std::string> res =
         ss.GetResultSet(q_result, queryable_pkb_stub.get());
     REQUIRE(res.size() == 3);
@@ -173,8 +178,10 @@ TEST_CASE("Test Synonym Select", "[SynonymSelect]") {
         {Synonym(EntityType::VARIABLE, "v1"),
          Synonym(EntityType::VARIABLE, "v2"),
          Synonym(EntityType::VARIABLE, "v3")});
-    SynonymSelect ss = SynonymSelect({Synonym(EntityType::VARIABLE, "v1"),
-                                      Synonym(EntityType::VARIABLE, "v1")});
+    SynonymSelect ss = SynonymSelect(
+        {Select::SynonymWithMaybeAttribute(Synonym(EntityType::VARIABLE, "v1")),
+         Select::SynonymWithMaybeAttribute(
+             Synonym(EntityType::VARIABLE, "v1"))});
     std::unordered_set<std::string> res =
         ss.GetResultSet(q_result, queryable_pkb_stub.get());
     REQUIRE(res.size() == 3);

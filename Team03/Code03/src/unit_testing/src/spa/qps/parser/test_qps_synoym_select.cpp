@@ -23,7 +23,8 @@ TEST_CASE("Tuple: Single synonym select", "[QPS Parser]") {
 
   REQUIRE(res.GetSelect()->GetSynonyms().size() == 1);
 
-  Select::SynonymWithMaybeAttribute expectedSynAttr = {Synonym(VARIABLE, "a")};
+  Select::SynonymWithMaybeAttribute expectedSynAttr =
+      Select::SynonymWithMaybeAttribute(Synonym(VARIABLE, "a"));
   Select::SynonymWithMaybeAttribute resultSynAttr =
       res.GetSelect()->GetSynonyms()[0];
 
@@ -59,7 +60,8 @@ TEST_CASE("Tuple: Double synonym select", "[QPS Parser]") {
 
   REQUIRE(res.GetSelect()->GetSynonyms().size() == 2);
 
-  Select::SynonymWithMaybeAttribute expectedSynAttr = {Synonym(VARIABLE, "a1")};
+  Select::SynonymWithMaybeAttribute expectedSynAttr =
+      Select::SynonymWithMaybeAttribute(Synonym(VARIABLE, "a1"));
   Select::SynonymWithMaybeAttribute resultSynAttr =
       res.GetSelect()->GetSynonyms()[1];
 
@@ -100,7 +102,8 @@ TEST_CASE("Tuple: Triple synonym select", "[QPS Parser]") {
 
   REQUIRE(res.GetSelect()->GetSynonyms().size() == 3);
 
-  Select::SynonymWithMaybeAttribute expectedSynAttr = {Synonym(ASSIGN, "v")};
+  Select::SynonymWithMaybeAttribute expectedSynAttr =
+      Select::SynonymWithMaybeAttribute(Synonym(ASSIGN, "v"));
   Select::SynonymWithMaybeAttribute resultSynAttr =
       res.GetSelect()->GetSynonyms()[2];
 
