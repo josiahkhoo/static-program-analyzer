@@ -91,7 +91,7 @@ FALSE
 18 - (SUCCESS) Find all statements pairs that follows and occurs next to another
 stmt s1, s2;
 Select <s1, s2> such that Follows(s1,s2) and Next(s1,s2)
-1 2, 2 3, 4 5, 5 6, 7 10, 10 11, 11 12, 13 14, 14 15, 16 17, 17 18
+1 2, 2 3, 4 5, 5 6, 3 7, 10 11, 11 12, 13 14, 14 15, 16 17, 17 18
 5000
 19 - (SUCCESS) Find all statements that are next of assign stmt 1
 stmt s;
@@ -185,8 +185,8 @@ TRUE
 5000
 37 - (SUCCESS) Find all assign statements that come after each other and assigns to the same variable
 assign a, a1; variable v;
-Select <a, a1> such that Next*(a, a1) and pattern a(v, _) and a1(v, _)
-1 4, 1 8, 1 12, 4 8, 4 12, 2 6, 9 10
+Select <a, a1> such that Next*(a, a1) pattern a(v, _) and a1(v, _)
+1 4, 1 8, 1 12, 4 8, 4 12, 2 6, 9 10, 4 4, 6 6, 8 12
 5000
 38 - (SUCCESS) Find all assign statements that next* after while stmt 3
 assign a;
@@ -216,12 +216,12 @@ TRUE
 43 - (SUCCESS) Are there any call statements that next* each other
 call c, c1;
 Select BOOLEAN such that Next*(c, c1)
-FALSE
+TRUE
 5000
 44 - (SUCCESS) Are there any read statements that next* each other
 read r, r1;
 Select BOOLEAN such that Next*(r, r1)
-FALSE
+TRUE
 5000
 45 - (SUCCESS) Find all assign statements that come before something
 assign a;
