@@ -35,8 +35,9 @@ std::unordered_set<std::string> NextTClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next*(s, 1)
-    return queryable_pkb.QueryPreviousT(GetRightHandSide().GetLineNumber(),
-                                        GetLeftHandSide().GetSynonym().GetEntityType());
+    return queryable_pkb.QueryPreviousT(
+        GetRightHandSide().GetLineNumber(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(s, _)
   return queryable_pkb.QueryAllNext(PROCEDURE);
