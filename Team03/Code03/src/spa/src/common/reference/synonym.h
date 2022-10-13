@@ -10,7 +10,7 @@ class Synonym {
  public:
   Synonym(EntityType entity_type, Identifier identifier);
 
-  [[nodiscard]] EntityType GetEntityType();
+  [[nodiscard]] EntityType GetEntityType() const;
 
   [[nodiscard]] Identifier GetIdentifier() const;
 
@@ -27,5 +27,19 @@ class Synonym {
   EntityType entity_type_;
   Identifier identifier_;
 };
+
+namespace std {
+template <>
+class hash<Synonym> {
+ public:
+  /// Hash function for Synonym using prime number 196613
+  /// \param syn
+  /// \return size_t.
+  size_t operator()(const Synonym &syn) const {
+    return (std::hash<std::string>{}(syn.GetIdentifier())) +
+           (syn.GetEntityType() % 196613);
+  }
+};
+}  // namespace std
 
 #endif  // SPA_SYNONYM_H

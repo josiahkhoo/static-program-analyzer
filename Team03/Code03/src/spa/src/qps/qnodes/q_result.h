@@ -62,6 +62,10 @@ class QResult {
       return seed;
     }
   };
+
+  [[nodiscard]] int GetSynonymsSize() const;
+  [[nodiscard]] bool IsSynonymsEmpty() const;
+  [[nodiscard]] Synonym GetSynonymAt(int index) const;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_
