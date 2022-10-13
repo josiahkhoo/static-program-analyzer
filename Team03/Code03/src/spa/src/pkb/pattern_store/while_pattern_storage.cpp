@@ -62,9 +62,3 @@ WhilePatternStorage::GetPatternVariablesFromWhile(int statement_number) const {
   }
   return res;
 }
-
-/// Clear Storage
-void WhilePatternStorage::Clear() {
-  while_stmt_to_vars_patterns_map_.clear();
-  var_to_while_stmts_patterns_map_.clear();
-}

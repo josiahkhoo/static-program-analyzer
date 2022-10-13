@@ -3,7 +3,6 @@
 
 TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
   AssignPatternStorage storage;
-  storage.Clear();
   storage.AddAssignPattern(1, "var1", "((x)*(y))");
   storage.AddAssignPattern(2, "var2", "(((x)*(y))+(z))");
   storage.AddAssignPattern(3, "var3", "((z)+((x)*(y)))");
@@ -61,7 +60,6 @@ TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
 
 TEST_CASE("Get Pattern Search", "[AssignPatternStorage]") {
   AssignPatternStorage storage;
-  storage.Clear();
   storage.AddAssignPattern(1, "var1", "((x)*(y))");
   storage.AddAssignPattern(2, "var1", "(((x)*(y))+(z))");
   storage.AddAssignPattern(3, "var2", "((x)*(y))");

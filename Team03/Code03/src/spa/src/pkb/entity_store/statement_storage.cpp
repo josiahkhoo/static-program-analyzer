@@ -35,7 +35,7 @@ void StatementStorage::AddWhileStatement(WhileEntity whileEntity) {
   statement_list_.emplace(whileEntity.GetStatementNumber());
 }
 
-std::unordered_set<std::string> StatementStorage::GetStatements() {
+std::unordered_set<std::string> StatementStorage::GetStatements() const {
   std::unordered_set<std::string> res;
   for (int stmt : statement_list_) {
     res.emplace(std::to_string(stmt));
@@ -43,7 +43,7 @@ std::unordered_set<std::string> StatementStorage::GetStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetCallStatements() {
+std::unordered_set<std::string> StatementStorage::GetCallStatements() const {
   std::unordered_set<std::string> res;
   for (auto stmt : call_statement_num_to_proc_map_) {
     res.emplace(std::to_string(stmt.first));
@@ -52,7 +52,7 @@ std::unordered_set<std::string> StatementStorage::GetCallStatements() {
 }
 
 std::unordered_set<std::string> StatementStorage::GetCallStatements(
-    std::string proc) {
+    std::string proc) const {
   std::unordered_set<std::string> res;
   for (auto stmt : call_statement_num_to_proc_map_) {
     if (stmt.second == proc) {
@@ -72,7 +72,7 @@ std::string StatementStorage::GetCallStatementProcedure(
   return result;
 }
 
-std::unordered_set<std::string> StatementStorage::GetReadStatements() {
+std::unordered_set<std::string> StatementStorage::GetReadStatements() const {
   std::unordered_set<std::string> res;
   for (auto stmt : read_statement_num_to_var_map_) {
     res.emplace(std::to_string(stmt.first));
@@ -81,7 +81,7 @@ std::unordered_set<std::string> StatementStorage::GetReadStatements() {
 }
 
 std::unordered_set<std::string> StatementStorage::GetReadStatements(
-    std::string var) {
+    std::string var) const {
   std::unordered_set<std::string> res;
   for (auto stmt : read_statement_num_to_var_map_) {
     if (stmt.second == var) {
@@ -101,7 +101,7 @@ std::string StatementStorage::GetReadStatementVariable(
   return result;
 }
 
-std::unordered_set<std::string> StatementStorage::GetPrintStatements() {
+std::unordered_set<std::string> StatementStorage::GetPrintStatements() const {
   std::unordered_set<std::string> res;
   for (auto stmt : print_statement_num_to_var_map_) {
     res.emplace(std::to_string(stmt.first));
@@ -110,7 +110,7 @@ std::unordered_set<std::string> StatementStorage::GetPrintStatements() {
 }
 
 std::unordered_set<std::string> StatementStorage::GetPrintStatements(
-    std::string var) {
+    std::string var) const {
   std::unordered_set<std::string> res;
   for (auto stmt : print_statement_num_to_var_map_) {
     if (stmt.second == var) {
@@ -130,7 +130,7 @@ std::string StatementStorage::GetPrintStatementVariable(
   return result;
 }
 
-std::unordered_set<std::string> StatementStorage::GetAssignStatements() {
+std::unordered_set<std::string> StatementStorage::GetAssignStatements() const {
   std::unordered_set<std::string> res;
   for (int stmt : assign_statement_list_) {
     res.emplace(std::to_string(stmt));
@@ -138,7 +138,7 @@ std::unordered_set<std::string> StatementStorage::GetAssignStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetIfStatements() {
+std::unordered_set<std::string> StatementStorage::GetIfStatements() const {
   std::unordered_set<std::string> res;
   for (int stmt : if_statement_list_) {
     res.emplace(std::to_string(stmt));
@@ -146,20 +146,10 @@ std::unordered_set<std::string> StatementStorage::GetIfStatements() {
   return res;
 }
 
-std::unordered_set<std::string> StatementStorage::GetWhileStatements() {
+std::unordered_set<std::string> StatementStorage::GetWhileStatements() const {
   std::unordered_set<std::string> res;
   for (int stmt : while_statement_list_) {
     res.emplace(std::to_string(stmt));
   }
   return res;
-}
-
-void StatementStorage::Clear() {
-  statement_list_.clear();
-  assign_statement_list_.clear();
-  if_statement_list_.clear();
-  while_statement_list_.clear();
-  call_statement_num_to_proc_map_.clear();
-  read_statement_num_to_var_map_.clear();
-  print_statement_num_to_var_map_.clear();
 }

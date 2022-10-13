@@ -34,9 +34,6 @@ class UsesStorage {
   std::unordered_set<std::string> GetStatementsUsingVariable(
       std::string variable_name) const;
 
-  // Empty storage
-  void Clear();
-
  private:
   std::unordered_map<int, std::unordered_set<std::string>>
       stmt_to_var_uses_map_;

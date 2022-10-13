@@ -15,7 +15,7 @@
 class Select {
  public:
   struct SynonymWithMaybeAttribute {
-    SynonymWithMaybeAttribute(Synonym synonym)
+    explicit SynonymWithMaybeAttribute(Synonym synonym)
         : synonym(std::move(synonym)), maybe_attribute(std::nullopt) {}
 
     SynonymWithMaybeAttribute(Synonym synonym, AttributeName attribute)

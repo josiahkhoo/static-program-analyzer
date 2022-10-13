@@ -30,9 +30,6 @@ class FollowsStorage {
   std::unordered_set<std::string> GetFollowsTByStatements(
       int statement_number) const;
 
-  // Empty storage
-  void Clear();
-
  private:
   std::unordered_map<int, int> follows_map_;
   std::unordered_map<int, int> follows_by_map_;

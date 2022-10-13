@@ -148,11 +148,3 @@ std::unordered_set<std::string> ModifiesStorage::GetStatementsModifyingVariable(
   }
   return res;
 }
-
-/// Clear Storage
-void ModifiesStorage::Clear() {
-  stmt_to_var_modifies_map_.clear();
-  proc_to_var_modifies_map_.clear();
-  var_to_stmt_modifies_map_.clear();
-  var_to_proc_modifies_map_.clear();
-}
