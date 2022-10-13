@@ -118,11 +118,11 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryCallsTBy(
       std::string identifier) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllNext()
-      const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllNext(
+      EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllPrevious()
-      const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllPrevious(
+      EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllNextRelations()
       const = 0;

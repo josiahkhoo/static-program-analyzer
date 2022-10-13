@@ -347,7 +347,9 @@ std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
   std::unordered_set<std::string> result;
   for (auto cfg : cfg_store_.GetCfgSet()) {
     for (auto cfg_node : cfg->GetReverseMap()) {
-      result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      if (!cfg_node.second.empty()) {
+        result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      }
     }
   }
   return result;
@@ -359,7 +361,9 @@ std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
   std::unordered_set<std::string> result;
   for (auto cfg : cfg_store_.GetCfgSet()) {
     for (auto cfg_node : cfg->GetForwardMap()) {
-      result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      if (!cfg_node.second.empty()) {
+        result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      }
     }
   }
   return result;

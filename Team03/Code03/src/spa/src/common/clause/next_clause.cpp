@@ -28,22 +28,25 @@ std::unordered_set<std::string> NextClause::FetchRhs(
         GetRightHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next(_, s)
-  return queryable_pkb.QueryAllPrevious();
+  return queryable_pkb.QueryAllNext(
+      GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 std::unordered_set<std::string> NextClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next(s, 1)
-    return queryable_pkb.QueryPrevious(GetRightHandSide().GetLineNumber(),
-                                       EntityType::STATEMENT);
+    return queryable_pkb.QueryPrevious(
+        GetRightHandSide().GetLineNumber(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next(s, _)
-  return queryable_pkb.QueryAllNext();
+  return queryable_pkb.QueryAllPrevious(
+      GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 bool NextClause::IsTrue(const QueryablePkb &queryable_pkb) const {
-  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryNext(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);
     if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=

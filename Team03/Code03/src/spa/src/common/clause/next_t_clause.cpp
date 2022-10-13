@@ -28,7 +28,7 @@ std::unordered_set<std::string> NextTClause::FetchRhs(
         GetRightHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(_, s)
-  return queryable_pkb.QueryAllPrevious();
+  return queryable_pkb.QueryAllPrevious(PROCEDURE);
 }
 
 std::unordered_set<std::string> NextTClause::FetchLhs(
@@ -36,10 +36,10 @@ std::unordered_set<std::string> NextTClause::FetchLhs(
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next*(s, 1)
     return queryable_pkb.QueryPreviousT(GetRightHandSide().GetLineNumber(),
-                                        EntityType::STATEMENT);
+                                        GetLeftHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(s, _)
-  return queryable_pkb.QueryAllNext();
+  return queryable_pkb.QueryAllNext(PROCEDURE);
 }
 
 bool NextTClause::IsTrue(const QueryablePkb &queryable_pkb) const {

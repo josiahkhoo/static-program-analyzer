@@ -151,12 +151,12 @@ Select s such that Next(s, 3)
 30 - (SUCCESS) Find all statements that come before something
 stmt s;
 Select s such that Next(s, _)
-
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17
 5000
 31 - (SUCCESS) Find all statements that come after something
 stmt s;
 Select s such that Next(_, s)
-
+2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18
 5000
 32 - (SUCCESS) Are there any statements that come after 18
 
@@ -196,7 +196,7 @@ Select a such that Next*(3, a)
 39 - (SUCCESS) Find all assign statements that next* before while stmt 3
 assign a;
 Select a such that Next*(a, 3)
-4, 5, 6, 1, 2
+4, 6, 1, 2
 5000
 40 - (SUCCESS) Find all assign statements that next* after if stmt 7
 assign a;
@@ -218,8 +218,18 @@ call c, c1;
 Select BOOLEAN such that Next*(c, c1)
 FALSE
 5000
-43 - (SUCCESS) Are there any read statements that next* each other
+44 - (SUCCESS) Are there any read statements that next* each other
 read r, r1;
 Select BOOLEAN such that Next*(r, r1)
 FALSE
+5000
+45 - (SUCCESS) Find all assign statements that come before something
+assign a;
+Select a such that Next(a, _)
+1, 2, 4, 6, 8, 9, 10, 11, 16, 17
+5000
+46 - (SUCCESS) Find all assign statements that come after something
+assign a;
+Select a such that Next(_, a)
+2, 4, 6, 8, 9, 10, 11, 12, 17
 5000

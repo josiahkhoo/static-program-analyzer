@@ -702,16 +702,31 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
  * ==================================== */
 /// QueryAllNext
 /// \return Query all statements that come next to some statement
-std::unordered_set<std::string> PKB::QueryAllNext() const {
-  std::unordered_set<std::string> result = relationship_manager_.GetAllNext();
+std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
+  std::unordered_set<std::string> statements =
+      relationship_manager_.GetAllNext();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
 /// QueryAllPrevious
 /// \return Query all statements that come previous to some statement
-std::unordered_set<std::string> PKB::QueryAllPrevious() const {
-  std::unordered_set<std::string> result =
+std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
+  std::unordered_set<std::string> statements =
       relationship_manager_.GetAllPrevious();
+  std::unordered_set<std::string> typed_statements = QueryAll(type);
+  std::unordered_set<std::string> result;
+  for (const std::string& statement : statements) {
+    if (typed_statements.find(statement) != typed_statements.end()) {
+      result.emplace(statement);
+    }
+  }
   return result;
 }
 
