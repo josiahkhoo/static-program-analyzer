@@ -170,12 +170,12 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllNext(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllNext"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllPrevious(
-      EntityType type) const override {
+      EntityType) const override {
     return {"QueryAllPrevious"};
   }
 
