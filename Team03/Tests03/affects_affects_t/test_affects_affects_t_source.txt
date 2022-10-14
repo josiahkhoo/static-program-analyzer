@@ -63,6 +63,11 @@ procedure Ninth {
     v = x;
     z = v; }
 
+procedure Tenth {
+    x = a;
+    print x;
+    v = x; }
+
 procedure Bumblebee {
     read x;
     y = 2 * z;
