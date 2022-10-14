@@ -31,6 +31,13 @@ class CFG {
 
   [[nodiscard]] std::unordered_set<int> GetStatements();
 
+  [[nodiscard]] std::unordered_map<std::shared_ptr<CFGNode>,
+                                   std::unordered_set<std::shared_ptr<CFGNode>>>
+  GetForwardMap() const;
+  [[nodiscard]] std::unordered_map<std::shared_ptr<CFGNode>,
+                                   std::unordered_set<std::shared_ptr<CFGNode>>>
+  GetReverseMap() const;
+
  private:
   std::unordered_map<std::shared_ptr<CFGNode>,
                      std::unordered_set<std::shared_ptr<CFGNode>>>

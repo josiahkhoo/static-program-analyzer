@@ -36,3 +36,15 @@ std::unordered_set<int> CFG::GetStatements() {
   }
   return statements;
 }
+
+std::unordered_map<std::shared_ptr<CFGNode>,
+                   std::unordered_set<std::shared_ptr<CFGNode>>>
+CFG::GetForwardMap() const {
+  return forward_map_;
+}
+
+std::unordered_map<std::shared_ptr<CFGNode>,
+                   std::unordered_set<std::shared_ptr<CFGNode>>>
+CFG::GetReverseMap() const {
+  return reverse_map_;
+}
