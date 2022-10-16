@@ -41,4 +41,4 @@ procedure r {
   read x; // Stmt 29 - Read
   read y; // Stmt 30 - Read
   read z; // Stmt 31 - Read
-  read q; } // Stmt 32 - Assign
+  read q; } // Stmt 32 - Read

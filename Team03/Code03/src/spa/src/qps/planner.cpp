@@ -66,6 +66,7 @@ void Planner::CreateAbstractionNodes(
     std::vector<std::shared_ptr<QNode>> &abstraction_nodes,
     std::unordered_map<std::shared_ptr<QNode>, std::shared_ptr<QueryOperation>>
         &abstraction_node_to_query_op_map) const {
+  std::unordered_set<std::shared_ptr<QueryOperation>> seen_single_ops;
   for (const auto &double_syn_op : double_syn_ops) {
     // Find all relevant single syn ops
     std::vector<std::shared_ptr<QueryOperation>> lhs_single_syn_ops,
@@ -75,9 +76,11 @@ void Planner::CreateAbstractionNodes(
       if (single_syn_op->GetSynonym() == lhs_syn) {
         // Find if LHS has single syn op
         lhs_single_syn_ops.push_back(single_syn_op);
+        seen_single_ops.insert(single_syn_op);
       } else if (single_syn_op->GetSynonym() == rhs_syn) {
         // Find if RHS has single syn op
         rhs_single_syn_ops.push_back(single_syn_op);
+        seen_single_ops.insert(single_syn_op);
       }
     }
 
@@ -105,6 +108,18 @@ void Planner::CreateAbstractionNodes(
     abstraction_node_to_query_op_map.insert(
         std::make_pair(abstraction_node, double_syn_op));
   }
+
+  for (const auto &single_syn_op : single_syn_ops) {
+    if (seen_single_ops.find(single_syn_op) == seen_single_ops.end()) {
+      // Create single syn op abstraction node
+      auto abstraction_node = std::make_shared<AbstractionNode>(single_syn_op);
+      // Add to list of abstraction nodes
+      abstraction_nodes.push_back(abstraction_node);
+      // Add to abstraction node -> query operator map
+      abstraction_node_to_query_op_map.insert(
+          std::make_pair(abstraction_node, single_syn_op));
+    }
+  }
 }
 
 void Planner::CreateDisjointJoinNodes(
@@ -126,22 +141,15 @@ void Planner::CreateDisjointJoinNodes(
         // Check if in seen
         if (seen.find(node2) == seen.end()) {
           // If not seen compare node1_op if it's common with node2_op
-          if (node1_op->GetSynonymPair().first ==
-                  node2_op->GetSynonymPair().first ||
-              node1_op->GetSynonymPair().first ==
-                  node2_op->GetSynonymPair().second ||
-              node1_op->GetSynonymPair().second ==
-                  node2_op->GetSynonymPair().first ||
-              node1_op->GetSynonymPair().second ==
-                  node2_op->GetSynonymPair().second) {
+          if (node1_op->IsRelatedTo(node2_op.get())) {
+            // Make current node left hand child of new node
+            // and make node 2 right hand child of new node,
+            // then swap new node and current node
+            auto new_node = std::make_shared<JoinNode>();
+            new_node->SetLeftNode(current_node);
+            new_node->SetRightNode(node2);
+            current_node = new_node;
           }
-          // Make current node left hand child of new node
-          // and make node 2 right hand child of new node,
-          // then swap new node and current node
-          auto new_node = std::make_shared<JoinNode>();
-          new_node->SetLeftNode(current_node);
-          new_node->SetRightNode(node2);
-          current_node = new_node;
         }
       }
       // Add current node to disjoint join nodes after iteration

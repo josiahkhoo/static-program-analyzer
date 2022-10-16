@@ -33,3 +33,23 @@ procedure BOOLEAN;
 Select BOOLEAN
 Example, p, q, s
 5000
+8 - (SUCCESS) Select boolean with int = int
+
+Select BOOLEAN with 555 = 555
+TRUE
+5000
+9 - (SUCCESS) Select boolean with int != int
+
+Select BOOLEAN with 555 = 556
+FALSE
+5000
+10 - (SUCCESS) Select boolean with str == str
+
+Select BOOLEAN with "x" = "x"
+TRUE
+5000
+11 - (SUCCESS) Select boolean with str != str
+
+Select BOOLEAN with "x" = "y"
+FALSE
+5000

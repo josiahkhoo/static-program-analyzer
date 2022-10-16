@@ -283,3 +283,13 @@ variable v; call c;
 Select c with c.procName = v.varName
 10, 16
 5000
+58 - (SUCCESS) If stmt 12 is assign, retrieve all assigns
+assign a, a1;
+Select a1 with a.stmt# = 12
+
+5000
+59 - (SUCCESS) If stmt 11 is assign, retrieve all assigns
+assign a, a1;
+Select a1 with a.stmt# = 11
+1, 2, 3, 5, 7, 8, 9, 11, 15, 17, 18, 19, 21, 22, 24, 26
+5000

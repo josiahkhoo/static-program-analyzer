@@ -142,7 +142,6 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::unordered_set<std::string> QueryAllUses(EntityType type) const override;
   std::unordered_set<std::string> QueryAllUsesBy(
       EntityType type) const override;
-  std::unordered_set<std::string> QueryAllUsesRelations() const override;
   std::unordered_set<std::string> QueryUsesS(int statement_number,
                                              EntityType type) const override;
   std::unordered_set<std::string> QueryUsesSBy(std::string identifier,
@@ -157,7 +156,6 @@ class PKB : public QueryablePkb, public StorablePkb {
       EntityType type) const override;
   std::unordered_set<std::string> QueryAllModifiesBy(
       EntityType type) const override;
-  std::unordered_set<std::string> QueryAllModifiesRelations() const override;
   std::unordered_set<std::string> QueryModifiesS(
       int statement_number) const override;
   std::unordered_set<std::string> QueryModifiesSBy(

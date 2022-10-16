@@ -45,6 +45,8 @@ class QueryOperation {
   [[nodiscard]] virtual IterateSide GetIterateSide(
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const = 0;
+
+  [[nodiscard]] bool IsRelatedTo(QueryOperation *other_op) const;
 };
 
 #endif  // SPA_QUERY_OPERATION_H
