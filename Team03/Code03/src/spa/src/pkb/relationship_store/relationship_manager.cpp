@@ -434,11 +434,13 @@ std::unordered_set<std::string> RelationshipManager::GetPreviousT(
 /// \return Query all assign statements that affects some other statement
 /// Get set of s such that Affects(s, _)
 std::unordered_set<std::string> RelationshipManager::GetAllAffects(
-    std::unordered_set<std::string> assigns) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
     std::unordered_set<std::string> stmts_affecting =
-        GetAffects(assigns, std::stoi(stmt));
+        GetAffects(assigns, calls, reads, std::stoi(stmt));
     if (!stmts_affecting.empty()) {
       for (auto s : stmts_affecting) {
         result.emplace(s);
@@ -453,11 +455,13 @@ std::unordered_set<std::string> RelationshipManager::GetAllAffects(
 /// statement
 /// Get set of s such that Affects(_, s)
 std::unordered_set<std::string> RelationshipManager::GetAllAffectsBy(
-    std::unordered_set<std::string> assigns) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
     std::unordered_set<std::string> stmts_affected =
-        GetAffectsBy(assigns, std::stoi(stmt));
+        GetAffectsBy(assigns, calls, reads, std::stoi(stmt));
     if (!stmts_affected.empty()) {
       for (auto s : stmts_affected) {
         result.emplace(s);
@@ -472,14 +476,17 @@ std::unordered_set<std::string> RelationshipManager::GetAllAffectsBy(
 /// \return Query all assign statements that affects given statement
 /// Get set of s such that Affects(s, statement)
 std::unordered_set<std::string> RelationshipManager::GetAffects(
-    std::unordered_set<std::string> assigns, int statement_number) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int statement_number) const {
   std::unordered_set<int> cfg_path;
   std::vector<int> affecting_list;
   std::unordered_set<std::string> modified_list;
 
   if (assigns.find(std::to_string(statement_number)) != assigns.end()) {
-    GetAffectsDFSTraversal(assigns, statement_number, statement_number,
-                           cfg_path, true, affecting_list, modified_list);
+    GetAffectsDFSTraversal(assigns, calls, reads, statement_number,
+                           statement_number, cfg_path, true, affecting_list,
+                           modified_list);
   }
 
   std::unordered_set<std::string> result;
@@ -494,13 +501,15 @@ std::unordered_set<std::string> RelationshipManager::GetAffects(
 /// \return Query all assign statements that are affected by given statement
 /// Get set of s such that Affects(statement, s)
 std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
-    std::unordered_set<std::string> assigns, int statement_number) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int statement_number) const {
   std::unordered_set<int> cfg_path;
   std::vector<int> affected_list;
 
   if (assigns.find(std::to_string(statement_number)) != assigns.end()) {
-    GetAffectsByDFSTraversal(assigns, statement_number, statement_number,
-                             cfg_path, true, affected_list);
+    GetAffectsByDFSTraversal(assigns, calls, reads, statement_number,
+                             statement_number, cfg_path, true, affected_list);
   }
 
   std::unordered_set<std::string> result;
@@ -515,7 +524,9 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsBy(
 /// \return Query all assign statements that affectsT given statement
 /// Get set of s such that Affects*(s, statement)
 std::unordered_set<std::string> RelationshipManager::GetAffectsT(
-    std::unordered_set<std::string> assigns, int statement_number) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int statement_number) const {
   std::unordered_set<std::string> result;
 
   std::unordered_set<int> stmts_called;
@@ -525,7 +536,7 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsT(
     int stmt = *to_be_called.begin();
     if (stmts_called.find(stmt) == stmts_called.end()) {
       stmts_called.emplace(stmt);
-      for (auto s : GetAffects(assigns, stmt)) {
+      for (auto s : GetAffects(assigns, calls, reads, stmt)) {
         if (stmts_called.find(std::stoi(s)) == stmts_called.end()) {
           to_be_called.emplace(std::stoi(s));
           result.emplace(s);
@@ -542,7 +553,9 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsT(
 /// \return Query all assign statements that are affectedT by given statement
 /// Get set of s such that Affects*(statement, s)
 std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
-    std::unordered_set<std::string> assigns, int statement_number) const {
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int statement_number) const {
   std::unordered_set<std::string> result;
 
   std::unordered_set<int> stmts_called;
@@ -552,7 +565,7 @@ std::unordered_set<std::string> RelationshipManager::GetAffectsTBy(
     int stmt = *to_be_called.begin();
     if (stmts_called.find(stmt) == stmts_called.end()) {
       stmts_called.emplace(stmt);
-      for (auto s : GetAffectsBy(assigns, stmt)) {
+      for (auto s : GetAffectsBy(assigns, calls, reads, stmt)) {
         if (stmts_called.find(std::stoi(s)) == stmts_called.end()) {
           to_be_called.emplace(std::stoi(s));
           result.emplace(s);
@@ -605,8 +618,10 @@ void RelationshipManager::PreviousDFSTraversal(
 }
 
 void RelationshipManager::GetAffectsDFSTraversal(
-    std::unordered_set<std::string> assigns, int end, int current,
-    std::unordered_set<int> &cfg_path, bool is_start,
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int end, int current,
+    std::unordered_set<int> &cfg_visited, bool is_start,
     std::vector<int> &affecting_list,
     std::unordered_set<std::string> &relevant_vars) const {
   std::unordered_set<std::string> used_vars = GetVariablesUsedByStatement(end);
@@ -615,19 +630,23 @@ void RelationshipManager::GetAffectsDFSTraversal(
 
   // Not root node
   if (!is_start) {
-    // Get vars that are modified by current stmt
-    modified_vars = GetVariablesModifiedByStatement(current);
-    for (auto var : modified_vars) {
-      // Check if var modified are not modified later on
-      if (relevant_vars.find(var) == relevant_vars.end()) {
-        // Check if var modified is used in end
-        if (used_vars.find(var) != used_vars.end()) {
-          // Check current is an assign statement
-          if (assigns.find(std::to_string(current)) != assigns.end()) {
-            affecting_list.push_back(current);
+    if (assigns.find(std::to_string(current)) != assigns.end() ||
+        calls.find(std::to_string(current)) != calls.end() ||
+        reads.find(std::to_string(current)) != reads.end()) {
+      // Get vars that are modified by current stmt
+      modified_vars = GetVariablesModifiedByStatement(current);
+      for (auto var : modified_vars) {
+        // Check if var modified are not modified later on
+        if (relevant_vars.find(var) == relevant_vars.end()) {
+          // Check if var modified is used in end
+          if (used_vars.find(var) != used_vars.end()) {
+            // Check current is an assign statement
+            if (assigns.find(std::to_string(current)) != assigns.end()) {
+              affecting_list.push_back(current);
+            }
+            relevant_vars.emplace(var);
+            relevant_modified_vars.emplace(var);
           }
-          relevant_vars.emplace(var);
-          relevant_modified_vars.emplace(var);
         }
       }
     }
@@ -643,48 +662,50 @@ void RelationshipManager::GetAffectsDFSTraversal(
 
   // Add stmt to cfg path if it is not root of DFS
   if (!is_start) {
-    cfg_path.emplace(current);
+    cfg_visited.emplace(current);
   }
 
   // Loop through previous neighbouring stmts
   for (auto neighbour_stmt : cfg_store_.GetBackwardNeighbours(current)) {
     // Neighbour has not been visited
-    if (cfg_path.find(neighbour_stmt) == cfg_path.end()) {
-      GetAffectsDFSTraversal(assigns, end, neighbour_stmt, cfg_path, false,
-                             affecting_list, relevant_vars);
+    if (cfg_visited.find(neighbour_stmt) == cfg_visited.end()) {
+      GetAffectsDFSTraversal(assigns, calls, reads, end, neighbour_stmt,
+                             cfg_visited, false, affecting_list, relevant_vars);
     }
   }
 
   for (auto var : relevant_modified_vars) {
     relevant_vars.erase(var);
   }
-  cfg_path.erase(current);
+  cfg_visited.erase(current);
   return;
 }
 
 void RelationshipManager::GetAffectsByDFSTraversal(
-    std::unordered_set<std::string> assigns, int start, int current,
-    std::unordered_set<int> &cfg_path, bool is_start,
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int start, int current,
+    std::unordered_set<int> &cfg_visited, bool is_start,
     std::vector<int> &affected_list) const {
   if (!is_start) {
     if (IsPossibleAffects(assigns, start, current)) {
       affected_list.push_back(current);
     }
-    if (IsLastModifiedBroken(current, start)) {
+    if (IsLastModifiedBroken(assigns, calls, reads, current, start)) {
       return;
     }
   }
 
   if (!is_start) {
-    cfg_path.emplace(current);
+    cfg_visited.emplace(current);
   }
 
   // Loop through forward neighbouring stmts
   for (auto neighbour_stmt : cfg_store_.GetForwardNeighbours(current)) {
     // Neighbour has not been visited
-    if (cfg_path.find(neighbour_stmt) != cfg_path.end()) {
-      GetAffectsByDFSTraversal(assigns, start, neighbour_stmt, cfg_path, false,
-                               affected_list);
+    if (cfg_visited.find(neighbour_stmt) == cfg_visited.end()) {
+      GetAffectsByDFSTraversal(assigns, calls, reads, start, neighbour_stmt,
+                               cfg_visited, false, affected_list);
     }
   }
   return;
@@ -692,32 +713,36 @@ void RelationshipManager::GetAffectsByDFSTraversal(
 
 bool RelationshipManager::IsPossibleAffects(
     std::unordered_set<std::string> assigns, int stmt1, int stmt2) const {
-  if (assigns.find(std::to_string(stmt1)) == assigns.end()) {
-    return false;
-  }
-  if (assigns.find(std::to_string(stmt2)) == assigns.end()) {
-    return false;
-  }
-  std::unordered_set<std::string> modified_vars_in_stmt1 =
-      GetVariablesModifiedByStatement(stmt1);
-  std::unordered_set<std::string> used_vars_in_stmt2 =
-      GetVariablesUsedByStatement(stmt2);
-  for (auto s : modified_vars_in_stmt1) {
-    if (used_vars_in_stmt2.find(s) != used_vars_in_stmt2.end()) {
-      return true;
+  if (assigns.find(std::to_string(stmt1)) != assigns.end() &&
+      assigns.find(std::to_string(stmt2)) != assigns.end()) {
+    std::unordered_set<std::string> modified_vars_in_stmt1 =
+        GetVariablesModifiedByStatement(stmt1);
+    std::unordered_set<std::string> used_vars_in_stmt2 =
+        GetVariablesUsedByStatement(stmt2);
+    for (auto s : used_vars_in_stmt2) {
+      if (modified_vars_in_stmt1.find(s) != modified_vars_in_stmt1.end()) {
+        return true;
+      }
     }
   }
   return false;
 }
 
-bool RelationshipManager::IsLastModifiedBroken(int current, int start) const {
-  std::unordered_set<std::string> modified_vars_in_start =
-      GetVariablesModifiedByStatement(start);
-  std::unordered_set<std::string> modified_vars_in_current =
-      GetVariablesModifiedByStatement(current);
-  for (auto s : modified_vars_in_start) {
-    if (modified_vars_in_current.find(s) != modified_vars_in_current.end()) {
-      return true;
+bool RelationshipManager::IsLastModifiedBroken(
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int current, int start) const {
+  if (assigns.find(std::to_string(current)) != assigns.end() ||
+      calls.find(std::to_string(current)) != calls.end() ||
+      reads.find(std::to_string(current)) != reads.end()) {
+    std::unordered_set<std::string> modified_vars_in_start =
+        GetVariablesModifiedByStatement(start);
+    std::unordered_set<std::string> modified_vars_in_current =
+        GetVariablesModifiedByStatement(current);
+    for (auto s : modified_vars_in_start) {
+      if (modified_vars_in_current.find(s) != modified_vars_in_current.end()) {
+        return true;
+      }
     }
   }
   return false;

@@ -818,7 +818,9 @@ std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
 std::unordered_set<std::string> PKB::QueryAllAffects() const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAllAffects(assigns);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAllAffects(assigns, calls, reads);
 }
 
 /// QueryAllAffectsBy
@@ -827,7 +829,9 @@ std::unordered_set<std::string> PKB::QueryAllAffects() const {
 std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAllAffectsBy(assigns);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAllAffectsBy(assigns, calls, reads);
 }
 
 /// QueryAffects
@@ -836,7 +840,10 @@ std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
 std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAffects(assigns, statement_number);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAffects(assigns, calls, reads,
+                                          statement_number);
 }
 
 /// QueryAffectsBy
@@ -846,7 +853,10 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
     int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAffectsBy(assigns, statement_number);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAffectsBy(assigns, calls, reads,
+                                            statement_number);
 }
 
 /// QueryAffectsT
@@ -855,7 +865,10 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
 std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAffectsT(assigns, statement_number);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAffectsT(assigns, calls, reads,
+                                           statement_number);
 }
 
 /// QueryAffectsTBy
@@ -865,7 +878,10 @@ std::unordered_set<std::string> PKB::QueryAffectsTBy(
     int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
-  return relationship_manager_.GetAffectsTBy(assigns, statement_number);
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  return relationship_manager_.GetAffectsTBy(assigns, calls, reads,
+                                             statement_number);
 }
 
 /* ====================================
