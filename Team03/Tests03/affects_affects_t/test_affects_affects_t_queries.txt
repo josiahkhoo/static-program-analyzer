@@ -458,3 +458,53 @@ Select s.stmt# such that Affects (s, 56)
 Select BOOLEAN such that Affects* (48, 57)
 TRUE
 5000
+89 - (SEMANTIC ERROR) Does any call statement affects* statement 1
+call c;
+Select BOOLEAN such that Affects*(c, 1)
+SemanticError
+5000
+90 - (SEMANTIC ERROR) Does any read statement affects* statement 1
+read r;
+Select BOOLEAN such that Affects*(r, 1)
+SemanticError
+5000
+91 - (SEMANTIC ERROR) Does any print statement affects* statement 1
+print p;
+Select BOOLEAN such that Affects*(p, 1)
+SemanticError
+5000
+92 - (SEMANTIC ERROR) Does any while statement affects* statement 1
+while w;
+Select BOOLEAN such that Affects*(w, 1)
+SemanticError
+5000
+93 - (SEMANTIC ERROR) Does any if statement affects* statement 1
+if i;
+Select BOOLEAN such that Affects*(i, 1)
+SemanticError
+5000
+94 - (SEMANTIC ERROR) Does statement 1 affects* any call statement
+call c;
+Select BOOLEAN such that Affects*(1, c)
+SemanticError
+5000
+95 - (SEMANTIC ERROR) Does statement 1 affects* any read statement
+read r;
+Select BOOLEAN such that Affects*(1, r)
+SemanticError
+5000
+96 - (SEMANTIC ERROR) Does statement 1 affects* any print statement
+print p;
+Select BOOLEAN such that Affects*(1, p)
+SemanticError
+5000
+97 - (SEMANTIC ERROR) Does statement 1 affects* any while statement
+while w;
+Select BOOLEAN such that Affects*(1, w)
+SemanticError
+5000
+98 - (SEMANTIC ERROR) Does statement 1 affects* any if statement
+if i;
+Select BOOLEAN such that Affects*(1, i)
+SemanticError
+5000
