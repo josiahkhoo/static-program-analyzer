@@ -254,11 +254,6 @@ class QueryablePkbStub : public QueryablePkb {
     return {"QueryAllUsesRelations"};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllModifiesRelations()
-      const override {
-    return {"QueryAllModifiesRelations"};
-  }
-
   [[nodiscard]] std::unordered_set<std::string> QueryAllCallsRelations()
       const override {
     return {"QueryAllCallsRelations"};

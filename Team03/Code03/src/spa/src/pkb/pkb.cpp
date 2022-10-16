@@ -572,12 +572,6 @@ std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
   }
 }
 
-/// QueryAllModifiesRelations
-/// \return todo: find out return what
-std::unordered_set<std::string> PKB::QueryAllModifiesRelations() const {
-  return {};
-}
-
 /// QueryModifiesS
 /// \param statement_number
 /// \return Variables modified in given statement_number

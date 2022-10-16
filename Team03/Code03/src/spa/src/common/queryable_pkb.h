@@ -82,9 +82,6 @@ class QueryablePkb {
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllModifiesBy(
       EntityType type) const = 0;
 
-  [[nodiscard]] virtual std::unordered_set<std::string>
-  QueryAllModifiesRelations() const = 0;
-
   [[nodiscard]] virtual std::unordered_set<std::string> QueryModifiesS(
       int statement_number) const = 0;
 
