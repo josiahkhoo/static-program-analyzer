@@ -25,8 +25,6 @@ class QNode {
 
   [[nodiscard]] std::shared_ptr<QNode> GetRightNode() const;
 
-  [[nodiscard]] bool IsLeaf() const;
-
   virtual QResult Fetch(const QueryablePkb &pkb);
 
  private:
