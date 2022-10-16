@@ -38,7 +38,7 @@ std::unordered_set<std::string> AffectsClause::FetchLhs(
 }
 
 bool AffectsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
-  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs =
         queryable_pkb.QueryAffectsBy(GetLeftHandSide().GetLineNumber());
     if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=
