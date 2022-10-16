@@ -447,10 +447,6 @@ std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
   }
 }
 
-std::unordered_set<std::string> PKB::QueryAllUsesRelations() const {
-  return {};
-}
-
 /// QueryUsesS
 /// \param statement_number
 /// \param type

@@ -69,6 +69,6 @@ bool UsesPClause::IsTrue(const QueryablePkb &queryable_pkb) const {
                               EntityType::PROCEDURE)
                 .empty();
   }
-  // Handle for wildcard wildcard
-  return !queryable_pkb.QueryAllUsesRelations().empty();
+  // Handle for wildcard wildcard, which is invalid
+  return false;
 }
