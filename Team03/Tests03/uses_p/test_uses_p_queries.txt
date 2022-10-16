@@ -13,3 +13,9 @@ variable v;
 Select v such that Uses ("q", v)
 j, x, z
 5000
+4 - (SUCCESS) Retrieve wildcard wildcard - return SemanticError
+procedure p;
+Select p such that Uses (_, _)
+SemanticError
+5000
+
