@@ -55,6 +55,6 @@ Select::SynonymWithMaybeAttribute SynonymSelectParser::ParseSynonym(
     AttributeName attr_name = QueryParserUtil::ExtractAttrName(synonym, tokens);
     return {synonym, attr_name};
   } else {
-    return {synonym};
+    return Select::SynonymWithMaybeAttribute(synonym);
   }
 }

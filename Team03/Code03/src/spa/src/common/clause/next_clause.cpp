@@ -11,7 +11,7 @@ NextClause::NextClause(StatementReference lhs, StatementReference rhs)
 
 [[nodiscard]] std::unordered_set<std::string> NextClause::FetchPossibleLhs(
     std::string rhs, const QueryablePkb &queryable_pkb) const {
-  return queryable_pkb.QueryNextBy(
+  return queryable_pkb.QueryPrevious(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
@@ -28,22 +28,25 @@ std::unordered_set<std::string> NextClause::FetchRhs(
         GetRightHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next(_, s)
-  return queryable_pkb.QueryAllNextBy();
+  return queryable_pkb.QueryAllNext(
+      GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 std::unordered_set<std::string> NextClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next(s, 1)
-    return queryable_pkb.QueryNextBy(GetRightHandSide().GetLineNumber(),
-                                     EntityType::STATEMENT);
+    return queryable_pkb.QueryPrevious(
+        GetRightHandSide().GetLineNumber(),
+        GetLeftHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next(s, _)
-  return queryable_pkb.QueryAllNext();
+  return queryable_pkb.QueryAllPrevious(
+      GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 bool NextClause::IsTrue(const QueryablePkb &queryable_pkb) const {
-  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryNext(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);
     if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=
@@ -60,8 +63,8 @@ bool NextClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   } else if (GetLeftHandSide().IsWildCard() &&
              GetRightHandSide().IsLineNumber()) {
     return !queryable_pkb
-                .QueryNextBy(GetRightHandSide().GetLineNumber(),
-                             EntityType::STATEMENT)
+                .QueryPrevious(GetRightHandSide().GetLineNumber(),
+                               EntityType::STATEMENT)
                 .empty();
   }
   return !queryable_pkb.QueryAllNextRelations().empty();

@@ -307,7 +307,7 @@ std::unordered_set<std::string> RelationshipManager::GetCallsProcedures(
   return calls_store_.GetCallsProcedures(proc_name);
 }
 
-/// GetCallsProcedures
+/// GetCallsTProcedures
 /// \param proc_name
 /// \return Gets all procedures that directly or indirectly call a specified
 /// procedure
@@ -344,31 +344,58 @@ std::unordered_set<std::string> RelationshipManager::GetCallsTByProcedures(
 /// GetAllNext
 /// \return Query all statements that come next to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllNext() const {
-  return {};
+  std::unordered_set<std::string> result;
+  for (auto cfg : cfg_store_.GetCfgSet()) {
+    for (auto cfg_node : cfg->GetReverseMap()) {
+      if (!cfg_node.second.empty()) {
+        result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      }
+    }
+  }
+  return result;
 }
 
 /// GetAllPrevious
 /// \return Query all statements that come previous to some statement
 std::unordered_set<std::string> RelationshipManager::GetAllPrevious() const {
-  return {};
+  std::unordered_set<std::string> result;
+  for (auto cfg : cfg_store_.GetCfgSet()) {
+    for (auto cfg_node : cfg->GetForwardMap()) {
+      if (!cfg_node.second.empty()) {
+        result.emplace(std::to_string(cfg_node.first->GetStatementNumber()));
+      }
+    }
+  }
+  return result;
 }
 
 /// GetNext
 /// \param statement_number statement
-/// \return Query statement(s) that comes next after given statement
+/// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> RelationshipManager::GetNext(
     int statement_number) const {
-  assert(statement_number);
-  return {};
+  std::unordered_set<int> statements =
+      cfg_store_.GetForwardNeighbours(statement_number);
+  std::unordered_set<std::string> result;
+  for (auto s : statements) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
 }
 
 /// GetPrevious
 /// \param statement_number statement
-/// \return Query statement(s) that comes previous before given statement
+/// \return Query statement(s) that immediately comes previous before given
+/// statement
 std::unordered_set<std::string> RelationshipManager::GetPrevious(
     int statement_number) const {
-  assert(statement_number);
-  return {};
+  std::unordered_set<int> statements =
+      cfg_store_.GetBackwardNeighbours(statement_number);
+  std::unordered_set<std::string> result;
+  for (auto s : statements) {
+    result.emplace(std::to_string(s));
+  }
+  return result;
 }
 
 /// GetNextT
