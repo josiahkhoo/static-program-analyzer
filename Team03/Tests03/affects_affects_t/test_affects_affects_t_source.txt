@@ -48,7 +48,7 @@ procedure Sixth {
     a = x; }
 
 procedure Seventh {
-    if ( i != 2 ) {
+    if ( i != 2 ) then {
         x = a + 1; }
     else {
         a = b; } }

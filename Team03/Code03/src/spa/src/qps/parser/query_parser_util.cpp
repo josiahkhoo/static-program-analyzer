@@ -188,7 +188,8 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 /// Verifies statement reference is an Assign synonym
 /// \param stmtRef
 void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
-  if (stmtRef.IsSynonym() && !stmtRef.IsEntityType(ASSIGN)) {
+  if (stmtRef.IsSynonym() &&
+      !(stmtRef.IsEntityType(ASSIGN) || stmtRef.IsEntityType(STATEMENT))) {
     throw SemanticException("Invalid statement reference for Affects clause");
   }
 }

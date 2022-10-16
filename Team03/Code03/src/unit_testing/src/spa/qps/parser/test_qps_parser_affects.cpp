@@ -103,7 +103,9 @@ TEST_CASE("Invalid Affects stmt synonym type", "[QPS Parser]") {
                                 Token(Token::IDENTIFIER, "s1"),
                                 Token(Token::RIGHT_ROUND_BRACKET),
                                 Token(Token::END)};
-  REQUIRE_THROWS(qp.Parse(tokens_));
+  QueryString res = qp.Parse(tokens_);
+  REQUIRE(res.GetSynonyms().size() == 2);
+  REQUIRE(res.GetQueryOperation().size() == 1);
 }
 
 TEST_CASE("Invalid AffectsT stmt synonym type", "[QPS Parser]") {
@@ -125,5 +127,7 @@ TEST_CASE("Invalid AffectsT stmt synonym type", "[QPS Parser]") {
                                 Token(Token::IDENTIFIER, "s1"),
                                 Token(Token::RIGHT_ROUND_BRACKET),
                                 Token(Token::END)};
-  REQUIRE_THROWS(qp.Parse(tokens_));
+  QueryString res = qp.Parse(tokens_);
+  REQUIRE(res.GetSynonyms().size() == 2);
+  REQUIRE(res.GetQueryOperation().size() == 1);
 }
