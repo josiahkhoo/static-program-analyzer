@@ -145,8 +145,8 @@ TEST_CASE("Query Result", "[QResult]") {
                             {"p", "15", "3", "33"}},
                            {syn2, syn3, syn4, syn5});
     QResult expected = QResult({{"3", "y", "13", "1", "31"},
-                                {"3", "y", "13", "1", "35"},
                                 {"2", "y", "13", "1", "31"},
+                                {"3", "y", "13", "1", "35"},
                                 {"2", "y", "13", "1", "35"},
                                 {"4", "x", "14", "2", "32"}},
                                {syn1, syn2, syn3, syn4, syn5});
@@ -167,4 +167,64 @@ TEST_CASE("Query Result", "[QResult]") {
 
     REQUIRE(res == expected);
   }
+}
+
+TEST_CASE("qwe", "[QResults]") {
+  Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
+  Synonym syn2 = Synonym(EntityType::READ, "r");
+  QResult res1 = QResult({{"3"}, {"4"}}, {syn1});
+  QResult res2 = QResult({{"1"}, {"2"}}, {syn2});
+
+  QResult expected =
+      QResult({{"3", "1"}, {"3", "2"}, {"4", "1"}, {"4", "2"}}, {syn1, syn2});
+  QResult res = res1.Join(res2);
+
+  REQUIRE(res == expected);
+}
+
+TEST_CASE("asd") {
+  Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
+  Synonym syn2 = Synonym(EntityType::VARIABLE, "v");
+  Synonym syn3 = Synonym(EntityType::READ, "r");
+  QResult res1 = QResult({{"3", "y"}, {"4", "x"}}, {syn1, syn2});
+  QResult res2 =
+      QResult({{"y", "1"}, {"y", "2"}, {"x", "1"}, {"x", "2"}, {"z", "5"}},
+              {syn2, syn3});
+  QResult expected = QResult(
+      {{"3", "y", "1"}, {"3", "y", "2"}, {"4", "x", "1"}, {"4", "x", "2"}},
+      {syn1, syn2, syn3});
+
+  QResult res = res1.Join(res2);
+
+  REQUIRE(res == expected);
+}
+
+TEST_CASE(
+    "Join 1 non-empty QResult and 1 non-empty QResult that are joined by 3 "
+    "var") {
+  Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
+  Synonym syn2 = Synonym(EntityType::VARIABLE, "v");
+  Synonym syn3 = Synonym(EntityType::READ, "r");
+  Synonym syn4 = Synonym(EntityType::CONSTANT, "cs");
+  Synonym syn5 = Synonym(EntityType::CALL, "c");
+  QResult res1 = QResult({{"3", "y", "13", "1"},
+                          {"2", "y", "13", "1"},
+                          {"4", "x", "14", "2"},
+                          {"5", "z", "15", "3"}},
+                         {syn1, syn2, syn3, syn4});
+  QResult res2 = QResult({{"y", "13", "1", "31"},
+                          {"y", "13", "1", "35"},
+                          {"x", "14", "2", "32"},
+                          {"p", "15", "3", "33"}},
+                         {syn2, syn3, syn4, syn5});
+  QResult expected = QResult({{"3", "y", "13", "1", "31"},
+                              {"3", "y", "13", "1", "35"},
+                              {"2", "y", "13", "1", "31"},
+                              {"2", "y", "13", "1", "35"},
+                              {"4", "x", "14", "2", "32"}},
+                             {syn1, syn2, syn3, syn4, syn5});
+
+  QResult res = res1.Join(res2);
+
+  REQUIRE(res == expected);
 }
