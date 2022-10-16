@@ -1,0 +1,115 @@
+procedure First {
+    x = 0;
+    i = 5;
+    while (i!=0) {
+        x = x + 2*y;
+        call Third;
+        i = i - 1; }
+    if (x==1) then {
+        x = x+1; }
+    else {
+        z = 1; }
+    z = z + x + i;
+    y = z + 2;
+    x = x * y + z; }
+
+procedure Second {
+    x = 1;
+    if ( i != 2 ) then {
+        x = a + 1; }
+    else {
+        a = b; }
+    a = x; }
+
+procedure Third {
+    x = a;
+    call Fifth;
+    v = x; }
+
+procedure Fourth {
+    x = 1;
+    y = 2;
+    z = y;
+    call Fifth;
+    z = x + y + z; }
+
+procedure Fifth {
+    x = 5;
+    t = 4;
+    if ( z > 0 ) then {
+        t = x + 1; }
+    else {
+        y = z + x; }
+    x = t + 1; }
+
+procedure Sixth {
+    x = 1;
+    call Seventh;
+    a = x; }
+
+procedure Seventh {
+    if ( i != 2 ) {
+        x = a + 1; }
+    else {
+        a = b; } }
+
+procedure Eighth {
+    x = a;
+    read x;
+    v = x; }
+
+procedure Ninth {
+    x = a;
+    v = x;
+    z = v; }
+
+procedure Tenth {
+    x = a;
+    print x;
+    v = x; }
+
+procedure Bumblebee {
+    read x;
+    y = 2 * z;
+    call Megatron;
+    z = p - y;
+    if (q!=1) then {
+        z =  x + 24;
+        call Ironhide;
+    } else {
+        while (z>0) {
+            y = x * q - 5;
+            z = z - 1;
+        }
+        y = x + y * z + p * q;
+        call Ironhide;
+    }
+    i = x + j + z;
+    call Barricade;
+}
+
+procedure Megatron {
+    p = x * 10;
+    q = y + y * 10;
+    while (t == 0) {
+        a = 5 * p - 5;
+        print y;
+    }
+    q = p * 5;
+}
+
+procedure Ironhide {
+    i = x * 10;
+    j = x + y * 10;
+    if (i > j) then {
+        read x;
+        call Barricade;
+    } else {
+        y = i + x + y * z;
+    }
+}
+
+procedure Barricade {
+    q = i * x * j + y + p * q;
+    print q;
+}
