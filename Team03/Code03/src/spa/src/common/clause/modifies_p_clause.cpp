@@ -58,6 +58,6 @@ bool ModifiesPClause::IsTrue(const QueryablePkb &queryable_pkb) const {
     return !queryable_pkb.QueryModifiesPBy(GetRightHandSide().GetIdentifier())
                 .empty();
   }
-  // Handle for wildcard wildcard
-  return !queryable_pkb.QueryAllModifiesRelations().empty();
+  // Handle for wildcard wildcard, which is invalid
+  return false;
 }

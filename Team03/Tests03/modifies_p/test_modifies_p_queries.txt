@@ -33,3 +33,8 @@ variable v;
 Select v such that Modifies ("p", v)
 x, i, z
 5000
+8 - (SUCCESS) Retrieve wildcard wildcard - return SemanticError
+procedure p;
+Select p such that Modifies (_, _)
+SemanticError
+5000
