@@ -75,12 +75,13 @@ UsesAbstractionExtractorImpl::Extract(
       uses_s_abstractions.emplace_back(lhs, rhs);
     }
 
-    auto* curr_ptr = const_cast<TNode*> (call_node);
+    auto* curr_ptr = const_cast<TNode*>(call_node);
     while (curr_ptr != nullptr) {
       if (curr_ptr->IsType(TNode::Procedure)) {
         break;
       }
-      if (curr_ptr->IsType(TNode::While) || curr_ptr->IsType(TNode::IfElseThen)) {
+      if (curr_ptr->IsType(TNode::While) ||
+          curr_ptr->IsType(TNode::IfElseThen)) {
         auto lhs2 = t_node_stmt_ent_umap.find(*curr_ptr)->second;
         for (const auto& var : proc_var_map[proc_node]) {
           auto rhs2 = t_node_var_ent_umap.find(*var)->second;
