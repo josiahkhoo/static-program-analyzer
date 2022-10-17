@@ -1,0 +1,115 @@
+procedure First {
+    x = 0;                  // Stmt 1
+    i = 5;                  // Stmt 2
+    while (i!=0) {          // Stmt 3
+        x = x + 2*y;        // Stmt 4
+        call Third;         // Stmt 5
+        i = i - 1; }        // Stmt 6
+    if (x==1) then {        // Stmt 7
+        x = x+1; }          // Stmt 8
+    else {
+        z = 1; }            // Stmt 9
+    z = z + x + i;          // Stmt 10
+    y = z + 2;              // Stmt 11
+    x = x * y + z; }        // Stmt 12
+
+procedure Second {
+    x = 1;                  // Stmt 13
+    if ( i != 2 ) then {    // Stmt 14
+        x = a + 1; }        // Stmt 15
+    else {
+        a = b; }            // Stmt 16
+    a = x; }                // Stmt 17
+
+procedure Third {
+    x = a;                  // Stmt 18
+    call Fifth;             // Stmt 19
+    v = x; }                // Stmt 20
+
+procedure Fourth {
+    x = 1;                  // Stmt 21
+    y = 2;                  // Stmt 22
+    z = y;                  // Stmt 23
+    call Fifth;             // Stmt 24
+    z = x + y + z; }        // Stmt 25
+
+procedure Fifth {
+    x = 5;                  // Stmt 26
+    t = 4;                  // Stmt 27
+    if ( z > 0 ) then {     // Stmt 28
+        t = x + 1; }        // Stmt 29
+    else {
+        y = z + x; }        // Stmt 30
+    x = t + 1; }            // Stmt 31
+
+procedure Sixth {
+    x = 1;                  // Stmt 32
+    call Seventh;           // Stmt 33
+    a = x; }                // Stmt 34
+
+procedure Seventh {
+    if ( i != 2 ) then {    // Stmt 35
+        x = a + 1; }        // Stmt 36
+    else {
+        a = b; } }          // Stmt 37
+
+procedure Eighth {
+    x = a;                  // Stmt 38
+    read x;                 // Stmt 39
+    v = x; }                // Stmt 40
+
+procedure Ninth {
+    x = a;                  // Stmt 41
+    v = x;                  // Stmt 42
+    z = v; }                // Stmt 43
+
+procedure Tenth {
+    x = a;                  // Stmt 44
+    print x;                // Stmt 45
+    v = x; }                // Stmt 46
+
+procedure Bumblebee {
+    read x;                 // Stmt 47
+    y = 2 * z;              // Stmt 48
+    call Megatron;          // Stmt 49
+    z = p - y;              // Stmt 50
+    if (q!=1) then {        // Stmt 51
+        z =  x + 24;        // Stmt 52
+        call Ironhide;      // Stmt 53
+    } else {
+        while (z>0) {       // Stmt 54
+            y = x * q - 5;  // Stmt 55
+            z = z - 1;      // Stmt 56
+        }
+        y = x + y * z + p * q;  // Stmt 57
+        call Ironhide;      // Stmt 58
+    }
+    i = x + j + z;          // Stmt 59
+    call Barricade;         // Stmt 60
+}
+
+procedure Megatron {
+    p = x * 10;             // Stmt 61
+    q = y + y * 10;         // Stmt 62
+    while (t == 0) {        // Stmt 63
+        a = 5 * p - 5;      // Stmt 64
+        print y;            // Stmt 65
+    }
+    q = p * 5;              // Stmt 66
+}
+
+procedure Ironhide {
+    i = x * 10;             // Stmt 67
+    j = x + y * 10;         // Stmt 68
+    if (i > j) then {       // Stmt 69
+        read x;             // Stmt 70
+        call Barricade;     // Stmt 71
+    } else {
+        y = i + x + y * z;  // Stmt 72
+    }
+}
+
+procedure Barricade {
+    q = i * x * j + y + p * q;  // Stmt 73
+    print q;                // Stmt 74
+}

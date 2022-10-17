@@ -16,8 +16,4 @@ std::shared_ptr<QNode> QNode::GetLeftNode() const { return left_node_; }
 
 std::shared_ptr<QNode> QNode::GetRightNode() const { return right_node_; }
 
-bool QNode::IsLeaf() const {
-  return (left_node_ == nullptr && right_node_ == nullptr);
-}
-
 QResult QNode::Fetch(const QueryablePkb &) { return QResult(false); }

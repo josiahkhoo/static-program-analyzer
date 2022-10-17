@@ -38,3 +38,8 @@ variable v;
 Select v such that Uses (20, v)
 
 5000
+9 - (SUCCESS) Retrieve wildcard wildcard - return SemanticError
+stmt s;
+Select s such that Uses (_, _)
+SemanticError
+5000
