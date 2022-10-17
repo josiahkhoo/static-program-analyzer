@@ -28,18 +28,28 @@ variable v;
 Select v such that Modifies (20, v)
 z
 5000
-7 - (SUCCESS) Retrieve all variables modified in statement 13 if - should return from every branch in if
+7 - (SUCCESS) Retrieve all variables modified in statement 23 if - should return from every branch in if
 variable v;
 Select v such that Modifies (23, v)
-x, z
+u, x
 5000
-7 - (SUCCESS) Retrieve all variables modified in statement 4 while - should return from every branch in while (incl. nest)
+8 - (SUCCESS) Retrieve all variables modified in statement 4 while - should return from every branch in while (incl. nest)
 variable v;
 Select v such that Modifies (4, v)
-x, z, y, i
+x, z, y, i, u
 5000
-8 - (SUCCESS) Retrieve all variables modified in statement 12 call - should return all indirect
+9 - (SUCCESS) Retrieve all variables modified in statement 12 call - should return all indirect
 variable v;
 Select v such that Modifies (12, v)
-x, i, z
+x, i, z, u, m
+5000
+10 - (SUCCESS) Retrieve all variables used in stmt 13 if
+variable v;
+Select v such that Modifies (13, v)
+x, i, z, m, u
+5000
+11 - (SUCCESS) Retrieve all variables used in stmt 14 while
+variable v;
+Select v such that Modifies (14, v)
+x, i, u
 5000
