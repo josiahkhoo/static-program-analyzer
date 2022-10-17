@@ -5,9 +5,9 @@
 #include "identifier.h"
 
 Synonym::Synonym(EntityType entity_type, Identifier identifier)
-    : entity_type_(entity_type), identifier_(identifier) {}
+    : entity_type_(entity_type), identifier_(std::move(identifier)) {}
 
-EntityType Synonym::GetEntityType() { return entity_type_; }
+EntityType Synonym::GetEntityType() const { return entity_type_; }
 
 Identifier Synonym::GetIdentifier() const { return identifier_; }
 

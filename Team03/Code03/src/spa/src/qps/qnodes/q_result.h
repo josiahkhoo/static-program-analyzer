@@ -1,9 +1,12 @@
 #ifndef SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_
 #define SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_
 
+#include <unordered_set>
 #include <vector>
 
 #include "common/reference/synonym.h"
+
+typedef std::vector<std::vector<std::string>> RowColumn;
 
 /// The QResult is designed like a table. The synonyms represent the column
 /// names while the rows represent the rows.
@@ -11,22 +14,20 @@
 class QResult {
  public:
   /// Instantiates a QResult that has been queried on before.
-  QResult(std::vector<std::vector<std::string>> rows,
-          std::vector<Synonym> synonyms);
+  QResult(RowColumn rows, std::vector<Synonym> synonyms);
 
   /// Instantiates an empty QResult and set a flag whether it has been queried
   /// on or not.
   explicit QResult(bool has_been_queried);
 
-  [[nodiscard]] std::vector<std::vector<std::string>> GetRows() const;
+  [[nodiscard]] RowColumn GetRows() const;
   [[nodiscard]] std::vector<Synonym> GetSynonyms() const;
   [[nodiscard]] bool HasBeenQueried() const;
 
   /// Get rows operation.
   /// \param synonyms Only retrieve rows from specified synonyms.
   /// \return Unique rows.
-  [[nodiscard]] std::vector<std::vector<std::string>> GetRows(
-      const std::vector<Synonym>& synonyms) const;
+  [[nodiscard]] RowColumn GetRows(const std::vector<Synonym>& synonyms) const;
 
   /// Joins a separate result with the current result and returns a new result.
   /// Things join considers:
@@ -34,7 +35,7 @@ class QResult {
   /// <br/>2. Whether or not there are common synonyms (inclusive merge)
   /// \param other_result Other result to join with.
   /// \return New result set.
-  [[nodiscard]] QResult Join(const QResult& other_result) const;
+  [[nodiscard]] QResult Join(const QResult& other_result);
 
   /// Intersects a separate result with the current result and returns a new
   /// result.
@@ -48,7 +49,7 @@ class QResult {
   bool operator!=(const QResult& rhs) const;
 
  private:
-  std::vector<std::vector<std::string>> rows_;
+  RowColumn rows_;
   std::vector<Synonym> synonyms_;
   bool has_been_queried_;
 
@@ -62,6 +63,19 @@ class QResult {
       return seed;
     }
   };
+
+  [[nodiscard]] int GetSynonymsSize() const;
+  [[nodiscard]] bool IsSynonymsEmpty() const;
+  [[nodiscard]] Synonym GetSynonymAt(int index) const;
+  [[nodiscard]] std::vector<Synonym> GenerateSynonymList(
+      const QResult& other_result,
+      const std::vector<std::pair<int, int>>& common_indexes,
+      const std::unordered_set<int>& common_indexes_second_set) const;
+  [[nodiscard]] RowColumn NestedLoopJoin(
+      const QResult& other_result,
+      const std::vector<std::pair<int, int>>& common_indexes,
+      const std::unordered_set<int>& common_indexes_second_set,
+      int n_cols) const;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_

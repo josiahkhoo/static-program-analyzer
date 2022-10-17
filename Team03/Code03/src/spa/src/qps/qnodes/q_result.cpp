@@ -1,11 +1,12 @@
 #include "q_result.h"
 
+#include <algorithm>
 #include <cassert>
+#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 
-QResult::QResult(std::vector<std::vector<std::string>> rows,
-                 std::vector<Synonym> synonyms)
+QResult::QResult(RowColumn rows, std::vector<Synonym> synonyms)
     : rows_(std::move(rows)),
       synonyms_(std::move(synonyms)),
       has_been_queried_(true) {}
@@ -14,52 +15,84 @@ QResult::QResult(bool has_been_queried) : has_been_queried_(has_been_queried) {}
 
 std::vector<Synonym> QResult::GetSynonyms() const { return synonyms_; }
 
-std::vector<std::vector<std::string>> QResult::GetRows() const { return rows_; }
+int QResult::GetSynonymsSize() const { return (int)synonyms_.size(); }
+
+bool QResult::IsSynonymsEmpty() const { return synonyms_.empty(); }
+
+Synonym QResult::GetSynonymAt(int index) const { return synonyms_.at(index); }
+
+RowColumn QResult::GetRows() const { return rows_; }
 
 bool QResult::HasBeenQueried() const { return has_been_queried_; }
 
-QResult QResult::Join(const QResult& other_result) const {
+QResult QResult::Join(const QResult& other_result) {
   // Return either one if one is empty
-  if (GetSynonyms().empty()) {
+  if (IsSynonymsEmpty()) {
     return other_result;
-  } else if (other_result.GetSynonyms().empty()) {
+  } else if (other_result.IsSynonymsEmpty()) {
     return {GetRows(), GetSynonyms()};
   }
 
   // Get all common synonyms
-  std::vector<std::pair<int, int>> common_indexes;
-  for (int i = 0; i < (int)GetSynonyms().size(); i++) {
-    for (int j = 0; j < (int)other_result.GetSynonyms().size(); j++) {
-      if (GetSynonyms().at(i) == other_result.GetSynonyms().at(j)) {
-        common_indexes.emplace_back(i, j);
-      }
-    }
-  }
-  // Create new merge synonyms list
-  std::vector<Synonym> new_syns;
-  int n_cols = GetSynonyms().size() + other_result.GetSynonyms().size() -
-               common_indexes.size();
-  new_syns.reserve(n_cols);
-  for (const auto& syn : GetSynonyms()) {
-    new_syns.emplace_back(syn);
-  }
-  for (int i = 0; i < (int)other_result.GetSynonyms().size(); i++) {
-    bool match = false;
-    for (auto [_, idx] : common_indexes) {
-      if (idx == i) {
-        // Skip if idx matches (which means included already)
-        match = true;
-        continue;
-      }
-    }
-    if (match) {
-      continue;
-    }
-    new_syns.emplace_back(other_result.GetSynonyms().at(i));
+  // Convert current results into hashmap
+  std::unordered_map<Synonym, int> syn_index_map;
+  for (int i = 0; i < GetSynonymsSize(); i++) {
+    Synonym key = GetSynonymAt(i);
+    syn_index_map.emplace(key, i);
   }
 
-  // Merge join algorithm (can be optimised into sort merge join in the future)
-  std::vector<std::vector<std::string>> new_rows;
+  // List of index pairs where syn is in A and B
+  std::vector<std::pair<int, int>> common_indexes;
+  std::unordered_set<int> common_indexes_second_set;
+  for (int j = 0; j < other_result.GetSynonymsSize(); j++) {
+    Synonym key = other_result.GetSynonymAt(j);
+    if (syn_index_map.count(key)) {
+      int i = syn_index_map.find(key)->second;
+      common_indexes.emplace_back(i, j);
+      common_indexes_second_set.emplace(j);
+    }
+  }
+
+  // Create new merge synonyms list
+  std::vector<Synonym> new_synonyms = GenerateSynonymList(
+      other_result, common_indexes, common_indexes_second_set);
+
+  // Merge Join
+  RowColumn new_rows =
+      NestedLoopJoin(other_result, common_indexes, common_indexes_second_set,
+                     (int)new_synonyms.size());
+
+  return {new_rows, new_synonyms};
+}
+
+std::vector<Synonym> QResult::GenerateSynonymList(
+    const QResult& other_result,
+    const std::vector<std::pair<int, int>>& common_indexes,
+    const std::unordered_set<int>& common_indexes_second_set) const {
+  std::vector<Synonym> new_synonyms;
+  int n_cols = GetSynonymsSize() + other_result.GetSynonymsSize() -
+               (int)common_indexes.size();
+  new_synonyms.reserve(n_cols);
+
+  // Populate new syn with result
+  for (const auto& syn : GetSynonyms()) {
+    new_synonyms.emplace_back(syn);
+  }
+  for (int i = 0; i < other_result.GetSynonymsSize(); i++) {
+    if (common_indexes_second_set.count(i)) {
+      continue;
+    }
+    new_synonyms.emplace_back(other_result.GetSynonymAt(i));
+  }
+  return new_synonyms;
+}
+
+RowColumn QResult::NestedLoopJoin(
+    const QResult& other_result,
+    const std::vector<std::pair<int, int>>& common_indexes,
+    const std::unordered_set<int>& common_indexes_second_set,
+    int n_cols) const {
+  RowColumn new_rows;
   for (auto row1 : GetRows()) {
     for (auto row2 : other_result.GetRows()) {
       // Check if row1 == row2 on common indexes
@@ -82,15 +115,7 @@ QResult QResult::Join(const QResult& other_result) const {
         new_row.emplace_back(entry);
       }
       for (int i = 0; i < (int)row2.size(); i++) {
-        bool match_idx = false;
-        for (auto [_, idx] : common_indexes) {
-          if (idx == i) {
-            // Skip if idx matches (which means included already)
-            match_idx = true;
-            continue;
-          }
-        }
-        if (match_idx) {
+        if (common_indexes_second_set.count(i)) {
           continue;
         }
         new_row.emplace_back(row2.at(i));
@@ -98,16 +123,15 @@ QResult QResult::Join(const QResult& other_result) const {
       new_rows.push_back(new_row);
     }
   }
-  return {new_rows, new_syns};
+  return new_rows;
 }
 
-std::vector<std::vector<std::string>> QResult::GetRows(
-    const std::vector<Synonym>& synonyms) const {
+RowColumn QResult::GetRows(const std::vector<Synonym>& synonyms) const {
   // Retrieve index of synonym table
   std::vector<int> indexes;
   for (const auto& syn : synonyms) {
-    for (int i = 0; i < (int)GetSynonyms().size(); i++) {
-      if (GetSynonyms().at(i) == syn) {
+    for (int i = 0; i < GetSynonymsSize(); i++) {
+      if (GetSynonymAt(i) == syn) {
         indexes.emplace_back(i);
       }
     }
@@ -124,7 +148,7 @@ std::vector<std::vector<std::string>> QResult::GetRows(
     new_rows_set.insert(new_row);
   }
   // Optimise later
-  std::vector<std::vector<std::string>> new_rows;
+  RowColumn new_rows;
   new_rows.reserve(new_rows_set.size());
   for (const auto& new_row : new_rows_set) {
     new_rows.push_back(new_row);
@@ -139,9 +163,9 @@ QResult QResult::Intersect(const QResult& other_result) const {
   }
   std::unordered_set<std::vector<std::string>, VectorHash> set;
   for (const auto& row : GetRows()) {
-    set.insert(row);
+    set.emplace(row);
   }
-  std::vector<std::vector<std::string>> intersections;
+  RowColumn intersections;
   intersections.reserve(std::min(GetRows().size(), GetRows().size()));
   for (const auto& row : other_result.GetRows()) {
     if (set.erase(row) > 0) {  // if n exists in set, then 1 is returned and n
