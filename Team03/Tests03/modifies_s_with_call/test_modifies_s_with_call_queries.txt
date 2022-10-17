@@ -43,13 +43,18 @@ variable v;
 Select v such that Modifies (12, v)
 x, i, z, u, m
 5000
-10 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables used in stmt 13 if
+10 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables modified in stmt 13 if
 variable v;
 Select v such that Modifies (13, v)
 x, i, z, m, u
 5000
-11 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables used in stmt 14 while
+11 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables modified in stmt 14 while
 variable v;
 Select v such that Modifies (14, v)
 x, i, u
+5000
+12 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all statements that modifies "u"
+stmt s;
+Select s such that Modifies (s, "u")
+16, 24, 4, 23, 12, 10, 14, 13, 27
 5000
