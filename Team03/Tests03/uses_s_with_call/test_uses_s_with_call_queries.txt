@@ -26,12 +26,12 @@ x
 6 - (SUCCESS) Retrieve all variables used in stmt 13 if - should return from every branch in if
 variable v;
 Select v such that Uses (13, v)
-x, y, i, z
+x, y, i, z, j
 5000
 7 - (SUCCESS) Retrieve all variables used in stmt 4 while - should return from every branch in while (incl. nest)
 variable v;
 Select v such that Uses (4, v)
-i, x, z
+i, x, z, j
 5000
 8 - (SUCCESS) Retrieve all procedures used in stmt 12 call - should return nothing
 procedure p;
