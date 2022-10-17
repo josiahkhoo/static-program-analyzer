@@ -694,7 +694,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     }
 
     REQUIRE_FALSE(uses_s_abstractions.empty());
-    REQUIRE(uses_s_abstractions.size() == 15);
+    REQUIRE(uses_s_abstractions.size() == 17);
     std::pair<int, std::string> p1 = {1, "y"};
     REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p1) !=
              uses_s_vector.end()));
@@ -738,6 +738,12 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p14) !=
              uses_s_vector.end()));
     std::pair<int, std::string> p15 = {2, "l"};
+    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
+             uses_s_vector.end()));
+    std::pair<int, std::string> p16 = {7, "m"};
+    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
+             uses_s_vector.end()));
+    std::pair<int, std::string> p17 = {7, "y"};
     REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
              uses_s_vector.end()));
 

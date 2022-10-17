@@ -48,7 +48,7 @@ variable v;
 Select v such that Uses (20, v)
 
 5000
-11 - (SUCCESS) Retrieve all variables used in stmt 14 while
+11 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables used in stmt 14 while
 variable v;
 Select v such that Uses (14, v)
 x, i, j, z, y
