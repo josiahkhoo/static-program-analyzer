@@ -74,7 +74,8 @@ class QResult {
   [[nodiscard]] RowColumn NestedLoopJoin(
       const QResult& other_result,
       const std::vector<std::pair<int, int>>& common_indexes,
-      const std::unordered_set<int>& common_indexes_second_set, int n_cols) const;
+      const std::unordered_set<int>& common_indexes_second_set,
+      int n_cols) const;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_
