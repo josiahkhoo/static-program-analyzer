@@ -741,10 +741,10 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
     REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
              uses_s_vector.end()));
     std::pair<int, std::string> p16 = {7, "m"};
-    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
+    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p16) !=
              uses_s_vector.end()));
     std::pair<int, std::string> p17 = {7, "y"};
-    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p15) !=
+    REQUIRE((std::find(uses_s_vector.begin(), uses_s_vector.end(), p17) !=
              uses_s_vector.end()));
 
     std::vector<std::pair<std::string, std::string>> uses_p_vector;
