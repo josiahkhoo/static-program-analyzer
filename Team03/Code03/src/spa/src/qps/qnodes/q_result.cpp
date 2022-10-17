@@ -25,7 +25,7 @@ RowColumn QResult::GetRows() const { return rows_; }
 
 bool QResult::HasBeenQueried() const { return has_been_queried_; }
 
-QResult QResult::Join(const QResult& other_result) const {
+QResult QResult::Join(const QResult& other_result) {
   // Return either one if one is empty
   if (IsSynonymsEmpty()) {
     return other_result;
@@ -54,6 +54,21 @@ QResult QResult::Join(const QResult& other_result) const {
   }
 
   // Create new merge synonyms list
+  std::vector<Synonym> new_synonyms = GenerateSynonymList(
+      other_result, common_indexes, common_indexes_second_set);
+
+  // Merge Join
+  RowColumn new_rows =
+      NestedLoopJoin(other_result, common_indexes, common_indexes_second_set,
+                     (int)new_synonyms.size());
+
+  return {new_rows, new_synonyms};
+}
+
+std::vector<Synonym> QResult::GenerateSynonymList(
+    const QResult& other_result,
+    const std::vector<std::pair<int, int>>& common_indexes,
+    const std::unordered_set<int>& common_indexes_second_set) const {
   std::vector<Synonym> new_synonyms;
   int n_cols = GetSynonymsSize() + other_result.GetSynonymsSize() -
                (int)common_indexes.size();
@@ -69,8 +84,14 @@ QResult QResult::Join(const QResult& other_result) const {
     }
     new_synonyms.emplace_back(other_result.GetSynonymAt(i));
   }
+  return new_synonyms;
+}
 
-  // Nested-Loop Join
+RowColumn QResult::NestedLoopJoin(
+    const QResult& other_result,
+    const std::vector<std::pair<int, int>>& common_indexes,
+    const std::unordered_set<int>& common_indexes_second_set,
+    int n_cols) const {
   RowColumn new_rows;
   for (auto row1 : GetRows()) {
     for (auto row2 : other_result.GetRows()) {
@@ -102,7 +123,7 @@ QResult QResult::Join(const QResult& other_result) const {
       new_rows.push_back(new_row);
     }
   }
-  return {new_rows, new_synonyms};
+  return new_rows;
 }
 
 RowColumn QResult::GetRows(const std::vector<Synonym>& synonyms) const {
