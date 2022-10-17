@@ -40,6 +40,7 @@ QResult QResult::Join(const QResult& other_result) const {
     Synonym key = GetSynonymAt(i);
     syn_index_map.emplace(key, i);
   }
+
   // List of index pairs where syn is in A and B
   std::vector<std::pair<int, int>> common_indexes;
   std::unordered_set<int> common_indexes_second_set;
@@ -68,22 +69,6 @@ QResult QResult::Join(const QResult& other_result) const {
     }
     new_synonyms.emplace_back(other_result.GetSynonymAt(i));
   }
-
-  auto a = GetRows();
-  auto b = other_result.GetRows();
-
-//  std::unordered_set<std::string> hashset;
-//  for (auto [idx1, _] : common_indexes) {
-//    for (auto& i : a) {
-//      hashset.insert(i[idx1]);
-//    }
-//  }
-
-  //  for (auto [idx1, idx2] : common_indexes) {
-  //    auto res = HashJoin(a, idx1, b, idx2, hashset);
-  //    return {res, new_synonyms};
-  //  }
-  auto new_new_rows = HashJoin(a, b, common_indexes);
 
   // Nested-Loop Join
   RowColumn new_rows;
@@ -117,35 +102,7 @@ QResult QResult::Join(const QResult& other_result) const {
       new_rows.push_back(new_row);
     }
   }
-  return {new_new_rows, new_synonyms};
-}
-
-RowColumn QResult::HashJoin(RowColumn a, RowColumn b,
-                            std::vector<std::pair<int, int>> common_indexes) {
-  std::unordered_multimap<std::string, int> hashmap;
-  // hash
-  for (auto item: common_indexes) {
-    for (size_t i = 0; i < a.size(); ++i) {
-      hashmap.insert(std::make_pair(a[i][item.first], i));
-    }
-  }
-
-  // map
-  RowColumn result;
-  for (const auto& i : b) {
-    auto range = hashmap.equal_range(i[common_indexes[0].second]);
-    for (auto it = range.first; it != range.second; ++it) {
-      RowColumn::value_type row;
-      row.insert(row.end(), a[it->second].begin(), a[it->second].end());
-      for (const auto& e : i) {
-        if (!hashmap.count(e)) {
-          row.insert(row.end(), e);
-        }
-      }
-      result.push_back(std::move(row));
-    }
-  }
-  return result;
+  return {new_rows, new_synonyms};
 }
 
 RowColumn QResult::GetRows(const std::vector<Synonym>& synonyms) const {

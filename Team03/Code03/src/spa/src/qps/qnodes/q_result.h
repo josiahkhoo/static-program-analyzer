@@ -67,9 +67,6 @@ class QResult {
   [[nodiscard]] int GetSynonymsSize() const;
   [[nodiscard]] bool IsSynonymsEmpty() const;
   [[nodiscard]] Synonym GetSynonymAt(int index) const;
-  [[nodiscard]] static RowColumn HashJoin(
-      RowColumn a, RowColumn b,
-      std::vector<std::pair<int, int>> common_indexes);
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_

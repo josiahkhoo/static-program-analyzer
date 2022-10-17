@@ -145,8 +145,8 @@ TEST_CASE("Query Result", "[QResult]") {
                             {"p", "15", "3", "33"}},
                            {syn2, syn3, syn4, syn5});
     QResult expected = QResult({{"3", "y", "13", "1", "31"},
-                                {"2", "y", "13", "1", "31"},
                                 {"3", "y", "13", "1", "35"},
+                                {"2", "y", "13", "1", "31"},
                                 {"2", "y", "13", "1", "35"},
                                 {"4", "x", "14", "2", "32"}},
                                {syn1, syn2, syn3, syn4, syn5});
@@ -169,7 +169,7 @@ TEST_CASE("Query Result", "[QResult]") {
   }
 }
 
-TEST_CASE("qwe", "[QResults]") {
+TEST_CASE("INDIVIDUAL - 2 x 2, no common", "[QResults]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
   Synonym syn2 = Synonym(EntityType::READ, "r");
   QResult res1 = QResult({{"3"}, {"4"}}, {syn1});
@@ -182,7 +182,7 @@ TEST_CASE("qwe", "[QResults]") {
   REQUIRE(res == expected);
 }
 
-TEST_CASE("asd") {
+TEST_CASE("INDIVIDUAL - 2 x 2, 1 common", "[QResults]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
   Synonym syn2 = Synonym(EntityType::VARIABLE, "v");
   Synonym syn3 = Synonym(EntityType::READ, "r");
@@ -199,9 +199,7 @@ TEST_CASE("asd") {
   REQUIRE(res == expected);
 }
 
-TEST_CASE(
-    "Join 1 non-empty QResult and 1 non-empty QResult that are joined by 3 "
-    "var") {
+TEST_CASE("INDIVIDUAL - 4 x 4, 3 common", "[QResults]") {
   Synonym syn1 = Synonym(EntityType::ASSIGN, "a");
   Synonym syn2 = Synonym(EntityType::VARIABLE, "v");
   Synonym syn3 = Synonym(EntityType::READ, "r");
