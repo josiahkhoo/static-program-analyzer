@@ -1,17 +1,17 @@
 1 - (SUCCESS) Retrieve all stmts which uses a variable (everything except 20 - read, 21)
 variable v; stmt s;
 Select s such that Uses (s, v)
-4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26
+4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26, 27
 5000
 2 - (SUCCESS) Retrieve all stmts which uses variable y - including upper callers
 stmt s;
 Select s such that Uses (s, "y")
-12, 13, 14, 15
+12, 13, 14, 15, 27
 5000
 3 - (SUCCESS) Retrieve all stmts which uses wildcard (everything except 20 - read, 21)
 stmt s;
 Select s such that Uses (s, _)
-4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26
+4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26, 27
 5000
 4 - (SUCCESS) Retrieve all variables used in stmt 15 assign
 variable v;
@@ -26,12 +26,12 @@ x
 6 - (SUCCESS) Retrieve all variables used in stmt 13 if - should return from every branch in if
 variable v;
 Select v such that Uses (13, v)
-x, y, i, z
+x, y, i, z, j, t
 5000
 7 - (SUCCESS) Retrieve all variables used in stmt 4 while - should return from every branch in while (incl. nest)
 variable v;
 Select v such that Uses (4, v)
-i, x, z
+i, x, z, j, t
 5000
 8 - (SUCCESS) Retrieve all procedures used in stmt 12 call - should return nothing
 procedure p;
@@ -41,10 +41,20 @@ SemanticError
 9 - (SUCCESS) Retrieve all variables used in stmt 12 call - should return all indirect
 variable v;
 Select v such that Uses (12, v)
-x, i, z, y, j
+x, i, z, y, j, t
 5000
 10 - (SUCCESS) Retrieve all variables used in stmt 20 read - should return nothing
 variable v;
 Select v such that Uses (20, v)
 
+5000
+11 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all variables used in stmt 14 while
+variable v;
+Select v such that Uses (14, v)
+x, i, j, z, y, t
+5000
+12 - (SUCCESS) [MILESTONE 2 REGRESSION] Retrieve all statements that uses "t"
+stmt s;
+Select s such that Uses (s, "t")
+16, 24, 4, 23, 12, 10, 14, 13, 27
 5000
