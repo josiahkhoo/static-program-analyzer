@@ -56,13 +56,20 @@ class QResult {
   bool has_been_queried_;
 
   struct VectorHash {
-    size_t operator()(const std::vector<std::string>& v) const {
-      std::hash<std::string> hasher;
-      size_t seed = 0;
-      for (const auto& str : v) {
-        seed ^= hasher(str) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    long long operator()(const std::vector<std::string>& v) const {
+      int prime = 31;
+      long long mod = 1e9 + 9;
+      long long hash = 0;
+      for (auto s : v) {
+        long long string_hash{};
+        long long pow = 1;
+        for (int i = 0; i < (int)s.length(); ++i) {
+          string_hash = (string_hash + (s[i] - '0' + 1) * pow) % mod;
+          pow = (prime * pow) % mod;
+        }
+        hash = (hash + string_hash + (prime * hash) % mod) % mod;
       }
-      return seed;
+      return hash;
     }
   };
 
@@ -82,6 +89,12 @@ class QResult {
       const std::vector<std::pair<int, int>>& common_indexes,
       const std::unordered_set<int>& common_indexes_second_set,
       int n_cols) const;
+  [[nodiscard]] RowColumn HashJoin(
+      const QResult& other_result,
+      const std::vector<std::pair<int, int>>& common_indexes,
+      const std::unordered_set<int>& common_indexes_second_set,
+      int n_cols) const;
+  [[nodiscard]] RowColumn CrossJoin(const QResult& other_result) const;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_Q_RESULT_H_
