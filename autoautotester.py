@@ -9,6 +9,7 @@ parser.add_argument("--autotester_path", help="Autotester path", required=True)
 parser.add_argument("--test_dir", help="Tests folder", required=True)
 parser.add_argument("--os", help="Tests folder", choices=["mac", "windows"], required=True)
 parser.add_argument("--debug", help="Debug flag", choices=["true", "false"], default=False)
+parser.add_argument("--time", help="Show timing information", choices=["true", "false"], default=False)
 args = parser.parse_args()
 
 # Test arguments
@@ -16,6 +17,7 @@ autotester_path: str = args.autotester_path
 test_dir_arg: str = args.test_dir
 os_type: str = args.os
 debug: str = args.debug
+time: str = args.time
 
 # Scripts
 # Comment out tests that you don't want to test
@@ -52,8 +54,8 @@ test_array = (
     ("And and With", "and_with"),
     ("Select attribute", "select_attribute"),
     ("Tuple select", "tuple_select"),
-    ("Next / Next T", "next_next_t")
-    #("Affects / Affects T", "affects_affects_t")
+    ("Next / Next T", "next_next_t"),
+    # ("Affects / Affects T", "affects_affects_t")
 )
 
 overall_passed_test_cases = 0
@@ -86,8 +88,13 @@ for test in test_array:
         passed_test_cases = []
         exception_test_cases = []
         failed_test_cases = []
+        parse_time = None
+        if match := re.search('.*<parsing_time_taken>(.*)</parsing_time_taken>.*', output, re.IGNORECASE):
+            parse_time = match.group(1)
+
         for query in output.split("<query>")[1:]:
             query_id = None
+
             if match := re.search('.*>(.*)</id>.*', query, re.IGNORECASE):
                 query_id = match.group(1)
 
@@ -103,15 +110,19 @@ for test in test_array:
             if match := re.search('.*<correct>(.*)</correct>.*', query, re.IGNORECASE):
                 correct = match.group(1)
 
+            time_taken = None
+            if match := re.search('.*<time_taken>(.*)</time_taken>.*', query, re.IGNORECASE):
+                time_taken = match.group(1)
+
             if "<passed/>" in query:
-                passed_test_cases.append([query_id, comment])
+                passed_test_cases.append([query_id, comment, time_taken])
 
             if "<exception/>" in query:
-                exception_test_cases.append([query_id, comment])
+                exception_test_cases.append([query_id, comment, time_taken])
 
             if "<failed>" in query:
                 failed_test_cases.append(
-                    [query_id, f"{comment} | Expected: '{correct}' | Returned: '{stuans}'"])
+                    [query_id, f"{comment} | Expected: '{correct}' | Returned: '{stuans}'", time_taken])
 
         overall_passed_test_cases += len(passed_test_cases)
         overall_failed_test_cases += len(failed_test_cases) + len(exception_test_cases)
@@ -119,13 +130,18 @@ for test in test_array:
         print(
             f"Passed: {len(passed_test_cases)}, Failed: {len(failed_test_cases) + len(exception_test_cases)}, "
             f"Exceptions (subset of failures): {len(exception_test_cases)}")
+        if time:
+            print(f"Parsing time: {parse_time}")
+            print("\nSuccess cases:")
+            for query_id, passed_comment, time_taken in passed_test_cases:
+                print(f"{query_id} - {passed_comment} | time: {time_taken}")
         if failed_test_cases:
             print("\nFailed cases:")
-            for failed_id, failed_comment in failed_test_cases:
+            for failed_id, failed_comment, _ in failed_test_cases:
                 print(f"{failed_id} - {failed_comment}")
         if exception_test_cases:
             print("\nException cases:")
-            for exception_id, exception_comment in exception_test_cases:
+            for exception_id, exception_comment, _ in exception_test_cases:
                 print(f"{exception_id} - {exception_comment}")
     print("")
 
