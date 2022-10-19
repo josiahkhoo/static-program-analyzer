@@ -59,8 +59,8 @@ QResult QResult::Join(const QResult& other_result) {
 
   // Merge Join
   RowColumn new_rows =
-      NestedLoopJoin(other_result, common_indexes, common_indexes_second_set,
-                     (int)new_synonyms.size());
+      SortMergeJoin(other_result, common_indexes, common_indexes_second_set,
+                    (int)new_synonyms.size());
 
   return {new_rows, new_synonyms};
 }
@@ -87,40 +87,79 @@ std::vector<Synonym> QResult::GenerateSynonymList(
   return new_synonyms;
 }
 
-RowColumn QResult::NestedLoopJoin(
+RowColumn QResult::SortMergeJoin(
     const QResult& other_result,
     const std::vector<std::pair<int, int>>& common_indexes,
     const std::unordered_set<int>& common_indexes_second_set,
     int n_cols) const {
   RowColumn new_rows;
-  for (auto row1 : GetRows()) {
-    for (auto row2 : other_result.GetRows()) {
-      // Check if row1 == row2 on common indexes
-      bool match = true;
-      for (auto [idx1, idx2] : common_indexes) {
-        if (row1[idx1] != row2[idx2]) {
-          match = false;
+  std::vector<int> common_indexes1, common_indexes2;
+  common_indexes1.reserve(common_indexes.size());
+  common_indexes2.reserve(common_indexes.size());
+
+  std::vector<std::pair<int, int>> common_indexes1_pair, common_indexes2_pair;
+  for (auto [idx1, idx2] : common_indexes) {
+    common_indexes1.emplace_back(idx1);
+    common_indexes2.emplace_back(idx2);
+    common_indexes1_pair.emplace_back(idx1, idx1);
+    common_indexes2_pair.emplace_back(idx2, idx2);
+  }
+  RowColumn sorted_rows1 = Sort(common_indexes1).GetRows();
+  RowColumn sorted_rows2 = other_result.Sort(common_indexes2).GetRows();
+  int row1_counter = 0, row2_counter = 0;
+  while ((row1_counter < (int)sorted_rows1.size()) &&
+         (row2_counter < (int)sorted_rows2.size())) {
+    auto row1 = sorted_rows1[row1_counter];
+    auto row2 = sorted_rows2[row2_counter];
+    int comparator = CompareRow(row1, row2, common_indexes);
+    if (comparator == -1) {
+      row1_counter++;
+    } else if (comparator == 1) {
+      row2_counter++;
+    } else {
+      int row1_endpoint = row1_counter, row2_endpoint = row2_counter;
+      while (row1_endpoint < (int)(sorted_rows1.size() - 1)) {
+        // Find cluster of same keys result1
+        row1_endpoint++;
+        if (CompareRow(row1, sorted_rows1[row1_endpoint],
+                       common_indexes1_pair) != 0) {
+          row1_endpoint--;
           break;
         }
       }
-      if (!match) {
-        // Break if it doesn't
-        continue;
-      }
-
-      // Add to new_rows if it reaches here
-      std::vector<std::string> new_row;
-      new_row.reserve(n_cols);
-      for (const auto& entry : row1) {
-        new_row.emplace_back(entry);
-      }
-      for (int i = 0; i < (int)row2.size(); i++) {
-        if (common_indexes_second_set.count(i)) {
-          continue;
+      while (row2_endpoint < (int)(sorted_rows2.size() - 1)) {
+        // Find cluster of same keys for result2
+        row2_endpoint++;
+        if (CompareRow(row2, sorted_rows2[row2_endpoint],
+                       common_indexes2_pair) != 0) {
+          row2_endpoint--;
+          break;
         }
-        new_row.emplace_back(row2.at(i));
       }
-      new_rows.push_back(new_row);
+      for (int row1_join_idx = row1_counter; row1_join_idx < row1_endpoint + 1;
+           row1_join_idx++) {
+        for (int row2_join_idx = row2_counter;
+             row2_join_idx < row2_endpoint + 1; row2_join_idx++) {
+          auto row1_to_be_joined = sorted_rows1[row1_join_idx];
+          auto row2_to_be_joined = sorted_rows2[row2_join_idx];
+          // Add to new_rows if it reaches here
+          // Check for next
+          std::vector<std::string> new_row;
+          new_row.reserve(n_cols);
+          for (const auto& entry : row1_to_be_joined) {
+            new_row.emplace_back(entry);
+          }
+          for (int i = 0; i < (int)row2_to_be_joined.size(); i++) {
+            if (common_indexes_second_set.count(i)) {
+              continue;
+            }
+            new_row.emplace_back(row2_to_be_joined.at(i));
+          }
+          new_rows.push_back(new_row);
+        }
+      }
+      row1_counter = row1_endpoint + 1;
+      row2_counter = row2_endpoint + 1;
     }
   }
   return new_rows;
@@ -181,3 +220,32 @@ bool QResult::operator==(const QResult& rhs) const {
 }
 
 bool QResult::operator!=(const QResult& rhs) const { return !(rhs == *this); }
+
+QResult QResult::Sort(const std::vector<int>& key_indexes) const {
+  auto sorted_rows = RowColumn(rows_);
+  std::vector<std::pair<int, int>> key_indexes_pair;
+  key_indexes_pair.reserve(key_indexes.size());
+  for (auto idx : key_indexes) {
+    key_indexes_pair.emplace_back(idx, idx);
+  }
+  std::sort(sorted_rows.begin(), sorted_rows.end(),
+            [&key_indexes_pair, this](const auto& a, const auto& b) {
+              return this->CompareRow(a, b, key_indexes_pair) == -1;
+            });
+  return {sorted_rows, synonyms_};
+}
+
+int QResult::CompareRow(
+    const std::vector<std::string>& row1, const std::vector<std::string>& row2,
+    const std::vector<std::pair<int, int>>& key_indexes) const {
+  for (auto [idx1, idx2] : key_indexes) {
+    // Checks if they are not equivalent
+    if (row1[idx1] < row2[idx2]) {
+      return -1;
+    } else if (row1[idx1] > row2[idx2]) {
+      return 1;
+    }
+  }
+  // When all indexes are equal
+  return 0;
+}

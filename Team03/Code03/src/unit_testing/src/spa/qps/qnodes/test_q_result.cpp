@@ -118,7 +118,12 @@ TEST_CASE("Query Result", "[QResult]") {
         QResult({{"y", "1"}, {"y", "2"}, {"x", "1"}, {"x", "2"}, {"z", "5"}},
                 {syn2, syn3});
     QResult expected = QResult(
-        {{"3", "y", "1"}, {"3", "y", "2"}, {"4", "x", "1"}, {"4", "x", "2"}},
+        {
+            {"4", "x", "1"},
+            {"4", "x", "2"},
+            {"3", "y", "1"},
+            {"3", "y", "2"},
+        },
         {syn1, syn2, syn3});
 
     QResult res = res1.Join(res2);
@@ -144,12 +149,15 @@ TEST_CASE("Query Result", "[QResult]") {
                             {"x", "14", "2", "32"},
                             {"p", "15", "3", "33"}},
                            {syn2, syn3, syn4, syn5});
-    QResult expected = QResult({{"3", "y", "13", "1", "31"},
-                                {"3", "y", "13", "1", "35"},
-                                {"2", "y", "13", "1", "31"},
-                                {"2", "y", "13", "1", "35"},
-                                {"4", "x", "14", "2", "32"}},
-                               {syn1, syn2, syn3, syn4, syn5});
+    QResult expected = QResult(
+        {
+            {"4", "x", "14", "2", "32"},
+            {"3", "y", "13", "1", "31"},
+            {"3", "y", "13", "1", "35"},
+            {"2", "y", "13", "1", "31"},
+            {"2", "y", "13", "1", "35"},
+        },
+        {syn1, syn2, syn3, syn4, syn5});
 
     QResult res = res1.Join(res2);
 
@@ -191,7 +199,12 @@ TEST_CASE("INDIVIDUAL - 2 x 2, 1 common", "[QResults]") {
       QResult({{"y", "1"}, {"y", "2"}, {"x", "1"}, {"x", "2"}, {"z", "5"}},
               {syn2, syn3});
   QResult expected = QResult(
-      {{"3", "y", "1"}, {"3", "y", "2"}, {"4", "x", "1"}, {"4", "x", "2"}},
+      {
+          {"4", "x", "1"},
+          {"4", "x", "2"},
+          {"3", "y", "1"},
+          {"3", "y", "2"},
+      },
       {syn1, syn2, syn3});
 
   QResult res = res1.Join(res2);
@@ -215,12 +228,15 @@ TEST_CASE("INDIVIDUAL - 4 x 4, 3 common", "[QResults]") {
                           {"x", "14", "2", "32"},
                           {"p", "15", "3", "33"}},
                          {syn2, syn3, syn4, syn5});
-  QResult expected = QResult({{"3", "y", "13", "1", "31"},
-                              {"3", "y", "13", "1", "35"},
-                              {"2", "y", "13", "1", "31"},
-                              {"2", "y", "13", "1", "35"},
-                              {"4", "x", "14", "2", "32"}},
-                             {syn1, syn2, syn3, syn4, syn5});
+  QResult expected = QResult(
+      {
+          {"4", "x", "14", "2", "32"},
+          {"3", "y", "13", "1", "31"},
+          {"3", "y", "13", "1", "35"},
+          {"2", "y", "13", "1", "31"},
+          {"2", "y", "13", "1", "35"},
+      },
+      {syn1, syn2, syn3, syn4, syn5});
 
   QResult res = res1.Join(res2);
 

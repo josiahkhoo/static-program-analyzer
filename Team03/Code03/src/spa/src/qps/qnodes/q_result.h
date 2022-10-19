@@ -44,6 +44,8 @@ class QResult {
   /// \return New result set.
   [[nodiscard]] QResult Intersect(const QResult& other_result) const;
 
+  [[nodiscard]] QResult Sort(const std::vector<int>& key_indexes) const;
+
   bool operator==(const QResult& rhs) const;
 
   bool operator!=(const QResult& rhs) const;
@@ -67,11 +69,15 @@ class QResult {
   [[nodiscard]] int GetSynonymsSize() const;
   [[nodiscard]] bool IsSynonymsEmpty() const;
   [[nodiscard]] Synonym GetSynonymAt(int index) const;
+  [[nodiscard]] int CompareRow(
+      const std::vector<std::string>& row1,
+      const std::vector<std::string>& row2,
+      const std::vector<std::pair<int, int>>& key_indexes) const;
   [[nodiscard]] std::vector<Synonym> GenerateSynonymList(
       const QResult& other_result,
       const std::vector<std::pair<int, int>>& common_indexes,
       const std::unordered_set<int>& common_indexes_second_set) const;
-  [[nodiscard]] RowColumn NestedLoopJoin(
+  [[nodiscard]] RowColumn SortMergeJoin(
       const QResult& other_result,
       const std::vector<std::pair<int, int>>& common_indexes,
       const std::unordered_set<int>& common_indexes_second_set,
