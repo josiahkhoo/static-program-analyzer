@@ -1,0 +1,363 @@
+procedure A {                                                                   
+    z = 1 % 2 / 3 * 4 - 5 + 6 / z;                                              
+    a = a + b - c * d / e;                                                      
+    b = b + c - d * e / a;                                                      
+    c = c + d - e * a / b;                                                      
+    d = d + e - a * b / c;                                                      
+    e = e + a - b * c / d;                                                      
+    read r;                                                                     
+    print p;                                                                    
+    call B;                                                                     
+    if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {               
+        a = a + b - c * d / e;                                                  
+        b = b + c - d * e / a;                                                  
+        c = c + d - e * a / b;                                                  
+        d = d + e - a * b / c;                                                  
+        e = e + a - b * c / d;                                                  
+        read r;                                                                 
+        print p;                                                                
+        call B;                                                                 
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           
+            a = a + b - c * d / e;                                              
+            b = b + c - d * e / a;                                              
+            c = c + d - e * a / b;                                              
+            d = d + e - a * b / c;                                              
+            e = e + a - b * c / d;                                              
+            read r;                                                             
+            print p;                                                            
+            call B;                                                             
+            while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {         
+                a = a + b - c * d / e;                                          
+                b = b + c - d * e / a;                                          
+                c = c + d - e * a / b;                                          
+                d = d + e - a * b / c;                                          
+                e = e + a - b * c / d;                                          
+                read r;                                                         
+                print p;                                                        
+                call B;                                                         
+            }
+            a = a + b - c * d / e;                                              
+            b = b + c - d * e / a;                                              
+            c = c + d - e * a / b;                                              
+            d = d + e - a * b / c;                                              
+            e = e + a - b * c / d;                                              
+            read r;                                                             
+            print p;                                                            
+            call B;                                                             
+        } else {
+            a = a + b - c * d / e;                                              
+            b = b + c - d * e / a;                                              
+            c = c + d - e * a / b;                                              
+            d = d + e - a * b / c;                                              
+            e = e + a - b * c / d;                                              
+            read r;                                                             
+            print p;                                                            
+            call B;                                                             
+        }
+        a = a + b - c * d / e;                                                  
+        b = b + c - d * e / a;                                                  
+        c = c + d - e * a / b;                                                  
+        d = d + e - a * b / c;                                                  
+        e = e + a - b * c / d;                                                  
+        read r;                                                                 
+        print p;                                                                
+        call B;                                                                 
+    } else {
+        z = 1 % 2 / 3 * 4 - 5 + 6;                                              
+        a = a + b - c * d / e;                                                  
+        b = b + c - d * e / a;                                                  
+        c = c + d - e * a / b;                                                  
+        d = d + e - a * b / c;                                                  
+        e = e + a - b * c / d;                                                  
+        read r;                                                                 
+        print p;                                                                
+        call B;                                                                 
+    }
+    a = a + b - c * d / e;                                                      
+    b = b + c - d * e / a;                                                      
+    c = c + d - e * a / b;                                                      
+    d = d + e - a * b / c;                                                      
+    e = e + a - b * c / d;                                                      
+    read r;                                                                     
+    print p;                                                                    
+    call B;                                                                     
+    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {                 
+        a = a + b - c * d / e;                                                  
+        b = b + c - d * e / a;                                                  
+        c = c + d - e * a / b;                                                  
+        d = d + e - a * b / c;                                                  
+        e = e + a - b * c / d;                                                  
+        read r;                                                                 
+        print p;                                                                
+        call B;                                                                 
+        while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {             
+            a = a + b - c * d / e;                                              
+            b = b + c - d * e / a;                                              
+            c = c + d - e * a / b;                                              
+            d = d + e - a * b / c;                                              
+            e = e + a - b * c / d;                                              
+            read r;                                                             
+            print p;                                                            
+            call B;                                                             
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       
+                a = a + b - c * d / e;                                          
+                b = b + c - d * e / a;                                          
+                c = c + d - e * a / b;                                          
+                d = d + e - a * b / c;                                          
+                e = e + a - b * c / d;                                          
+                read r;                                                         
+                print p;                                                        
+                call B;                                                         
+            } else {
+                a = a + b - c * d / e;                                          
+                b = b + c - d * e / a;                                          
+                c = c + d - e * a / b;                                          
+                d = d + e - a * b / c;                                          
+                e = e + a - b * c / d;                                          
+                read r;                                                         
+                print p;                                                        
+                call B;                                                         
+            }
+            a = a + b - c * d / e;                                              
+            b = b + c - d * e / a;                                              
+            c = c + d - e * a / b;                                              
+            d = d + e - a * b / c;                                              
+            e = e + a - b * c / d;                                              
+            read r;                                                             
+            print p;                                                            
+            call B;                                                             
+        }
+        a = a + b - c * d / e;                                                  
+        b = b + c - d * e / a;                                                  
+        c = c + d - e * a / b;                                                  
+        d = d + e - a * b / c;                                                  
+        e = e + a - b * c / d;                                                  
+        read r;                                                                 
+        print p;                                                                
+        call B;                                                                 
+    }
+    z = 1 % 2 / 3 * 4 - 5 + 6 / z;                                              
+    a = a + b - c * d / e;                                                      
+    b = b + c - d * e / a;                                                      
+    c = c + d - e * a / b;                                                      
+    d = d + e - a * b / c;                                                      
+    e = e + a - b * c / d;                                                      
+    read r;                                                                     
+    print p;                                                                    
+    call B;                                                                     
+}
+procedure B {
+    x = 1 % 2 / 3 * 4 - 5 + 6 / x;                                              
+    f = f + g - h * i / j;                                                      
+    g = g + h - i * j / f;                                                      
+    h = h + i - j * f / g;                                                      
+    i = i + j - f * g / h;                                                      
+    j = j + f - g * h / i;                                                      
+    call C;                                                                     
+    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {                 
+        f = f + g - h * i / j;                                                  
+        g = g + h - i * j / f;                                                  
+        h = h + i - j * f / g;                                                  
+        i = i + j - f * g / h;                                                  
+        j = j + f - g * h / i;                                                  
+        call C;                                                                         
+        while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {             
+            f = f + g - h * i / j;                                              
+            g = g + h - i * j / f;                                              
+            h = h + i - j * f / g;                                              
+            i = i + j - f * g / h;                                              
+            j = j + f - g * h / i;                                              
+            call C;                                                             
+            while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {         
+                f = f + g - h * i / j;                                          
+                g = g + h - i * j / f;                                          
+                h = h + i - j * f / g;                                          
+                i = i + j - f * g / h;                                          
+                j = j + f - g * h / i;                                          
+                call C;                                                         
+                while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {     
+                    f = f + g - h * i / j;                                      
+                    g = g + h - i * j / f;                                      
+                    h = h + i - j * f / g;                                      
+                    i = i + j - f * g / h;                                      
+                    j = j + f - g * h / i;                                      
+                    call C;                                                     
+                    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) { 
+                        f = f + g - h * i / j;                                  
+                        g = g + h - i * j / f;                                  
+                        h = h + i - j * f / g;                                  
+                        i = i + j - f * g / h;                                  
+                        j = j + f - g * h / i;                                  
+                        call C;                                                 
+                    }
+                    f = f + g - h * i / j;                                      
+                    g = g + h - i * j / f;                                      
+                    h = h + i - j * f / g;                                      
+                    i = i + j - f * g / h;                                      
+                    j = j + f - g * h / i;                                      
+                    call C;                                                     
+                }
+                f = f + g - h * i / j;                                          
+                g = g + h - i * j / f;                                          
+                h = h + i - j * f / g;                                          
+                i = i + j - f * g / h;                                          
+                j = j + f - g * h / i;                                          
+                call C;                                                         
+            }
+            f = f + g - h * i / j;                                              
+            g = g + h - i * j / f;                                              
+            h = h + i - j * f / g;                                              
+            i = i + j - f * g / h;                                              
+            j = j + f - g * h / i;                                              
+            call C;                                                             
+        }
+        f = f + g - h * i / j;                                                  
+        g = g + h - i * j / f;                                                  
+        h = h + i - j * f / g;                                                  
+        i = i + j - f * g / h;                                                  
+        j = j + f - g * h / i;                                                  
+        call C;                                                                 
+    }
+    x = 1 % 2 / 3 * 4 - 5 + 6 / x;                                              
+    f = f + g - h * i / j;                                                      
+    g = g + h - i * j / f;                                                      
+    h = h + i - j * f / g;                                                      
+    i = i + j - f * g / h;                                                      
+    j = j + f - g * h / i;                                                      
+    call C;                                                                     
+}
+procedure C {
+    y = 1 % 2 / 3 * 4 - 5 + 6 / y;                                              
+    k = k + l - m * n / o;                                                      
+    l = l + m - n * o / k;                                                      
+    m = m + n - o * k / l;                                                      
+    n = n + o - k * l / m;                                                      
+    o = o + k - l * m / n;                                                      
+    if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {               
+        k = k + l - m * n / o;                                                  
+        l = l + m - n * o / k;                                                  
+        m = m + n - o * k / l;                                                  
+        n = n + o - k * l / m;                                                  
+        o = o + k - l * m / n;                                                  
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            } else {
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            }
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+        } else {
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            } else {
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            }
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+        }
+        k = k + l - m * n / o;                                                  
+        l = l + m - n * o / k;                                                  
+        m = m + n - o * k / l;                                                  
+        n = n + o - k * l / m;                                                  
+        o = o + k - l * m / n;                                                  
+    } else {
+        k = k + l - m * n / o;                                                  
+        l = l + m - n * o / k;                                                  
+        m = m + n - o * k / l;                                                  
+        n = n + o - k * l / m;                                                  
+        o = o + k - l * m / n;                                                  
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            } else {
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            }
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+        } else {
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            } else {
+                k = k + l - m * n / o;                                          
+                l = l + m - n * o / k;                                          
+                m = m + n - o * k / l;                                          
+                n = n + o - k * l / m;                                          
+                o = o + k - l * m / n;                                          
+            }
+            k = k + l - m * n / o;                                              
+            l = l + m - n * o / k;                                              
+            m = m + n - o * k / l;                                              
+            n = n + o - k * l / m;                                              
+            o = o + k - l * m / n;                                              
+        }
+        k = k + l - m * n / o;                                                  
+        l = l + m - n * o / k;                                                  
+        m = m + n - o * k / l;                                                  
+        n = n + o - k * l / m;                                                  
+        o = o + k - l * m / n;                                                  
+    }
+    y = 1 % 2 / 3 * 4 - 5 + 6 / y;                                              
+    k = k + l - m * n / o;                                                      
+    l = l + m - n * o / k;                                                      
+    m = m + n - o * k / l;                                                      
+    n = n + o - k * l / m;                                                      
+    o = o + k - l * m / n;                                                      
+}

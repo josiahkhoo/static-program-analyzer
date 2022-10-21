@@ -1,0 +1,363 @@
+procedure A {
+    z = 1 % 2 / 3 * 4 - 5 + 6 / z;                                              //Stmt 1
+    a = a + b - c * d / e;                                                      //Stmt 2
+    b = b + c - d * e / a;                                                      //Stmt 3
+    c = c + d - e * a / b;                                                      //Stmt 4
+    d = d + e - a * b / c;                                                      //Stmt 5
+    e = e + a - b * c / d;                                                      //Stmt 6
+    read r;                                                                     //Stmt 7
+    print p;                                                                    //Stmt 8
+    call B;                                                                     //Stmt 9
+    if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {               //Stmt 10
+        a = a + b - c * d / e;                                                  //Stmt 11
+        b = b + c - d * e / a;                                                  //Stmt 12
+        c = c + d - e * a / b;                                                  //Stmt 13
+        d = d + e - a * b / c;                                                  //Stmt 14
+        e = e + a - b * c / d;                                                  //Stmt 15
+        read r;                                                                 //Stmt 16
+        print p;                                                                //Stmt 17
+        call B;                                                                 //Stmt 18
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           //Stmt 19
+            a = a + b - c * d / e;                                              //Stmt 20
+            b = b + c - d * e / a;                                              //Stmt 21
+            c = c + d - e * a / b;                                              //Stmt 22
+            d = d + e - a * b / c;                                              //Stmt 23
+            e = e + a - b * c / d;                                              //Stmt 24
+            read r;                                                             //Stmt 25
+            print p;                                                            //Stmt 26
+            call B;                                                             //Stmt 27
+            while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {         //Stmt 28
+                a = a + b - c * d / e;                                          //Stmt 29
+                b = b + c - d * e / a;                                          //Stmt 30
+                c = c + d - e * a / b;                                          //Stmt 31
+                d = d + e - a * b / c;                                          //Stmt 32
+                e = e + a - b * c / d;                                          //Stmt 33
+                read r;                                                         //Stmt 34
+                print p;                                                        //Stmt 35
+                call B;                                                         //Stmt 36
+            }
+            a = a + b - c * d / e;                                              //Stmt 37
+            b = b + c - d * e / a;                                              //Stmt 38
+            c = c + d - e * a / b;                                              //Stmt 39
+            d = d + e - a * b / c;                                              //Stmt 40
+            e = e + a - b * c / d;                                              //Stmt 41
+            read r;                                                             //Stmt 42
+            print p;                                                            //Stmt 43
+            call B;                                                             //Stmt 44
+        } else {
+            a = a + b - c * d / e;                                              //Stmt 45
+            b = b + c - d * e / a;                                              //Stmt 46
+            c = c + d - e * a / b;                                              //Stmt 47
+            d = d + e - a * b / c;                                              //Stmt 48
+            e = e + a - b * c / d;                                              //Stmt 49
+            read r;                                                             //Stmt 50
+            print p;                                                            //Stmt 51
+            call B;                                                             //Stmt 52
+        }
+        a = a + b - c * d / e;                                                  //Stmt 53
+        b = b + c - d * e / a;                                                  //Stmt 54
+        c = c + d - e * a / b;                                                  //Stmt 55
+        d = d + e - a * b / c;                                                  //Stmt 56
+        e = e + a - b * c / d;                                                  //Stmt 57
+        read r;                                                                 //Stmt 58
+        print p;                                                                //Stmt 59
+        call B;                                                                 //Stmt 60
+    } else {
+        z = 1 % 2 / 3 * 4 - 5 + 6;                                              //Stmt 61
+        a = a + b - c * d / e;                                                  //Stmt 62
+        b = b + c - d * e / a;                                                  //Stmt 63
+        c = c + d - e * a / b;                                                  //Stmt 64
+        d = d + e - a * b / c;                                                  //Stmt 65
+        e = e + a - b * c / d;                                                  //Stmt 66
+        read r;                                                                 //Stmt 67
+        print p;                                                                //Stmt 68
+        call B;                                                                 //Stmt 69
+    }
+    a = a + b - c * d / e;                                                      //Stmt 70
+    b = b + c - d * e / a;                                                      //Stmt 71
+    c = c + d - e * a / b;                                                      //Stmt 72
+    d = d + e - a * b / c;                                                      //Stmt 73
+    e = e + a - b * c / d;                                                      //Stmt 74
+    read r;                                                                     //Stmt 75
+    print p;                                                                    //Stmt 76
+    call B;                                                                     //Stmt 77
+    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {                 //Stmt 78
+        a = a + b - c * d / e;                                                  //Stmt 79
+        b = b + c - d * e / a;                                                  //Stmt 80
+        c = c + d - e * a / b;                                                  //Stmt 81
+        d = d + e - a * b / c;                                                  //Stmt 82
+        e = e + a - b * c / d;                                                  //Stmt 83
+        read r;                                                                 //Stmt 84
+        print p;                                                                //Stmt 85
+        call B;                                                                 //Stmt 86
+        while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {             //Stmt 87
+            a = a + b - c * d / e;                                              //Stmt 88
+            b = b + c - d * e / a;                                              //Stmt 89
+            c = c + d - e * a / b;                                              //Stmt 90
+            d = d + e - a * b / c;                                              //Stmt 91
+            e = e + a - b * c / d;                                              //Stmt 92
+            read r;                                                             //Stmt 93
+            print p;                                                            //Stmt 94
+            call B;                                                             //Stmt 95
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       //Stmt 96
+                a = a + b - c * d / e;                                          //Stmt 97
+                b = b + c - d * e / a;                                          //Stmt 98
+                c = c + d - e * a / b;                                          //Stmt 99
+                d = d + e - a * b / c;                                          //Stmt 100
+                e = e + a - b * c / d;                                          //Stmt 101
+                read r;                                                         //Stmt 102
+                print p;                                                        //Stmt 103
+                call B;                                                         //Stmt 104
+            } else {
+                a = a + b - c * d / e;                                          //Stmt 105
+                b = b + c - d * e / a;                                          //Stmt 106
+                c = c + d - e * a / b;                                          //Stmt 107
+                d = d + e - a * b / c;                                          //Stmt 108
+                e = e + a - b * c / d;                                          //Stmt 109
+                read r;                                                         //Stmt 110
+                print p;                                                        //Stmt 111
+                call B;                                                         //Stmt 112
+            }
+            a = a + b - c * d / e;                                              //Stmt 113
+            b = b + c - d * e / a;                                              //Stmt 114
+            c = c + d - e * a / b;                                              //Stmt 115
+            d = d + e - a * b / c;                                              //Stmt 116
+            e = e + a - b * c / d;                                              //Stmt 117
+            read r;                                                             //Stmt 118
+            print p;                                                            //Stmt 119
+            call B;                                                             //Stmt 120
+        }
+        a = a + b - c * d / e;                                                  //Stmt 121
+        b = b + c - d * e / a;                                                  //Stmt 122
+        c = c + d - e * a / b;                                                  //Stmt 123
+        d = d + e - a * b / c;                                                  //Stmt 124
+        e = e + a - b * c / d;                                                  //Stmt 125
+        read r;                                                                 //Stmt 126
+        print p;                                                                //Stmt 127
+        call B;                                                                 //Stmt 128
+    }
+    z = 1 % 2 / 3 * 4 - 5 + 6 / z;                                              //Stmt 129
+    a = a + b - c * d / e;                                                      //Stmt 130
+    b = b + c - d * e / a;                                                      //Stmt 131
+    c = c + d - e * a / b;                                                      //Stmt 132
+    d = d + e - a * b / c;                                                      //Stmt 133
+    e = e + a - b * c / d;                                                      //Stmt 134
+    read r;                                                                     //Stmt 135
+    print p;                                                                    //Stmt 136
+    call B;                                                                     //Stmt 137
+}
+procedure B {
+    x = 1 % 2 / 3 * 4 - 5 + 6 / x;                                              //Stmt 138
+    f = f + g - h * i / j;                                                      //Stmt 139
+    g = g + h - i * j / f;                                                      //Stmt 140
+    h = h + i - j * f / g;                                                      //Stmt 141
+    i = i + j - f * g / h;                                                      //Stmt 142
+    j = j + f - g * h / i;                                                      //Stmt 143
+    call C;                                                                     //Stmt 144
+    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {                 //Stmt 145
+        f = f + g - h * i / j;                                                  //Stmt 146
+        g = g + h - i * j / f;                                                  //Stmt 147
+        h = h + i - j * f / g;                                                  //Stmt 148
+        i = i + j - f * g / h;                                                  //Stmt 149
+        j = j + f - g * h / i;                                                  //Stmt 150
+        call C;                                                                 //Stmt 151
+        while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {             //Stmt 152
+            f = f + g - h * i / j;                                              //Stmt 153
+            g = g + h - i * j / f;                                              //Stmt 154
+            h = h + i - j * f / g;                                              //Stmt 155
+            i = i + j - f * g / h;                                              //Stmt 156
+            j = j + f - g * h / i;                                              //Stmt 157
+            call C;                                                             //Stmt 158
+            while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {         //Stmt 159
+                f = f + g - h * i / j;                                          //Stmt 160
+                g = g + h - i * j / f;                                          //Stmt 161
+                h = h + i - j * f / g;                                          //Stmt 162
+                i = i + j - f * g / h;                                          //Stmt 163
+                j = j + f - g * h / i;                                          //Stmt 164
+                call C;                                                         //Stmt 165
+                while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) {     //Stmt 166
+                    f = f + g - h * i / j;                                      //Stmt 167
+                    g = g + h - i * j / f;                                      //Stmt 168
+                    h = h + i - j * f / g;                                      //Stmt 169
+                    i = i + j - f * g / h;                                      //Stmt 170
+                    j = j + f - g * h / i;                                      //Stmt 171
+                    call C;                                                     //Stmt 172
+                    while (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) { //Stmt 173
+                        f = f + g - h * i / j;                                  //Stmt 174
+                        g = g + h - i * j / f;                                  //Stmt 175
+                        h = h + i - j * f / g;                                  //Stmt 176
+                        i = i + j - f * g / h;                                  //Stmt 177
+                        j = j + f - g * h / i;                                  //Stmt 178
+                        call C;                                                 //Stmt 179
+                    }
+                    f = f + g - h * i / j;                                      //Stmt 180
+                    g = g + h - i * j / f;                                      //Stmt 181
+                    h = h + i - j * f / g;                                      //Stmt 182
+                    i = i + j - f * g / h;                                      //Stmt 183
+                    j = j + f - g * h / i;                                      //Stmt 184
+                    call C;                                                     //Stmt 185
+                }
+                f = f + g - h * i / j;                                          //Stmt 186
+                g = g + h - i * j / f;                                          //Stmt 187
+                h = h + i - j * f / g;                                          //Stmt 188
+                i = i + j - f * g / h;                                          //Stmt 189
+                j = j + f - g * h / i;                                          //Stmt 190
+                call C;                                                         //Stmt 191
+            }
+            f = f + g - h * i / j;                                              //Stmt 192
+            g = g + h - i * j / f;                                              //Stmt 193
+            h = h + i - j * f / g;                                              //Stmt 194
+            i = i + j - f * g / h;                                              //Stmt 195
+            j = j + f - g * h / i;                                              //Stmt 196
+            call C;                                                             //Stmt 197
+        }
+        f = f + g - h * i / j;                                                  //Stmt 198
+        g = g + h - i * j / f;                                                  //Stmt 199
+        h = h + i - j * f / g;                                                  //Stmt 200
+        i = i + j - f * g / h;                                                  //Stmt 201
+        j = j + f - g * h / i;                                                  //Stmt 202
+        call C;                                                                 //Stmt 203
+    }
+    x = 1 % 2 / 3 * 4 - 5 + 6 / x;                                              //Stmt 204
+    f = f + g - h * i / j;                                                      //Stmt 205
+    g = g + h - i * j / f;                                                      //Stmt 206
+    h = h + i - j * f / g;                                                      //Stmt 207
+    i = i + j - f * g / h;                                                      //Stmt 208
+    j = j + f - g * h / i;                                                      //Stmt 209
+    call C;                                                                     //Stmt 210
+}
+procedure C {
+    y = 1 % 2 / 3 * 4 - 5 + 6 / y;                                              //Stmt 211
+    k = k + l - m * n / o;                                                      //Stmt 212
+    l = l + m - n * o / k;                                                      //Stmt 213
+    m = m + n - o * k / l;                                                      //Stmt 214
+    n = n + o - k * l / m;                                                      //Stmt 215
+    o = o + k - l * m / n;                                                      //Stmt 216
+    if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {               //Stmt 217
+        k = k + l - m * n / o;                                                  //Stmt 218
+        l = l + m - n * o / k;                                                  //Stmt 219
+        m = m + n - o * k / l;                                                  //Stmt 220
+        n = n + o - k * l / m;                                                  //Stmt 221
+        o = o + k - l * m / n;                                                  //Stmt 222
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           //Stmt 223
+            k = k + l - m * n / o;                                              //Stmt 224
+            l = l + m - n * o / k;                                              //Stmt 225
+            m = m + n - o * k / l;                                              //Stmt 226
+            n = n + o - k * l / m;                                              //Stmt 227
+            o = o + k - l * m / n;                                              //Stmt 228
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       //Stmt 229
+                k = k + l - m * n / o;                                          //Stmt 230
+                l = l + m - n * o / k;                                          //Stmt 231
+                m = m + n - o * k / l;                                          //Stmt 232
+                n = n + o - k * l / m;                                          //Stmt 233
+                o = o + k - l * m / n;                                          //Stmt 234
+            } else {
+                k = k + l - m * n / o;                                          //Stmt 235
+                l = l + m - n * o / k;                                          //Stmt 236
+                m = m + n - o * k / l;                                          //Stmt 237
+                n = n + o - k * l / m;                                          //Stmt 238
+                o = o + k - l * m / n;                                          //Stmt 239
+            }
+            k = k + l - m * n / o;                                              //Stmt 240
+            l = l + m - n * o / k;                                              //Stmt 241
+            m = m + n - o * k / l;                                              //Stmt 242
+            n = n + o - k * l / m;                                              //Stmt 243
+            o = o + k - l * m / n;                                              //Stmt 244
+        } else {
+            k = k + l - m * n / o;                                              //Stmt 245
+            l = l + m - n * o / k;                                              //Stmt 246
+            m = m + n - o * k / l;                                              //Stmt 247
+            n = n + o - k * l / m;                                              //Stmt 248
+            o = o + k - l * m / n;                                              //Stmt 249
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       //Stmt 250
+                k = k + l - m * n / o;                                          //Stmt 251
+                l = l + m - n * o / k;                                          //Stmt 252
+                m = m + n - o * k / l;                                          //Stmt 253
+                n = n + o - k * l / m;                                          //Stmt 254
+                o = o + k - l * m / n;                                          //Stmt 255
+            } else {
+                k = k + l - m * n / o;                                          //Stmt 256
+                l = l + m - n * o / k;                                          //Stmt 257
+                m = m + n - o * k / l;                                          //Stmt 258
+                n = n + o - k * l / m;                                          //Stmt 259
+                o = o + k - l * m / n;                                          //Stmt 260
+            }
+            k = k + l - m * n / o;                                              //Stmt 261
+            l = l + m - n * o / k;                                              //Stmt 262
+            m = m + n - o * k / l;                                              //Stmt 263
+            n = n + o - k * l / m;                                              //Stmt 264
+            o = o + k - l * m / n;                                              //Stmt 265
+        }
+        k = k + l - m * n / o;                                                  //Stmt 266
+        l = l + m - n * o / k;                                                  //Stmt 267
+        m = m + n - o * k / l;                                                  //Stmt 268
+        n = n + o - k * l / m;                                                  //Stmt 269
+        o = o + k - l * m / n;                                                  //Stmt 270
+    } else {
+        k = k + l - m * n / o;                                                  //Stmt 271
+        l = l + m - n * o / k;                                                  //Stmt 272
+        m = m + n - o * k / l;                                                  //Stmt 273
+        n = n + o - k * l / m;                                                  //Stmt 274
+        o = o + k - l * m / n;                                                  //Stmt 275
+        if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {           //Stmt 276
+            k = k + l - m * n / o;                                              //Stmt 277
+            l = l + m - n * o / k;                                              //Stmt 278
+            m = m + n - o * k / l;                                              //Stmt 279
+            n = n + o - k * l / m;                                              //Stmt 280
+            o = o + k - l * m / n;                                              //Stmt 281
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       //Stmt 282
+                k = k + l - m * n / o;                                          //Stmt 283
+                l = l + m - n * o / k;                                          //Stmt 284
+                m = m + n - o * k / l;                                          //Stmt 285
+                n = n + o - k * l / m;                                          //Stmt 286
+                o = o + k - l * m / n;                                          //Stmt 287
+            } else {
+                k = k + l - m * n / o;                                          //Stmt 288
+                l = l + m - n * o / k;                                          //Stmt 289
+                m = m + n - o * k / l;                                          //Stmt 290
+                n = n + o - k * l / m;                                          //Stmt 291
+                o = o + k - l * m / n;                                          //Stmt 292
+            }
+            k = k + l - m * n / o;                                              //Stmt 293
+            l = l + m - n * o / k;                                              //Stmt 294
+            m = m + n - o * k / l;                                              //Stmt 295
+            n = n + o - k * l / m;                                              //Stmt 296
+            o = o + k - l * m / n;                                              //Stmt 297
+        } else {
+            k = k + l - m * n / o;                                              //Stmt 298
+            l = l + m - n * o / k;                                              //Stmt 299
+            m = m + n - o * k / l;                                              //Stmt 300
+            n = n + o - k * l / m;                                              //Stmt 301
+            o = o + k - l * m / n;                                              //Stmt 302
+            if (!(((a == b) && (c != d)) || ((e < 0) && (e > 0)))) then {       //Stmt 303
+                k = k + l - m * n / o;                                          //Stmt 304
+                l = l + m - n * o / k;                                          //Stmt 305
+                m = m + n - o * k / l;                                          //Stmt 306
+                n = n + o - k * l / m;                                          //Stmt 307
+                o = o + k - l * m / n;                                          //Stmt 308
+            } else {
+                k = k + l - m * n / o;                                          //Stmt 309
+                l = l + m - n * o / k;                                          //Stmt 310
+                m = m + n - o * k / l;                                          //Stmt 311
+                n = n + o - k * l / m;                                          //Stmt 312
+                o = o + k - l * m / n;                                          //Stmt 313
+            }
+            k = k + l - m * n / o;                                              //Stmt 314
+            l = l + m - n * o / k;                                              //Stmt 315
+            m = m + n - o * k / l;                                              //Stmt 316
+            n = n + o - k * l / m;                                              //Stmt 317
+            o = o + k - l * m / n;                                              //Stmt 318
+        }
+        k = k + l - m * n / o;                                                  //Stmt 319
+        l = l + m - n * o / k;                                                  //Stmt 320
+        m = m + n - o * k / l;                                                  //Stmt 321
+        n = n + o - k * l / m;                                                  //Stmt 322
+        o = o + k - l * m / n;                                                  //Stmt 323
+    }
+    y = 1 % 2 / 3 * 4 - 5 + 6 / y;                                              //Stmt 324
+    k = k + l - m * n / o;                                                      //Stmt 325
+    l = l + m - n * o / k;                                                      //Stmt 326
+    m = m + n - o * k / l;                                                      //Stmt 327
+    n = n + o - k * l / m;                                                      //Stmt 328
+    o = o + k - l * m / n;                                                      //Stmt 329
+}

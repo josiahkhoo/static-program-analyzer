@@ -1,0 +1,45 @@
+1 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable (Affects First)
+assign a, a1, a2; constant c; variable v;
+Select <a, a1, a2> such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern a(v, _) and a1(v, _) and a2(v, _)
+174 174 174,33 33 33,175 175 175,177 177 177,29 29 29,176 176 176,31 31 31,30 30 30,178 178 178,32 32 32
+20000
+2 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable (Pattern First)
+assign a, a1, a2; constant c; variable v;
+Select <a, a1, a2> pattern a(v, _) and a1(v, _) and a2(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1)
+174 174 174,33 33 33,175 175 175,177 177 177,29 29 29,176 176 176,31 31 31,30 30 30,178 178 178,32 32 32
+20000
+3 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable (Alternate)
+assign a, a1, a2; constant c; variable v;
+Select <a, a1, a2> pattern a(v, _) such that Affects(a, a1) and Affects(a, a2) pattern a1(v, _) such that Affects(a1, a) and Affects(a1, a2) pattern a2(v, _) such that Affects(a2, a) and Affects(a2, a1)
+174 174 174,33 33 33,175 175 175,177 177 177,29 29 29,176 176 176,31 31 31,30 30 30,178 178 178,32 32 32
+20000
+4 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement: A, PIPW, P)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern if(v, _, _) and w(v, _) and a(v, _) and a1(v, _) and a2(v, _)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
+5 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement:A, P, PIPW)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern a(v, _) and a1(v, _) and a2(v, _) and if(v, _, _) and w(v, _)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
+6 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement:PIPW, A, P)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> pattern if(v, _, _) and w(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern a(v, _) and a1(v, _) and a2(v, _)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
+7 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement:PIPW, P, A)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> pattern if(v, _, _) and w(v, _) and a(v, _) and a1(v, _) and a2(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
+8 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement:P, PIPW, A)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> pattern a(v, _) and a1(v, _) and a2(v, _) and if(v, _, _) and w(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
+9 - (SUCCESS) Select triplets of assign that affects each other and all modifies the same variable and if and while conditions uses that variable (Arrangement:P, A, PIPW)
+assign a, a1, a2; if if; while w; variable v;
+Select <a, a1, a2> pattern a(v, _) and a1(v, _) and a2(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern if(v, _, _) and w(v, _)
+29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
+20000
