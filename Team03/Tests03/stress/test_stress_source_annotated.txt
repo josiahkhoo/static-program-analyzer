@@ -1,5 +1,5 @@
 procedure A {
-    z = 1 % 2 / 3 * 4 - 5 + 6 / z;                                              //Stmt 1
+    z = 1 % 2 / 3 * 4 - 5 + 6 / z + 129 - 138 * 204 / 211 % 324;                //Stmt 1
     a = a + b - c * d / e;                                                      //Stmt 2
     b = b + c - d * e / a;                                                      //Stmt 3
     c = c + d - e * a / b;                                                      //Stmt 4
