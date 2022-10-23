@@ -165,11 +165,6 @@ Select a such that Affects*(a,a1) and Affects*(a,a2) with a1.stmt# = c.value and
 20000
 34 - (SUCCESS) Select assignment that affects* a and a1 and a2 that is some constant value (Affects* behind)
 assign a, a1, a2, a3, a4; constant c, c1, c2;
-Select a such that Affects*(a,a1) and Affects*(a,a2) with a1.stmt# = c.value and a2.stmt# = c1.value and a.stmt# = c2.value
-1,211,138,2,3,4,5
-20000
-35 - (SUCCESS) Select assignment that affects* a and a1 and a2 that is some constant value (Affects* behind)
-assign a, a1, a2, a3, a4; constant c, c1, c2;
 Select a with a1.stmt# = c.value and a2.stmt# = c1.value and a.stmt# = c2.value such that Affects*(a,a1) and Affects*(a,a2)
 1,211,138,2,3,4,5
 25000
