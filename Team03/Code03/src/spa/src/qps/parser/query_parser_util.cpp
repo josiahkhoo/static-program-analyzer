@@ -189,12 +189,9 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 /// \param stmtRef
 void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
   if (stmtRef.IsSynonym() &&
-      !(stmtRef.IsEntityType(ASSIGN) ||
-        stmtRef.IsEntityType(STATEMENT) ||
-        stmtRef.IsEntityType(IF) ||
-        stmtRef.IsEntityType(WHILE) ||
-        stmtRef.IsEntityType(READ) ||
-        stmtRef.IsEntityType(PRINT))) {
+      !(stmtRef.IsEntityType(ASSIGN) || stmtRef.IsEntityType(STATEMENT) ||
+        stmtRef.IsEntityType(IF) || stmtRef.IsEntityType(WHILE) ||
+        stmtRef.IsEntityType(READ) || stmtRef.IsEntityType(PRINT))) {
     throw SemanticException("Invalid statement reference for Affects clause");
   }
 }
