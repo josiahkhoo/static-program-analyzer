@@ -162,7 +162,7 @@ SyntaxError
 assign a;
 Select a pattern a(_, _"x+y")
 SyntaxError
-27 - (SYNTAX ERROR) Invalid PatternAssign expression back only wildcard
+28 - (SYNTAX ERROR) Invalid PatternAssign expression back only wildcard
 assign a;
 Select a pattern a(_, "x+y"_)
 SyntaxError
