@@ -1,5 +1,6 @@
 #include "query_processing_subsystem.h"
 
+#include "affects_statement_checker.h"
 #include "qps/exceptions/semantic_exception.h"
 #include "qps/exceptions/syntax_exception.h"
 
@@ -26,6 +27,7 @@ void QueryProcessingSubsystem::Process(std::string query,
     results.emplace_back(ex.what());
     return;
   }
+  AffectsStatementChecker::Check(q_string, queryable_pkb_);
   std::shared_ptr<QNode> q_plan = planner_.Plan(q_string);
   std::unordered_set<std::string> q_res =
       evaluator_.Execute(queryable_pkb_, q_plan, q_string.GetSelect());

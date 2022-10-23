@@ -235,6 +235,7 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::unordered_set<std::string> QueryWithAttribute(EntityType type,
                                                      AttributeName name,
                                                      int number) const override;
+  bool CheckValidAffectsStmtNo(int stmt_no);
 
  private:
   EntityManager entity_manager_;
