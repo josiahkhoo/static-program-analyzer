@@ -34,14 +34,10 @@ TEST_CASE("Pattern ASSIGN Single-Syn", "[QPS Pattern Parser]") {
   REQUIRE_FALSE(
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
           ->GetExpression()
-          .has_front_wildcard);
+          .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE_FALSE(
-      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-          ->GetExpression()
-          .has_back_wildcard);
 }
 
 TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
@@ -76,14 +72,10 @@ TEST_CASE("Pattern ASSIGN Double-Syn", "[QPS Pattern Parser]") {
   REQUIRE_FALSE(
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
           ->GetExpression()
-          .has_front_wildcard);
+          .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE_FALSE(
-      std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-          ->GetExpression()
-          .has_back_wildcard);
 }
 
 TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
@@ -107,13 +99,10 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
     REQUIRE(res.GetQueryOperation().size() == 1);
     REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
-                .has_front_wildcard);
+                .has_wildcard);
     REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match.empty());
-    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-                ->GetExpression()
-                .has_back_wildcard);
   }
   SECTION("Front & back wildcard") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
@@ -138,13 +127,10 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
     REQUIRE(res.GetQueryOperation().size() == 1);
     REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
-                .has_front_wildcard);
+                .has_wildcard);
     REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
                 ->GetExpression()
                 .to_match == "b");
-    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-                ->GetExpression()
-                .has_back_wildcard);
   }
   SECTION("Front only wildcard") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
@@ -163,19 +149,7 @@ TEST_CASE("Pattern Wildcards", "[QPS Pattern Parser]") {
                                   Token(Token::INVERTED_COMMAS),
                                   Token(Token::RIGHT_ROUND_BRACKET),
                                   Token(Token::END)};
-    QueryString res = qp.Parse(tokens_);
-
-    REQUIRE(res.GetQueryOperation().size() == 1);
-    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-                ->GetExpression()
-                .has_front_wildcard);
-    REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-                ->GetExpression()
-                .to_match == "b");
-    REQUIRE_FALSE(
-        std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-            ->GetExpression()
-            .has_back_wildcard);
+    REQUIRE_THROWS(qp.Parse(tokens_));
   }
 }
 
@@ -289,7 +263,7 @@ TEST_CASE("Pattern patterns (string)", "[QPS Pattern Parser]") {
   }
 }
 
-TEST_CASE("invalid Pattern ASSIGN semantics", "[QPS Pattern Parser]") {
+TEST_CASE("Invalid Pattern ASSIGN semantics", "[QPS Pattern Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
                                 Token(Token::IDENTIFIER, "a"),

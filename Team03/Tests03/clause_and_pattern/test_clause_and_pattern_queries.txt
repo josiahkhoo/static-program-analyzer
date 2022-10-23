@@ -10,12 +10,12 @@ Select a such that Follows(18, a) pattern a("x", "x + z")
 5000
 3 - (SUCCESS) Join operation with single declaration, follows* and pattern matches multiple
 assign a;
-Select a such that Follows*(14, a) pattern a(_, "x"_)
+Select a such that Follows*(14, a) pattern a(_, _"x"_)
 18, 19
 5000
 4 - (SUCCESS) Join operation with single declaration, pattern and follows* matches multiple
 assign a;
-Select a pattern a(_, "x"_) such that Follows*(14, a)
+Select a pattern a(_, _"x"_) such that Follows*(14, a)
 18, 19
 5000
 5 - (SUCCESS) Disjoint operation with multiple declaration, pattern and follows doesn't match
@@ -45,8 +45,8 @@ Select a such that Modifies (a, v) pattern a (v, _)
 5000
 10 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: modified by variable modified by tail i
 assign a; variable v;
-Select a such that Modifies (a, v) pattern a (v, _"i")
-9, 22
+Select a such that Modifies (a, v) pattern a (v, _"i"_)
+9, 11, 17, 22
 5000
 11 - (SUCCESS) Disjoint operation with multiple declaration, retrieve assigns: followed by a modified assign
 assign a, a1; variable v;

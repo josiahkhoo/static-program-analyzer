@@ -815,13 +815,10 @@ TEST_CASE("`Assign PatternAssign Follow`", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 2);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .has_front_wildcard);
+              .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_back_wildcard);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
@@ -882,13 +879,10 @@ TEST_CASE("`Assign Follow PatternAssign`", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 2);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
-              .has_front_wildcard);
+              .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
-              ->GetExpression()
-              .has_back_wildcard);
 }
 
 TEST_CASE("UsesS Syn-Var", "[QPS Parser]") {
@@ -1182,13 +1176,10 @@ TEST_CASE("`Assign PatternAssign PatternAssign`", "[QPS Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 2);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
-              .has_front_wildcard);
+              .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0])
-              ->GetExpression()
-              .has_back_wildcard);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
@@ -1196,13 +1187,10 @@ TEST_CASE("`Assign PatternAssign PatternAssign`", "[QPS Parser]") {
           std::vector{Select::SynonymWithMaybeAttribute(syn)});
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
-              .has_front_wildcard);
+              .has_wildcard);
   REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
               ->GetExpression()
               .to_match == "b");
-  REQUIRE(std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1])
-              ->GetExpression()
-              .has_back_wildcard);
 }
 
 TEST_CASE("invalid Follows syntax", "[QPS Parser]") {

@@ -158,3 +158,11 @@ assign a, b;
 Select <a b>
 SyntaxError
 5000
+27 - (SYNTAX ERROR) Invalid PatternAssign expression front only wildcard
+assign a;
+Select a pattern a(_, _"x+y")
+SyntaxError
+27 - (SYNTAX ERROR) Invalid PatternAssign expression back only wildcard
+assign a;
+Select a pattern a(_, "x+y"_)
+SyntaxError
