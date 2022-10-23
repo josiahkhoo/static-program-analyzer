@@ -43,12 +43,12 @@ assign a, a1, a2; if if; while w; variable v;
 Select <a, a1, a2> pattern a(v, _) and a1(v, _) and a2(v, _) such that Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern if(v, _, _) and w(v, _)
 29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
 20000
-10 - (SUCCESS) Select triplets of assign that affects each other and all modifies and uses the same variable and if and while conditions uses that variable (Arrangement: )
+10 - (SUCCESS) Select triplets of assign that affects each other and all modifies and uses the same variable and if and while conditions uses that variable
 assign a, a1, a2; if if; while w; variable v;
 Select <a, a1, a2> such that Uses(a, v) and Modifies(a, v) and Uses(a1, v) and Modifies(a1, v) and Uses(a2, v) and Modifies(a2,v) and Affects(a, a1) and Affects(a, a2) and Affects(a1, a) and Affects(a1, a2) and Affects(a2, a) and Affects(a2, a1) pattern if(v, _, _) and w(v, _)
 29 29 29,32 32 32,30 30 30,31 31 31,33 33 33
 20000
-11 - (SUCCESS) Chaining same affects (Arrangement: )
+11 - (SUCCESS) Chaining same affects
 assign a, a1, a2; constant c, c1;
 Select <a, a1> such that Affects(a, a1) and Affects(a, a1) and Affects(a, a1) and Affects(a, a1) and Affects(a, a1) with a.stmt# = c.value and a1.stmt# = c1.value
 5 6,1 129,3 6,3 5,138 204,4 5,211 324,2 3,2 5,3 4,2 4,4 6,2 6
