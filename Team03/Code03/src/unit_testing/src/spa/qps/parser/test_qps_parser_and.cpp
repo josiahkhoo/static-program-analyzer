@@ -99,9 +99,8 @@ TEST_CASE("Assign PatternAssign And", "[QPS And Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 2);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0]);
-  REQUIRE(ptrnAssign->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign->GetExpression().has_back_wildcard);
 
   Synonym syn = Synonym(EntityType::ASSIGN, "a");
   std::shared_ptr<SynonymSelect> expected_select =
@@ -109,9 +108,8 @@ TEST_CASE("Assign PatternAssign And", "[QPS And Parser]") {
           std::vector{Select::SynonymWithMaybeAttribute(syn)});
   std::shared_ptr<PatternAssign> ptrnAssign1 =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1]);
-  REQUIRE(ptrnAssign1->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign1->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign1->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign1->GetExpression().has_back_wildcard);
 }
 
 TEST_CASE("Variable WITH And", "[QPS And Parser]") {
@@ -222,9 +220,8 @@ TEST_CASE("Assign Follows And PatternAssign", "[QPS And Parser]") {
   REQUIRE(cl1->GetRightHandSide() == f1.GetRightHandSide());
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[2]);
-  REQUIRE(ptrnAssign->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign->GetExpression().has_back_wildcard);
 }
 
 TEST_CASE("Assign PatternAssign Follows And", "[QPS And Parser]") {
@@ -288,9 +285,8 @@ TEST_CASE("Assign PatternAssign Follows And", "[QPS And Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0]);
-  REQUIRE(ptrnAssign->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign->GetExpression().has_back_wildcard);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[1]);
   REQUIRE(cl->GetLeftHandSide() == f.GetLeftHandSide());
@@ -360,14 +356,12 @@ TEST_CASE("Assign PatternAssign And Follows", "[QPS And Parser]") {
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[0]);
-  REQUIRE(ptrnAssign->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign->GetExpression().has_back_wildcard);
   std::shared_ptr<PatternAssign> ptrnAssign1 =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[1]);
-  REQUIRE(ptrnAssign1->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign1->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign1->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign1->GetExpression().has_back_wildcard);
   std::shared_ptr<Clause> cl =
       std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[2]);
   REQUIRE(cl->GetLeftHandSide() == f.GetLeftHandSide());
@@ -496,14 +490,12 @@ TEST_CASE("Assign Variable Follows And WITH And PatternAssign And WITH",
   REQUIRE(withCl1->GetType() == QueryOperation::SINGLE_SYNONYM);
   std::shared_ptr<PatternAssign> ptrnAssign =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[4]);
-  REQUIRE(ptrnAssign->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign->GetExpression().has_back_wildcard);
   std::shared_ptr<PatternAssign> ptrnAssign1 =
       std::dynamic_pointer_cast<PatternAssign>(res.GetQueryOperation()[5]);
-  REQUIRE(ptrnAssign1->GetExpression().has_front_wildcard);
+  REQUIRE(ptrnAssign1->GetExpression().has_wildcard);
   REQUIRE(ptrnAssign1->GetExpression().to_match == "b");
-  REQUIRE(ptrnAssign1->GetExpression().has_back_wildcard);
   std::shared_ptr<With> withCl2 =
       std::dynamic_pointer_cast<With>(res.GetQueryOperation()[6]);
   REQUIRE(withCl2->GetSynonym().IsEntityType(VARIABLE));
