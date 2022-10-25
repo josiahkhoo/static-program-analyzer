@@ -21,6 +21,8 @@ bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   return false;
 }
 
+// clang-format off
 bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
   return true;
 }
+// clang-format on
