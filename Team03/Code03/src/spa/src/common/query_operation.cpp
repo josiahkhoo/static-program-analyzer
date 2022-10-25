@@ -20,3 +20,7 @@ bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   }
   return false;
 }
+
+bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
+  return true;
+}

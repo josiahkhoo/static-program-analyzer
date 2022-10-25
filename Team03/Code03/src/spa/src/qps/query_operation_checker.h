@@ -1,12 +1,12 @@
-#ifndef QUERY_PARSER_CPP_AFFECTS_STATEMENT_CHECKER_H
-#define QUERY_PARSER_CPP_AFFECTS_STATEMENT_CHECKER_H
+#ifndef QUERY_PARSER_CPP_QUERY_OPERATION_CHECKER_H
+#define QUERY_PARSER_CPP_QUERY_OPERATION_CHECKER_H
 
 #include "common/queryable_pkb.h"
 #include "query_string.h"
 
-class AffectsStatementChecker {
+class QueryOperationChecker {
  public:
-  AffectsStatementChecker();
+  QueryOperationChecker();
 
   static void Check(const QueryString &q_string,
                     const QueryablePkb &queryable_pkb);
@@ -18,4 +18,4 @@ class AffectsStatementChecker {
   }
 };
 
-#endif  // QUERY_PARSER_CPP_AFFECTS_STATEMENT_CHECKER_H
+#endif  // QUERY_PARSER_CPP_QUERY_OPERATION_CHECKER_H

@@ -57,3 +57,19 @@ bool AffectsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   }
   return !queryable_pkb.QueryAllAffectsBy().empty();
 }
+
+bool AffectsClause::IsValid(const QueryablePkb &queryable_pkb) const {
+  if (GetLeftHandSide().IsLineNumber()) {
+    if (!queryable_pkb.CheckValidAffectsStmtNo(
+            GetLeftHandSide().GetLineNumber())) {
+      return false;
+    }
+  }
+  if (GetRightHandSide().IsLineNumber()) {
+    if (!queryable_pkb.CheckValidAffectsStmtNo(
+            GetRightHandSide().GetLineNumber())) {
+      return false;
+    }
+  }
+  return true;
+}
