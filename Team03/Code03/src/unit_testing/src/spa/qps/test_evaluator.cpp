@@ -310,6 +310,7 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] bool CheckValidAffectsStmtNo(int stmt_no) const override {
+    assert(stmt_no > 0);
     return true;
   }
 };
