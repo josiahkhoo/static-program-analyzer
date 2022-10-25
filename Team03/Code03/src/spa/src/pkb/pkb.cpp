@@ -1067,4 +1067,7 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
   return result;
 }
 
-bool PKB::CheckValidAffectsStmtNo(int stmt_no) const { return true; }
+bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
+  assert(stmt_no > 0);
+  return true;
+}
