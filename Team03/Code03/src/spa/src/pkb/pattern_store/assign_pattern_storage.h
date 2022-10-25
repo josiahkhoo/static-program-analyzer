@@ -24,6 +24,10 @@ class AssignPatternStorage {
 
  private:
   std::unordered_map<int, std::pair<std::string, std::string>> patterns_map_;
+  std::unordered_map<int, std::string> stmt_to_var_map_;
+  std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_map_;
+  std::unordered_map<int, std::string> stmt_to_exp_map_;
+  std::unordered_map<std::string, std::unordered_set<int>> exp_to_stmt_map_;
 };
 
 #endif  // SPA_ASSIGN_PATTERN_STORAGE_H
