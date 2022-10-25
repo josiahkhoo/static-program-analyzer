@@ -439,12 +439,10 @@ std::unordered_set<std::string> RelationshipManager::GetAllAffects(
     std::unordered_set<std::string> reads) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
-    std::unordered_set<std::string> stmts_affecting =
-        GetAffects(assigns, calls, reads, std::stoi(stmt));
-    if (!stmts_affecting.empty()) {
-      for (auto s : stmts_affecting) {
-        result.emplace(s);
-      }
+    std::unordered_set<int> cfg_visited;
+    if (CheckAffectingDFSTraversal(assigns, calls, reads, std::stoi(stmt),
+                                   std::stoi(stmt), cfg_visited, true)) {
+      result.emplace(stmt);
     }
   }
   return result;
@@ -460,12 +458,12 @@ std::unordered_set<std::string> RelationshipManager::GetAllAffectsBy(
     std::unordered_set<std::string> reads) const {
   std::unordered_set<std::string> result;
   for (auto stmt : assigns) {
-    std::unordered_set<std::string> stmts_affected =
-        GetAffectsBy(assigns, calls, reads, std::stoi(stmt));
-    if (!stmts_affected.empty()) {
-      for (auto s : stmts_affected) {
-        result.emplace(s);
-      }
+    std::unordered_set<int> cfg_visited;
+    std::unordered_set<std::string> relevant_vars;
+    if (CheckAffectedByDFSTraversal(assigns, calls, reads, std::stoi(stmt),
+                                    std::stoi(stmt), cfg_visited, true,
+                                    relevant_vars)) {
+      result.emplace(stmt);
     }
   }
   return result;
@@ -615,6 +613,104 @@ void RelationshipManager::PreviousDFSTraversal(
       PreviousDFSTraversal(stmt, visited_stmts, previousT_stmts);
     }
   }
+}
+
+bool RelationshipManager::CheckAffectingDFSTraversal(
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int start, int current,
+    std::unordered_set<int> &cfg_visited, bool is_start) const {
+  if (!is_start) {
+    if (IsPossibleAffects(assigns, start, current)) {
+      return true;
+    }
+    if (IsLastModifiedBroken(assigns, calls, reads, current, start)) {
+      return false;
+    }
+  }
+
+  if (!is_start) {
+    cfg_visited.emplace(current);
+  }
+
+  // Loop through forward neighbouring stmts
+  for (auto neighbour_stmt : cfg_store_.GetForwardNeighbours(current)) {
+    // Neighbour has not been visited
+    if (cfg_visited.find(neighbour_stmt) == cfg_visited.end()) {
+      bool result = CheckAffectingDFSTraversal(
+          assigns, calls, reads, start, neighbour_stmt, cfg_visited, false);
+      if (result) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool RelationshipManager::CheckAffectedByDFSTraversal(
+    std::unordered_set<std::string> assigns,
+    std::unordered_set<std::string> calls,
+    std::unordered_set<std::string> reads, int end, int current,
+    std::unordered_set<int> &cfg_visited, bool is_start,
+    std::unordered_set<std::string> &relevant_vars) const {
+  std::unordered_set<std::string> used_vars = GetVariablesUsedByStatement(end);
+  std::unordered_set<std::string> relevant_modified_vars;
+  std::unordered_set<std::string> modified_vars;
+  // Not root node
+  if (!is_start) {
+    if (assigns.find(std::to_string(current)) != assigns.end() ||
+        calls.find(std::to_string(current)) != calls.end() ||
+        reads.find(std::to_string(current)) != reads.end()) {
+      // Get vars that are modified by current stmt
+      modified_vars = GetVariablesModifiedByStatement(current);
+      for (auto var : modified_vars) {
+        // Check if var modified are not modified later on
+        if (relevant_vars.find(var) == relevant_vars.end()) {
+          // Check if var modified is used in end
+          if (used_vars.find(var) != used_vars.end()) {
+            // Check current is an assign statement
+            if (assigns.find(std::to_string(current)) != assigns.end()) {
+              return true;
+            }
+            relevant_vars.emplace(var);
+            relevant_modified_vars.emplace(var);
+          }
+        }
+      }
+    }
+  }
+
+  // Early return if variables used by end are all modified along the way
+  if (used_vars == relevant_vars) {
+    for (auto var : relevant_modified_vars) {
+      relevant_vars.erase(var);
+    }
+    return false;
+  }
+
+  // Add stmt to cfg path if it is not root of DFS
+  if (!is_start) {
+    cfg_visited.emplace(current);
+  }
+
+  // Loop through previous neighbouring stmts
+  for (auto neighbour_stmt : cfg_store_.GetBackwardNeighbours(current)) {
+    // Neighbour has not been visited
+    if (cfg_visited.find(neighbour_stmt) == cfg_visited.end()) {
+      bool result = CheckAffectedByDFSTraversal(assigns, calls, reads, end,
+                                                neighbour_stmt, cfg_visited,
+                                                false, relevant_vars);
+      if (result) {
+        return true;
+      }
+    }
+  }
+
+  for (auto var : relevant_modified_vars) {
+    relevant_vars.erase(var);
+  }
+  cfg_visited.erase(current);
+  return false;
 }
 
 void RelationshipManager::GetAffectsDFSTraversal(

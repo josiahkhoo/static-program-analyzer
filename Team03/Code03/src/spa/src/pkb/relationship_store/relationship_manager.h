@@ -165,6 +165,18 @@ class RelationshipManager {
   void PreviousDFSTraversal(int statement_number,
                             std::unordered_set<int>& visited_stmts,
                             std::unordered_set<int>& previousT_stmts) const;
+  bool CheckAffectingDFSTraversal(std::unordered_set<std::string> assigns,
+                                  std::unordered_set<std::string> calls,
+                                  std::unordered_set<std::string> reads,
+                                  int start, int current,
+                                  std::unordered_set<int>& cfg_visited,
+                                  bool is_start) const;
+  bool CheckAffectedByDFSTraversal(
+      std::unordered_set<std::string> assigns,
+      std::unordered_set<std::string> calls,
+      std::unordered_set<std::string> reads, int end, int current,
+      std::unordered_set<int>& cfg_visited, bool is_start,
+      std::unordered_set<std::string>& relevant_vars) const;
   void GetAffectsDFSTraversal(
       std::unordered_set<std::string> assigns,
       std::unordered_set<std::string> calls,
