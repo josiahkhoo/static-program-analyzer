@@ -8,14 +8,9 @@
 
 PatternAssign::PatternAssign(Synonym syn, EntityReference entity,
                              Expression expression)
-    : syn_(std::move(syn)), entity_(std::move(entity)) {
-  // Full Wildcard
-  Expression exp = std::move(expression);
-  if (exp.to_match.empty()) {
-    exp.has_back_wildcard = true;
-  }
-  expression_ = exp;
-}
+    : syn_(std::move(syn)),
+      entity_(std::move(entity)),
+      expression_(std::move(expression)) {}
 
 std::unordered_set<std::string> PatternAssign::Fetch(
     const QueryablePkb &queryable_pkb) const {

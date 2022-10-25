@@ -66,9 +66,10 @@ Expression QueryParserUtil::ExtractExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
   Expression exp;
+  int wildcard_found = 0;
   // Wildcard front
   if (tokens->MatchKind(Token::UNDERSCORE)) {
-    exp.has_front_wildcard = true;
+    wildcard_found++;
     tokens->Forward();
   }
   // Pattern to match - Expression
@@ -79,8 +80,22 @@ Expression QueryParserUtil::ExtractExpression(
   }
   // Wildcard back
   if (tokens->MatchKind(Token::UNDERSCORE)) {
-    exp.has_back_wildcard = true;
+    wildcard_found++;
     tokens->Forward();
+  }
+  switch (wildcard_found) {
+    case 2:
+      exp.has_wildcard = true;
+      break;
+    case 1:
+      if (!exp.to_match.empty()) {
+        throw SyntaxException("tokens->Expected different declaration");
+      } else {
+        exp.has_wildcard = true;
+        break;
+      }
+    default:
+      break;
   }
   return exp;
 }
