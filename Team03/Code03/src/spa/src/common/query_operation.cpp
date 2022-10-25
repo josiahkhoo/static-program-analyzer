@@ -1,5 +1,7 @@
 #include "common/query_operation.h"
 
+#include <cassert>
+
 bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   if (this->GetType() == DOUBLE_SYNONYM &&
       other_op->GetType() == DOUBLE_SYNONYM) {
@@ -21,8 +23,7 @@ bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   return false;
 }
 
-// clang-format off
 bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
+  assert(queryable_pkb.CheckValidAffectsStmtNo(1));
   return true;
 }
-// clang-format on
