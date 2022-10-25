@@ -64,8 +64,7 @@ bool AffectsClause::IsValid(const QueryablePkb &queryable_pkb) const {
             GetLeftHandSide().GetLineNumber())) {
       return false;
     }
-  }
-  if (GetRightHandSide().IsLineNumber()) {
+  } else if (GetRightHandSide().IsLineNumber()) {
     if (!queryable_pkb.CheckValidAffectsStmtNo(
             GetRightHandSide().GetLineNumber())) {
       return false;

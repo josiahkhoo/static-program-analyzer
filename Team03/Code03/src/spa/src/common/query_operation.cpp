@@ -23,7 +23,9 @@ bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   return false;
 }
 
+#define UNUSED(x) (void)(x)
+
 bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
-  assert(queryable_pkb.CheckValidAffectsStmtNo(1));
+  UNUSED(queryable_pkb);
   return true;
 }

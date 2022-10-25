@@ -9,7 +9,7 @@ void QueryOperationChecker::Check(const QueryString &q_string,
                                   const QueryablePkb &queryable_pkb) {
   for (const auto &query_operation : q_string.GetQueryOperation()) {
     if (!query_operation->IsValid(queryable_pkb)) {
-      throw SemanticException("Invalid Affects clause statement number");
+      throw SemanticException("Invalid query operation parameters");
     }
   }
 }
