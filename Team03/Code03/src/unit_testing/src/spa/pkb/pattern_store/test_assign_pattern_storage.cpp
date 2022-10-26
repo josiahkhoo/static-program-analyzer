@@ -28,8 +28,7 @@ TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
   std::unordered_set<std::string> test3 = {"1", "2", "3", "4"};
   REQUIRE(res3 == test3);
 
-  std::unordered_set<std::string> res4 =
-      storage.GetAllPattern("(z)", true);
+  std::unordered_set<std::string> res4 = storage.GetAllPattern("(z)", true);
   std::unordered_set<std::string> test4 = {"2", "3", "4"};
   REQUIRE(res4 == test4);
 
@@ -38,8 +37,7 @@ TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
   std::unordered_set<std::string> test5 = {"3", "4"};
   REQUIRE(res5 == test5);
 
-  std::unordered_set<std::string> res7 =
-      storage.GetAllPattern("(z)", false);
+  std::unordered_set<std::string> res7 = storage.GetAllPattern("(z)", false);
   REQUIRE(res7.empty());
 
   std::unordered_set<std::string> res8 =
