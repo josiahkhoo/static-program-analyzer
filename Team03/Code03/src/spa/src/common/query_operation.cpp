@@ -1,7 +1,5 @@
 #include "common/query_operation.h"
 
-#include <cassert>
-
 bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   if (this->GetType() == DOUBLE_SYNONYM &&
       other_op->GetType() == DOUBLE_SYNONYM) {

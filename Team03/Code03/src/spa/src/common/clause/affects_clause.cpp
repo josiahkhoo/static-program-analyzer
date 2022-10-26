@@ -59,16 +59,11 @@ bool AffectsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
 }
 
 bool AffectsClause::IsValid(const QueryablePkb &queryable_pkb) const {
+  int line_no = -1;
   if (GetLeftHandSide().IsLineNumber()) {
-    if (!queryable_pkb.CheckValidAffectsStmtNo(
-            GetLeftHandSide().GetLineNumber())) {
-      return false;
-    }
+    line_no = GetLeftHandSide().GetLineNumber();
   } else if (GetRightHandSide().IsLineNumber()) {
-    if (!queryable_pkb.CheckValidAffectsStmtNo(
-            GetRightHandSide().GetLineNumber())) {
-      return false;
-    }
+    line_no = GetRightHandSide().IsLineNumber();
   }
-  return true;
+  return queryable_pkb.CheckValidAffectsStmtNo(line_no);
 }
