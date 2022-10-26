@@ -308,6 +308,11 @@ class QueryablePkbStub : public QueryablePkb {
       EntityType, AttributeName, int) const override {
     return {"QueryWithAttributeNumber"};
   }
+
+  [[nodiscard]] bool CheckValidAffectsStmtNo(int stmt_no) const override {
+    assert(stmt_no > 0);
+    return true;
+  }
 };
 
 TEST_CASE("Query 'Select'", "[Evaluator]") {
