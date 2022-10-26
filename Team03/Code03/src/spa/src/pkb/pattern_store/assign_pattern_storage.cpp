@@ -43,14 +43,12 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
         res.emplace(std::to_string(i.first));
       }
     }
-  } else if (has_wildcard) {
+  } else {
     for (auto i : stmt_to_exp_map_) {
       if (i.second.find(pattern) != std::string::npos) {
         res.emplace(std::to_string(i.first));
       }
     }
-  } else {
-    throw std::invalid_argument("Missing wildcard booleans");
   }
   return res;
 }
@@ -89,7 +87,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         res.emplace(std::to_string(i));
       }
     }
-  } else if (has_wildcard) {
+  } else {
     std::unordered_set<int> stmts = {};
     if (!exp_to_stmt_map_.empty()) {
       for (auto i : exp_to_stmt_map_) {
@@ -103,8 +101,6 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         res.emplace(std::to_string(i));
       }
     }
-  } else {
-    throw std::invalid_argument("Missing wildcard booleans");
   }
   return res;
 }
