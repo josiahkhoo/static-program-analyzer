@@ -10,50 +10,42 @@ TEST_CASE("Get All Pattern Search", "[AssignPatternStorage]") {
   storage.AddAssignPattern(5, "var5", "(t)");
 
   std::unordered_set<std::string> res =
-      storage.GetAllPattern("NoPattern", false, false);
+      storage.GetAllPattern("NoPattern", false);
   REQUIRE(res.empty());
 
   std::unordered_set<std::string> res1 =
-      storage.GetAllPattern("((x)*(y))", false, false);
+      storage.GetAllPattern("((x)*(y))", false);
   std::unordered_set<std::string> test1 = {"1"};
   REQUIRE(res1 == test1);
 
   std::unordered_set<std::string> res2 =
-      storage.GetAllPattern("((x)*(y))", true, true);
+      storage.GetAllPattern("((x)*(y))", true);
   std::unordered_set<std::string> test2 = {"1", "2", "3", "4"};
   REQUIRE(res2 == test2);
 
   std::unordered_set<std::string> res3 =
-      storage.GetAllPattern("((x)*(y))", false, true);
-  std::unordered_set<std::string> test3 = {"1", "2"};
+      storage.GetAllPattern("((x)*(y))", true);
+  std::unordered_set<std::string> test3 = {"1", "2", "3", "4"};
   REQUIRE(res3 == test3);
 
-  std::unordered_set<std::string> res4 =
-      storage.GetAllPattern("(z)", false, true);
-  std::unordered_set<std::string> test4 = {"3", "4"};
+  std::unordered_set<std::string> res4 = storage.GetAllPattern("(z)", true);
+  std::unordered_set<std::string> test4 = {"2", "3", "4"};
   REQUIRE(res4 == test4);
 
   std::unordered_set<std::string> res5 =
-      storage.GetAllPattern("((z)+((x)*(y)))", false, true);
+      storage.GetAllPattern("((z)+((x)*(y)))", true);
   std::unordered_set<std::string> test5 = {"3", "4"};
   REQUIRE(res5 == test5);
 
-  std::unordered_set<std::string> res6 =
-      storage.GetAllPattern("((x)*(y))", true, false);
-  std::unordered_set<std::string> test6 = {"1", "3"};
-  REQUIRE(res6 == test6);
-
-  std::unordered_set<std::string> res7 =
-      storage.GetAllPattern("(z)", true, false);
-  std::unordered_set<std::string> test7 = {"2", "4"};
-  REQUIRE(res7 == test7);
+  std::unordered_set<std::string> res7 = storage.GetAllPattern("(z)", false);
+  REQUIRE(res7.empty());
 
   std::unordered_set<std::string> res8 =
-      storage.GetAllPattern("(((x)*(y))+(z))", true, false);
+      storage.GetAllPattern("(((x)*(y))+(z))", true);
   std::unordered_set<std::string> test8 = {"2"};
   REQUIRE(res8 == test8);
 
-  std::unordered_set<std::string> res9 = storage.GetAllPattern("", true, true);
+  std::unordered_set<std::string> res9 = storage.GetAllPattern("", true);
   std::unordered_set<std::string> test9 = {"1", "2", "3", "4", "5"};
   REQUIRE(res9 == test9);
 }
@@ -66,24 +58,25 @@ TEST_CASE("Get Pattern Search", "[AssignPatternStorage]") {
   storage.AddAssignPattern(4, "var2", "(((x)*(y))+(z))");
 
   std::unordered_set<std::string> res =
-      storage.GetPattern("NoLHS", "NoPattern", false, false);
+      storage.GetPattern("NoLHS", "NoPattern", false);
   REQUIRE(res.empty());
 
   std::unordered_set<std::string> res1 =
-      storage.GetPattern("NoLHS", "((x)*(y))", false, false);
+      storage.GetPattern("NoLHS", "((x)*(y))", false);
   REQUIRE(res1.empty());
 
   std::unordered_set<std::string> res2 =
-      storage.GetPattern("var1", "((x)*(y))", true, true);
+      storage.GetPattern("var1", "((x)*(y))", true);
   std::unordered_set<std::string> test2 = {"1", "2"};
   REQUIRE(res2 == test2);
 
   std::unordered_set<std::string> res3 =
-      storage.GetPattern("var2", "((x)*(y))", true, true);
+      storage.GetPattern("var2", "((x)*(y))", true);
   std::unordered_set<std::string> test3 = {"3", "4"};
   REQUIRE(res3 == test3);
 
   std::unordered_set<std::string> res4 =
-      storage.GetPattern("var1", "(z)", false, true);
-  REQUIRE(res4.empty());
+      storage.GetPattern("var1", "(z)", true);
+  std::unordered_set<std::string> test4 = {"2"};
+  REQUIRE(res4 == test4);
 }
