@@ -47,6 +47,8 @@ class QueryOperation {
       std::vector<std::vector<std::string>> rhs) const = 0;
 
   [[nodiscard]] bool IsRelatedTo(QueryOperation *other_op) const;
+
+  [[nodiscard]] virtual bool IsValid(const QueryablePkb &queryable_pkb) const;
 };
 
 #endif  // SPA_QUERY_OPERATION_H
