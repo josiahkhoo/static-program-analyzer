@@ -23,7 +23,6 @@ class AssignPatternStorage {
                                              bool back_wildcard) const;
 
  private:
-  std::unordered_map<int, std::pair<std::string, std::string>> patterns_map_;
   std::unordered_map<int, std::string> stmt_to_var_map_;
   std::unordered_map<std::string, std::unordered_set<int>> var_to_stmt_map_;
   std::unordered_map<int, std::string> stmt_to_exp_map_;

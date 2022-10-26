@@ -14,8 +14,6 @@ void AssignPatternStorage::AddAssignPattern(int statement_number,
            .second) {
     exp_to_stmt_map_.at(rhs).emplace(statement_number);
   }
-//  patterns_map_.emplace(statement_number,
-//                        std::pair<std::string, std::string>(lhs, rhs));
 }
 
 std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
@@ -57,8 +55,6 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
   return res;
 }
 
-//(i.second.first.compare(lhs) == 0)
-
 std::unordered_set<std::string> AssignPatternStorage::GetPattern(
     std::string lhs, std::string pattern, bool front_wildcard,
     bool back_wildcard) const {
@@ -94,12 +90,6 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         res.emplace(std::to_string(i));
       }
     }
-//    for (auto i : patterns_map_) {
-//      if ((i.second.first.compare(lhs) == 0) &&
-//          (i.second.second.compare(pattern) == 0)) {
-//        res.emplace(std::to_string(i.first));
-//      }
-//    }
   } else if (front_wildcard && back_wildcard) {
     std::unordered_set<int> stmts = {};
     if (!exp_to_stmt_map_.empty()) {
@@ -114,12 +104,6 @@ std::unordered_set<std::string> AssignPatternStorage::GetPattern(
         res.emplace(std::to_string(i));
       }
     }
-//    for (auto i : patterns_map_) {
-//      if ((i.second.first.compare(lhs) == 0) &&
-//          (i.second.second.find(pattern) != std::string::npos)) {
-//        res.emplace(std::to_string(i.first));
-//      }
-//    }
   } else {
     throw std::invalid_argument("Missing wildcard booleans");
   }
