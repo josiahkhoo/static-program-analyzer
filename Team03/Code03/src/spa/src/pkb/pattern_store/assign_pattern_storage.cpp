@@ -18,25 +18,7 @@ void AssignPatternStorage::AddAssignPattern(int statement_number,
 
 std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
     std::string pattern, bool has_wildcard) const {
-  std::string::size_type pattern_start_pos = 0;
-  std::string::size_type pattern_end_pos = 0;
-  for (int i = 0; i < (int)pattern.size(); i++) {
-    if (pattern[i] == '(') {
-      pattern_start_pos++;
-    } else {
-      break;
-    }
-  }
-  for (int i = pattern.size() - 1; i >= 0; i--) {
-    if (pattern[i] == ')') {
-      pattern_end_pos++;
-    } else {
-      break;
-    }
-  }
-
   std::unordered_set<std::string> res;
-
   if (!has_wildcard) {
     for (auto i : stmt_to_exp_map_) {
       if (i.second.compare(pattern) == 0) {
@@ -55,51 +37,21 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
 
 std::unordered_set<std::string> AssignPatternStorage::GetPattern(
     std::string lhs, std::string pattern, bool has_wildcard) const {
-  std::string::size_type pattern_start_pos = 0;
-  std::string::size_type pattern_end_pos = 0;
-  for (int i = 0; i < (int)pattern.size(); i++) {
-    if (pattern[i] == '(') {
-      pattern_start_pos++;
-    } else {
-      break;
-    }
-  }
-  for (int i = pattern.size() - 1; i >= 0; i--) {
-    if (pattern[i] == ')') {
-      pattern_end_pos++;
-    } else {
-      break;
-    }
-  }
-
   std::unordered_set<std::string> res;
   std::unordered_set<int> lhs_stmts = {};
   if (var_to_stmt_map_.find(lhs) != var_to_stmt_map_.end()) {
     lhs_stmts = var_to_stmt_map_.find(lhs)->second;
   }
   if (!has_wildcard) {
-    std::unordered_set<int> rhs_stmts = {};
-    if (exp_to_stmt_map_.find(pattern) != exp_to_stmt_map_.end()) {
-      rhs_stmts = exp_to_stmt_map_.find(pattern)->second;
-    }
     for (auto i : lhs_stmts) {
-      if (rhs_stmts.find(i) != rhs_stmts.end()) {
-        res.emplace(std::to_string(i));
-      }
+      auto entry = stmt_to_exp_map_.find(i);
+      if (entry->second == pattern) res.emplace((std::to_string(i)));
     }
   } else {
-    std::unordered_set<int> stmts = {};
-    if (!exp_to_stmt_map_.empty()) {
-      for (auto i : exp_to_stmt_map_) {
-        if (i.first.find(pattern) != std::string::npos) {
-          stmts.merge(i.second);
-        }
-      }
-    }
     for (auto i : lhs_stmts) {
-      if (stmts.find(i) != stmts.end()) {
-        res.emplace(std::to_string(i));
-      }
+      auto entry = stmt_to_exp_map_.find(i);
+      if (entry->second.find(pattern) != std::string::npos)
+        res.emplace((std::to_string(i)));
     }
   }
   return res;
