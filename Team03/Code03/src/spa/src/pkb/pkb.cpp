@@ -1066,3 +1066,6 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
   }
   return result;
 }
+
+// Todo: @PKB Team to implement checker
+bool PKB::CheckValidAffectsStmtNo(int stmt_no) const { return true || stmt_no; }

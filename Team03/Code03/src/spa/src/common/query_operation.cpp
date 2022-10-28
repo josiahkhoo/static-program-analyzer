@@ -13,6 +13,13 @@ bool QueryOperation::IsRelatedTo(std::unordered_set<Synonym> synonyms) const {
   }
 }
 
+#define UNUSED(x) (void)(x)
+
+bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
+  UNUSED(queryable_pkb);
+  return true;
+}
+
 QueryOperation::Speed QueryOperation::GetSpeed() const {
   return QueryOperation::DEFAULT;
 }

@@ -26,6 +26,8 @@ class AffectsClause : public Clause {
 
   [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
 
+  [[nodiscard]] bool IsValid(const QueryablePkb &queryable_pkb) const override;
+
   [[nodiscard]] Speed GetSpeed() const override;
 
  private:

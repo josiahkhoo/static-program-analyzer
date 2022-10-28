@@ -218,6 +218,10 @@ class QueryablePkb {
   /// Treats x.value = 1 &  with 2 = x.stmt# the same
   [[nodiscard]] virtual std::unordered_set<std::string> QueryWithAttribute(
       EntityType type, AttributeName name, int number) const = 0;
+
+  /// Checks with the pkb to see if the given statement number is a read, print,
+  /// if, while, or assign statement
+  [[nodiscard]] virtual bool CheckValidAffectsStmtNo(int stmt_no) const = 0;
 };
 
 #endif  // SPA_QUERYABLE_PKB_H

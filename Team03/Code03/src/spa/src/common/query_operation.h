@@ -48,6 +48,8 @@ class QueryOperation {
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const = 0;
 
+  [[nodiscard]] virtual bool IsValid(const QueryablePkb &queryable_pkb) const;
+
   [[nodiscard]] bool IsRelatedTo(std::unordered_set<Synonym> synonyms) const;
 
   [[nodiscard]] virtual Speed GetSpeed() const;
