@@ -8,6 +8,8 @@
 #include "common/parser.h"
 #include "common/t_node.h"
 #include "common/token.h"
+#include "qps/token_handler.h"
+#include "qps/exceptions/syntax_exception.h"
 
 class SimpleParser : public Parser<TNode, std::vector<Token>> {
  public:
@@ -16,10 +18,11 @@ class SimpleParser : public Parser<TNode, std::vector<Token>> {
   TNode Parse(std::vector<Token> tokens_) override;
 
  private:
-  int token_pos_ = 0;
+  //int token_pos_ = 0;
   int statement_number_ = 0;
   int t_node_id_ = 0;
-  std::vector<Token> tokens_;
+  //std::vector<Token> tokens_;
+  std::shared_ptr<TokenHandler> tokens_;
   std::string curr_proc_;
   std::unordered_map<std::string, std::unordered_set<std::string>> proc_map_;
 

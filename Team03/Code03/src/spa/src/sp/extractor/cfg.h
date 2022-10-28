@@ -21,8 +21,6 @@ class CFG {
 
   [[nodiscard]] std::shared_ptr<CFGNode> GetNode(int stmt_no);
 
-  [[nodiscard]] int GetStatementWithinSameNode(int stmt_no);
-
   [[nodiscard]] std::unordered_set<std::shared_ptr<CFGNode>> GetNextNodes(
       const std::shared_ptr<CFGNode>& cfg_node_ptr);
 

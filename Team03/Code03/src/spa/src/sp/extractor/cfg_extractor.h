@@ -9,6 +9,6 @@
 
 class CFGExtractor {
  public:
-  virtual std::vector<CFG> Extract(const TNode &ast) const = 0;
+  [[nodiscard]] virtual std::vector<CFG> Extract(const TNode &ast) const = 0;
 };
 #endif  // SPA_CFG_EXTRACTOR_H

@@ -63,3 +63,11 @@ bool TokenHandler::IsMathOperator() {
          next.Is(Token::ASTERISK) || next.Is(Token::SLASH) ||
          next.Is(Token::PERCENT);
 }
+
+int TokenHandler::GetTokenPos() {
+  return token_pos_;
+}
+
+void TokenHandler::SetTokenPos(int token_pos) {
+  token_pos_ = token_pos;
+}
