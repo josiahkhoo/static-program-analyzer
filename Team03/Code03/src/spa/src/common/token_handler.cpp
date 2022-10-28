@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "qps/exceptions/syntax_exception.h"
+#include "common/exceptions/syntax_exception.h"
 
 TokenHandler::TokenHandler() = default;
 

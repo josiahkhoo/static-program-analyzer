@@ -6,8 +6,8 @@
 #include "common/reference/attribute_reference.h"
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
+#include "common/token_handler.h"
 #include "qps/query_string_builder.h"
-#include "qps/token_handler.h"
 
 /// Contains utility methods used for parsing tokens in the various *Parser
 /// classes.

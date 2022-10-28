@@ -2,7 +2,7 @@
 
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
-#include "qps/exceptions/syntax_exception.h"
+#include "common/exceptions/syntax_exception.h"
 #include "qps/parser/operations/affects_parser.h"
 #include "qps/parser/operations/affects_t_parser.h"
 #include "qps/parser/operations/calls_parser.h"

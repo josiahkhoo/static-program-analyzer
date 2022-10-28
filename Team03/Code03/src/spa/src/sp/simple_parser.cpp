@@ -20,10 +20,6 @@ TNode SimpleParser::Parse(std::vector<Token> tokens) {
     TNode program_node = TNode(t_node_id_, TNode::Program, children);
     AssignParentToChildren(std::make_shared<TNode>(program_node), children);
     return program_node;
-  } catch (const std::runtime_error &e) {
-    TNode invalid_node(0, TNode::Invalid,
-                       std::vector<std::shared_ptr<TNode>>());
-    return invalid_node;
   } catch (const SyntaxException &e) {
     TNode invalid_node(0, TNode::Invalid,
                        std::vector<std::shared_ptr<TNode>>());
@@ -41,7 +37,7 @@ std::shared_ptr<TNode> SimpleParser::ParseProcedure() {
     std::unordered_set<std::string> empty_set;
     proc_map_.emplace(proc_name_, empty_set);
   } else {
-    throw std::runtime_error("There are procedures with the same name!");
+    throw SyntaxException("There are procedures with the same name!");
   }
 
   tokens_->Expect(Token::LEFT_CURLY_BRACKET);
@@ -82,7 +78,7 @@ std::shared_ptr<TNode> SimpleParser::ParseStatement() {
   tokens_->Back();
 
   if (!tokens_->MatchKind(Token::IDENTIFIER)) {
-    throw std::runtime_error("Expected IDENTIFIER but got something else");
+    throw SyntaxException("Expected IDENTIFIER but got something else");
   }
 
   if (tokens_->PeekValue() == "read") {
@@ -96,7 +92,7 @@ std::shared_ptr<TNode> SimpleParser::ParseStatement() {
   } else if (tokens_->PeekValue() == "if") {
     return ParseIf();
   } else {
-    throw std::runtime_error("Failed to Parse statement with Token name " +
+    throw SyntaxException("Failed to Parse statement with Token name " +
                              tokens_->PeekValue());
   }
 }
@@ -154,7 +150,7 @@ std::shared_ptr<TNode> SimpleParser::ParseCall() {
   if (call_proc_name != curr_proc_) {
     proc_map_[curr_proc_].emplace(call_proc_name);
   } else {
-    throw std::runtime_error("Recursive procedure calling!");
+    throw SyntaxException("Recursive procedure calling!");
   }
 
   t_node_id_++;
@@ -219,7 +215,7 @@ std::shared_ptr<TNode> SimpleParser::ParseCondExpr() {
 
   // Check for empty condition
   if (tokens_->MatchKind(Token::RIGHT_ROUND_BRACKET)) {
-    throw std::runtime_error("Empty condition!");
+    throw SyntaxException("Empty condition!");
   }
 
   // Check for rel_expr
@@ -264,7 +260,7 @@ std::shared_ptr<TNode> SimpleParser::ParseCondExpr() {
       tokens_->Expect(Token::OR);
       type = TNode::Or;
     } else {
-      throw std::runtime_error(
+      throw SyntaxException(
           "Expected boolean operator but got something else!");
     }
 
@@ -278,7 +274,7 @@ std::shared_ptr<TNode> SimpleParser::ParseCondExpr() {
     AssignParentToChildren(cond_node, children);
     return cond_node;
   } else {
-    throw std::runtime_error("Invalid CondExpr!");
+    throw SyntaxException("Invalid CondExpr!");
   }
 }
 
@@ -309,7 +305,7 @@ std::shared_ptr<TNode> SimpleParser::ParseRelExpr() {
     tokens_->Expect(Token::NOT_EQUAL);
     type = TNode::NotEqual;
   } else {
-    throw std::runtime_error(
+    throw SyntaxException(
         "Expected rel expr operator but got something else!");
   }
 
@@ -457,10 +453,10 @@ void SimpleParser::TraverseProcedureTree(
   for (const auto &child : children) {
     end = child;
     if (end == start) {
-      throw std::runtime_error("Cyclic procedure calling!");
+      throw SyntaxException("Cyclic procedure calling!");
     }
     if (proc_map_.find(end) == proc_map_.end()) {
-      throw std::runtime_error("Called procedure not found!");
+      throw SyntaxException("Called procedure not found!");
     }
     auto next_children = proc_map_[child];
     if (next_children.empty()) {

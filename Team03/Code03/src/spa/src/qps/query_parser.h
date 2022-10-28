@@ -2,11 +2,11 @@
 #define SPA_QUERY_PARSER_H
 
 #include "common/parser.h"
+#include "common/token_handler.h"
 #include "qps/parser/query_operation_parser.h"
 #include "qps/parser/query_select_parser.h"
 #include "qps/query_string.h"
 #include "qps/query_string_builder.h"
-#include "qps/token_handler.h"
 
 class QueryParser : public Parser<QueryString, std::vector<Token>> {
  public:
