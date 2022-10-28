@@ -8,7 +8,8 @@
 
 class UsesAbstractionExtractorImpl : public UsesAbstractionExtractor {
  public:
-  std::pair<std::vector<UsesSAbstraction>, std::vector<UsesPAbstraction>>
+  [[nodiscard]] std::pair<std::vector<UsesSAbstraction>,
+                          std::vector<UsesPAbstraction>>
   Extract(const SubAbstractionExtractorContext& context) const override;
 
  private:

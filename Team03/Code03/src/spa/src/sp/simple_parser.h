@@ -8,8 +8,8 @@
 #include "common/parser.h"
 #include "common/t_node.h"
 #include "common/token.h"
-#include "qps/token_handler.h"
 #include "qps/exceptions/syntax_exception.h"
+#include "qps/token_handler.h"
 
 class SimpleParser : public Parser<TNode, std::vector<Token>> {
  public:
@@ -18,23 +18,13 @@ class SimpleParser : public Parser<TNode, std::vector<Token>> {
   TNode Parse(std::vector<Token> tokens_) override;
 
  private:
-  //int token_pos_ = 0;
+  // int token_pos_ = 0;
   int statement_number_ = 0;
   int t_node_id_ = 0;
-  //std::vector<Token> tokens_;
+  // std::vector<Token> tokens_;
   std::shared_ptr<TokenHandler> tokens_;
   std::string curr_proc_;
   std::unordered_map<std::string, std::unordered_set<std::string>> proc_map_;
-
-  Token Peek(int pos);
-
-  bool MatchKind(Token::Kind kind);
-
-  bool MatchString(const std::string &s);
-
-  void Expect(Token::Kind kind);
-
-  void Expect(const std::string &s);
 
   std::shared_ptr<TNode> ParseProcedure();
 
@@ -70,8 +60,8 @@ class SimpleParser : public Parser<TNode, std::vector<Token>> {
 
   std::shared_ptr<TNode> ParseConstValue();
 
-  void AssignParentToChildren(
-      std::shared_ptr<TNode> t_node,
+  static void AssignParentToChildren(
+      const std::shared_ptr<TNode> &t_node,
       const std::vector<std::shared_ptr<TNode>> &children);
 
   void CheckValidProgram();

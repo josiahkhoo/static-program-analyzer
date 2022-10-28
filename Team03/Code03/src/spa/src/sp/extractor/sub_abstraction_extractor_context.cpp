@@ -95,14 +95,14 @@ std::unordered_map<TNode, VariableEntity>
   return t_node_var_ent_umap_;
 }
 
-std::unordered_map<TNode, ConstantEntity>
-    &SubAbstractionExtractorContext::GetTNodeConstEntUmap() const {
-  return t_node_const_ent_umap_;
-}
-
 std::unordered_map<TNode, ProcedureEntity>
     &SubAbstractionExtractorContext::GetTNodeProcEntUmap() const {
   return t_node_proc_ent_umap_;
+}
+
+[[maybe_unused]] std::unordered_map<TNode, ConstantEntity>
+    &SubAbstractionExtractorContext::GetTNodeConstEntUmap() const {
+  return t_node_const_ent_umap_;
 }
 
 std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
@@ -239,4 +239,4 @@ SubAbstractionExtractorContext::Builder::Build() {
       *t_node_proc_ent_umap_, *proc_node_call_ent_umap_, *proc_name_node_umap_);
 }
 
-SubAbstractionExtractorContext::Builder::Builder() {}
+SubAbstractionExtractorContext::Builder::Builder() = default;

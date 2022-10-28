@@ -5,41 +5,8 @@
 
 SimpleParser::SimpleParser() = default;
 
-/*
-Token SimpleParser::Peek(int pos) {
-  if (pos >= (int)tokens_.size()) {
-    throw std::runtime_error("No more tokens left to Peek");
-  }
-  return tokens_[pos];
-}
-
-bool SimpleParser::MatchKind(Token::Kind kind) {
-  return Peek(token_pos_).Is(kind);
-}
-
-bool SimpleParser::MatchString(const std::string &s) {
-  return (Peek(token_pos_).GetValue() == s);
-}
-
-void SimpleParser::Expect(Token::Kind kind) {
-  if (MatchKind(kind)) {
-    token_pos_++;
-  } else {
-    throw std::runtime_error("Expected a different token kind");
-  }
-}
-
-void SimpleParser::Expect(const std::string &s) {
-  if (MatchString(s)) {
-    token_pos_++;
-  } else {
-    throw std::runtime_error("Expected a different token string");
-  }
-}*/
-
 TNode SimpleParser::Parse(std::vector<Token> tokens) {
   try {
-    //this->tokens_ = tokens_;
     std::vector<std::shared_ptr<TNode>> children;
     tokens_ = std::make_shared<TokenHandler>(TokenHandler(tokens));
 
@@ -363,8 +330,9 @@ std::shared_ptr<TNode> SimpleParser::ParseRelFactor() {
 std::shared_ptr<TNode> SimpleParser::ParseExpr() {
   // expr '+' term | expr '-' term | term
   std::shared_ptr<TNode> expr_node = ParseTerm();
-  while (!tokens_->MatchKind(Token::END) &&
-         ((tokens_->MatchKind(Token::PLUS)) || tokens_->MatchKind(Token::MINUS))) {
+  while (
+      !tokens_->MatchKind(Token::END) &&
+      ((tokens_->MatchKind(Token::PLUS)) || tokens_->MatchKind(Token::MINUS))) {
     std::vector<std::shared_ptr<TNode>> children;
 
     TNode::Type type;
@@ -396,7 +364,8 @@ std::shared_ptr<TNode> SimpleParser::ParseTerm() {
   // term '*' factor | term '/' factor | term '%' factor | factor
   std::shared_ptr<TNode> term_node = ParseFactor();
   while (!tokens_->MatchKind(Token::END) &&
-         ((tokens_->MatchKind(Token::ASTERISK)) || tokens_->MatchKind(Token::SLASH) ||
+         ((tokens_->MatchKind(Token::ASTERISK)) ||
+          tokens_->MatchKind(Token::SLASH) ||
           tokens_->MatchKind(Token::PERCENT))) {
     std::vector<std::shared_ptr<TNode>> children;
 
@@ -466,7 +435,7 @@ std::shared_ptr<TNode> SimpleParser::ParseConstValue() {
 }
 
 void SimpleParser::AssignParentToChildren(
-    std::shared_ptr<TNode> t_node,
+    const std::shared_ptr<TNode> &t_node,
     const std::vector<std::shared_ptr<TNode>> &children) {
   for (const auto &child : children) {
     child->SetParent(t_node);

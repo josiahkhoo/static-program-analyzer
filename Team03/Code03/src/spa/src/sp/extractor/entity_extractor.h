@@ -6,7 +6,8 @@
 
 class EntityExtractor {
  public:
-  virtual EntityExtractorResult Extract(const TNode &ast) const = 0;
+  [[nodiscard]] virtual EntityExtractorResult Extract(
+      const TNode &ast) const = 0;
 };
 
 #endif  // SPA_ENTITY_EXTRACTOR_H
