@@ -64,10 +64,6 @@ bool TokenHandler::IsMathOperator() {
          next.Is(Token::PERCENT);
 }
 
-int TokenHandler::GetTokenPos() {
-  return token_pos_;
-}
+int TokenHandler::GetTokenPos() { return token_pos_; }
 
-void TokenHandler::SetTokenPos(int token_pos) {
-  token_pos_ = token_pos;
-}
+void TokenHandler::SetTokenPos(int token_pos) { token_pos_ = token_pos; }

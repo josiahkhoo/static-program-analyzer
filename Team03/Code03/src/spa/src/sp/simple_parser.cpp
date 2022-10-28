@@ -93,7 +93,7 @@ std::shared_ptr<TNode> SimpleParser::ParseStatement() {
     return ParseIf();
   } else {
     throw SyntaxException("Failed to Parse statement with Token name " +
-                             tokens_->PeekValue());
+                          tokens_->PeekValue());
   }
 }
 
@@ -305,8 +305,7 @@ std::shared_ptr<TNode> SimpleParser::ParseRelExpr() {
     tokens_->Expect(Token::NOT_EQUAL);
     type = TNode::NotEqual;
   } else {
-    throw SyntaxException(
-        "Expected rel expr operator but got something else!");
+    throw SyntaxException("Expected rel expr operator but got something else!");
   }
 
   children.emplace_back((ParseRelFactor()));
