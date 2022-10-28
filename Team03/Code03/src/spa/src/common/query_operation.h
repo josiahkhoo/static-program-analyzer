@@ -17,6 +17,8 @@ class QueryOperation {
 
   enum IterateSide { LHS, RHS };
 
+  enum Speed { FASTEST, FAST, DEFAULT, SLOW, SLOWEST };
+
   /// Fetch is called when the query operation is a single synonym operation. It
   /// returns every value of the synonym associated with this clause.
   [[nodiscard]] virtual std::unordered_set<std::string> Fetch(
@@ -46,7 +48,11 @@ class QueryOperation {
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const = 0;
 
-  [[nodiscard]] bool IsRelatedTo(QueryOperation *other_op) const;
+  [[nodiscard]] bool IsRelatedTo(std::unordered_set<Synonym> synonyms) const;
+
+  [[nodiscard]] virtual Speed GetSpeed() const;
+
+  [[nodiscard]] std::vector<Synonym> GetSynonyms() const;
 };
 
 #endif  // SPA_QUERY_OPERATION_H

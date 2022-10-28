@@ -1,22 +1,30 @@
 #include "common/query_operation.h"
 
-bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
-  if (this->GetType() == DOUBLE_SYNONYM &&
-      other_op->GetType() == DOUBLE_SYNONYM) {
-    return this->GetSynonymPair().first == other_op->GetSynonymPair().first ||
-           this->GetSynonymPair().first == other_op->GetSynonymPair().second ||
-           this->GetSynonymPair().second == other_op->GetSynonymPair().first ||
-           this->GetSynonymPair().second == other_op->GetSynonymPair().second;
+bool QueryOperation::IsRelatedTo(std::unordered_set<Synonym> synonyms) const {
+  switch (this->GetType()) {
+    case DOUBLE_SYNONYM:
+      return synonyms.count(this->GetSynonymPair().first) ||
+             synonyms.count(this->GetSynonymPair().second);
+    case SINGLE_SYNONYM:
+      return synonyms.count(this->GetSynonym());
+    case NO_SYNONYM:
+    default:
+      return false;
   }
-  if (this->GetType() == DOUBLE_SYNONYM &&
-      other_op->GetType() == SINGLE_SYNONYM) {
-    return this->GetSynonymPair().first == other_op->GetSynonym() ||
-           this->GetSynonymPair().second == other_op->GetSynonym();
+}
+
+QueryOperation::Speed QueryOperation::GetSpeed() const {
+  return QueryOperation::DEFAULT;
+}
+
+std::vector<Synonym> QueryOperation::GetSynonyms() const {
+  switch (this->GetType()) {
+    case DOUBLE_SYNONYM:
+      return {this->GetSynonymPair().first, this->GetSynonymPair().second};
+    case SINGLE_SYNONYM:
+      return {this->GetSynonym()};
+    case NO_SYNONYM:
+    default:
+      return {};
   }
-  if (other_op->GetType() == DOUBLE_SYNONYM &&
-      this->GetType() == SINGLE_SYNONYM) {
-    return other_op->GetSynonymPair().first == this->GetSynonym() ||
-           other_op->GetSynonymPair().second == this->GetSynonym();
-  }
-  return false;
 }
