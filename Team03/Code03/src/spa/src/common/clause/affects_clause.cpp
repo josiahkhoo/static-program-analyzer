@@ -67,3 +67,7 @@ bool AffectsClause::IsValid(const QueryablePkb &queryable_pkb) const {
   }
   return queryable_pkb.CheckValidAffectsStmtNo(line_no);
 }
+
+QueryOperation::Speed AffectsClause::GetSpeed() const {
+  return QueryOperation::Speed::SLOW;
+}

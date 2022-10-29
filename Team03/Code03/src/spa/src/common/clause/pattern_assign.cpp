@@ -66,3 +66,7 @@ bool PatternAssign::IsTrue(const QueryablePkb &) const {
   assert(!"Patterns are never no synonyms, this should not get called");
   return false;
 }
+
+QueryOperation::Speed PatternAssign::GetSpeed() const {
+  return QueryOperation::Speed::SLOW;
+}

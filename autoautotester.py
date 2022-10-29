@@ -121,6 +121,10 @@ for test in test_array:
             if "<exception/>" in query:
                 exception_test_cases.append([query_id, comment, time_taken])
 
+            if "timeout/>" in query:
+                failed_test_cases.append(
+                    [query_id, f"{comment} | Expected: '{correct}' | Returned: 'TIMEOUT'", time_taken])
+
             if "<failed>" in query:
                 failed_test_cases.append(
                     [query_id, f"{comment} | Expected: '{correct}' | Returned: '{stuans}'", time_taken])

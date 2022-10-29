@@ -57,3 +57,7 @@ bool AffectsTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
   }
   return !queryable_pkb.QueryAllAffectsBy().empty();
 }
+
+QueryOperation::Speed AffectsTClause::GetSpeed() const {
+  return QueryOperation::Speed::SLOWEST;
+}
