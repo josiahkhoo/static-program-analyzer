@@ -37,6 +37,7 @@ class PatternAssign : public QueryOperation {
       std::vector<std::vector<std::string>> rhs) const override;
 
   [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
+  Speed GetSpeed() const override;
 
  private:
   Synonym syn_;

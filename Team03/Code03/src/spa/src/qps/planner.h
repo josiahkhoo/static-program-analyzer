@@ -16,6 +16,13 @@ class Planner {
   [[nodiscard]] std::shared_ptr<QNode> Plan(const QueryString &q_string) const;
 
  private:
+  /// Sorts a given vector of query operation based on speed, from fastest to
+  /// slowest.
+  ///
+  /// \param v Vector to sort.
+  void SortQueryOperationVector(
+      std::vector<std::shared_ptr<QueryOperation>> &v) const;
+
   [[nodiscard]] std::shared_ptr<QNode> BuildIntersectTree(
       const std::vector<std::shared_ptr<QueryOperation>> &operations) const;
 
