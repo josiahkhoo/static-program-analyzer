@@ -204,7 +204,7 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 /// \param stmtRef
 void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
   std::unordered_set<EntityType> allowedEntityTypes = {
-      ASSIGN, STATEMENT, IF, WHILE, READ, PRINT};
+      ASSIGN, STATEMENT, IF, WHILE, READ, PRINT, CALL};
   if (stmtRef.IsSynonym()) {
     EntityType type = stmtRef.GetSynonym().GetEntityType();
     if (!allowedEntityTypes.count(type)) {

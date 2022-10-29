@@ -163,30 +163,30 @@ stmt s;
 Select s such that Affects(1, s)
 4, 8, 10, 12
 5000
-32 - (SEMANTIC ERROR) Find all assign that while stmt 3 affects
+32 - (SUCCESS) Find all assign that while stmt 3 affects
 assign a;
 Select a such that Affects(3, a)
-SemanticError
+
 5000
-33 - (SEMANTIC ERROR) Find all statements that if stmt 7 affects
+33 - (SUCCESS) Find all statements that if stmt 7 affects
 stmt s;
 Select s such that Affects(7, s)
-SemanticError
+
 5000
-34 - (SEMANTIC ERROR) Find all statements that call stmt 5 affects
+34 - (SUCCESS) Find all statements that call stmt 5 affects
 stmt s;
 Select s such that Affects(5, s)
-SemanticError
+
 5000
-35 - (SEMANTIC ERROR) Find all assign that read stmt 39 affects
+35 - (SUCCESS) Find all assign that read stmt 39 affects
 assign a;
 Select a such that Affects(39, a)
-SemanticError
+
 5000
-36 - (SEMANTIC ERROR) Find all assign that print stmt 45 affects
+36 - (SUCCESS) Find all assign that print stmt 45 affects
 assign a;
 Select a such that Affects(45, a)
-SemanticError
+
 5000
 37 - (SUCCESS) Find all statements that stmt 2 affects - procedure First
 stmt s;
@@ -308,60 +308,55 @@ FALSE
 Select BOOLEAN such that Affects(_, _)
 TRUE
 5000
-123
-stmt s, s1;
-Select <s, s1> such that Affects*(s, s1) with s.stmt# = s1.stmt#
-
-5000
 61 - (SUCCESS) Find all assign statements that affects* each other and assigns to the same variable
 assign a, a1; variable v;
 Select <a, a1> such that Affects*(a, a1) pattern a(v, _) and a1(v, _)
 1 4, 1 8, 1 12, 2 6, 6 6, 8 12, 9 10, 23 25, 26 31, 48 57, 50 56, 55 57, 56 56
 5000
-62 - (SEMANTIC ERROR) Find all assign that affects while stmt 3
+62 - (SUCCESS) Find all assign that affects while stmt 3
 stmt s;
 Select s such that Affects(s, 3)
-SemanticError
+
 5000
-63 - (SEMANTIC ERROR) Find all assign that affects* while stmt 3
+63 - (SUCCESS) Find all assign that affects* while stmt 3
 stmt s;
 Select s such that Affects*(s, 3)
-SemanticError
+
 5000
-64 - (SEMANTIC ERROR) Find all assign that while stmt 3 affects*
+64 - (SUCCESS) Find all assign that while stmt 3 affects*
 stmt s;
 Select s such that Affects*(3, s)
-SemanticError
+
 5000
 65 - (SUCCESS) Are there any statements that affects* each other
 
 Select BOOLEAN such that Affects*(_, _)
 TRUE
 5000
-66 - (SEMANTIC ERROR) Are there any statements that call statement affects*
+66 - (SUCCESS) Are there any statements that call statement affects*
 call c, c1;
 Select BOOLEAN such that Affects*(c, c1)
-SemanticError
+FALSE
 5000
-67 - (SEMANTIC ERROR) Are there any statements that read statement affects*
+67 - (SUCCESS) Are there any statements that read statement affects*
 read r, r1;
 Select BOOLEAN such that Affects*(r, r1)
-SemanticError
+FALSE
 5000
-68 - (SEMANTIC ERROR) Are there any statements that print statement affects*
+68 - (SUCCESS) Are there any statements that print statement affects*
 print p, p1;
 Select BOOLEAN such that Affects*(p, p1)
-SemanticError
+FALSE
 5000
-69 - (SEMANTIC ERROR) Are there any statements that while statement affects*
+69 - (SUCCESS) Are there any statements that while statement affects*
 while w, w1;
 Select BOOLEAN such that Affects*(w, w1)
-SemanticError
+FALSE
 5000
-70 - (SEMANTIC ERROR) Are there any statements that if statement affects*
+70 - (SUCCESS) Are there any statements that if statement affects*
 if i, i1;
 Select BOOLEAN such that Affects*(i, i1)
-SemanticError
+FALSE
 5000
 71 - (SUCCESS) Find all statements that stmt 1 affects* - procedure First
 stmt s;
@@ -463,53 +458,78 @@ Select s.stmt# such that Affects (s, 56)
 Select BOOLEAN such that Affects* (48, 57)
 TRUE
 5000
-89 - (SEMANTIC ERROR) Does any call statement affects* statement 1
+89 - (SUCCESS) Does any call statement affects* statement 1
 call c;
 Select BOOLEAN such that Affects*(c, 1)
-SemanticError
+FALSE
 5000
-90 - (SEMANTIC ERROR) Does any read statement affects* statement 1
+90 - (SUCCESS) Does any read statement affects* statement 1
 read r;
 Select BOOLEAN such that Affects*(r, 1)
-SemanticError
+FALSE
 5000
-91 - (SEMANTIC ERROR) Does any print statement affects* statement 1
+91 - (SUCCESS) Does any print statement affects* statement 1
 print p;
 Select BOOLEAN such that Affects*(p, 1)
-SemanticError
+FALSE
 5000
-92 - (SEMANTIC ERROR) Does any while statement affects* statement 1
+92 - (SUCCESS) Does any while statement affects* statement 1
 while w;
 Select BOOLEAN such that Affects*(w, 1)
-SemanticError
+FALSE
 5000
-93 - (SEMANTIC ERROR) Does any if statement affects* statement 1
+93 - (SUCCESS) Does any if statement affects* statement 1
 if i;
 Select BOOLEAN such that Affects*(i, 1)
-SemanticError
+FALSE
 5000
-94 - (SEMANTIC ERROR) Does statement 1 affects* any call statement
+94 - (SUCCESS) Does statement 1 affects* any call statement
 call c;
 Select BOOLEAN such that Affects*(1, c)
-SemanticError
+FALSE
 5000
-95 - (SEMANTIC ERROR) Does statement 1 affects* any read statement
+95 - (SUCCESS) Does statement 1 affects* any read statement
 read r;
 Select BOOLEAN such that Affects*(1, r)
-SemanticError
+FALSE
 5000
-96 - (SEMANTIC ERROR) Does statement 1 affects* any print statement
+96 - (SUCCESS) Does statement 1 affects* any print statement
 print p;
 Select BOOLEAN such that Affects*(1, p)
-SemanticError
+FALSE
 5000
-97 - (SEMANTIC ERROR) Does statement 1 affects* any while statement
+97 - (SUCCESS) Does statement 1 affects* any while statement
 while w;
 Select BOOLEAN such that Affects*(1, w)
-SemanticError
+FALSE
 5000
-98 - (SEMANTIC ERROR) Does statement 1 affects* any if statement
+98 - (SUCCESS) Does statement 1 affects* any if statement
 if i;
 Select BOOLEAN such that Affects*(1, i)
-SemanticError
+FALSE
+5000
+99 - (SUCCESS) Does statement 1 affects any call statement
+call c;
+Select BOOLEAN such that Affects(1, c)
+FALSE
+5000
+100 - (SUCCESS) Does statement 1 affects any read statement
+read r;
+Select BOOLEAN such that Affects(1, r)
+FALSE
+5000
+101 - (SUCCESS) Does statement 1 affects any print statement
+print p;
+Select BOOLEAN such that Affects(1, p)
+FALSE
+5000
+102 - (SUCCESS) Does statement 1 affects any while statement
+while w;
+Select BOOLEAN such that Affects(1, w)
+FALSE
+5000
+103 - (SUCCESS) Does statement 1 affects any if statement
+if i;
+Select BOOLEAN such that Affects(1, i)
+FALSE
 5000

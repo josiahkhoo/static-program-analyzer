@@ -33,6 +33,7 @@ class AffectsClause : public Clause {
  private:
   StatementReference lhs_;
   StatementReference rhs_;
+  [[nodiscard]] bool CheckIfNotAssignStatement(const Reference &ref) const;
 };
 
 #endif  // QUERY_PARSER_CPP_AFFECTS_CLAUSE_H
