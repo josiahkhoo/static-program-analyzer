@@ -127,29 +127,29 @@ class RelationshipManager {
 
   // Affects query methods
   std::unordered_set<std::string> GetAllAffects(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads) const;
   std::unordered_set<std::string> GetAllAffectsBy(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads) const;
   std::unordered_set<std::string> GetAffects(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int statement_number) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int statement_number) const;
   std::unordered_set<std::string> GetAffectsBy(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int statement_number) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int statement_number) const;
   std::unordered_set<std::string> GetAffectsT(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int statement_number) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int statement_number) const;
   std::unordered_set<std::string> GetAffectsTBy(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int statement_number) const;
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int statement_number) const;
 
  private:
   FollowsStorage follows_store_;
@@ -165,38 +165,37 @@ class RelationshipManager {
   void PreviousDFSTraversal(int statement_number,
                             std::unordered_set<int>& visited_stmts,
                             std::unordered_set<int>& previousT_stmts) const;
-  bool CheckAffectingDFSTraversal(std::unordered_set<std::string> assigns,
-                                  std::unordered_set<std::string> calls,
-                                  std::unordered_set<std::string> reads,
-                                  int start, int current,
-                                  std::unordered_set<int>& cfg_visited,
-                                  bool is_start) const;
+  bool CheckAffectingDFSTraversal(
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int start, int current,
+      std::unordered_set<int>& cfg_visited, bool is_start) const;
   bool CheckAffectedByDFSTraversal(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int end, int current,
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int end, int current,
       std::unordered_set<int>& cfg_visited, bool is_start,
       std::unordered_set<std::string>& relevant_vars) const;
   void GetAffectsDFSTraversal(
-      std::unordered_set<std::string> assigns,
-      std::unordered_set<std::string> calls,
-      std::unordered_set<std::string> reads, int end, int current,
+      const std::unordered_set<std::string>& assigns,
+      const std::unordered_set<std::string>& calls,
+      const std::unordered_set<std::string>& reads, int end, int current,
       std::unordered_set<int>& cfg_visited, bool is_start,
       std::vector<int>& affecting_list,
       std::unordered_set<std::string>& relevant_vars) const;
-  void GetAffectsByDFSTraversal(std::unordered_set<std::string> assigns,
-                                std::unordered_set<std::string> calls,
-                                std::unordered_set<std::string> reads,
+  void GetAffectsByDFSTraversal(const std::unordered_set<std::string>& assigns,
+                                const std::unordered_set<std::string>& calls,
+                                const std::unordered_set<std::string>& reads,
                                 int start, int current,
                                 std::unordered_set<int>& cfg_visited,
                                 bool is_start,
                                 std::vector<int>& affected_list) const;
-  bool IsPossibleAffects(std::unordered_set<std::string> assigns, int stmt1,
-                         int stmt2) const;
-  bool IsLastModifiedBroken(std::unordered_set<std::string> assigns,
-                            std::unordered_set<std::string> calls,
-                            std::unordered_set<std::string> reads, int current,
-                            int start) const;
+  bool IsPossibleAffects(const std::unordered_set<std::string>& assigns,
+                         int stmt1, int stmt2) const;
+  bool IsLastModifiedBroken(const std::unordered_set<std::string>& assigns,
+                            const std::unordered_set<std::string>& calls,
+                            const std::unordered_set<std::string>& reads,
+                            int current, int start) const;
 };
 
 #endif  // SPA_RELATIONSHIP_MANAGER_H
