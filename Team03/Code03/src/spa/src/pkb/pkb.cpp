@@ -1067,8 +1067,22 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
   return result;
 }
 
-// Todo: @PKB Team to implement checker
 bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
-  assert(stmt_no > 0);
-  return true;
+  std::unordered_set<std::string> assigns = entity_manager_.GetAssignStatements();
+  std::unordered_set<std::string> ifs = entity_manager_.GetIfStatements();
+  std::unordered_set<std::string> whiles = entity_manager_.GetWhileStatements();
+  std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  std::unordered_set<std::string> prints = entity_manager_.GetPrintStatements();
+  if (assigns.find(std::to_string(stmt_no)) != assigns.end()) {
+    return true;
+  } else if (ifs.find(std::to_string(stmt_no)) != ifs.end()) {
+    return true;
+  } else if (whiles.find(std::to_string(stmt_no)) != whiles.end()) {
+    return true;
+  } else if (reads.find(std::to_string(stmt_no)) != reads.end()) {
+    return true;
+  } else if (prints.find(std::to_string(stmt_no)) != prints.end()) {
+    return true;
+  }
+  return false;
 }
