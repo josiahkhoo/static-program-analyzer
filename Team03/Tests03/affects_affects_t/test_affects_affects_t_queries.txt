@@ -308,11 +308,6 @@ FALSE
 Select BOOLEAN such that Affects(_, _)
 TRUE
 5000
-123
-stmt s, s1;
-Select <s, s1> such that Affects*(s, s1) with s.stmt# = s1.stmt#
-
-5000
 61 - (SUCCESS) Find all assign statements that affects* each other and assigns to the same variable
 assign a, a1; variable v;
 Select <a, a1> such that Affects*(a, a1) pattern a(v, _) and a1(v, _)
