@@ -81,6 +81,6 @@ QueryOperation::Speed AffectsClause::GetSpeed() const {
   return QueryOperation::Speed::SLOW;
 }
 
-bool AffectsClause::CheckIfNotAssignStatement(const Reference& ref) const {
+bool AffectsClause::CheckIfNotAssignStatement(const Reference &ref) const {
   return !(ref.IsEntityType(STATEMENT) || ref.IsEntityType(ASSIGN));
 }
