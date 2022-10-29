@@ -19,6 +19,11 @@ const Reference &AffectsTClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> AffectsTClause::FetchRhs(
     const QueryablePkb &queryable_pkb) const {
+  // Ignore read | print | call | while | if
+  if (!(GetRightHandSide().IsEntityType(STATEMENT) ||
+        GetRightHandSide().IsEntityType(ASSIGN))) {
+    return {};
+  }
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Affects*(1, s)
     return queryable_pkb.QueryAffectsTBy(GetLeftHandSide().GetLineNumber());
@@ -29,6 +34,10 @@ std::unordered_set<std::string> AffectsTClause::FetchRhs(
 
 std::unordered_set<std::string> AffectsTClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
+  if (!(GetLeftHandSide().IsEntityType(STATEMENT) ||
+        GetLeftHandSide().IsEntityType(ASSIGN))) {
+    return {};
+  }
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Affects*(s, 1)
     return queryable_pkb.QueryAffectsT(GetRightHandSide().GetLineNumber());
@@ -56,6 +65,18 @@ bool AffectsTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
                 .empty();
   }
   return !queryable_pkb.QueryAllAffectsBy().empty();
+}
+
+bool AffectsTClause::IsValid(const QueryablePkb &queryable_pkb) const {
+  int line_no;
+  if (GetLeftHandSide().IsLineNumber()) {
+    line_no = GetLeftHandSide().GetLineNumber();
+  } else if (GetRightHandSide().IsLineNumber()) {
+    line_no = GetRightHandSide().IsLineNumber();
+  } else {
+    return true;
+  }
+  return queryable_pkb.CheckValidAffectsStmtNo(line_no);
 }
 
 QueryOperation::Speed AffectsTClause::GetSpeed() const {

@@ -508,3 +508,28 @@ if i;
 Select BOOLEAN such that Affects*(1, i)
 FALSE
 5000
+99 - (SUCCESS) Does statement 1 affects any call statement
+call c;
+Select BOOLEAN such that Affects(1, c)
+FALSE
+5000
+100 - (SUCCESS) Does statement 1 affects any read statement
+read r;
+Select BOOLEAN such that Affects(1, r)
+FALSE
+5000
+101 - (SUCCESS) Does statement 1 affects any print statement
+print p;
+Select BOOLEAN such that Affects(1, p)
+FALSE
+5000
+102 - (SUCCESS) Does statement 1 affects any while statement
+while w;
+Select BOOLEAN such that Affects(1, w)
+FALSE
+5000
+103 - (SUCCESS) Does statement 1 affects any if statement
+if i;
+Select BOOLEAN such that Affects(1, i)
+FALSE
+5000

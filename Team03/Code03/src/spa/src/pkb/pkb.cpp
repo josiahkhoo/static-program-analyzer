@@ -832,6 +832,9 @@ std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  if (CheckNotAssignStmtNo(statement_number)) {
+    return {};
+  }
   return relationship_manager_.GetAffects(assigns, calls, reads,
                                           statement_number);
 }
@@ -845,6 +848,9 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  if (CheckNotAssignStmtNo(statement_number)) {
+    return {};
+  }
   return relationship_manager_.GetAffectsBy(assigns, calls, reads,
                                             statement_number);
 }
@@ -857,6 +863,9 @@ std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  if (CheckNotAssignStmtNo(statement_number)) {
+    return {};
+  }
   return relationship_manager_.GetAffectsT(assigns, calls, reads,
                                            statement_number);
 }
@@ -870,6 +879,9 @@ std::unordered_set<std::string> PKB::QueryAffectsTBy(
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
+  if (CheckNotAssignStmtNo(statement_number)) {
+    return {};
+  }
   return relationship_manager_.GetAffectsTBy(assigns, calls, reads,
                                              statement_number);
 }
@@ -1074,6 +1086,7 @@ bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
   std::unordered_set<std::string> whiles = entity_manager_.GetWhileStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
   std::unordered_set<std::string> prints = entity_manager_.GetPrintStatements();
+  std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
   if (assigns.find(std::to_string(stmt_no)) != assigns.end()) {
     return true;
   } else if (ifs.find(std::to_string(stmt_no)) != ifs.end()) {
@@ -1084,6 +1097,17 @@ bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
     return true;
   } else if (prints.find(std::to_string(stmt_no)) != prints.end()) {
     return true;
+  } else if (calls.find(std::to_string(stmt_no)) != calls.end()) {
+    return true;
   }
   return false;
+}
+
+bool PKB::CheckNotAssignStmtNo(int stmt_no) const {
+  std::unordered_set<std::string> assigns =
+      entity_manager_.GetAssignStatements();
+  if (assigns.find(std::to_string(stmt_no)) != assigns.end()) {
+    return false;
+  }
+  return true;
 }

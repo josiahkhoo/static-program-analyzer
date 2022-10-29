@@ -25,7 +25,10 @@ class AffectsTClause : public Clause {
       const QueryablePkb &queryable_pkb) const override;
 
   [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
-  Speed GetSpeed() const override;
+
+  [[nodiscard]] bool IsValid(const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] Speed GetSpeed() const override;
 
  private:
   StatementReference lhs_;
