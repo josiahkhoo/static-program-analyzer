@@ -9,9 +9,9 @@ class ModifiesAbstractionExtractor
     : public BiSubAbstractionExtractor<ModifiesSAbstraction,
                                        ModifiesPAbstraction> {
  public:
-  [[nodiscard]] virtual std::pair<std::vector<ModifiesSAbstraction>,
-                                  std::vector<ModifiesPAbstraction>>
-  Extract(const SubAbstractionExtractorContext& context) const = 0;
+  [[nodiscard]] std::pair<std::vector<ModifiesSAbstraction>,
+                          std::vector<ModifiesPAbstraction>>
+  Extract(const SubAbstractionExtractorContext& context) const override = 0;
 };
 
 #endif  // SPA_MODIFIES_ABSTRACTION_EXTRACTOR_H

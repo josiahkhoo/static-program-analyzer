@@ -1,10 +1,10 @@
 #include "query_parser_util.h"
 
+#include "common/exceptions/syntax_exception.h"
 #include "common/reference/attribute_name.h"
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
 #include "qps/exceptions/semantic_exception.h"
-#include "qps/exceptions/syntax_exception.h"
 
 /// Retrieve statement reference from tokens & builder
 /// \param tokens
