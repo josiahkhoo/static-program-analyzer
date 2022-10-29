@@ -1068,7 +1068,8 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
 }
 
 bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
-  std::unordered_set<std::string> assigns = entity_manager_.GetAssignStatements();
+  std::unordered_set<std::string> assigns =
+      entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> ifs = entity_manager_.GetIfStatements();
   std::unordered_set<std::string> whiles = entity_manager_.GetWhileStatements();
   std::unordered_set<std::string> reads = entity_manager_.GetReadStatements();
