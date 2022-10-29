@@ -1,5 +1,6 @@
 #include "planner.h"
 
+#include <algorithm>
 #include <cassert>
 #include <unordered_map>
 
@@ -31,6 +32,11 @@ std::shared_ptr<QNode> Planner::Plan(const QueryString &q_string) const {
       default:
         assert(false);
     }
+  }
+
+  for (std::vector<std::shared_ptr<QueryOperation>> *v :
+       {&no_syn_ops, &single_syn_ops, &double_syn_ops}) {
+    SortQueryOperationVector(*v);
   }
 
   std::vector<std::shared_ptr<QNode>> abstraction_nodes;
@@ -135,21 +141,38 @@ void Planner::CreateDisjointJoinNodes(
       // If node not seen yet link with other relevant nodes
       std::shared_ptr<QueryOperation> node1_op =
           abstraction_node_to_query_op_map[node1];
-      for (const auto &node2 : abstraction_nodes) {
-        std::shared_ptr<QueryOperation> node2_op =
-            abstraction_node_to_query_op_map[node2];
-        // Check if in seen
-        if (seen.find(node2) == seen.end()) {
-          // If not seen compare node1_op if it's common with node2_op
-          if (node1_op->IsRelatedTo(node2_op.get())) {
-            // Make current node left hand child of new node
-            // and make node 2 right hand child of new node,
-            // then swap new node and current node
-            auto new_node = std::make_shared<JoinNode>();
-            new_node->SetLeftNode(current_node);
-            new_node->SetRightNode(node2);
-            current_node = new_node;
+
+      std::unordered_set<Synonym> related_synonyms;
+      for (const auto &syn : node1_op->GetSynonyms())
+        related_synonyms.emplace(syn);
+
+      // Continuously loop to keep finding new relations
+      bool has_match = true;
+      while (has_match) {
+        bool has_inner_match = false;
+        for (const auto &node2 : abstraction_nodes) {
+          std::shared_ptr<QueryOperation> node2_op =
+              abstraction_node_to_query_op_map[node2];
+          // Check if in seen
+          if (seen.find(node2) == seen.end()) {
+            // If not seen compare node1_op if it's common with node2_op
+            if (node2_op->IsRelatedTo(related_synonyms)) {
+              // Make current node left hand child of new node
+              // and make node 2 right hand child of new node,
+              // then swap new node and current node
+              auto new_node = std::make_shared<JoinNode>();
+              new_node->SetLeftNode(current_node);
+              new_node->SetRightNode(node2);
+              current_node = new_node;
+              for (const auto &syn : node2_op->GetSynonyms())
+                related_synonyms.emplace(syn);
+              has_inner_match = true;
+              seen.insert(node2);
+            }
           }
+        }
+        if (!has_inner_match) {
+          has_match = false;
         }
       }
       // Add current node to disjoint join nodes after iteration
@@ -254,4 +277,13 @@ std::shared_ptr<QNode> Planner::BuildIntersectTree(
     }
   }
   return head;
+}
+
+void Planner::SortQueryOperationVector(
+    std::vector<std::shared_ptr<QueryOperation>> &v) const {
+  std::sort(v.begin(), v.end(),
+            [](const std::shared_ptr<QueryOperation> &a,
+               const std::shared_ptr<QueryOperation> &b) {
+              return a->GetSpeed() > b->GetSpeed();
+            });
 }
