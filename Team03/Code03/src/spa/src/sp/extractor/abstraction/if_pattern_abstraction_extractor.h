@@ -7,7 +7,7 @@
 class IfPatternAbstractionExtractor
     : public SubAbstractionExtractor<IfPatternAbstraction> {
  public:
-  std::vector<IfPatternAbstraction> Extract(
+  [[nodiscard]] std::vector<IfPatternAbstraction> Extract(
       const SubAbstractionExtractorContext &context) const override;
 
  private:

@@ -13,7 +13,7 @@
 
 class AbstractionExtractor {
  public:
-  virtual AbstractionExtractorResult Extract(
+  [[nodiscard]] virtual AbstractionExtractorResult Extract(
       const std::vector<AssignEntity> &assign_entities,
       const std::vector<CallEntity> &call_entities,
       const std::vector<ConstantEntity> &constant_entities,

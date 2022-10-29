@@ -24,6 +24,8 @@ class TokenHandler {
   void Back();
   bool IsNotEnd();
   bool IsMathOperator();
+  int GetTokenPos();
+  void SetTokenPos(int token_pos);
 };
 
 #endif  // SPA_TOKEN_HANDLER_H

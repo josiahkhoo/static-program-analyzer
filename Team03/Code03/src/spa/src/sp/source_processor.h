@@ -22,7 +22,7 @@ class SourceProcessor {
   DesignExtractor &design_extractor_;
   StorablePkb &storable_pkb_;
 
-  void StoreDesignExtractorResult(
+  static void StoreDesignExtractorResult(
       const DesignExtractorResult &design_extractor_result,
       StorablePkb &storable_pkb);
 };
