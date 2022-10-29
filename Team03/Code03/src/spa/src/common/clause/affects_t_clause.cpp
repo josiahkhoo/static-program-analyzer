@@ -20,8 +20,7 @@ const Reference &AffectsTClause::GetRightHandSide() const { return rhs_; }
 std::unordered_set<std::string> AffectsTClause::FetchRhs(
     const QueryablePkb &queryable_pkb) const {
   // Ignore read | print | call | while | if
-  if (!(GetRightHandSide().IsEntityType(STATEMENT) ||
-        GetRightHandSide().IsEntityType(ASSIGN))) {
+  if (CheckIfNotAssignStatement(GetRightHandSide())) {
     return {};
   }
   if (GetLeftHandSide().IsLineNumber()) {
@@ -34,8 +33,7 @@ std::unordered_set<std::string> AffectsTClause::FetchRhs(
 
 std::unordered_set<std::string> AffectsTClause::FetchLhs(
     const QueryablePkb &queryable_pkb) const {
-  if (!(GetLeftHandSide().IsEntityType(STATEMENT) ||
-        GetLeftHandSide().IsEntityType(ASSIGN))) {
+  if (CheckIfNotAssignStatement(GetLeftHandSide())) {
     return {};
   }
   if (GetRightHandSide().IsLineNumber()) {
@@ -81,4 +79,8 @@ bool AffectsTClause::IsValid(const QueryablePkb &queryable_pkb) const {
 
 QueryOperation::Speed AffectsTClause::GetSpeed() const {
   return QueryOperation::Speed::SLOWEST;
+}
+
+bool AffectsTClause::CheckIfNotAssignStatement(const Reference& ref) const {
+  return !(ref.IsEntityType(STATEMENT) || ref.IsEntityType(ASSIGN));
 }
