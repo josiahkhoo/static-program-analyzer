@@ -20,3 +20,10 @@ bool QueryOperation::IsRelatedTo(QueryOperation* other_op) const {
   }
   return false;
 }
+
+#define UNUSED(x) (void)(x)
+
+bool QueryOperation::IsValid(const QueryablePkb& queryable_pkb) const {
+  UNUSED(queryable_pkb);
+  return true;
+}
