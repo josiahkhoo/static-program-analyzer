@@ -7,8 +7,8 @@
 QueryStringBuilder::QueryStringBuilder() = default;
 
 void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
-  declared_synonyms_.emplace(declared_synonym.GetIdentifier(),
-                             declared_synonym);
+  declared_synonyms_.emplace(std::make_pair(declared_synonym.GetIdentifier(),
+                             declared_synonym));
 }
 
 void QueryStringBuilder::AddSelect(
