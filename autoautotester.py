@@ -55,8 +55,8 @@ test_array = (
     ("Select attribute", "select_attribute"),
     ("Tuple select", "tuple_select"),
     ("Next / Next T", "next_next_t"),
-    # ("Affects / Affects T", "affects_affects_t"),
-    # ("Stress", "stress"),
+    ("Affects / Affects T", "affects_affects_t"),
+    ("Stress", "stress"),
 )
 
 overall_passed_test_cases = 0
@@ -120,6 +120,10 @@ for test in test_array:
 
             if "<exception/>" in query:
                 exception_test_cases.append([query_id, comment, time_taken])
+
+            if "timeout/>" in query:
+                failed_test_cases.append(
+                    [query_id, f"{comment} | Expected: '{correct}' | Returned: 'TIMEOUT'", time_taken])
 
             if "<failed>" in query:
                 failed_test_cases.append(

@@ -4,8 +4,8 @@
 #include <memory>
 
 #include "common/entity/entity_type.h"
+#include "common/token_handler.h"
 #include "qps/query_string_builder.h"
-#include "qps/token_handler.h"
 
 /// Utility class for matching clause/operation starting grammar word(s)
 class QueryOperationMatcher {

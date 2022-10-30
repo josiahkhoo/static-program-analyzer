@@ -7,7 +7,7 @@
 class ParentTAbstractionExtractor
     : public SubAbstractionExtractor<ParentTAbstraction> {
  public:
-  std::vector<ParentTAbstraction> Extract(
+  [[nodiscard]] std::vector<ParentTAbstraction> Extract(
       const SubAbstractionExtractorContext &context) const override;
 
  private:

@@ -26,9 +26,14 @@ class AffectsTClause : public Clause {
 
   [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
 
+  [[nodiscard]] bool IsValid(const QueryablePkb &queryable_pkb) const override;
+
+  [[nodiscard]] Speed GetSpeed() const override;
+
  private:
   StatementReference lhs_;
   StatementReference rhs_;
+  [[nodiscard]] bool CheckIfNotAssignStatement(const Reference &ref) const;
 };
 
 #endif  // QUERY_PARSER_CPP_AFFECTS_T_CLAUSE_H
