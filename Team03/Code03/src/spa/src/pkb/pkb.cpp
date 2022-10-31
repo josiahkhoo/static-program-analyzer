@@ -170,16 +170,6 @@ std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
 /// \param type
 /// \return Query all statements following any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
-//    std::unordered_set<std::string> statements = relationship_manager_.GetFollowsStatements()
-//        ;
-//    std::unordered_set<std::string> typed_statements = QueryAll(type);
-//    std::unordered_set<std::string> result;
-//    for (const std::string& statement : statements) {
-//      if (typed_statements.find(statement) != typed_statements.end()) {
-//        result.emplace(statement);
-//      }
-//    }
-//   return result;
   return FindIntersect(relationship_manager_.GetFollowsStatements(),
                        QueryAll(type));
 }
@@ -188,16 +178,6 @@ std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
 /// \param type
 /// \return Query all statements followed by any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsByStatements();
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  }
-//  return result;
     return FindIntersect(relationship_manager_.GetFollowsByStatements(),
                          QueryAll(type));
 }
@@ -216,16 +196,6 @@ std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
 /// statement
 std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
                                                   EntityType type) const {
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsStatements(statement_number);
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  }
-//  return result;
     return FindIntersect(relationship_manager_.GetFollowsStatements(statement_number),
                          QueryAll(type));
 }
@@ -237,16 +207,6 @@ std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
                                                     EntityType type) const {
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsByStatements(statement_number);
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  }
-//  return result;
     return FindIntersect(relationship_manager_.GetFollowsByStatements(statement_number),
                          QueryAll(type));
 }
@@ -258,16 +218,6 @@ std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
                                                    EntityType type) const {
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsTStatements(statement_number);
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  };
-//  return result;
     return FindIntersect(relationship_manager_.GetFollowsTStatements(statement_number),
                          QueryAll(type));
 }
@@ -279,16 +229,6 @@ std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
                                                      EntityType type) const {
-//  std::unordered_set<std::string> statements =
-//      relationship_manager_.GetFollowsTByStatements(statement_number);
-//  std::unordered_set<std::string> typed_statements = QueryAll(type);
-//  std::unordered_set<std::string> result;
-//  for (const std::string& statement : statements) {
-//    if (typed_statements.find(statement) != typed_statements.end()) {
-//      result.emplace(statement);
-//    }
-//  }
-//  return result;
     return FindIntersect(relationship_manager_.GetFollowsTByStatements(statement_number),
                          QueryAll(type));
 }
@@ -296,31 +236,15 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
 /// QueryAllParent
 /// \return Query all statements that are direct parents of any statement
 std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentStatements();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetParentStatements(),
+                       QueryAll(type));
 }
 
 /// QueryAllParentBy
 /// \return Query all statements that are direct children of any statement
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentByStatements();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetParentByStatements(),
+                       QueryAll(type));
 }
 
 /// QueryAllParentsRelations
@@ -341,16 +265,9 @@ std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
 /// statement
 std::unordered_set<std::string> PKB::QueryParent(int statement_number,
                                                  EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentStatements(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetParentStatements(statement_number),
+                       QueryAll(type));
+
 }
 
 /// QueryParentBy
@@ -360,16 +277,8 @@ std::unordered_set<std::string> PKB::QueryParent(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
                                                    EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentByStatements(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetParentByStatements(statement_number),
+                       QueryAll(type));
 }
 
 /// QueryParentT
@@ -379,16 +288,8 @@ std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
 /// specified statement
 std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
                                                   EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentTStatements(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  };
-  return result;
+  return FindIntersect(relationship_manager_.GetParentTStatements(statement_number),
+                       QueryAll(type));
 }
 
 /// QueryParentTBy
@@ -398,16 +299,8 @@ std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
 /// specified statement
 std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
                                                     EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetParentTByStatements(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetParentTByStatements(statement_number),
+                       QueryAll(type));
 }
 
 /* ====================================
