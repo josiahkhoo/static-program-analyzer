@@ -18,7 +18,25 @@ void AssignPatternStorage::AddAssignPattern(int statement_number,
 
 std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
     std::string pattern, bool has_wildcard) const {
+  std::string::size_type pattern_start_pos = 0;
+  std::string::size_type pattern_end_pos = 0;
+  for (int i = 0; i < (int)pattern.size(); i++) {
+    if (pattern[i] == '(') {
+      pattern_start_pos++;
+    } else {
+      break;
+    }
+  }
+  for (int i = pattern.size() - 1; i >= 0; i--) {
+    if (pattern[i] == ')') {
+      pattern_end_pos++;
+    } else {
+      break;
+    }
+  }
+
   std::unordered_set<std::string> res;
+
   if (!has_wildcard) {
     for (auto i : stmt_to_exp_map_) {
       if (i.second.compare(pattern) == 0) {
@@ -37,6 +55,23 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
 
 std::unordered_set<std::string> AssignPatternStorage::GetPattern(
     std::string lhs, std::string pattern, bool has_wildcard) const {
+  std::string::size_type pattern_start_pos = 0;
+  std::string::size_type pattern_end_pos = 0;
+  for (int i = 0; i < (int)pattern.size(); i++) {
+    if (pattern[i] == '(') {
+      pattern_start_pos++;
+    } else {
+      break;
+    }
+  }
+  for (int i = pattern.size() - 1; i >= 0; i--) {
+    if (pattern[i] == ')') {
+      pattern_end_pos++;
+    } else {
+      break;
+    }
+  }
+
   std::unordered_set<std::string> res;
   std::unordered_set<int> lhs_stmts = {};
   if (var_to_stmt_map_.find(lhs) != var_to_stmt_map_.end()) {
