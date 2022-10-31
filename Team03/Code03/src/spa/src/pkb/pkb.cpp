@@ -1,6 +1,5 @@
 #include "pkb.h"
 
-#include <cassert>
 #include <stdexcept>
 #include <vector>
 
@@ -8,42 +7,56 @@
 
 PKB::PKB() {}
 
+/// Store Procedure Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<ProcedureEntity> ts) {
   for (const ProcedureEntity& entity : ts) {
     entity_manager_.AddProcedure(entity);
   }
 }
 
+/// Store Variable Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<VariableEntity> ts) {
   for (const VariableEntity& entity : ts) {
     entity_manager_.AddVariable(entity);
   }
 }
 
+/// Store Constant Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<ConstantEntity> ts) {
   for (const ConstantEntity& entity : ts) {
     entity_manager_.AddConstant(entity);
   }
 }
 
+/// Store Call Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<CallEntity> ts) {
   for (const CallEntity& entity : ts) {
     entity_manager_.AddCallStatement(entity);
   }
 }
 
+/// Store Read Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<ReadEntity> ts) {
   for (const ReadEntity& entity : ts) {
     entity_manager_.AddReadStatement(entity);
   }
 }
 
+/// Store Print Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<PrintEntity> ts) {
   for (const PrintEntity& entity : ts) {
     entity_manager_.AddPrintStatement(entity);
   }
 }
 
+/// Store Assign Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<AssignEntity> ts) {
   for (const AssignEntity& entity : ts) {
     entity_manager_.AddAssignStatement(entity);
@@ -51,96 +64,129 @@ void PKB::Store(std::vector<AssignEntity> ts) {
   }
 }
 
+/// Store If Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<IfEntity> ts) {
   for (const IfEntity& entity : ts) {
     entity_manager_.AddIfStatement(entity);
   }
 }
 
+/// Store While Entities
+/// \param ts List of entities
 void PKB::Store(std::vector<WhileEntity> ts) {
   for (const WhileEntity& entity : ts) {
     entity_manager_.AddWhileStatement(entity);
   }
 }
 
+/// Store Follows Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<FollowsAbstraction> abstractions) {
   for (const FollowsAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store FollowsT Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
   for (const FollowsTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store Parent Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<ParentAbstraction> abstractions) {
   for (const ParentAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store ParentT Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
   for (const ParentTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store Calls Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<CallsAbstraction> abstractions) {
   for (const CallsAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store CallsT Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<CallsTAbstraction> abstractions) {
   for (const CallsTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store UsesS Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
   for (const UsesSAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store UsesP Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
   for (const UsesPAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store ModifiesS Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
   for (const ModifiesSAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store ModifiesP Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
   for (const ModifiesPAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
 }
 
+/// Store While Pattern Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
   for (const WhilePatternAbstraction& abstraction : abstractions) {
     pattern_manager_.AddWhilePattern(abstraction);
   }
 }
 
+/// Store If Pattern Abstractions
+/// \param abstractions List of abstractions
 void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
   for (const IfPatternAbstraction& abstraction : abstractions) {
     pattern_manager_.AddIfPattern(abstraction);
   }
 }
 
+/// Store CFGs
+/// \param abstractions List of Cfgs
 void PKB::Store(std::vector<CFG> cfgs) {
   for (const CFG& cfg : cfgs) {
     relationship_manager_.AddCFG(cfg);
   }
 }
 
+/// QueryAll
+/// \param type
+/// \return Query all statements of a specified type
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
