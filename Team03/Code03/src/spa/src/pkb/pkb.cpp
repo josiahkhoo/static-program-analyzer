@@ -407,9 +407,8 @@ std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetModifyingProcedures();
   } else {
-    return FindIntersect(
-        relationship_manager_.GetModifyingStatements(),
-        QueryAll(type));
+    return FindIntersect(relationship_manager_.GetModifyingStatements(),
+                         QueryAll(type));
   }
 }
 
@@ -557,16 +556,7 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
 /// QueryAllNext
 /// \return Query all statements that come next to some statement
 std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetAllNext();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetAllNext(), QueryAll(type));
 }
 
 /// QueryAllPrevious
@@ -574,14 +564,7 @@ std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
 std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
   std::unordered_set<std::string> statements =
       relationship_manager_.GetAllPrevious();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetAllPrevious(), QueryAll(type));
 }
 
 /// QueryAllNext
@@ -599,16 +582,8 @@ std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
 /// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> PKB::QueryNext(int statement_number,
                                                EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetNext(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetNext(statement_number),
+                       QueryAll(type));
 }
 
 /// QueryPrevious
@@ -617,16 +592,8 @@ std::unordered_set<std::string> PKB::QueryNext(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
                                                    EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetPrevious(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetPrevious(statement_number),
+                       QueryAll(type));
 }
 
 /// QueryNextT
@@ -634,16 +601,8 @@ std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
 /// \return Query statement(s) that comes nextT after given statement
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
                                                 EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetNextT(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetNextT(statement_number),
+                       QueryAll(type));
 }
 
 /// QueryPreviousT
@@ -651,16 +610,8 @@ std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
 /// \return Query statement(s) that comes previousT before given statement
 std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
                                                     EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetPreviousT(statement_number);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(relationship_manager_.GetPreviousT(statement_number),
+                       QueryAll(type));
 }
 
 /* ====================================
