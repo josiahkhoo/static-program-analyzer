@@ -11,15 +11,13 @@
 
 class AssignPatternStorage {
  public:
-  void AddAssignPattern(int statement_number, const std::string& lhs,
-                        const std::string& rhs);
+  void AddAssignPattern(int statement_number, std::string lhs, std::string rhs);
 
   [[nodiscard]] std::unordered_set<std::string> GetAllPattern(
-      const std::string& pattern, bool has_wildcard) const;
+      std::string pattern, bool has_wildcard) const;
 
   [[nodiscard]] std::unordered_set<std::string> GetPattern(
-      const std::string& lhs, const std::string& pattern,
-      bool has_wildcard) const;
+      std::string lhs, std::string pattern, bool has_wildcard) const;
 
  private:
   std::unordered_map<int, std::string> stmt_to_var_map_;

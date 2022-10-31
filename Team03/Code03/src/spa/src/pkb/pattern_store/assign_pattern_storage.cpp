@@ -3,8 +3,7 @@
 #include <stdexcept>
 
 void AssignPatternStorage::AddAssignPattern(int statement_number,
-                                            const std::string& lhs,
-                                            const std::string& rhs) {
+                                            std::string lhs, std::string rhs) {
   stmt_to_var_map_.emplace(statement_number, lhs);
   if (!var_to_stmt_map_.emplace(lhs, std::unordered_set<int>{statement_number})
            .second) {
@@ -18,7 +17,7 @@ void AssignPatternStorage::AddAssignPattern(int statement_number,
 }
 
 std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
-    const std::string& pattern, bool has_wildcard) const {
+    std::string pattern, bool has_wildcard) const {
   std::unordered_set<std::string> res;
   if (!has_wildcard) {
     for (const auto& i : stmt_to_exp_map_) {
@@ -37,8 +36,7 @@ std::unordered_set<std::string> AssignPatternStorage::GetAllPattern(
 }
 
 std::unordered_set<std::string> AssignPatternStorage::GetPattern(
-    const std::string& lhs, const std::string& pattern,
-    bool has_wildcard) const {
+    std::string lhs, std::string pattern, bool has_wildcard) const {
   std::unordered_set<std::string> res;
   std::unordered_set<int> lhs_stmts = {};
   if (var_to_stmt_map_.find(lhs) != var_to_stmt_map_.end()) {
