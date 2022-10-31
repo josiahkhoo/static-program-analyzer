@@ -927,6 +927,10 @@ bool PKB::CheckNotAssignStmtNo(int stmt_no) const {
   return true;
 }
 
+/// FindIntersect
+/// \param statements Statements from relationship manager
+/// \param typed_statements Statements from entity manager
+/// \return Statements that are in both sets of statements
 std::unordered_set<std::string> PKB::FindIntersect(
     std::unordered_set<std::string> statements,
     std::unordered_set<std::string> typed_statements) const {
