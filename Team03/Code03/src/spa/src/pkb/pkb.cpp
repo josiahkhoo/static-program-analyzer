@@ -331,14 +331,14 @@ std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
 /// \return All Variables that are used by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
+  std::unordered_set<std::string> result;
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
-    return {};
+    result = {};
   } else if (type == EntityType::PROCEDURE) {
-    return relationship_manager_.GetVariablesUsedByProcedures();
+    result = relationship_manager_.GetVariablesUsedByProcedures();
   } else if (type == EntityType::STATEMENT) {
-    return relationship_manager_.GetVariablesUsedByStatements();
+    result = relationship_manager_.GetVariablesUsedByStatements();
   } else {
-    std::unordered_set<std::string> result;
     std::unordered_set<std::string> typed_statements = QueryAll(type);
     for (const std::string& statement : typed_statements) {
       std::unordered_set<std::string> vars =
@@ -348,8 +348,8 @@ std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
         result.emplace(var);
       }
     }
-    return result;
   }
+  return result;
 }
 
 /// QueryUsesS
@@ -417,14 +417,14 @@ std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
+  std::unordered_set<std::string> result;
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
-    return {};
+    result = {};
   } else if (type == EntityType::PROCEDURE) {
-    return relationship_manager_.GetVariablesModifiedByProcedures();
+    result = relationship_manager_.GetVariablesModifiedByProcedures();
   } else if (type == EntityType::STATEMENT) {
-    return relationship_manager_.GetVariablesModifiedByStatements();
+    result = relationship_manager_.GetVariablesModifiedByStatements();
   } else {
-    std::unordered_set<std::string> result;
     std::unordered_set<std::string> typed_statements = QueryAll(type);
     for (const std::string& statement : typed_statements) {
       std::unordered_set<std::string> vars =
@@ -434,8 +434,8 @@ std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
         result.emplace(var);
       }
     }
-    return result;
   }
+  return result;
 }
 
 /// QueryModifiesS
@@ -443,9 +443,8 @@ std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
 /// \return Variables modified in given statement_number
 std::unordered_set<std::string> PKB::QueryModifiesS(
     int statement_number) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetVariablesModifiedByStatement(statement_number);
-  return result;
+  return relationship_manager_.GetVariablesModifiedByStatement(
+      statement_number);
 }
 
 /// QueryModifiesSBy
@@ -464,9 +463,7 @@ std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
 /// \return Variables modified in given Procedure identifier
 std::unordered_set<std::string> PKB::QueryModifiesP(
     std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetVariablesModifiedByProcedure(identifier);
-  return result;
+  return relationship_manager_.GetVariablesModifiedByProcedure(identifier);
 }
 
 /// QueryModifiesPBy
@@ -474,9 +471,7 @@ std::unordered_set<std::string> PKB::QueryModifiesP(
 /// \return Procedures that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesPBy(
     std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetProceduresModifyingVariable(identifier);
-  return result;
+  return relationship_manager_.GetProceduresModifyingVariable(identifier);
 }
 
 /* ====================================
@@ -485,17 +480,13 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(
 /// QueryAllCalls
 /// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCalls() const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsProcedures();
-  return result;
+  return relationship_manager_.GetCallsProcedures();
 }
 
 /// QueryAllCallsBy
 /// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsByProcedures();
-  return result;
+  return relationship_manager_.GetCallsByProcedures();
 }
 
 /// QueryAllCallsBy
@@ -513,9 +504,7 @@ std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
 /// \param identifier
 /// \return Gets all procedures that directly call a specified procedure
 std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsProcedures(identifier);
-  return result;
+  return relationship_manager_.GetCallsProcedures(identifier);
 }
 
 /// QueryCallsBy
@@ -524,9 +513,7 @@ std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
 /// procedure
 std::unordered_set<std::string> PKB::QueryCallsBy(
     std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsByProcedures(identifier);
-  return result;
+  return relationship_manager_.GetCallsByProcedures(identifier);
 }
 
 /// QueryCallsT
@@ -534,9 +521,7 @@ std::unordered_set<std::string> PKB::QueryCallsBy(
 /// \return Gets all procedures that directly or indirectly call a specified
 /// procedure
 std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsTProcedures(identifier);
-  return result;
+  return relationship_manager_.GetCallsTProcedures(identifier);
 }
 
 /// QueryCallsTBy
@@ -545,9 +530,7 @@ std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
 /// specified procedure
 std::unordered_set<std::string> PKB::QueryCallsTBy(
     std::string identifier) const {
-  std::unordered_set<std::string> result =
-      relationship_manager_.GetCallsTByProcedures(identifier);
-  return result;
+  return relationship_manager_.GetCallsTByProcedures(identifier);
 }
 
 /* ====================================
@@ -562,8 +545,6 @@ std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
 /// QueryAllPrevious
 /// \return Query all statements that come previous to some statement
 std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetAllPrevious();
   return FindIntersect(relationship_manager_.GetAllPrevious(), QueryAll(type));
 }
 
