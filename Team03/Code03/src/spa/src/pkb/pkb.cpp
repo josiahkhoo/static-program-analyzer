@@ -406,17 +406,11 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetModifyingProcedures();
+  } else {
+    return FindIntersect(
+        relationship_manager_.GetModifyingStatements(),
+        QueryAll(type));
   }
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetModifyingStatements();
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
 }
 
 /// QueryAllModifiesBy
@@ -461,16 +455,9 @@ std::unordered_set<std::string> PKB::QueryModifiesS(
 /// \return Statements that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
                                                       EntityType type) const {
-  std::unordered_set<std::string> statements =
-      relationship_manager_.GetStatementsModifyingVariable(identifier);
-  std::unordered_set<std::string> typed_statements = QueryAll(type);
-  std::unordered_set<std::string> result;
-  for (const std::string& statement : statements) {
-    if (typed_statements.find(statement) != typed_statements.end()) {
-      result.emplace(statement);
-    }
-  }
-  return result;
+  return FindIntersect(
+      relationship_manager_.GetStatementsModifyingVariable(identifier),
+      QueryAll(type));
 }
 
 /// QueryModifiesP
