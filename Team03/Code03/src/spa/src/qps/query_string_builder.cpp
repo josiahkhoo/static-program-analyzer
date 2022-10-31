@@ -7,8 +7,8 @@
 QueryStringBuilder::QueryStringBuilder() = default;
 
 void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
-  declared_synonyms_.emplace(std::make_pair(declared_synonym.GetIdentifier(),
-                             declared_synonym));
+  declared_synonyms_.emplace(
+      std::make_pair(declared_synonym.GetIdentifier(), declared_synonym));
 }
 
 void QueryStringBuilder::AddSelect(
@@ -32,12 +32,13 @@ QueryString QueryStringBuilder::GetQueryString() {
   return QueryString(select_.value(), synonyms, query_operations_);
 }
 
-Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
+std::optional<Synonym> QueryStringBuilder::GetSynonym(
+    const std::string& identifier) const {
   auto synonym = declared_synonyms_.find(identifier);
   if (synonym != declared_synonyms_.end()) {
     return synonym->second;
   }
-  throw SemanticException("Synonym not declared");
+  return {};
 }
 
 bool QueryStringBuilder::IsOperationsEmpty() {

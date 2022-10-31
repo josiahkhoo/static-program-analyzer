@@ -36,6 +36,8 @@ class QueryParserUtil {
   static void CheckVariableEntity(const EntityReference& entRef);
   static bool CheckProcedureClause(const std::shared_ptr<TokenHandler>& tokens,
                                    const QueryStringBuilder& builder);
+  static Synonym ExtractSynonym(const QueryStringBuilder& builder,
+                                const Identifier& identifier);
 
  private:
   static std::string GetExpression(const std::shared_ptr<TokenHandler>& tokens,

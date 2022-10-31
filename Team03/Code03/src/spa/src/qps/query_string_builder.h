@@ -1,6 +1,8 @@
 #ifndef SPA_QUERY_STRING_BUILDER_H
 #define SPA_QUERY_STRING_BUILDER_H
 
+#include <optional>
+
 #include "common/clause/follows_clause.h"
 #include "common/clause/follows_t_clause.h"
 #include "common/clause/pattern_assign.h"
@@ -21,7 +23,8 @@ class QueryStringBuilder {
 
   QueryString GetQueryString();
 
-  [[nodiscard]] Synonym GetSynonym(const std::string& identifier) const;
+  [[nodiscard]] std::optional<Synonym> GetSynonym(
+      const std::string& identifier) const;
 
   bool IsOperationsEmpty();
 
