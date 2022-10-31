@@ -243,6 +243,9 @@ class PKB : public QueryablePkb, public StorablePkb {
   PatternManager pattern_manager_;
 
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
+  [[nodiscard]] std::unordered_set<std::string> FindIntersect(
+      std::unordered_set<std::string> statements,
+      std::unordered_set<std::string> typed_statements) const;
 };
 
 #endif  // SPA_PKB_H
