@@ -6,7 +6,7 @@
 
 class StatementEntityNodeExtractor : public NodeExtractor<StatementEntity> {
  public:
-  StatementEntityNodeExtractor() {}
+  StatementEntityNodeExtractor() = default;
 
   [[nodiscard]] std::optional<StatementEntity> TryExtractFromNode(
       const TNode &ast) const override;

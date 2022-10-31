@@ -54,7 +54,7 @@ class SubAbstractionExtractorContext {
       &GetTNodeStmtEntUmap() const;
   [[nodiscard]] std::unordered_map<TNode, VariableEntity> &GetTNodeVarEntUmap()
       const;
-  [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
+  [[maybe_unused]] [[nodiscard]] std::unordered_map<TNode, ConstantEntity>
       &GetTNodeConstEntUmap() const;
   [[nodiscard]] std::unordered_map<TNode, ProcedureEntity>
       &GetTNodeProcEntUmap() const;
@@ -97,23 +97,23 @@ class SubAbstractionExtractorContext {
     SubAbstractionExtractorContext Build();
 
    private:
-    const std::vector<AssignEntity> *assign_entities_;
-    const std::vector<CallEntity> *call_entities_;
-    const std::vector<ConstantEntity> *constant_entities_;
-    const std::vector<IfEntity> *if_entities_;
-    const std::vector<PrintEntity> *print_entities_;
-    const std::vector<ProcedureEntity> *procedure_entities_;
-    const std::vector<ReadEntity> *read_entities_;
-    const std::vector<StatementEntity> *statement_entities_;
-    const std::vector<VariableEntity> *variable_entities_;
-    const std::vector<WhileEntity> *while_entities_;
-    std::unordered_map<TNode, StatementEntity> *t_node_stmt_ent_umap_;
-    std::unordered_map<TNode, VariableEntity> *t_node_var_ent_umap_;
-    std::unordered_map<TNode, ConstantEntity> *t_node_const_ent_umap_;
-    std::unordered_map<TNode, ProcedureEntity> *t_node_proc_ent_umap_;
+    const std::vector<AssignEntity> *assign_entities_{};
+    const std::vector<CallEntity> *call_entities_{};
+    const std::vector<ConstantEntity> *constant_entities_{};
+    const std::vector<IfEntity> *if_entities_{};
+    const std::vector<PrintEntity> *print_entities_{};
+    const std::vector<ProcedureEntity> *procedure_entities_{};
+    const std::vector<ReadEntity> *read_entities_{};
+    const std::vector<StatementEntity> *statement_entities_{};
+    const std::vector<VariableEntity> *variable_entities_{};
+    const std::vector<WhileEntity> *while_entities_{};
+    std::unordered_map<TNode, StatementEntity> *t_node_stmt_ent_umap_{};
+    std::unordered_map<TNode, VariableEntity> *t_node_var_ent_umap_{};
+    std::unordered_map<TNode, ConstantEntity> *t_node_const_ent_umap_{};
+    std::unordered_map<TNode, ProcedureEntity> *t_node_proc_ent_umap_{};
     std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
-        *proc_node_call_ent_umap_;
-    std::unordered_map<std::string, const TNode *> *proc_name_node_umap_;
+        *proc_node_call_ent_umap_{};
+    std::unordered_map<std::string, const TNode *> *proc_name_node_umap_{};
   };
 
  private:

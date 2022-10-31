@@ -7,7 +7,7 @@
 class WhilePatternAbstractionExtractor
     : public SubAbstractionExtractor<WhilePatternAbstraction> {
  public:
-  std::vector<WhilePatternAbstraction> Extract(
+  [[nodiscard]] std::vector<WhilePatternAbstraction> Extract(
       const SubAbstractionExtractorContext &context) const override;
 
  private:

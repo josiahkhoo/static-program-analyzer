@@ -7,7 +7,7 @@
 class CallsTAbstractionExtractor
     : public SubAbstractionExtractor<CallsTAbstraction> {
  public:
-  std::vector<CallsTAbstraction> Extract(
+  [[nodiscard]] std::vector<CallsTAbstraction> Extract(
       const SubAbstractionExtractorContext &context) const override;
 
   void TraverseProcedureTree(

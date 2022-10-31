@@ -7,14 +7,14 @@
 class FollowsAbstractionExtractor
     : public SubAbstractionExtractor<FollowsAbstraction> {
  public:
-  std::vector<FollowsAbstraction> Extract(
+  [[nodiscard]] std::vector<FollowsAbstraction> Extract(
       const SubAbstractionExtractorContext &context) const override;
 
  private:
-  void RetrieveFromChildren(
+  static void RetrieveFromChildren(
       std::vector<FollowsAbstraction> *follows_abstractions,
       const std::vector<std::shared_ptr<TNode>> &children,
-      std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap) const;
+      std::unordered_map<TNode, StatementEntity> &t_node_stmt_ent_umap);
 };
 
 #endif  // SPA_FOLLOWS_ABSTRACTION_EXTRACTOR_H

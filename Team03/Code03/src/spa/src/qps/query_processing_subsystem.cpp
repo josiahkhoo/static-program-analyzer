@@ -1,7 +1,7 @@
 #include "query_processing_subsystem.h"
 
+#include "common/exceptions/syntax_exception.h"
 #include "qps/exceptions/semantic_exception.h"
-#include "qps/exceptions/syntax_exception.h"
 #include "query_operation_checker.h"
 
 QueryProcessingSubsystem::QueryProcessingSubsystem(

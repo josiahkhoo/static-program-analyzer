@@ -1,10 +1,10 @@
 #include "query_parser_util.h"
 
+#include "common/exceptions/syntax_exception.h"
 #include "common/reference/attribute_name.h"
 #include "common/reference/identifier.h"
 #include "common/reference/integer.h"
 #include "qps/exceptions/semantic_exception.h"
-#include "qps/exceptions/syntax_exception.h"
 
 /// Retrieve statement reference from tokens & builder
 /// \param tokens
@@ -204,7 +204,7 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
 /// \param stmtRef
 void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
   std::unordered_set<EntityType> allowedEntityTypes = {
-      ASSIGN, STATEMENT, IF, WHILE, READ, PRINT};
+      ASSIGN, STATEMENT, IF, WHILE, READ, PRINT, CALL};
   if (stmtRef.IsSynonym()) {
     EntityType type = stmtRef.GetSynonym().GetEntityType();
     if (!allowedEntityTypes.count(type)) {

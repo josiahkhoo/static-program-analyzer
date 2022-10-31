@@ -241,6 +241,8 @@ class PKB : public QueryablePkb, public StorablePkb {
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
   PatternManager pattern_manager_;
+
+  [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
 };
 
 #endif  // SPA_PKB_H

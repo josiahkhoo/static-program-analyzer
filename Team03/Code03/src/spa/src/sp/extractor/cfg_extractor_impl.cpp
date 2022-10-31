@@ -13,7 +13,6 @@ std::vector<CFG> CFGExtractorImpl::Extract(const TNode& ast) const {
 }
 
 CFG CFGExtractorImpl::CreateCFG(const TNode& node) const {
-  std::string proc_name = node.GetStringValue();
   std::unordered_map<std::shared_ptr<CFGNode>,
                      std::unordered_set<std::shared_ptr<CFGNode>>>
       forward_map;
@@ -37,7 +36,7 @@ CFG CFGExtractorImpl::CreateCFG(const TNode& node) const {
       reverse_map[s].emplace(first);
     }
   }
-  CFG cfg = CFG(proc_name, forward_map, reverse_map, stmt_node_map);
+  CFG cfg = CFG(forward_map, reverse_map, stmt_node_map);
   return cfg;
 }
 
