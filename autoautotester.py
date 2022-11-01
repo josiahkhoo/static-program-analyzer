@@ -57,6 +57,7 @@ test_array = (
     ("Next / Next T", "next_next_t"),
     ("Affects / Affects T", "affects_affects_t"),
     ("Stress", "stress"),
+    ("Should Not Exception", "should_not_exception")
 )
 
 overall_passed_test_cases = 0
