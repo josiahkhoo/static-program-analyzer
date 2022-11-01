@@ -1,20 +1,17 @@
 #include "boolean_select_parser.h"
 
 #include "common/clause/boolean_select.h"
+#include "qps/parser/query_parser_util.h"
 
 bool BooleanSelectParser::MatchParser(const TokenBuilderPair& data) const {
   // Get data
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
 
-  // Check BOOLEAN keyword
-  if (!tokens->CheckEnd() && tokens->MatchString("BOOLEAN")) {
-    try {
-      // Check if synonym or is keyword
-      Synonym attempt_synonym = builder.GetSynonym(tokens->PeekValue());
-    } catch (...) {
-      return true;
-    }
+  std::optional<Synonym> attempt_synonym =
+      builder.GetSynonym(tokens->PeekValue());
+  if (!attempt_synonym.has_value() && tokens->MatchString("BOOLEAN")) {
+    return true;
   }
   return false;
 }

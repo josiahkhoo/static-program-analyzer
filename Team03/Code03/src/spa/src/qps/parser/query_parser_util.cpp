@@ -16,7 +16,8 @@ StatementReference QueryParserUtil::ExtractStmtRef(
   StatementReference statement_reference;
   if (tokens->MatchKind(Token::IDENTIFIER)) {
     // Checks current declared synonyms to do matching
-    Synonym synonym = builder.GetSynonym(tokens->PeekValue());
+    Synonym synonym =
+        QueryParserUtil::ExtractSynonym(builder, tokens->PeekValue());
     statement_reference = StatementReference(synonym);
     tokens->Forward();
   } else if (tokens->MatchKind(Token::UNDERSCORE)) {
@@ -50,7 +51,8 @@ EntityReference QueryParserUtil::ExtractEntityRef(
   }
   // Synonym
   else if (tokens->MatchKind(Token::IDENTIFIER)) {
-    entity_reference = EntityReference(builder.GetSynonym(tokens->PeekValue()));
+    entity_reference = EntityReference(
+        QueryParserUtil::ExtractSynonym(builder, tokens->PeekValue()));
     tokens->Forward();
   } else {
     throw SyntaxException("Expected different entRef");
@@ -252,7 +254,7 @@ bool QueryParserUtil::CheckProcedureClause(
   }
   bool result = false;
   if (next.Is(Token::IDENTIFIER)) {
-    Synonym syn = builder.GetSynonym(next.GetValue());
+    Synonym syn = QueryParserUtil::ExtractSynonym(builder, next.GetValue());
     if (syn.IsEntityType(PROCEDURE)) {
       result = true;
     }
@@ -284,7 +286,7 @@ AttributeReference QueryParserUtil::ExtractAttrRef(
   // Attribute x.'procName'| 'varName' | 'value' | 'stmt#'
   else {
     tokens->Expect(Token::IDENTIFIER);
-    Synonym syn = builder.GetSynonym(next.GetValue());
+    Synonym syn = QueryParserUtil::ExtractSynonym(builder, next.GetValue());
     tokens->Expect(Token::PERIOD);
     AttributeName attrName = ExtractAttrName(syn, tokens);
     Attribute attr = Attribute(syn, attrName);
@@ -340,4 +342,11 @@ Integer QueryParserUtil::ExtractInteger(
   Integer integer = stoi(tokens->PeekValue());
   tokens->Forward();
   return integer;
+}
+
+Synonym QueryParserUtil::ExtractSynonym(const QueryStringBuilder& builder,
+                                        const Identifier& identifier) {
+  std::optional<Synonym> synonym = builder.GetSynonym(identifier);
+  if (!synonym.has_value()) throw SemanticException("Synonym not declared");
+  return synonym.value();
 }

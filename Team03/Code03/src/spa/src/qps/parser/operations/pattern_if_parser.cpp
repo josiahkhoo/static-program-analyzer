@@ -17,7 +17,7 @@ std::shared_ptr<QueryOperation> PatternIfParser::Parse(TokenBuilderPair data) {
   QueryStringBuilder builder = data.second;
   Token next = tokens->Peek();
   tokens->Expect(Token::IDENTIFIER);
-  Synonym synonym = builder.GetSynonym(next.GetValue());
+  Synonym synonym = QueryParserUtil::ExtractSynonym(builder, next.GetValue());
   // Check if ASSIGN, IF, WHILE
   QueryParserUtil::CheckPatternSyn(synonym);
   tokens->Expect(Token::LEFT_ROUND_BRACKET);

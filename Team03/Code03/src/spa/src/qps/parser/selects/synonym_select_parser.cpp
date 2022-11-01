@@ -47,7 +47,7 @@ Select::SynonymWithMaybeAttribute SynonymSelectParser::ParseSynonym(
     const QueryStringBuilder& builder) {
   std::string syn_token = tokens->PeekValue();
   tokens->Expect(Token::IDENTIFIER);
-  Synonym synonym = builder.GetSynonym(syn_token);
+  Synonym synonym = QueryParserUtil::ExtractSynonym(builder, syn_token);
 
   // Get attribute name if exist
   if (!tokens->CheckEnd() && tokens->MatchKind(Token::PERIOD)) {

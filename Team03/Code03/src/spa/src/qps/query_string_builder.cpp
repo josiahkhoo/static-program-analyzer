@@ -7,8 +7,8 @@
 QueryStringBuilder::QueryStringBuilder() = default;
 
 void QueryStringBuilder::AddDeclaration(const Synonym& declared_synonym) {
-  declared_synonyms_.reserve(1);
-  declared_synonyms_.push_back(declared_synonym);
+  declared_synonyms_.emplace(
+      std::make_pair(declared_synonym.GetIdentifier(), declared_synonym));
 }
 
 void QueryStringBuilder::AddSelect(
@@ -23,16 +23,22 @@ void QueryStringBuilder::AddQueryOperation(
 }
 
 QueryString QueryStringBuilder::GetQueryString() {
-  return QueryString(select_.value(), declared_synonyms_, query_operations_);
+  std::vector<Synonym> synonyms;
+  synonyms.reserve(declared_synonyms_.size());
+  for (const auto& syn : declared_synonyms_) {
+    synonyms.push_back(syn.second);
+  }
+
+  return QueryString(select_.value(), synonyms, query_operations_);
 }
 
-Synonym QueryStringBuilder::GetSynonym(const std::string& identifier) const {
-  for (auto synonym : declared_synonyms_) {
-    if (synonym.GetIdentifier() == identifier) {
-      return synonym;
-    }
+std::optional<Synonym> QueryStringBuilder::GetSynonym(
+    const std::string& identifier) const {
+  auto synonym = declared_synonyms_.find(identifier);
+  if (synonym != declared_synonyms_.end()) {
+    return synonym->second;
   }
-  throw SemanticException("Synonym not declared");
+  return {};
 }
 
 bool QueryStringBuilder::IsOperationsEmpty() {

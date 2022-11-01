@@ -1,3 +1,6 @@
+#include <algorithm>
+
+#include "../../helper.hpp"
 #include "catch.hpp"
 #include "common/clause/calls_clause.h"
 #include "common/clause/modifies_p_clause.h"
@@ -215,8 +218,8 @@ TEST_CASE("Declaration flags", "[QPS Parser]") {
     Synonym syn_v = Synonym(EntityType::VARIABLE, "v");
 
     REQUIRE(res.GetSynonyms().size() == 2);
-    REQUIRE(res.GetSynonyms()[0] == syn_a);
-    REQUIRE(res.GetSynonyms()[1] == syn_v);
+    REQUIRE(contains(res.GetSynonyms(), syn_a));
+    REQUIRE(contains(res.GetSynonyms(), syn_v));
 
     std::shared_ptr<SynonymSelect> expected_select =
         std::make_shared<SynonymSelect>(
@@ -289,9 +292,9 @@ TEST_CASE("'Assign Variable Statement Select' query", "[QPS Parser]") {
           std::vector{Select::SynonymWithMaybeAttribute(syn_assign)});
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn_assign);
-  REQUIRE(res.GetSynonyms()[1] == syn_var);
-  REQUIRE(res.GetSynonyms()[2] == syn_stmt);
+  REQUIRE(contains(res.GetSynonyms(), syn_assign));
+  REQUIRE(contains(res.GetSynonyms(), syn_var));
+  REQUIRE(contains(res.GetSynonyms(), syn_stmt));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn_assign);
 }
 
@@ -318,9 +321,9 @@ TEST_CASE("'Assign Variable Variable Select' query", "[QPS Parser]") {
           std::vector{Select::SynonymWithMaybeAttribute(syn_var1)});
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn_assign);
-  REQUIRE(res.GetSynonyms()[1] == syn_var1);
-  REQUIRE(res.GetSynonyms()[2] == syn_var2);
+  REQUIRE(contains(res.GetSynonyms(), syn_assign));
+  REQUIRE(contains(res.GetSynonyms(), syn_var1));
+  REQUIRE(contains(res.GetSynonyms(), syn_var2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn_var1);
 }
 
@@ -733,7 +736,7 @@ TEST_CASE("'Procedure Select Calls' query", "[QPS Parser]") {
   CallsClause c = CallsClause(entity_ref_1, entity_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 2);
-  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(contains(res.GetSynonyms(), syn));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
@@ -774,7 +777,7 @@ TEST_CASE("'Procedure Select CallsT' query", "[QPS Parser]") {
   CallsClause c = CallsClause(entity_ref_1, entity_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 2);
-  REQUIRE(res.GetSynonyms()[0] == syn);
+  REQUIRE(contains(res.GetSynonyms(), syn));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
@@ -1124,9 +1127,9 @@ TEST_CASE("'Assign Select Follow Follow' query", "[QPS Parser]") {
   FollowsClause f1 = FollowsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 2);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])

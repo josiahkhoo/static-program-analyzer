@@ -24,7 +24,8 @@ bool QueryOperationMatcher::MatchParser(
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
   bool res = false;
-  Synonym synonym = builder.GetSynonym(tokens->PeekValue());
+  Synonym synonym =
+      QueryParserUtil::ExtractSynonym(builder, tokens->PeekValue());
   // Check if ASSIGN, IF, WHILE
   QueryParserUtil::CheckPatternSyn(synonym);
   if (synonym.IsEntityType(type)) {

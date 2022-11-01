@@ -1,3 +1,4 @@
+#include "../../../helper.hpp"
 #include "catch.hpp"
 #include "common/clause/affects_clause.h"
 #include "common/clause/affects_t_clause.h"
@@ -34,8 +35,8 @@ TEST_CASE("'Assign Select Affects' query", "[QPS Parser]") {
   AffectsClause a = AffectsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 2);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
@@ -75,8 +76,8 @@ TEST_CASE("'Assign Select AffectsT' query", "[QPS Parser]") {
   AffectsTClause a = AffectsTClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 2);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 1);
   REQUIRE(std::dynamic_pointer_cast<Clause>(res.GetQueryOperation()[0])
