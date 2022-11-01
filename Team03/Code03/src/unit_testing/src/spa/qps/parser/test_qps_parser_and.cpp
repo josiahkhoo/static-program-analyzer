@@ -1,3 +1,4 @@
+#include "../../../helper.hpp"
 #include "catch.hpp"
 #include "common/clause/pattern_assign.h"
 #include "common/clause/synonym_select.h"
@@ -47,9 +48,9 @@ TEST_CASE("Assign Follows And", "[QPS And Parser]") {
   FollowsClause f1 = FollowsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 2);
   std::shared_ptr<Clause> cl =
@@ -205,9 +206,9 @@ TEST_CASE("Assign Follows And PatternAssign", "[QPS And Parser]") {
   FollowsClause f1 = FollowsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<Clause> cl =
@@ -278,9 +279,9 @@ TEST_CASE("Assign PatternAssign Follows And", "[QPS And Parser]") {
   FollowsClause f1 = FollowsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
@@ -350,8 +351,8 @@ TEST_CASE("Assign PatternAssign And Follows", "[QPS And Parser]") {
   FollowsClause f = FollowsClause(statement_ref, statement_ref_1);
 
   REQUIRE(res.GetSynonyms().size() == 2);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 3);
   std::shared_ptr<PatternAssign> ptrnAssign =
@@ -465,11 +466,11 @@ TEST_CASE("Assign Variable Follows And WITH And PatternAssign And WITH",
   FollowsClause f1 = FollowsClause(statement_ref_1, statement_ref_2);
 
   REQUIRE(res.GetSynonyms().size() == 5);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
-  REQUIRE(res.GetSynonyms()[3] == syn3);
-  REQUIRE(res.GetSynonyms()[4] == syn4);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
+  REQUIRE(contains(res.GetSynonyms(), syn3));
+  REQUIRE(contains(res.GetSynonyms(), syn4));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 7);
   std::shared_ptr<Clause> cl =
@@ -561,9 +562,9 @@ TEST_CASE("Assign Follows And And And", "[QPS And Parser]") {
   FollowsClause f3 = FollowsClause(statement_ref_2, statement_ref);
 
   REQUIRE(res.GetSynonyms().size() == 3);
-  REQUIRE(res.GetSynonyms()[0] == syn);
-  REQUIRE(res.GetSynonyms()[1] == syn1);
-  REQUIRE(res.GetSynonyms()[2] == syn2);
+  REQUIRE(contains(res.GetSynonyms(), syn));
+  REQUIRE(contains(res.GetSynonyms(), syn1));
+  REQUIRE(contains(res.GetSynonyms(), syn2));
   REQUIRE(res.GetSelect()->GetSynonyms()[0].synonym == syn);
   REQUIRE(res.GetQueryOperation().size() == 4);
   std::shared_ptr<Clause> cl =
