@@ -1,0 +1,25 @@
+104 - comment
+assign a, a1; variable v, v1; stmt s, s1; read r; print pn; while w; if ifs; constant c; procedure p;
+Select r such that Follows*(1, _) pattern a1(_, _"x1"_)
+
+5000
+104 - comment
+assign a, a1; variable v, v1; stmt s, s1; read r; print pn; while w; if ifs; constant c; procedure p;
+Select r such that Follows*(1, _) pattern a1(_, _"HAHA123"_)
+
+5000
+50 - Next*, integer, wildcard, TRUE (First statement)
+stmt s1, s2;
+Select BOOLEAN such that Next*(5, _)
+TRUE
+5000
+49 - Next*, integer, wildcard, TRUE (While statement)
+stmt s1, s2;
+Select BOOLEAN such that Next*(1, _)
+TRUE
+5000
+50 - Next*, integer, wildcard, TRUE (While statement)
+stmt s1, s2;
+Select BOOLEAN such that Next*(14, _)
+TRUE
+5000

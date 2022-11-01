@@ -87,7 +87,8 @@ TEST_CASE("SPA", "[SPA]") {
       {"And and With", "and_with"},
       {"Select attribute", "select_attribute"},
       {"Tuple select", "tuple_select"},
-      {"Next / Next T", "next_next_t"}};
+      {"Next / Next T", "next_next_t"},
+      {"Should not exception", "should_not_exception"}};
 
   for (auto [test_name, file_prefix] : test_cases) {
     std::string test_folder = std::getenv("TEST_FOLDER");

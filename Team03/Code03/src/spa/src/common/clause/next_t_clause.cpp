@@ -44,7 +44,7 @@ std::unordered_set<std::string> NextTClause::FetchLhs(
 }
 
 bool NextTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
-  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().GetLineNumber()) {
+  if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryNextT(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);
     if (possible_rhs.find(std::to_string(GetRightHandSide().GetLineNumber())) !=
