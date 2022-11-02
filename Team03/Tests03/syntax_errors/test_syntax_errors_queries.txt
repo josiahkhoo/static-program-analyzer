@@ -168,3 +168,18 @@ assign a;
 Select a pattern a(_, "x+y"_)
 SyntaxError
 5000
+29 - (VALID) Missing select clause
+variable v;
+
+
+5000
+30 - (SYNTAX ERROR) Invalid [] bracket
+stmt s;
+Select s such that Follows[1, s]
+SyntaxError
+5000
+32 - (SYNTAX ERROR) Invalid `
+stmt s;
+Select `
+SyntaxError
+5000
