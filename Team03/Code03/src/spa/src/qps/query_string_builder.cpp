@@ -28,7 +28,9 @@ QueryString QueryStringBuilder::GetQueryString() {
   for (const auto& syn : declared_synonyms_) {
     synonyms.push_back(syn.second);
   }
-
+  if (!select_.has_value()) {
+    return {};
+  }
   return QueryString(select_.value(), synonyms, query_operations_);
 }
 
