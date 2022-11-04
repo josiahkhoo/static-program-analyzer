@@ -1,5 +1,6 @@
 #include "query_string_builder.h"
 
+#include <cassert>
 #include <stdexcept>
 
 #include "qps/exceptions/semantic_exception.h"
@@ -16,6 +17,8 @@ void QueryStringBuilder::AddSelect(
   select_ = select_clause;
 }
 
+bool QueryStringBuilder::HasNoSelect() { return !select_.has_value(); }
+
 void QueryStringBuilder::AddQueryOperation(
     const std::shared_ptr<QueryOperation>& query_operation) {
   query_operations_.reserve(1);
@@ -28,7 +31,7 @@ QueryString QueryStringBuilder::GetQueryString() {
   for (const auto& syn : declared_synonyms_) {
     synonyms.push_back(syn.second);
   }
-
+  assert(!HasNoSelect());
   return QueryString(select_.value(), synonyms, query_operations_);
 }
 

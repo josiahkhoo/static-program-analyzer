@@ -3,6 +3,8 @@
 #include <istream>
 #include <regex>
 
+#include "common/exceptions/syntax_exception.h"
+
 std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
     {Token::WHITESPACE, "^(\\s+)"},
     {Token::NUMBER, "^(\\d+)"},
@@ -64,22 +66,37 @@ std::vector<Token> Lexer::Lex(std::istream &stream) const {
 std::vector<Token> Lexer::LexLine(std::string &line) const {
   std::vector<Token> tokens;
   while (!line.empty()) {
-    for (auto const &pair : tokenRules) {
-      std::smatch matched_regex;
-      if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
-        if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {
-          Token found_token(pair.first, matched_regex.str());
-          tokens.push_back(found_token);
-        } else if (pair.first != Token::WHITESPACE) {
-          Token found_token(pair.first);
-          tokens.push_back(found_token);
-        }
-        // else skip whitespaces
+    ProcessLineHead(line, tokens);
+  }
+  return tokens;
+}
 
+void Lexer::ProcessLineHead(std::string &line, std::vector<Token> &tokens) {
+  for (auto const &pair : tokenRules) {
+    std::smatch matched_regex;
+    try {
+      if (std::regex_search(line, matched_regex, std::regex(pair.second))) {
+        FindTokens(tokens, pair, matched_regex);
         line = line.substr(static_cast<int>(matched_regex.str().size()));
         break;
       }
+    } catch (...) {
+      throw SyntaxException("Invalid character");
     }
   }
-  return tokens;
+}
+
+void Lexer::FindTokens(std::vector<Token> &tokens,
+                       const std::pair<Token::Kind, std::string> &pair,
+                       const std::smatch &matched_regex) {
+  if (pair.first == Token::WHITESPACE) {  // Skip whitespaces
+    return;
+  }
+  if (pair.first == Token::IDENTIFIER || pair.first == Token::NUMBER) {
+    Token found_token(pair.first, matched_regex.str());
+    tokens.push_back(found_token);
+    return;
+  }
+  Token found_token(pair.first);
+  tokens.push_back(found_token);
 }

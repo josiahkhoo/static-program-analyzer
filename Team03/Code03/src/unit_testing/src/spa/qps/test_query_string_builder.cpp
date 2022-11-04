@@ -7,7 +7,7 @@
 TEST_CASE("Test without 'Select' builder", "[QueryStringBuilder]") {
   QueryStringBuilder qsb = QueryStringBuilder();
 
-  REQUIRE_THROWS(qsb.GetQueryString());
+  REQUIRE(qsb.HasNoSelect());
 }
 
 TEST_CASE("Test with 'Select' builder", "[QueryStringBuilder]") {

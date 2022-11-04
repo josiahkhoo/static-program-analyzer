@@ -16,9 +16,9 @@ QueryProcessingSubsystem::QueryProcessingSubsystem(
 
 void QueryProcessingSubsystem::Process(std::string query,
                                        std::list<std::string> &results) {
-  std::vector<Token> tokens = lexer_.LexLine(query);
   QueryString q_string;
   try {
+    std::vector<Token> tokens = lexer_.LexLine(query);
     q_string = parser_.Parse(tokens);
   } catch (const SyntaxException &ex) {
     results.emplace_back(ex.what());
