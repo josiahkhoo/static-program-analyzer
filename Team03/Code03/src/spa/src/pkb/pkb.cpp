@@ -627,7 +627,7 @@ std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
 /// \param statement_number statement
 /// \return Query statement(s) that comes nextT after given statement
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
-                                                EntityType type) const {
+                                                EntityType type) {
   return FindIntersect(relationship_manager_.GetNextT(statement_number),
                        QueryAll(type));
 }
@@ -636,7 +636,7 @@ std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
 /// \param statement_number statement
 /// \return Query statement(s) that comes previousT before given statement
 std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
-                                                    EntityType type) const {
+                                                    EntityType type) {
   return FindIntersect(relationship_manager_.GetPreviousT(statement_number),
                        QueryAll(type));
 }

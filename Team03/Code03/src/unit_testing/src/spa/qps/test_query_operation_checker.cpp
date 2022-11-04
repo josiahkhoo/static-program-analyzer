@@ -180,12 +180,12 @@ class QueryOpCheckPkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {""};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPreviousT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {""};
   }
 

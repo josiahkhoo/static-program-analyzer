@@ -188,9 +188,9 @@ class PKB : public QueryablePkb, public StorablePkb {
   std::unordered_set<std::string> QueryPrevious(int statement_number,
                                                 EntityType type) const override;
   std::unordered_set<std::string> QueryNextT(int statement_number,
-                                             EntityType type) const override;
-  std::unordered_set<std::string> QueryPreviousT(
-      int statement_number, EntityType type) const override;
+                                             EntityType type) override;
+  std::unordered_set<std::string> QueryPreviousT(int statement_number,
+                                                 EntityType type) override;
 
   // Affects query methods
   std::unordered_set<std::string> QueryAllAffects() override;

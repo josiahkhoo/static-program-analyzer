@@ -197,13 +197,22 @@ std::unordered_set<std::string> CachedQueryablePkb::QueryPrevious(
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryNextT(
-    int statement_number, EntityType type) const {
-  return queryable_pkb_.QueryNextT(statement_number, type);
+    int statement_number, EntityType type) {
+  std::pair<int, EntityType> key = std::make_pair(statement_number, type);
+  if (next_t_cache_.find(key) == next_t_cache_.end()) {
+    next_t_cache_[key] = queryable_pkb_.QueryNextT(statement_number, type);
+  }
+  return next_t_cache_[key];
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryPreviousT(
-    int statement_number, EntityType type) const {
-  return queryable_pkb_.QueryPreviousT(statement_number, type);
+    int statement_number, EntityType type) {
+  std::pair<int, EntityType> key = std::make_pair(statement_number, type);
+  if (previous_t_cache_.find(key) == previous_t_cache_.end()) {
+    previous_t_cache_[key] =
+        queryable_pkb_.QueryPreviousT(statement_number, type);
+  }
+  return previous_t_cache_[key];
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAllAffects() {

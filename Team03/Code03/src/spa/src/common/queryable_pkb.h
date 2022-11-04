@@ -128,10 +128,10 @@ class QueryablePkb {
       int statement_number, EntityType type) const = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryNextT(
-      int statement_number, EntityType type) const = 0;
+      int statement_number, EntityType type) = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryPreviousT(
-      int statement_number, EntityType type) const = 0;
+      int statement_number, EntityType type) = 0;
 
   /// QueryAllAffects
   /// \return Query all assign statements that affects some other statement
