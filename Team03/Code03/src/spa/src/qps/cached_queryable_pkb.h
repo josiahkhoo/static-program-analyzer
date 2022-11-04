@@ -1,6 +1,8 @@
 #ifndef SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_CACHED_QUERYABLE_PKB_H_
 #define SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_CACHED_QUERYABLE_PKB_H_
 
+#include <optional>
+
 #include "common/queryable_pkb.h"
 
 class CachedQueryablePkb : public QueryablePkb {
