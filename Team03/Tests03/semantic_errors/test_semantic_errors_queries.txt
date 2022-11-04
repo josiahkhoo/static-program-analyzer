@@ -113,3 +113,8 @@ variable v;
 Select v such that Affects* (1, v)
 SemanticError
 5000
+24 - (SEMANTIC ERROR) Missing select clause
+variable v;
+
+SemanticError
+5000

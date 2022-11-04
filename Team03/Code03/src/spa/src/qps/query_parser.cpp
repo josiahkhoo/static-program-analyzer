@@ -3,6 +3,7 @@
 #include "common/clause/select.h"
 #include "common/entity/assign_entity.h"
 #include "common/exceptions/syntax_exception.h"
+#include "qps/exceptions/semantic_exception.h"
 #include "qps/parser/operations/affects_parser.h"
 #include "qps/parser/operations/affects_t_parser.h"
 #include "qps/parser/operations/calls_parser.h"
@@ -36,7 +37,7 @@ QueryString QueryParser::Parse(std::vector<Token> tokens) {
   ParseSelect();
   ParseQueryOperation();
   CheckLeftoverTokens();
-  return query_string_builder_.GetQueryString();
+  return RetrieveQueryString();
 }
 
 void QueryParser::ParseDeclaration() {
@@ -222,4 +223,11 @@ void QueryParser::CheckLeftoverTokens() {
   if (!tokens_->CheckEnd() && tokens_->Peek().IsNot(Token::END)) {
     throw SyntaxException("Unexpected additional token(s)");
   }
+}
+
+QueryString QueryParser::RetrieveQueryString() {
+  if (query_string_builder_.HasNoSelect()) {
+    throw SemanticException("Empty select");
+  }
+  return query_string_builder_.GetQueryString();
 }

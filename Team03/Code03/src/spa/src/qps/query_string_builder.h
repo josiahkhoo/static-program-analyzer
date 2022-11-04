@@ -28,6 +28,8 @@ class QueryStringBuilder {
 
   bool IsOperationsEmpty();
 
+  bool HasNoSelect();
+
  private:
   std::unordered_map<Identifier, Synonym> declared_synonyms_;
   std::vector<std::shared_ptr<QueryOperation>> query_operations_;

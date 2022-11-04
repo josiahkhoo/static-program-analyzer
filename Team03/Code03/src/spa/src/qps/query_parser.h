@@ -39,6 +39,8 @@ class QueryParser : public Parser<QueryString, std::vector<Token>> {
   bool ParseWith(bool isAnd = false);
 
   void CheckLeftoverTokens();
+
+  QueryString RetrieveQueryString();
 };
 
 #endif  // SPA_QUERY_PARSER_H
