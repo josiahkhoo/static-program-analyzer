@@ -27,79 +27,81 @@
 #include "pkb/pattern_store/pattern_manager.h"
 #include "pkb/relationship_store/relationship_manager.h"
 #include "sp/extractor/cfg.h"
+#include "storable_pkb_impl.h"
 
-class PKB : public QueryablePkb, public StorablePkb {
+template <class T>
+class PKB : public QueryablePkb {
  public:
   PKB();
 
-  /* ====================================
-   * Entity Store Methods
-   * ==================================== */
-  // Procedures
-  void Store(std::vector<ProcedureEntity> ts) override;
-
-  // Variables
-  void Store(std::vector<VariableEntity> ts) override;
-
-  // Constants
-  void Store(std::vector<ConstantEntity> ts) override;
-
-  // Statements
-  void Store(std::vector<CallEntity> ts) override;
-
-  void Store(std::vector<ReadEntity> ts) override;
-
-  void Store(std::vector<PrintEntity> ts) override;
-
-  void Store(std::vector<AssignEntity> ts)
-      override;  // Store both assign entity and pattern to statement storage
-                 // and pattern storage respectively
-
-  void Store(std::vector<IfEntity> ts) override;
-
-  void Store(std::vector<WhileEntity> ts) override;
-
-  /* ====================================
-   * Relationship Store Methods
-   * ==================================== */
-  // Follows
-  void Store(std::vector<FollowsAbstraction> abstractions) override;
-
-  // FollowsT
-  void Store(std::vector<FollowsTAbstraction> abstractions) override;
-
-  // Parent
-  void Store(std::vector<ParentAbstraction> abstractions) override;
-
-  // ParentT
-  void Store(std::vector<ParentTAbstraction> abstractions) override;
-
-  // UsesS
-  void Store(std::vector<UsesSAbstraction> abstractions) override;
-
-  // UsesP
-  void Store(std::vector<UsesPAbstraction> abstractions) override;
-
-  // ModifiesS
-  void Store(std::vector<ModifiesSAbstraction> abstractions) override;
-
-  // ModifiesP
-  void Store(std::vector<ModifiesPAbstraction> abstractions) override;
-
-  // Calls
-  void Store(std::vector<CallsAbstraction> abstractions) override;
-
-  // CallsT
-  void Store(std::vector<CallsTAbstraction> abstractions) override;
-
-  // WhilePattern
-  void Store(std::vector<WhilePatternAbstraction> abstractions) override;
-
-  // IfPattern
-  void Store(std::vector<IfPatternAbstraction> abstractions) override;
-
-  // CFGs
-  void Store(std::vector<CFG> cfgs) override;
+//  /* ====================================
+//   * Entity Store Methods
+//   * ==================================== */
+//  // Procedures
+//  void Store(std::vector<ProcedureEntity> ts) override;
+//
+//  // Variables
+//  void Store(std::vector<VariableEntity> ts) override;
+//
+//  // Constants
+//  void Store(std::vector<ConstantEntity> ts) override;
+//
+//  // Statements
+//  void Store(std::vector<CallEntity> ts) override;
+//
+//  void Store(std::vector<ReadEntity> ts) override;
+//
+//  void Store(std::vector<PrintEntity> ts) override;
+//
+//  void Store(std::vector<AssignEntity> ts)
+//      override;  // Store both assign entity and pattern to statement storage
+//                 // and pattern storage respectively
+//
+//  void Store(std::vector<IfEntity> ts) override;
+//
+//  void Store(std::vector<WhileEntity> ts) override;
+//
+//  /* ====================================
+//   * Relationship Store Methods
+//   * ==================================== */
+//  // Follows
+//  void Store(std::vector<FollowsAbstraction> abstractions) override;
+//
+//  // FollowsT
+//  void Store(std::vector<FollowsTAbstraction> abstractions) override;
+//
+//  // Parent
+//  void Store(std::vector<ParentAbstraction> abstractions) override;
+//
+//  // ParentT
+//  void Store(std::vector<ParentTAbstraction> abstractions) override;
+//
+//  // UsesS
+//  void Store(std::vector<UsesSAbstraction> abstractions) override;
+//
+//  // UsesP
+//  void Store(std::vector<UsesPAbstraction> abstractions) override;
+//
+//  // ModifiesS
+//  void Store(std::vector<ModifiesSAbstraction> abstractions) override;
+//
+//  // ModifiesP
+//  void Store(std::vector<ModifiesPAbstraction> abstractions) override;
+//
+//  // Calls
+//  void Store(std::vector<CallsAbstraction> abstractions) override;
+//
+//  // CallsT
+//  void Store(std::vector<CallsTAbstraction> abstractions) override;
+//
+//  // WhilePattern
+//  void Store(std::vector<WhilePatternAbstraction> abstractions) override;
+//
+//  // IfPattern
+//  void Store(std::vector<IfPatternAbstraction> abstractions) override;
+//
+//  // CFGs
+//  void Store(std::vector<CFG> cfgs) override;
 
   /* ====================================
    * Entity Query Methods
@@ -241,6 +243,7 @@ class PKB : public QueryablePkb, public StorablePkb {
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
   PatternManager pattern_manager_;
+  StorablePkbImpl<T, T, T> storable_pkb_impl;
 
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
   [[nodiscard]] std::unordered_set<std::string> FindIntersect(

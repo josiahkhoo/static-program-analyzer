@@ -3,10 +3,9 @@
 
 #include "vector"
 
-template <class T>
 class Storable {
  public:
-  virtual void store(std::vector<T> ts) = 0;
+  virtual ~Storable() = default;
 };
 
 #endif  // SPA_STORABLE_H

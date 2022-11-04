@@ -5,189 +5,191 @@
 
 #include "common/reference/attribute_name.h"
 
-PKB::PKB() {}
-
-/// Store Procedure Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<ProcedureEntity> ts) {
-  for (const ProcedureEntity& entity : ts) {
-    entity_manager_.AddProcedure(entity);
-  }
-}
-
-/// Store Variable Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<VariableEntity> ts) {
-  for (const VariableEntity& entity : ts) {
-    entity_manager_.AddVariable(entity);
-  }
-}
-
-/// Store Constant Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<ConstantEntity> ts) {
-  for (const ConstantEntity& entity : ts) {
-    entity_manager_.AddConstant(entity);
-  }
-}
-
-/// Store Call Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<CallEntity> ts) {
-  for (const CallEntity& entity : ts) {
-    entity_manager_.AddCallStatement(entity);
-  }
-}
-
-/// Store Read Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<ReadEntity> ts) {
-  for (const ReadEntity& entity : ts) {
-    entity_manager_.AddReadStatement(entity);
-  }
-}
-
-/// Store Print Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<PrintEntity> ts) {
-  for (const PrintEntity& entity : ts) {
-    entity_manager_.AddPrintStatement(entity);
-  }
-}
-
-/// Store Assign Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<AssignEntity> ts) {
-  for (const AssignEntity& entity : ts) {
-    entity_manager_.AddAssignStatement(entity);
-    pattern_manager_.AddAssignPattern(entity);
-  }
-}
-
-/// Store If Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<IfEntity> ts) {
-  for (const IfEntity& entity : ts) {
-    entity_manager_.AddIfStatement(entity);
-  }
-}
-
-/// Store While Entities
-/// \param ts List of entities
-void PKB::Store(std::vector<WhileEntity> ts) {
-  for (const WhileEntity& entity : ts) {
-    entity_manager_.AddWhileStatement(entity);
-  }
-}
-
-/// Store Follows Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<FollowsAbstraction> abstractions) {
-  for (const FollowsAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store FollowsT Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
-  for (const FollowsTAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store Parent Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<ParentAbstraction> abstractions) {
-  for (const ParentAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store ParentT Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
-  for (const ParentTAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store Calls Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<CallsAbstraction> abstractions) {
-  for (const CallsAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store CallsT Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<CallsTAbstraction> abstractions) {
-  for (const CallsTAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store UsesS Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
-  for (const UsesSAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store UsesP Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
-  for (const UsesPAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store ModifiesS Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
-  for (const ModifiesSAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store ModifiesP Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
-  for (const ModifiesPAbstraction& abstraction : abstractions) {
-    relationship_manager_.AddAbstraction(abstraction);
-  }
-}
-
-/// Store While Pattern Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
-  for (const WhilePatternAbstraction& abstraction : abstractions) {
-    pattern_manager_.AddWhilePattern(abstraction);
-  }
-}
-
-/// Store If Pattern Abstractions
-/// \param abstractions List of abstractions
-void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
-  for (const IfPatternAbstraction& abstraction : abstractions) {
-    pattern_manager_.AddIfPattern(abstraction);
-  }
-}
-
-/// Store CFGs
-/// \param abstractions List of Cfgs
-void PKB::Store(std::vector<CFG> cfgs) {
-  for (const CFG& cfg : cfgs) {
-    relationship_manager_.AddCFG(cfg);
-  }
-}
+template <class T>
+PKB<T>::PKB() {}
+//
+///// Store Procedure Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<ProcedureEntity> ts) {
+//  for (const ProcedureEntity& entity : ts) {
+//    entity_manager_.AddProcedure(entity);
+//  }
+//}
+//
+///// Store Variable Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<VariableEntity> ts) {
+//  for (const VariableEntity& entity : ts) {
+//    entity_manager_.AddVariable(entity);
+//  }
+//}
+//
+///// Store Constant Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<ConstantEntity> ts) {
+//  for (const ConstantEntity& entity : ts) {
+//    entity_manager_.AddConstant(entity);
+//  }
+//}
+//
+///// Store Call Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<CallEntity> ts) {
+//  for (const CallEntity& entity : ts) {
+//    entity_manager_.AddCallStatement(entity);
+//  }
+//}
+//
+///// Store Read Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<ReadEntity> ts) {
+//  for (const ReadEntity& entity : ts) {
+//    entity_manager_.AddReadStatement(entity);
+//  }
+//}
+//
+///// Store Print Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<PrintEntity> ts) {
+//  for (const PrintEntity& entity : ts) {
+//    entity_manager_.AddPrintStatement(entity);
+//  }
+//}
+//
+///// Store Assign Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<AssignEntity> ts) {
+//  for (const AssignEntity& entity : ts) {
+//    entity_manager_.AddAssignStatement(entity);
+//    pattern_manager_.AddAssignPattern(entity);
+//  }
+//}
+//
+///// Store If Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<IfEntity> ts) {
+//  for (const IfEntity& entity : ts) {
+//    entity_manager_.AddIfStatement(entity);
+//  }
+//}
+//
+///// Store While Entities
+///// \param ts List of entities
+//void PKB::Store(std::vector<WhileEntity> ts) {
+//  for (const WhileEntity& entity : ts) {
+//    entity_manager_.AddWhileStatement(entity);
+//  }
+//}
+//
+///// Store Follows Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<FollowsAbstraction> abstractions) {
+//  for (const FollowsAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store FollowsT Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
+//  for (const FollowsTAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store Parent Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<ParentAbstraction> abstractions) {
+//  for (const ParentAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store ParentT Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
+//  for (const ParentTAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store Calls Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<CallsAbstraction> abstractions) {
+//  for (const CallsAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store CallsT Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<CallsTAbstraction> abstractions) {
+//  for (const CallsTAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store UsesS Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
+//  for (const UsesSAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store UsesP Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
+//  for (const UsesPAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store ModifiesS Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
+//  for (const ModifiesSAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store ModifiesP Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
+//  for (const ModifiesPAbstraction& abstraction : abstractions) {
+//    relationship_manager_.AddAbstraction(abstraction);
+//  }
+//}
+//
+///// Store While Pattern Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
+//  for (const WhilePatternAbstraction& abstraction : abstractions) {
+//    pattern_manager_.AddWhilePattern(abstraction);
+//  }
+//}
+//
+///// Store If Pattern Abstractions
+///// \param abstractions List of abstractions
+//void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
+//  for (const IfPatternAbstraction& abstraction : abstractions) {
+//    pattern_manager_.AddIfPattern(abstraction);
+//  }
+//}
+//
+///// Store CFGs
+///// \param abstractions List of Cfgs
+//void PKB::Store(std::vector<CFG> cfgs) {
+//  for (const CFG& cfg : cfgs) {
+//    relationship_manager_.AddCFG(cfg);
+//  }
+//}
 
 /// QueryAll
 /// \param type
 /// \return Query all statements of a specified type
-std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAll(EntityType type) const {
   switch (type) {
     case PROCEDURE:
       return entity_manager_.GetProcedures();
@@ -215,7 +217,8 @@ std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
 /// QueryAllFollows
 /// \param type
 /// \return Query all statements following any statement of a specified type
-std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllFollows(EntityType type) const {
   return FindIntersect(relationship_manager_.GetFollowsStatements(),
                        QueryAll(type));
 }
@@ -223,7 +226,8 @@ std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
 /// QueryAllFollowsBy
 /// \param type
 /// \return Query all statements followed by any statement of a specified type
-std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllFollowsBy(EntityType type) const {
   return FindIntersect(relationship_manager_.GetFollowsByStatements(),
                        QueryAll(type));
 }
@@ -231,7 +235,8 @@ std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
 /// QueryAllFollows
 /// \param type
 /// \return Gets all statements following or followed by any statement
-std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllFollowsRelations() const {
   return relationship_manager_.GetFollowsStatements();
 }
 
@@ -240,7 +245,8 @@ std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
 /// \param type
 /// \return Query all statements directly following a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryFollows(int statement_number,
                                                   EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetFollowsStatements(statement_number),
@@ -252,7 +258,8 @@ std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
 /// \param type
 /// \return Query all statements directly followed by a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryFollowsBy(int statement_number,
                                                     EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetFollowsByStatements(statement_number),
@@ -264,7 +271,8 @@ std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
 /// \param type
 /// \return Query all statements directly or indirectly following a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryFollowsT(int statement_number,
                                                    EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetFollowsTStatements(statement_number),
@@ -276,7 +284,8 @@ std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
 /// \param type
 /// \return Query all statements directly or indirectly followed by a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryFollowsTBy(int statement_number,
                                                      EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetFollowsTByStatements(statement_number),
@@ -285,21 +294,24 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
 
 /// QueryAllParent
 /// \return Query all statements that are direct parents of any statement
-std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllParent(EntityType type) const {
   return FindIntersect(relationship_manager_.GetParentStatements(),
                        QueryAll(type));
 }
 
 /// QueryAllParentBy
 /// \return Query all statements that are direct children of any statement
-std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllParentBy(EntityType type) const {
   return FindIntersect(relationship_manager_.GetParentByStatements(),
                        QueryAll(type));
 }
 
 /// QueryAllParentsRelations
 /// \return Query all parent and children statements of any statement
-std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllParentsRelations() const {
   std::unordered_set<std::string> res =
       relationship_manager_.GetParentStatements();
   std::unordered_set<std::string> children =
@@ -313,7 +325,8 @@ std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
 /// \param type
 /// \return Query all statements that are direct parents of a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryParent(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryParent(int statement_number,
                                                  EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetParentStatements(statement_number),
@@ -325,7 +338,8 @@ std::unordered_set<std::string> PKB::QueryParent(int statement_number,
 /// \param type
 /// \return Query all statements that are direct children of a specified
 /// statement
-std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryParentBy(int statement_number,
                                                    EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetParentByStatements(statement_number),
@@ -337,7 +351,8 @@ std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
 /// \param type
 /// \return Query all statements that are direct or indirect parents of a
 /// specified statement
-std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryParentT(int statement_number,
                                                   EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetParentTStatements(statement_number),
@@ -349,7 +364,8 @@ std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
 /// \param type
 /// \return Query all statements that are direct or indirect children of a
 /// specified statement
-std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryParentTBy(int statement_number,
                                                     EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetParentTByStatements(statement_number),
@@ -363,7 +379,8 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
 /// QueryAllUses
 /// \param type
 /// \return All statements or procedures that uses some Variable
-std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllUses(EntityType type) const {
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetUsingProcedures();
   } else {
@@ -376,7 +393,8 @@ std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
 /// \param type
 /// \return All Variables that are used by EntityType (Procedure or
 /// Statement types)
-std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllUsesBy(EntityType type) const {
   std::unordered_set<std::string> result;
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
     result = {};
@@ -402,7 +420,8 @@ std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
 /// \param statement_number
 /// \param type
 /// \return Query all variables used by a specified statement
-std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryUsesS(int statement_number,
                                                 EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetVariablesUsedByStatement(statement_number),
@@ -413,7 +432,8 @@ std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
 /// \param identifier
 /// \param type
 /// \return Query all statements that use a specified variable
-std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetStatementsUsingVariable(identifier),
@@ -424,7 +444,8 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
 /// \param statement_number
 /// \param type
 /// \return Query all variables used by a specified procedure
-std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryUsesP(std::string identifier,
                                                 EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetVariablesUsedByProcedure(identifier),
@@ -435,7 +456,8 @@ std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
 /// \param identifier
 /// \param type
 /// \return Query all procedures that use a specified variable
-std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryUsesPBy(std::string identifier,
                                                   EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetProceduresUsingVariable(identifier),
@@ -449,7 +471,8 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 /// QueryAllModifies
 /// \param type
 /// \return All statements or procedures that modifies some Variable
-std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllModifies(EntityType type) const {
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetModifyingProcedures();
   } else {
@@ -462,7 +485,8 @@ std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
 /// \param type
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
-std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllModifiesBy(EntityType type) const {
   std::unordered_set<std::string> result;
   if (type == EntityType::CONSTANT || type == EntityType::VARIABLE) {
     result = {};
@@ -487,7 +511,8 @@ std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
 /// QueryModifiesS
 /// \param statement_number
 /// \return Variables modified in given statement_number
-std::unordered_set<std::string> PKB::QueryModifiesS(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryModifiesS(
     int statement_number) const {
   return relationship_manager_.GetVariablesModifiedByStatement(
       statement_number);
@@ -497,7 +522,8 @@ std::unordered_set<std::string> PKB::QueryModifiesS(
 /// \param identifier
 /// \param type
 /// \return Statements that modifies given Variable identifier
-std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryModifiesSBy(std::string identifier,
                                                       EntityType type) const {
   return FindIntersect(
       relationship_manager_.GetStatementsModifyingVariable(identifier),
@@ -507,7 +533,8 @@ std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
 /// QueryModifiesP
 /// \param identifier
 /// \return Variables modified in given Procedure identifier
-std::unordered_set<std::string> PKB::QueryModifiesP(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryModifiesP(
     std::string identifier) const {
   return relationship_manager_.GetVariablesModifiedByProcedure(identifier);
 }
@@ -515,7 +542,8 @@ std::unordered_set<std::string> PKB::QueryModifiesP(
 /// QueryModifiesPBy
 /// \param identifier
 /// \return Procedures that modifies given Variable identifier
-std::unordered_set<std::string> PKB::QueryModifiesPBy(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryModifiesPBy(
     std::string identifier) const {
   return relationship_manager_.GetProceduresModifyingVariable(identifier);
 }
@@ -525,19 +553,22 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(
  * ==================================== */
 /// QueryAllCalls
 /// \return Query all procedures that call any procedure
-std::unordered_set<std::string> PKB::QueryAllCalls() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllCalls() const {
   return relationship_manager_.GetCallsProcedures();
 }
 
 /// QueryAllCallsBy
 /// \return Query all procedures that call any procedure
-std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllCallsBy() const {
   return relationship_manager_.GetCallsByProcedures();
 }
 
 /// QueryAllCallsBy
 /// \return Query all procedures that call or are called by any procedure
-std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllCallsRelations() const {
   std::unordered_set<std::string> result =
       relationship_manager_.GetCallsProcedures();
   std::unordered_set<std::string> called =
@@ -549,7 +580,8 @@ std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
 /// QueryCalls
 /// \param identifier
 /// \return Gets all procedures that directly call a specified procedure
-std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryCalls(std::string identifier) const {
   return relationship_manager_.GetCallsProcedures(identifier);
 }
 
@@ -557,7 +589,8 @@ std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
 /// \param identifier
 /// \return Gets all procedures that are directly called by a specified
 /// procedure
-std::unordered_set<std::string> PKB::QueryCallsBy(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryCallsBy(
     std::string identifier) const {
   return relationship_manager_.GetCallsByProcedures(identifier);
 }
@@ -566,7 +599,8 @@ std::unordered_set<std::string> PKB::QueryCallsBy(
 /// \param identifier
 /// \return Gets all procedures that directly or indirectly call a specified
 /// procedure
-std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryCallsT(std::string identifier) const {
   return relationship_manager_.GetCallsTProcedures(identifier);
 }
 
@@ -574,7 +608,8 @@ std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
 /// \param identifier
 /// \return Gets all procedures that are directly or indirectly called by a
 /// specified procedure
-std::unordered_set<std::string> PKB::QueryCallsTBy(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryCallsTBy(
     std::string identifier) const {
   return relationship_manager_.GetCallsTByProcedures(identifier);
 }
@@ -584,19 +619,22 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
  * ==================================== */
 /// QueryAllNext
 /// \return Query all statements that come next to some statement
-std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllNext(EntityType type) const {
   return FindIntersect(relationship_manager_.GetAllNext(), QueryAll(type));
 }
 
 /// QueryAllPrevious
 /// \return Query all statements that come previous to some statement
-std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllPrevious(EntityType type) const {
   return FindIntersect(relationship_manager_.GetAllPrevious(), QueryAll(type));
 }
 
 /// QueryAllNext
 /// \return Query all statements that come next or previous to some statement
-std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllNextRelations() const {
   std::unordered_set<std::string> result = relationship_manager_.GetAllNext();
   std::unordered_set<std::string> previous =
       relationship_manager_.GetAllPrevious();
@@ -607,7 +645,8 @@ std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
 /// QueryNext
 /// \param statement_number statement
 /// \return Query statement(s) that immediately comes next after given statement
-std::unordered_set<std::string> PKB::QueryNext(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryNext(int statement_number,
                                                EntityType type) const {
   return FindIntersect(relationship_manager_.GetNext(statement_number),
                        QueryAll(type));
@@ -617,7 +656,8 @@ std::unordered_set<std::string> PKB::QueryNext(int statement_number,
 /// \param statement_number statement
 /// \return Query statement(s) that immediately comes previous before given
 /// statement
-std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryPrevious(int statement_number,
                                                    EntityType type) const {
   return FindIntersect(relationship_manager_.GetPrevious(statement_number),
                        QueryAll(type));
@@ -626,7 +666,8 @@ std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
 /// QueryNextT
 /// \param statement_number statement
 /// \return Query statement(s) that comes nextT after given statement
-std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryNextT(int statement_number,
                                                 EntityType type) const {
   return FindIntersect(relationship_manager_.GetNextT(statement_number),
                        QueryAll(type));
@@ -635,7 +676,8 @@ std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
 /// QueryPreviousT
 /// \param statement_number statement
 /// \return Query statement(s) that comes previousT before given statement
-std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryPreviousT(int statement_number,
                                                     EntityType type) const {
   return FindIntersect(relationship_manager_.GetPreviousT(statement_number),
                        QueryAll(type));
@@ -647,7 +689,8 @@ std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
 
 /// QueryAllAffects
 /// \return Query all assign statements that affects some other statement
-std::unordered_set<std::string> PKB::QueryAllAffects() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllAffects() const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -658,7 +701,8 @@ std::unordered_set<std::string> PKB::QueryAllAffects() const {
 /// QueryAllAffectsBy
 /// \return Query all assign statements that are affected by some other
 /// statement
-std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllAffectsBy() const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -669,7 +713,8 @@ std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
 /// QueryAffects
 /// \param statement_number statement
 /// \return Query all assign statements that affects given statement
-std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAffects(int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -684,7 +729,8 @@ std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
 /// QueryAffectsBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affected by given statement
-std::unordered_set<std::string> PKB::QueryAffectsBy(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAffectsBy(
     int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
@@ -700,7 +746,8 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
 /// QueryAffectsT
 /// \param statement_number statement
 /// \return Query all assign statements that affectsT given statement
-std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAffectsT(int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -715,7 +762,8 @@ std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
 /// QueryAffectsTBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affectedT by given statement
-std::unordered_set<std::string> PKB::QueryAffectsTBy(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAffectsTBy(
     int statement_number) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
@@ -732,17 +780,20 @@ std::unordered_set<std::string> PKB::QueryAffectsTBy(
  * Assign Pattern Query Methods
  * ==================================== */
 
-std::unordered_set<std::string> PKB::QueryAllAssignPattern(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllAssignPattern(
     Expression exp) const {
   return pattern_manager_.GetAllPattern(exp);
 }
 
-std::unordered_set<std::string> PKB::QueryAssignPattern(std::string lhs,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAssignPattern(std::string lhs,
                                                         Expression exp) const {
   return pattern_manager_.GetPattern(lhs, exp);
 }
 
-std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryPatternVariablesFromAssign(
     int) const {
   return {};
 }
@@ -754,7 +805,8 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
 /// QueryAllWhilePattern
 /// \return Get all While Statements that use a variable in conditional
 /// container
-std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllWhilePattern() const {
   return pattern_manager_.GetAllWhilePattern();
 }
 
@@ -762,7 +814,8 @@ std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
 /// \param ident
 /// \return Get all While Statements that use variable ident in conditional
 /// container
-std::unordered_set<std::string> PKB::QueryWhilePattern(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryWhilePattern(
     std::string ident) const {
   return pattern_manager_.GetWhilePattern(ident);
 }
@@ -771,7 +824,8 @@ std::unordered_set<std::string> PKB::QueryWhilePattern(
 /// \param statement_number
 /// \return Get all variables used in conditional container of given While
 /// Statement
-std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryPatternVariablesFromWhile(
     int statement_number) const {
   return pattern_manager_.GetPatternVariablesFromWhile(statement_number);
 }
@@ -782,7 +836,8 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
 
 /// QueryAllIfPattern
 /// \return Get all If Statements that use a variable in conditional container
-std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryAllIfPattern() const {
   return pattern_manager_.GetAllIfPattern();
 }
 
@@ -790,7 +845,8 @@ std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
 /// \param ident
 /// \return Get all If Statements that use variable ident in conditional
 /// container
-std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryIfPattern(std::string ident) const {
   return pattern_manager_.GetIfPattern(ident);
 }
 
@@ -798,7 +854,8 @@ std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
 /// \param statement_number
 /// \return Get all variables used in conditional container of given If
 /// Statement
-std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryPatternVariablesFromIf(
     int statement_number) const {
   return pattern_manager_.GetPatternVariablesFromIf(statement_number);
 }
@@ -807,7 +864,8 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
  * While Pattern Query Methods
  * ==================================== */
 
-std::string PKB::QueryWithAttributeFromStatement(EntityType type,
+template <class T>
+std::string PKB<T>::QueryWithAttributeFromStatement(EntityType type,
                                                  int statement_number) const {
   std::string result;
   if (type == EntityType::CALL) {
@@ -825,7 +883,8 @@ std::string PKB::QueryWithAttributeFromStatement(EntityType type,
 /// \param name Attribute proc_name or var_name
 /// \param identifier proc_name/var_name
 /// \return Query entities that matches attribute proc_name or var_name
-std::unordered_set<std::string> PKB::QueryWithAttribute(
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryWithAttribute(
     EntityType type, AttributeName name, std::string identifier) const {
   std::unordered_set<std::string> result;
   if (type == EntityType::PROCEDURE && name == AttributeName::PROC_NAME) {
@@ -866,7 +925,8 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(
 /// \param name Attribute value or stmt_no
 /// \param number value/stmt_no
 /// \return Query entities that matches attribute value or stmt_no
-std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
+template <class T>
+std::unordered_set<std::string> PKB<T>::QueryWithAttribute(EntityType type,
                                                         AttributeName name,
                                                         int number) const {
   std::unordered_set<std::string> result;
@@ -921,7 +981,8 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
   return result;
 }
 
-bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
+template <class T>
+bool PKB<T>::CheckValidAffectsStmtNo(int stmt_no) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> ifs = entity_manager_.GetIfStatements();
@@ -945,7 +1006,8 @@ bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
   return false;
 }
 
-bool PKB::CheckNotAssignStmtNo(int stmt_no) const {
+template <class T>
+bool PKB<T>::CheckNotAssignStmtNo(int stmt_no) const {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   if (assigns.find(std::to_string(stmt_no)) != assigns.end()) {
@@ -958,7 +1020,8 @@ bool PKB::CheckNotAssignStmtNo(int stmt_no) const {
 /// \param statements Statements from relationship manager
 /// \param typed_statements Statements from entity manager
 /// \return Statements that are in both sets of statements
-std::unordered_set<std::string> PKB::FindIntersect(
+template <class T>
+std::unordered_set<std::string> PKB<T>::FindIntersect(
     std::unordered_set<std::string> statements,
     std::unordered_set<std::string> typed_statements) const {
   std::unordered_set<std::string> result;
