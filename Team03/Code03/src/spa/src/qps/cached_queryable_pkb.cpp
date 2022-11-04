@@ -207,22 +207,22 @@ std::unordered_set<std::string> CachedQueryablePkb::QueryPreviousT(
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAllAffects() {
-  if (cached_all_affects_->empty()) {
-    cached_all_affects_ = queryable_pkb_.QueryAllAffects();
+  if (!cached_all_affects_.has_value()) {
+    cached_all_affects_ = {queryable_pkb_.QueryAllAffects()};
   }
   return cached_all_affects_.value();
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAllAffectsBy() {
-  if (cached_all_affects_by_->empty()) {
-    cached_all_affects_by_ = queryable_pkb_.QueryAllAffectsBy();
+  if (!cached_all_affects_by_.has_value()) {
+    cached_all_affects_by_ = {queryable_pkb_.QueryAllAffectsBy()};
   }
   return cached_all_affects_by_.value();
 }
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAffects(
     int statement_number) {
-  if (affects_stmt_no_cache_.find(statement_number) !=
+  if (affects_stmt_no_cache_.find(statement_number) ==
       affects_stmt_no_cache_.end()) {
     affects_stmt_no_cache_[statement_number] =
         queryable_pkb_.QueryAffects(statement_number);
@@ -232,7 +232,7 @@ std::unordered_set<std::string> CachedQueryablePkb::QueryAffects(
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAffectsBy(
     int statement_number) {
-  if (affects_by_stmt_no_cache_.find(statement_number) !=
+  if (affects_by_stmt_no_cache_.find(statement_number) ==
       affects_by_stmt_no_cache_.end()) {
     affects_by_stmt_no_cache_[statement_number] =
         queryable_pkb_.QueryAffectsBy(statement_number);
@@ -242,7 +242,7 @@ std::unordered_set<std::string> CachedQueryablePkb::QueryAffectsBy(
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAffectsT(
     int statement_number) {
-  if (affects_t_stmt_no_cache_.find(statement_number) !=
+  if (affects_t_stmt_no_cache_.find(statement_number) ==
       affects_t_stmt_no_cache_.end()) {
     affects_t_stmt_no_cache_[statement_number] =
         queryable_pkb_.QueryAffectsT(statement_number);
@@ -252,7 +252,7 @@ std::unordered_set<std::string> CachedQueryablePkb::QueryAffectsT(
 
 std::unordered_set<std::string> CachedQueryablePkb::QueryAffectsTBy(
     int statement_number) {
-  if (affects_t_by_stmt_no_cache_.find(statement_number) !=
+  if (affects_t_by_stmt_no_cache_.find(statement_number) ==
       affects_t_by_stmt_no_cache_.end()) {
     affects_t_by_stmt_no_cache_[statement_number] =
         queryable_pkb_.QueryAffectsTBy(statement_number);
