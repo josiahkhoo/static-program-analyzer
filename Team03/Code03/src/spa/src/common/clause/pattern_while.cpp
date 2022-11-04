@@ -10,7 +10,7 @@ PatternWhile::PatternWhile(Synonym syn, EntityReference entity)
     : syn_(std::move(syn)), entity_(std::move(entity)) {}
 
 std::unordered_set<std::string> PatternWhile::Fetch(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
     return queryable_pkb.QueryAllWhilePattern();
   } else if (GetEntity().IsIdentifier()) {
@@ -21,12 +21,12 @@ std::unordered_set<std::string> PatternWhile::Fetch(
 }
 
 std::unordered_set<std::string> PatternWhile::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryPatternVariablesFromWhile(std::stoi(lhs));
 }
 
 std::unordered_set<std::string> PatternWhile::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryWhilePattern(rhs);
 }
 
@@ -56,7 +56,7 @@ QueryOperation::IterateSide PatternWhile::GetIterateSide(
   return QueryOperation::RHS;
 }
 
-bool PatternWhile::IsTrue(const QueryablePkb &) const {
+bool PatternWhile::IsTrue(QueryablePkb &) {
   assert(!"Patterns are never no synonyms, this should not get called");
   return false;
 }

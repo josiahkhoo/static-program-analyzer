@@ -8,7 +8,7 @@
 /// not repeated across declarations.
 class JoinNode : public QNode {
  public:
-  QResult Fetch(const QueryablePkb& pkb) override;
+  QResult Fetch(QueryablePkb& pkb) override;
 };
 
 #endif  // SPA_TEAM03_CODE03_SRC_SPA_SRC_QPS_QNODES_JOIN_NODE_H_

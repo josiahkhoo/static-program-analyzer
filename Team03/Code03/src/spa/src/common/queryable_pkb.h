@@ -135,38 +135,36 @@ class QueryablePkb {
 
   /// QueryAllAffects
   /// \return Query all assign statements that affects some other statement
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffects()
-      const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffects() = 0;
 
   /// QueryAllAffectsBy
   /// \return Query all assign statements that are affected by some other
   /// statement
-  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffectsBy()
-      const = 0;
+  [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffectsBy() = 0;
 
   /// QueryAffects
   /// \param statement_number statement
   /// \return Query all assign statements that affects given statement
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffects(
-      int statement_number) const = 0;
+      int statement_number) = 0;
 
   /// QueryAffectsBy
   /// \param statement_number statement
   /// \return Query all assign statements that are affected by given statement
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsBy(
-      int statement_number) const = 0;
+      int statement_number) = 0;
 
   /// QueryAffectsT
   /// \param statement_number statement
   /// \return Query all assign statements that affectsT given statement
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsT(
-      int statement_number) const = 0;
+      int statement_number) = 0;
 
   /// QueryAffectsTBy
   /// \param statement_number statement
   /// \return Query all assign statements that are affectedT by given statement
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsTBy(
-      int statement_number) const = 0;
+      int statement_number) = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAssignPattern(
       Expression exp) const = 0;

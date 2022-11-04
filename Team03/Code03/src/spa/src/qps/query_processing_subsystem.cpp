@@ -1,5 +1,6 @@
 #include "query_processing_subsystem.h"
 
+#include "cached_queryable_pkb.h"
 #include "common/exceptions/syntax_exception.h"
 #include "qps/exceptions/semantic_exception.h"
 #include "query_operation_checker.h"
@@ -7,7 +8,7 @@
 QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
     const Planner &planner, const Evaluator &evaluator,
-    const QueryablePkb &queryable_pkb)
+    QueryablePkb &queryable_pkb)
     : lexer_(lexer),
       parser_(parser),
       planner_(planner),
@@ -27,9 +28,10 @@ void QueryProcessingSubsystem::Process(std::string query,
     results.emplace_back(ex.what());
     return;
   }
-  QueryOperationChecker::Check(q_string, queryable_pkb_);
+  auto cached_queryable_pkb = CachedQueryablePkb(queryable_pkb_);
+  QueryOperationChecker::Check(q_string, cached_queryable_pkb);
   std::shared_ptr<QNode> q_plan = planner_.Plan(q_string);
   std::unordered_set<std::string> q_res =
-      evaluator_.Execute(queryable_pkb_, q_plan, q_string.GetSelect());
+      evaluator_.Execute(cached_queryable_pkb, q_plan, q_string.GetSelect());
   results.insert(results.end(), q_res.begin(), q_res.end());
 }

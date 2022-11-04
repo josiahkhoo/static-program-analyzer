@@ -6,7 +6,7 @@
 AbstractionNode::AbstractionNode(std::shared_ptr<QueryOperation> q_operation)
     : QNode(), q_operation_(std::move(q_operation)) {}
 
-QResult AbstractionNode::Fetch(const QueryablePkb& pkb) {
+QResult AbstractionNode::Fetch(QueryablePkb& pkb) {
   if (GetLeftNode() || GetRightNode()) {
     return FetchWithChildren(pkb);
   }
@@ -21,7 +21,7 @@ QResult AbstractionNode::Fetch(const QueryablePkb& pkb) {
   return {rows, {q_operation_->GetSynonym()}};
 }
 
-QResult AbstractionNode::FetchWithChildren(const QueryablePkb& pkb) {
+QResult AbstractionNode::FetchWithChildren(QueryablePkb& pkb) {
   // This has to be a double syn query op
   assert(q_operation_->GetType() == QueryOperation::DOUBLE_SYNONYM);
 
