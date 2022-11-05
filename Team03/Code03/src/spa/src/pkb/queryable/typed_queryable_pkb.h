@@ -14,7 +14,7 @@ class TypedQueryablePkb {
   TypedQueryablePkb(RelationshipManager &relationship_manager_,
                     EntityQueryable &entity_queryable_);
 
-  [[nodiscard]] FollowsQueryable GetFollowsQueryable() const;
+  [[nodiscard]] FollowsQueryable& GetFollowsQueryable();
 
  private:
   FollowsQueryable follows_queryable_;

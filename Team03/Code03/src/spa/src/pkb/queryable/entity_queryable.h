@@ -10,9 +10,9 @@
 
 class EntityQueryable {
  public:
-  std::unordered_set<std::string> QueryAll(EntityType type) const;
- protected:
   explicit EntityQueryable(EntityManager &entity_manager_);
+  [[nodiscard]] std::unordered_set<std::string> QueryAll(EntityType type) const;
+ protected:
   EntityManager &entity_manager_;
 };
 
