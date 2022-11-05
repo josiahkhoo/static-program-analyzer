@@ -353,6 +353,9 @@ Identifier QueryParserUtil::ExtractIdentifier(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::INVERTED_COMMAS);
   Identifier ident = tokens->PeekValue();
+  if (ident.empty()) {
+    throw SyntaxException("Invalid identifier");
+  }
   tokens->Forward();
   tokens->Expect(Token::INVERTED_COMMAS);
   return ident;
