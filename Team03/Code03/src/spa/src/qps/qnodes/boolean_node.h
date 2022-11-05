@@ -8,7 +8,7 @@
 class BooleanNode : public QNode {
  public:
   explicit BooleanNode(std::shared_ptr<QueryOperation> no_syn_operation);
-  QResult Fetch(const QueryablePkb& pkb) override;
+  QResult Fetch(QueryablePkb& pkb) override;
 
  private:
   std::shared_ptr<QueryOperation> no_syn_operation_;

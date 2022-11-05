@@ -6,12 +6,12 @@ ModifiesSClause::ModifiesSClause(StatementReference lhs, EntityReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryModifiesS(std::stoi(lhs));
 }
 
 [[nodiscard]] std::unordered_set<std::string> ModifiesSClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryModifiesSBy(
       rhs, GetLeftHandSide().GetSynonym().GetEntityType());
 }
@@ -21,7 +21,7 @@ const Reference &ModifiesSClause::GetLeftHandSide() const { return lhs_; }
 const Reference &ModifiesSClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> ModifiesSClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Modifies(1, a)
     return queryable_pkb.QueryModifiesS(GetLeftHandSide().GetLineNumber());
@@ -31,7 +31,7 @@ std::unordered_set<std::string> ModifiesSClause::FetchRhs(
 }
 
 std::unordered_set<std::string> ModifiesSClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetRightHandSide().IsIdentifier()) {
     // E.g. Modifies(a, "x")
     return queryable_pkb.QueryModifiesSBy(
@@ -43,7 +43,7 @@ std::unordered_set<std::string> ModifiesSClause::FetchLhs(
       GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-bool ModifiesSClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool ModifiesSClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsIdentifier()) {
     auto possible_rhs =
         queryable_pkb.QueryModifiesS(GetLeftHandSide().GetLineNumber());

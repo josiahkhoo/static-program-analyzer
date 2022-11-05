@@ -11,7 +11,7 @@ class Evaluator {
   explicit Evaluator();
 
   [[nodiscard]] std::unordered_set<std::string> Execute(
-      const QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
+      QueryablePkb& pkb, const std::shared_ptr<QNode>& q_tree,
       const std::shared_ptr<Select>& slt) const;
 };
 

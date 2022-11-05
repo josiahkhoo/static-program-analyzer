@@ -180,42 +180,36 @@ class QueryOpCheckPkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {""};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPreviousT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllAffects()
-      const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAllAffects() override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAllAffectsBy()
-      const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAllAffectsBy() override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAffects(
-      int) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAffects(int) override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAffectsBy(
-      int) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAffectsBy(int) override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAffectsT(
-      int) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAffectsT(int) override {
     return {""};
   }
 
-  [[nodiscard]] std::unordered_set<std::string> QueryAffectsTBy(
-      int) const override {
+  [[nodiscard]] std::unordered_set<std::string> QueryAffectsTBy(int) override {
     return {""};
   }
 

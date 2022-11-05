@@ -13,7 +13,7 @@ PatternAssign::PatternAssign(Synonym syn, EntityReference entity,
       expression_(std::move(expression)) {}
 
 std::unordered_set<std::string> PatternAssign::Fetch(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
     return queryable_pkb.QueryAllAssignPattern(expression_);
   } else if (GetEntity().IsIdentifier()) {
@@ -25,12 +25,12 @@ std::unordered_set<std::string> PatternAssign::Fetch(
 }
 
 std::unordered_set<std::string> PatternAssign::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryPatternVariablesFromAssign(std::stoi(lhs));
 }
 
 std::unordered_set<std::string> PatternAssign::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryAssignPattern(rhs, expression_);
 }
 
@@ -62,7 +62,7 @@ QueryOperation::IterateSide PatternAssign::GetIterateSide(
   return QueryOperation::RHS;
 }
 
-bool PatternAssign::IsTrue(const QueryablePkb &) const {
+bool PatternAssign::IsTrue(QueryablePkb &) {
   assert(!"Patterns are never no synonyms, this should not get called");
   return false;
 }

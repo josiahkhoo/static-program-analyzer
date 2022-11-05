@@ -6,13 +6,13 @@ ParentTClause::ParentTClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> ParentTClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryParentTBy(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> ParentTClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryParentT(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
@@ -22,7 +22,7 @@ const Reference &ParentTClause::GetLeftHandSide() const { return lhs_; }
 const Reference &ParentTClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> ParentTClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Parent(1, a)
     return queryable_pkb.QueryParentTBy(
@@ -35,7 +35,7 @@ std::unordered_set<std::string> ParentTClause::FetchRhs(
 }
 
 std::unordered_set<std::string> ParentTClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Parent(a, 1)
     return queryable_pkb.QueryParentT(
@@ -47,7 +47,7 @@ std::unordered_set<std::string> ParentTClause::FetchLhs(
       GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-bool ParentTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool ParentTClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryParentTBy(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);

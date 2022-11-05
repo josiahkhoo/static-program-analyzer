@@ -4,13 +4,13 @@ NextClause::NextClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> NextClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryNext(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> NextClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryPrevious(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
@@ -20,7 +20,7 @@ const Reference &NextClause::GetLeftHandSide() const { return lhs_; }
 const Reference &NextClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> NextClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Next(1, s)
     return queryable_pkb.QueryNext(
@@ -33,7 +33,7 @@ std::unordered_set<std::string> NextClause::FetchRhs(
 }
 
 std::unordered_set<std::string> NextClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Next(s, 1)
     return queryable_pkb.QueryPrevious(
@@ -45,7 +45,7 @@ std::unordered_set<std::string> NextClause::FetchLhs(
       GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-bool NextClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool NextClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryNext(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);

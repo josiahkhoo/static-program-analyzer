@@ -25,7 +25,7 @@ class QNode {
 
   [[nodiscard]] std::shared_ptr<QNode> GetRightNode() const;
 
-  virtual QResult Fetch(const QueryablePkb &pkb);
+  virtual QResult Fetch(QueryablePkb &pkb);
 
  private:
   std::shared_ptr<QNode> left_node_;

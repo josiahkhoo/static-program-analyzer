@@ -7,8 +7,7 @@
 With::With(AttributeReference attRefL, AttributeReference attRefR)
     : lhs_(std::move(attRefL)), rhs_(std::move(attRefR)) {}
 
-std::unordered_set<std::string> With::Fetch(
-    const QueryablePkb& queryable_pkb) const {
+std::unordered_set<std::string> With::Fetch(QueryablePkb& queryable_pkb) {
   if (lhs_.IsAttributeName()) {
     if (rhs_.IsIdentifier()) {
       // E.g. with x.procName = "name"
@@ -40,7 +39,7 @@ std::unordered_set<std::string> With::Fetch(
 }
 
 std::unordered_set<std::string> With::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb& queryable_pkb) const {
+    std::string lhs, QueryablePkb& queryable_pkb) {
   // E.g. with x.procName = y.varName
   if (lhs_.GetSynonym().IsValueNotEqualToAttribute(lhs_.GetAttributeName())) {
     lhs = queryable_pkb.QueryWithAttributeFromStatement(
@@ -56,7 +55,7 @@ std::unordered_set<std::string> With::FetchPossibleRhs(
 }
 
 std::unordered_set<std::string> With::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb& queryable_pkb) const {
+    std::string rhs, QueryablePkb& queryable_pkb) {
   // E.g. with x.procName = y.varName
   if (rhs_.GetSynonym().IsValueNotEqualToAttribute(rhs_.GetAttributeName())) {
     rhs = queryable_pkb.QueryWithAttributeFromStatement(
@@ -105,7 +104,7 @@ QueryOperation::IterateSide With::GetIterateSide(
   return LHS;
 }
 
-bool With::IsTrue(const QueryablePkb& queryable_pkb) const {
+bool With::IsTrue(QueryablePkb& queryable_pkb) {
   if (lhs_.IsAttributeName()) {
     if (rhs_.IsIdentifier()) {
       // E.g. with x.procName = "name"

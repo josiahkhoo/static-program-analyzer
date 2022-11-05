@@ -9,8 +9,7 @@
 PatternIf::PatternIf(Synonym syn, EntityReference entity)
     : syn_(std::move(syn)), entity_(std::move(entity)) {}
 
-std::unordered_set<std::string> PatternIf::Fetch(
-    const QueryablePkb &queryable_pkb) const {
+std::unordered_set<std::string> PatternIf::Fetch(QueryablePkb &queryable_pkb) {
   if (GetEntity().IsSynonym() || GetEntity().IsWildCard()) {
     return queryable_pkb.QueryAllIfPattern();
   } else if (GetEntity().IsIdentifier()) {
@@ -21,12 +20,12 @@ std::unordered_set<std::string> PatternIf::Fetch(
 }
 
 std::unordered_set<std::string> PatternIf::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryPatternVariablesFromIf(std::stoi(lhs));
 }
 
 std::unordered_set<std::string> PatternIf::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryIfPattern(rhs);
 }
 
@@ -56,7 +55,7 @@ QueryOperation::IterateSide PatternIf::GetIterateSide(
   return QueryOperation::RHS;
 }
 
-bool PatternIf::IsTrue(const QueryablePkb &) const {
+bool PatternIf::IsTrue(QueryablePkb &) {
   assert(!"Patterns are never no synonyms, this should not get called");
   return false;
 }
