@@ -533,3 +533,378 @@ if i;
 Select BOOLEAN such that Affects(1, i)
 FALSE
 5000
+104 - (SUCCESS) Does call statement affect any call statement
+call c, c1;
+Select BOOLEAN such that Affects(c, c1)
+FALSE
+5000
+105 - (SUCCESS) Does call statement affect any read statement
+call c; read r;
+Select BOOLEAN such that Affects(c, r)
+FALSE
+5000
+106 - (SUCCESS) Does call statement affect any print statement
+call c; print p;
+Select BOOLEAN such that Affects(c, p)
+FALSE
+5000
+107 - (SUCCESS) Does call statement affect any while statement
+call c; while w;
+Select BOOLEAN such that Affects(c, w)
+FALSE
+5000
+108 - (SUCCESS) Does call statement affect any if statement
+call c; if i;
+Select BOOLEAN such that Affects(c, i)
+FALSE
+5000
+109 - (SUCCESS) Does read statement affect any call statement
+read r; call c;
+Select BOOLEAN such that Affects(r, c)
+FALSE
+5000
+110 - (SUCCESS) Does read statement affect any read statement
+read r, r1;
+Select BOOLEAN such that Affects(r, r1)
+FALSE
+5000
+111 - (SUCCESS) Does read statement affect any print statement
+read r; print p;
+Select BOOLEAN such that Affects(r, p)
+FALSE
+5000
+112 - (SUCCESS) Does read statement affect any while statement
+read r; while w;
+Select BOOLEAN such that Affects(r, w)
+FALSE
+5000
+113 - (SUCCESS) Does read statement affect any if statement
+read r; if i;
+Select BOOLEAN such that Affects(r, i)
+FALSE
+5000
+114 - (SUCCESS) Does print statement affect any call statement
+print p; call c;
+Select BOOLEAN such that Affects(p, c)
+FALSE
+5000
+115 - (SUCCESS) Does print statement affect any read statement
+print p; read r;
+Select BOOLEAN such that Affects(p, r)
+FALSE
+5000
+116 - (SUCCESS) Does print statement affect any print statement
+print p, p1;
+Select BOOLEAN such that Affects(p, p1)
+FALSE
+5000
+117 - (SUCCESS) Does print statement affect any while statement
+print p; while w;
+Select BOOLEAN such that Affects(p, w)
+FALSE
+5000
+118 - (SUCCESS) Does print statement affect any if statement
+print p; if i;
+Select BOOLEAN such that Affects(p, i)
+FALSE
+5000
+119 - (SUCCESS) Does while statement affect any call statement
+while w; call c;
+Select BOOLEAN such that Affects(w, c)
+FALSE
+5000
+120 - (SUCCESS) Does while statement affect any read statement
+while w; read r;
+Select BOOLEAN such that Affects(w, r)
+FALSE
+5000
+121 - (SUCCESS) Does while statement affect any print statement
+while w; print p;
+Select BOOLEAN such that Affects(w, p)
+FALSE
+5000
+122 - (SUCCESS) Does while statement affect any while statement
+while w, w1;
+Select BOOLEAN such that Affects(w, w1)
+FALSE
+5000
+123 - (SUCCESS) Does while statement affect any if statement
+while w; if i;
+Select BOOLEAN such that Affects(w, i)
+FALSE
+5000
+124 - (SUCCESS) Does if statement affect any call statement
+if i; call c;
+Select BOOLEAN such that Affects(i, c)
+FALSE
+5000
+125 - (SUCCESS) Does if statement affect any read statement
+if i; read r;
+Select BOOLEAN such that Affects(i, r)
+FALSE
+5000
+126 - (SUCCESS) Does if statement affect any print statement
+if i; print p;
+Select BOOLEAN such that Affects(i, p)
+FALSE
+5000
+127 - (SUCCESS) Does if statement affect any while statement
+if i; while w;
+Select BOOLEAN such that Affects(i, w)
+FALSE
+5000
+128 - (SUCCESS) Does if statement affect any if statement
+if i, i1;
+Select BOOLEAN such that Affects(i, i1)
+FALSE
+5000
+129 - (SUCCESS) Does statement 3 affects any call statement
+call c;
+Select BOOLEAN such that Affects(3, c)
+FALSE
+5000
+130 - (SUCCESS) Does statement 3 affects any read statement
+read r;
+Select BOOLEAN such that Affects(3, r)
+FALSE
+5000
+131 - (SUCCESS) Does statement 3 affects any print statement
+print p;
+Select BOOLEAN such that Affects(3, p)
+FALSE
+5000
+132 - (SUCCESS) Does statement 3 affects any while statement
+while w;
+Select BOOLEAN such that Affects(3, w)
+FALSE
+5000
+133 - (SUCCESS) Does statement 3 affects any if statement
+if i;
+Select BOOLEAN such that Affects(3, i)
+FALSE
+5000
+134 - (SUCCESS) Does any call statement affects statement 3
+call c;
+Select BOOLEAN such that Affects(c, 3)
+FALSE
+5000
+135 - (SUCCESS) Does any read statement affects statement 3
+read r;
+Select BOOLEAN such that Affects(r, 3)
+FALSE
+5000
+136 - (SUCCESS) Does any print statement affects statement 3
+print p;
+Select BOOLEAN such that Affects(p, 3)
+FALSE
+5000
+137 - (SUCCESS) Does any while statement affects statement 3
+while w;
+Select BOOLEAN such that Affects(w, 3)
+FALSE
+5000
+138 - (SUCCESS) Does any if statement affects statement 3
+if i;
+Select BOOLEAN such that Affects(i, 3)
+FALSE
+5000
+139 - (SUCCESS) Does statement 7 affects any call statement
+call c;
+Select BOOLEAN such that Affects(7, c)
+FALSE
+5000
+140 - (SUCCESS) Does statement 7 affects any read statement
+read r;
+Select BOOLEAN such that Affects(7, r)
+FALSE
+5000
+141 - (SUCCESS) Does statement 7 affects any print statement
+print p;
+Select BOOLEAN such that Affects(7, p)
+FALSE
+5000
+142 - (SUCCESS) Does statement 7 affects any while statement
+while w;
+Select BOOLEAN such that Affects(7, w)
+FALSE
+5000
+143 - (SUCCESS) Does statement 7 affects any if statement
+if i;
+Select BOOLEAN such that Affects(7, i)
+FALSE
+5000
+144 - (SUCCESS) Does any call statement affects statement 7
+call c;
+Select BOOLEAN such that Affects(c, 7)
+FALSE
+5000
+145 - (SUCCESS) Does any read statement affects statement 7
+read r;
+Select BOOLEAN such that Affects(r, 7)
+FALSE
+5000
+146 - (SUCCESS) Does any print statement affects statement 7
+print p;
+Select BOOLEAN such that Affects(p, 7)
+FALSE
+5000
+147 - (SUCCESS) Does any while statement affects statement 7
+while w;
+Select BOOLEAN such that Affects(w, 7)
+FALSE
+5000
+148 - (SUCCESS) Does any if statement affects statement 7
+if i;
+Select BOOLEAN such that Affects(i, 7)
+FALSE
+5000
+149 - (SUCCESS) Does statement 45 affects any call statement
+call c;
+Select BOOLEAN such that Affects(45, c)
+FALSE
+5000
+150 - (SUCCESS) Does statement 45 affects any read statement
+read r;
+Select BOOLEAN such that Affects(45, r)
+FALSE
+5000
+151 - (SUCCESS) Does statement 45 affects any print statement
+print p;
+Select BOOLEAN such that Affects(45, p)
+FALSE
+5000
+152 - (SUCCESS) Does statement 45 affects any while statement
+while w;
+Select BOOLEAN such that Affects(45, w)
+FALSE
+5000
+153 - (SUCCESS) Does statement 45 affects any if statement
+if i;
+Select BOOLEAN such that Affects(45, i)
+FALSE
+5000
+154 - (SUCCESS) Does any call statement affects statement 45
+call c;
+Select BOOLEAN such that Affects(c, 45)
+FALSE
+5000
+155 - (SUCCESS) Does any read statement affects statement 45
+read r;
+Select BOOLEAN such that Affects(r, 45)
+FALSE
+5000
+156 - (SUCCESS) Does any print statement affects statement 45
+print p;
+Select BOOLEAN such that Affects(p, 45)
+FALSE
+5000
+157 - (SUCCESS) Does any while statement affects statement 45
+while w;
+Select BOOLEAN such that Affects(w, 45)
+FALSE
+5000
+158 - (SUCCESS) Does any if statement affects statement 45
+if i;
+Select BOOLEAN such that Affects(i, 45)
+FALSE
+5000
+159 - (SUCCESS) Does statement 39 affects any call statement
+call c;
+Select BOOLEAN such that Affects(39, c)
+FALSE
+5000
+160 - (SUCCESS) Does statement 39 affects any read statement
+read r;
+Select BOOLEAN such that Affects(39, r)
+FALSE
+5000
+161 - (SUCCESS) Does statement 39 affects any print statement
+print p;
+Select BOOLEAN such that Affects(39, p)
+FALSE
+5000
+162 - (SUCCESS) Does statement 39 affects any while statement
+while w;
+Select BOOLEAN such that Affects(39, w)
+FALSE
+5000
+163 - (SUCCESS) Does statement 39 affects any if statement
+if i;
+Select BOOLEAN such that Affects(39, i)
+FALSE
+5000
+164 - (SUCCESS) Does any call statement affects statement 39
+call c;
+Select BOOLEAN such that Affects(c, 39)
+FALSE
+5000
+165 - (SUCCESS) Does any read statement affects statement 39
+read r;
+Select BOOLEAN such that Affects(r, 39)
+FALSE
+5000
+166 - (SUCCESS) Does any print statement affects statement 39
+print p;
+Select BOOLEAN such that Affects(p, 39)
+FALSE
+5000
+167 - (SUCCESS) Does any while statement affects statement 39
+while w;
+Select BOOLEAN such that Affects(w, 39)
+FALSE
+5000
+168 - (SUCCESS) Does any if statement affects statement 39
+if i;
+Select BOOLEAN such that Affects(i, 39)
+FALSE
+5000
+169 - (SUCCESS) Does statement 5 affects any call statement
+call c;
+Select BOOLEAN such that Affects(5, c)
+FALSE
+5000
+170 - (SUCCESS) Does statement 5 affects any read statement
+read r;
+Select BOOLEAN such that Affects(5, r)
+FALSE
+5000
+171 - (SUCCESS) Does statement 5 affects any print statement
+print p;
+Select BOOLEAN such that Affects(5, p)
+FALSE
+5000
+172 - (SUCCESS) Does statement 5 affects any while statement
+while w;
+Select BOOLEAN such that Affects(5, w)
+FALSE
+5000
+173 - (SUCCESS) Does statement 5 affects any if statement
+if i;
+Select BOOLEAN such that Affects(5, i)
+FALSE
+5000
+174 - (SUCCESS) Does any call statement affects statement 5
+call c;
+Select BOOLEAN such that Affects(c, 5)
+FALSE
+5000
+175 - (SUCCESS) Does any read statement affects statement 5
+read r;
+Select BOOLEAN such that Affects(r, 5)
+FALSE
+5000
+176 - (SUCCESS) Does any print statement affects statement 5
+print p;
+Select BOOLEAN such that Affects(p, 5)
+FALSE
+5000
+177 - (SUCCESS) Does any while statement affects statement 5
+while w;
+Select BOOLEAN such that Affects(w, 5)
+FALSE
+5000
+178 - (SUCCESS) Does any if statement affects statement 5
+if i;
+Select BOOLEAN such that Affects(i, 5)
+FALSE
+5000

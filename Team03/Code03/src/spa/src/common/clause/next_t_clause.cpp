@@ -28,7 +28,8 @@ std::unordered_set<std::string> NextTClause::FetchRhs(
         GetRightHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(_, s)
-  return queryable_pkb.QueryAllPrevious(PROCEDURE);
+  return queryable_pkb.QueryAllNext(
+      GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 std::unordered_set<std::string> NextTClause::FetchLhs(
@@ -40,7 +41,8 @@ std::unordered_set<std::string> NextTClause::FetchLhs(
         GetLeftHandSide().GetSynonym().GetEntityType());
   }
   // E.g. Next*(s, _)
-  return queryable_pkb.QueryAllNext(PROCEDURE);
+  return queryable_pkb.QueryAllPrevious(
+      GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
 bool NextTClause::IsTrue(QueryablePkb &queryable_pkb) {
