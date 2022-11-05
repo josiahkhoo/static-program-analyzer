@@ -67,31 +67,57 @@ EntityReference QueryParserUtil::ExtractEntityRef(
 Expression QueryParserUtil::ExtractExpression(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
-  Expression exp;
+  std::optional<Expression> maybe_expression;
   int wildcard_found = 0;
   // Wildcard front
   if (tokens->MatchKind(Token::UNDERSCORE)) {
     wildcard_found++;
     tokens->Forward();
+
+    Expression exp;
+    maybe_expression = exp;
   }
   // Pattern to match - Expression
   if (tokens->MatchKind(Token::INVERTED_COMMAS)) {
     tokens->Forward();
-    exp.to_match = GetExpression(tokens, builder);
+    std::string to_match = GetExpression(tokens, builder);
     tokens->Expect(Token::INVERTED_COMMAS);
+
+    if (maybe_expression.has_value()) {
+      maybe_expression.value().to_match = to_match;
+    } else {
+      Expression exp;
+      exp.to_match = to_match;
+      maybe_expression = exp;
+    }
   }
   // Wildcard back
   if (tokens->MatchKind(Token::UNDERSCORE)) {
     wildcard_found++;
     tokens->Forward();
+
+    if (!maybe_expression.has_value()) {
+      Expression exp;
+      maybe_expression = exp;
+    }
   }
+  if (!maybe_expression.has_value()) {
+    throw SyntaxException("Missing expression");
+  }
+  Expression exp = CreateExpression(maybe_expression, wildcard_found);
+  return exp;
+}
+
+Expression QueryParserUtil::CreateExpression(
+    std::optional<Expression>& maybe_expression, int wildcard_found) {
+  Expression exp = maybe_expression.value();
   switch (wildcard_found) {
     case 2:
       exp.has_wildcard = true;
       break;
     case 1:
       if (!exp.to_match.empty()) {
-        throw SyntaxException("tokens->Expected different declaration");
+        throw SyntaxException("Expected different declaration");
       } else {
         exp.has_wildcard = true;
         break;
