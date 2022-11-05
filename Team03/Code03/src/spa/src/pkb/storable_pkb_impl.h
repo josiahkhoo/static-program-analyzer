@@ -15,8 +15,8 @@ class StorablePkbImpl {
                   RelationshipManager &relationship_manager,
                   PatternManager &pattern_manager_);
 
-  [[nodiscard]] EntityStorablePkb GetEntityStorablePkb() const;
-  [[nodiscard]] AbstractionStorablePkb GetAbstractionStorablePkb() const;
+  [[nodiscard]] EntityStorablePkb& GetEntityStorablePkb();
+  [[nodiscard]] AbstractionStorablePkb& GetAbstractionStorablePkb();
 
 
  private:

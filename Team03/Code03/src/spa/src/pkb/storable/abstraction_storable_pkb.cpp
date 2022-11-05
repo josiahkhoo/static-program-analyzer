@@ -23,78 +23,78 @@ AbstractionStorablePkb::AbstractionStorablePkb(
 
 /// Get FollowsStorable
 /// \return FollowsStorable
-FollowsStorable AbstractionStorablePkb::GetFollowsStorable() const {
+FollowsStorable& AbstractionStorablePkb::GetFollowsStorable() {
   return follows_storable_;
 }
 
 /// Get FollowsTStorable
 /// \return FollowsTStorable
-FollowsTStorable AbstractionStorablePkb::GetFollowsTStorable() const {
+FollowsTStorable& AbstractionStorablePkb::GetFollowsTStorable() {
   return follows_t_storable_;
 }
 
 /// Get ParentStorable
 /// \return ParentStorable
-ParentStorable AbstractionStorablePkb::GetParentStorable() const {
+ParentStorable& AbstractionStorablePkb::GetParentStorable() {
   return parent_storable_;
 }
 
 /// Get ParentTStorable
 /// \return ParentTStorable
-ParentTStorable AbstractionStorablePkb::GetParentTStorable() const {
+ParentTStorable& AbstractionStorablePkb::GetParentTStorable() {
   return parent_t_storable_;
 }
 
 /// Get ModifiesPStorable
 /// \return ModifiesPStorable
-ModifiesPStorable AbstractionStorablePkb::GetModifiesPStorable() const {
+ModifiesPStorable& AbstractionStorablePkb::GetModifiesPStorable() {
   return modifies_p_storable_;
 }
 
 /// Get ModifiesSStorable
 /// \return ModifiesSStorable
-ModifiesSStorable AbstractionStorablePkb::GetModifiesSStorable() const {
+ModifiesSStorable& AbstractionStorablePkb::GetModifiesSStorable() {
   return modifies_s_storable_;
 }
 
 /// Get UsesPStorable
 /// \return UsesPStorable
-UsesPStorable AbstractionStorablePkb::GetUsesPStorable() const {
+UsesPStorable& AbstractionStorablePkb::GetUsesPStorable() {
   return uses_s_storable_;
 }
 
 /// Get UsesSStorable
 /// \return UsesSStorable
-UsesSStorable AbstractionStorablePkb::GetUsesSStorable() const {
+UsesSStorable& AbstractionStorablePkb::GetUsesSStorable() {
   return uses_p_storable_;
 }
 
 /// Get CallsStorable
 /// \return CallsStorable
-CallsStorable AbstractionStorablePkb::GetCallsStorable() const {
+CallsStorable& AbstractionStorablePkb::GetCallsStorable() {
   return calls_storable_;
 }
 
 /// Get CallsTStorable
 /// \return CallsTStorable
-CallsTStorable AbstractionStorablePkb::GetCallsTStorable() const {
+CallsTStorable& AbstractionStorablePkb::GetCallsTStorable() {
   return calls_t_storable_;
 }
 
 /// Get IfPatternStorable
 /// \return IfPatternStorable
-IfPatternStorable AbstractionStorablePkb::GetIfPatternStorable() const {
+IfPatternStorable& AbstractionStorablePkb::GetIfPatternStorable() {
   return if_pattern_storable_;
 }
 
 /// Get WhilePatternStorable
 /// \return WhilePatternStorable
-WhilePatternStorable AbstractionStorablePkb::GetWhilePatternStorable() const {
+WhilePatternStorable& AbstractionStorablePkb::GetWhilePatternStorable() {
   return while_pattern_storable_;
 }
 
 /// Get CfgStorable
 /// \return CfgStorable
-CfgStorable AbstractionStorablePkb::GetCfgStorable() const {
+CfgStorable& AbstractionStorablePkb::GetCfgStorable() {
   return cfg_storable_;
 }

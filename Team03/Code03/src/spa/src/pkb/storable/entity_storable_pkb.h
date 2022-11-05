@@ -19,23 +19,23 @@ class EntityStorablePkb {
  public:
   EntityStorablePkb(EntityManager &entity_manager_, PatternManager &pattern_manager_);
 
-  [[nodiscard]] AssignEntityStorable GetAssignEntityStorable() const;
+  [[nodiscard]] AssignEntityStorable& GetAssignEntityStorable();
 
-  [[nodiscard]] CallEntityStorable GetCallEntityStorable() const;
+  [[nodiscard]] CallEntityStorable& GetCallEntityStorable();
 
-  [[nodiscard]] ConstantEntityStorable GetConstantEntityStorable() const;
+  [[nodiscard]] ConstantEntityStorable& GetConstantEntityStorable();
 
-  [[nodiscard]] IfEntityStorable GetIfEntityStorable() const;
+  [[nodiscard]] IfEntityStorable& GetIfEntityStorable();
 
-  [[nodiscard]] PrintEntityStorable GetPrintEntityStorable() const;
+  [[nodiscard]] PrintEntityStorable& GetPrintEntityStorable();
 
-  [[nodiscard]] ProcedureEntityStorable GetProcedureEntityStorable() const;
+  [[nodiscard]] ProcedureEntityStorable& GetProcedureEntityStorable();
 
-  [[nodiscard]] ReadEntityStorable GetReadEntityStorable() const;
+  [[nodiscard]] ReadEntityStorable& GetReadEntityStorable();
 
-  [[nodiscard]] VariableEntityStorable GetVariableEntityStorable() const;
+  [[nodiscard]] VariableEntityStorable& GetVariableEntityStorable();
 
-  [[nodiscard]] WhileEntityStorable GetWhileEntityStorable() const;
+  [[nodiscard]] WhileEntityStorable& GetWhileEntityStorable();
 
  private:
   AssignEntityStorable assign_entity_storable_;

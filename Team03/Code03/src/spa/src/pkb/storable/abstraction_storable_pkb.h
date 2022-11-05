@@ -23,31 +23,31 @@ class AbstractionStorablePkb {
  public:
   AbstractionStorablePkb(RelationshipManager &relationship_manager_, PatternManager &pattern_manager_);
 
-  [[nodiscard]] FollowsStorable GetFollowsStorable() const;
+  [[nodiscard]] FollowsStorable& GetFollowsStorable();
 
-  [[nodiscard]] FollowsTStorable GetFollowsTStorable() const;
+  [[nodiscard]] FollowsTStorable& GetFollowsTStorable();
 
-  [[nodiscard]] ParentStorable GetParentStorable() const;
+  [[nodiscard]] ParentStorable& GetParentStorable();
 
-  [[nodiscard]] ParentTStorable GetParentTStorable() const;
+  [[nodiscard]] ParentTStorable& GetParentTStorable();
 
-  [[nodiscard]] ModifiesPStorable GetModifiesPStorable() const;
+  [[nodiscard]] ModifiesPStorable& GetModifiesPStorable();
 
-  [[nodiscard]] ModifiesSStorable GetModifiesSStorable() const;
+  [[nodiscard]] ModifiesSStorable& GetModifiesSStorable();
 
-  [[nodiscard]] UsesPStorable GetUsesPStorable() const;
+  [[nodiscard]] UsesPStorable& GetUsesPStorable();
 
-  [[nodiscard]] UsesSStorable GetUsesSStorable() const;
+  [[nodiscard]] UsesSStorable& GetUsesSStorable();
 
-  [[nodiscard]] CallsStorable GetCallsStorable() const;
+  [[nodiscard]] CallsStorable& GetCallsStorable();
 
-  [[nodiscard]] CallsTStorable GetCallsTStorable() const;
+  [[nodiscard]] CallsTStorable& GetCallsTStorable();
 
-  [[nodiscard]] IfPatternStorable GetIfPatternStorable() const;
+  [[nodiscard]] IfPatternStorable& GetIfPatternStorable();
 
-  [[nodiscard]] WhilePatternStorable GetWhilePatternStorable() const;
+  [[nodiscard]] WhilePatternStorable& GetWhilePatternStorable();
 
-  [[nodiscard]] CfgStorable GetCfgStorable() const;
+  [[nodiscard]] CfgStorable& GetCfgStorable();
 
  private:
   FollowsStorable follows_storable_;

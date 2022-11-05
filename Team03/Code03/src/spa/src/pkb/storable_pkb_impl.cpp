@@ -12,10 +12,10 @@ StorablePkbImpl::StorablePkbImpl(EntityManager &entity_manager_,
       abstraction_storable_pkb_(
           AbstractionStorablePkb(relationship_manager, pattern_manager_)) {}
 
-EntityStorablePkb StorablePkbImpl::GetEntityStorablePkb() const {
+EntityStorablePkb& StorablePkbImpl::GetEntityStorablePkb() {
   return entity_storable_pkb_;
 }
 
-AbstractionStorablePkb StorablePkbImpl::GetAbstractionStorablePkb() const {
+AbstractionStorablePkb& StorablePkbImpl::GetAbstractionStorablePkb() {
   return abstraction_storable_pkb_;
 }

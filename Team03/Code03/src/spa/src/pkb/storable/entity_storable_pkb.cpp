@@ -19,54 +19,54 @@ EntityStorablePkb::EntityStorablePkb(EntityManager &entity_manager_,
 
 /// Get AssignEntityStorable
 /// \return AssignEntityStorable
-AssignEntityStorable EntityStorablePkb::GetAssignEntityStorable() const {
+AssignEntityStorable& EntityStorablePkb::GetAssignEntityStorable() {
   return assign_entity_storable_;
 }
 
 /// Get CallEntityStorable
 /// \return CallEntityStorable
-CallEntityStorable EntityStorablePkb::GetCallEntityStorable() const {
+CallEntityStorable& EntityStorablePkb::GetCallEntityStorable() {
   return call_entity_storable_;
 }
 
 /// Get ConstantEntityStorable
 /// \return ConstantEntityStorable
-ConstantEntityStorable EntityStorablePkb::GetConstantEntityStorable() const {
+ConstantEntityStorable& EntityStorablePkb::GetConstantEntityStorable() {
   return constant_entity_storable_;
 }
 
 /// Get IfEntityStorable
 /// \return IfEntityStorable
-IfEntityStorable EntityStorablePkb::GetIfEntityStorable() const {
+IfEntityStorable& EntityStorablePkb::GetIfEntityStorable() {
   return if_entity_storable_;
 }
 
 /// Get PrintEntityStorable
 /// \return PrintEntityStorable
-PrintEntityStorable EntityStorablePkb::GetPrintEntityStorable() const {
+PrintEntityStorable& EntityStorablePkb::GetPrintEntityStorable() {
   return print_entity_storable_;
 }
 
 /// Get ProcedureEntityStorable
 /// \return ProcedureEntityStorable
-ProcedureEntityStorable EntityStorablePkb::GetProcedureEntityStorable() const {
+ProcedureEntityStorable& EntityStorablePkb::GetProcedureEntityStorable() {
   return procedure_entity_storable_;
 }
 
 /// Get ReadEntityStorable
 /// \return ReadEntityStorable
-ReadEntityStorable EntityStorablePkb::GetReadEntityStorable() const {
+ReadEntityStorable& EntityStorablePkb::GetReadEntityStorable() {
   return read_entity_storable_;
 }
 
 /// Get VariableEntityStorable
 /// \return VariableEntityStorable
-VariableEntityStorable EntityStorablePkb::GetVariableEntityStorable() const {
+VariableEntityStorable& EntityStorablePkb::GetVariableEntityStorable() {
   return variable_entity_storable_;
 }
 
 /// Get WhileEntityStorable
 /// \return WhileEntityStorable
-WhileEntityStorable EntityStorablePkb::GetWhileEntityStorable() const {
+WhileEntityStorable& EntityStorablePkb::GetWhileEntityStorable() {
   return while_entity_storable_;
 }
