@@ -166,6 +166,7 @@ std::unordered_map<const TNode *, std::unordered_set<const TNode *>>
 AbstractionExtractorImpl::GetProcNodeCallEntityMap(
     const std::vector<CallEntity> &call_entities) {
   std::unordered_map<const TNode *, std::unordered_set<const TNode *>> umap;
+  std::unordered_map<std::string, std::unordered_set<std::string>> visited;
   for (const auto &call_entity : call_entities) {
     auto *curr_node_ptr = const_cast<TNode *>(call_entity.GetNodePointer());
     auto *parent_node_ptr =
@@ -176,11 +177,17 @@ AbstractionExtractorImpl::GetProcNodeCallEntityMap(
       }
       parent_node_ptr = parent_node_ptr->GetParent().get();
     }
-    if (umap.find(parent_node_ptr) != umap.end()) {
-      umap[parent_node_ptr].emplace(curr_node_ptr);
-    } else {
-      std::unordered_set<const TNode *> procedure_call_nodes = {curr_node_ptr};
-      umap.emplace(parent_node_ptr, procedure_call_nodes);
+    std::string parent_name = parent_node_ptr->GetStringValue();
+    std::string child_name = curr_node_ptr->GetStringValue();
+    if (visited[parent_name].find(child_name) == visited[parent_name].end()) {
+      visited[parent_name].emplace(child_name);
+      if (umap.find(parent_node_ptr) != umap.end()) {
+        umap[parent_node_ptr].emplace(curr_node_ptr);
+      } else {
+        std::unordered_set<const TNode *> procedure_call_nodes = {
+            curr_node_ptr};
+        umap.emplace(parent_node_ptr, procedure_call_nodes);
+      }
     }
   }
   return umap;
