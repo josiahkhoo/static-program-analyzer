@@ -8,7 +8,7 @@
 std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
     {Token::WHITESPACE, "^(\\s+)"},
     {Token::NUMBER, "^(\\d+)"},
-    {Token::IDENTIFIER, "^([A-Za-z]\\w*([0-9])?)\\b"},
+    {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
     {Token::LEFT_ROUND_BRACKET, "^(\\()"},
     {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
     {Token::LEFT_CURLY_BRACKET, "^(\\{)"},

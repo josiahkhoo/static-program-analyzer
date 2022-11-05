@@ -49,6 +49,8 @@ class QueryParserUtil {
   static Identifier ExtractIdentifier(
       const std::shared_ptr<TokenHandler>& tokens);
   static Integer ExtractInteger(const std::shared_ptr<TokenHandler>& tokens);
+  static Expression CreateExpression(
+      std::optional<Expression>& maybe_expression, int wildcard_found);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H
