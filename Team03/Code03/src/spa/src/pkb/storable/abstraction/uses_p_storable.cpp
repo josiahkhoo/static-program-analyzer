@@ -4,7 +4,8 @@
 
 #include "uses_p_storable.h"
 
-UsesPStorable::UsesPStorable() = default;
+UsesPStorable::UsesPStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store UsesP Abstractions
 /// \param abstractions List of abstractions

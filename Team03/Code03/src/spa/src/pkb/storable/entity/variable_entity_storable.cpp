@@ -4,7 +4,8 @@
 
 #include "variable_entity_storable.h"
 
-VariableEntityStorable::VariableEntityStorable() = default;
+VariableEntityStorable::VariableEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Variable Entities
 /// \param ts List of entities

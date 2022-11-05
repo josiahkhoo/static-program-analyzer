@@ -10,7 +10,7 @@
 
 class PrintEntityStorable : EntityStorable, StorablePkb<PrintEntity> {
  public:
-  PrintEntityStorable();
+  explicit PrintEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<PrintEntity> ts) override;
 };
 

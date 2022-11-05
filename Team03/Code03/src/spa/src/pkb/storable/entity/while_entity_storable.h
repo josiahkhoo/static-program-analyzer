@@ -10,7 +10,7 @@
 
 class WhileEntityStorable : EntityStorable, StorablePkb<WhileEntity> {
  public:
-  WhileEntityStorable();
+  explicit WhileEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<WhileEntity> ts) override;
 };
 

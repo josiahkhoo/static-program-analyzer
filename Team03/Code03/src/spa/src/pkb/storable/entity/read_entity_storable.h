@@ -10,7 +10,7 @@
 
 class ReadEntityStorable : EntityStorable, StorablePkb<ReadEntity> {
  public:
-  ReadEntityStorable();
+  explicit ReadEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<ReadEntity> ts) override;
 };
 

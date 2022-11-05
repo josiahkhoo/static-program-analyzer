@@ -4,7 +4,8 @@
 
 #include "if_entity_storable.h"
 
-IfEntityStorable::IfEntityStorable() = default;
+IfEntityStorable::IfEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store If Entities
 /// \param ts List of entities

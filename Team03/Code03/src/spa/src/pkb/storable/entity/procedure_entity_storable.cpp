@@ -4,7 +4,8 @@
 
 #include "procedure_entity_storable.h"
 
-ProcedureEntityStorable::ProcedureEntityStorable() = default;
+ProcedureEntityStorable::ProcedureEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Procedure Entities
 /// \param ts List of entities

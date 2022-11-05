@@ -4,7 +4,10 @@
 
 #include "constant_entity_storable.h"
 
-ConstantEntityStorable::ConstantEntityStorable() = default;
+#include <utility>
+
+ConstantEntityStorable::ConstantEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Constant Entities
 /// \param ts List of entities

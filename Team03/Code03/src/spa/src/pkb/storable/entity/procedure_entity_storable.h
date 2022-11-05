@@ -10,7 +10,7 @@
 
 class ProcedureEntityStorable : EntityStorable, StorablePkb<ProcedureEntity> {
  public:
-  ProcedureEntityStorable();
+  explicit ProcedureEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<ProcedureEntity> ts) override;
 };
 

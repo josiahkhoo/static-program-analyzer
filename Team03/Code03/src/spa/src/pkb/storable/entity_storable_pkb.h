@@ -17,7 +17,7 @@
 
 class EntityStorablePkb {
  public:
-  EntityStorablePkb();
+  EntityStorablePkb(EntityManager &entity_manager_, PatternManager &pattern_manager_);
 
   [[nodiscard]] AssignEntityStorable GetAssignEntityStorable() const;
 

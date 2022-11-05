@@ -4,7 +4,8 @@
 
 #include "print_entity_storable.h"
 
-PrintEntityStorable::PrintEntityStorable() = default;
+PrintEntityStorable::PrintEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Print Entities
 /// \param ts List of entities

@@ -11,7 +11,9 @@
 
 class StorablePkbImpl {
  public:
-  StorablePkbImpl();
+  StorablePkbImpl(EntityManager &entity_manager_,
+                  RelationshipManager &relationship_manager,
+                  PatternManager &pattern_manager_);
 
   [[nodiscard]] EntityStorablePkb GetEntityStorablePkb() const;
   [[nodiscard]] AbstractionStorablePkb GetAbstractionStorablePkb() const;

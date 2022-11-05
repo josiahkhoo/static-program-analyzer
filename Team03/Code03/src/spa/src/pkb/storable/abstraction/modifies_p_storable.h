@@ -10,7 +10,7 @@
 
 class ModifiesPStorable : RelationshipAbstractionStorable, StorablePkb<ModifiesPAbstraction> {
  public:
-  ModifiesPStorable();
+  explicit ModifiesPStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<ModifiesPAbstraction> abstractions) override;
 };
 

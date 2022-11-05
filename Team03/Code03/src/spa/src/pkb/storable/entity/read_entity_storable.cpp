@@ -4,7 +4,8 @@
 
 #include "read_entity_storable.h"
 
-ReadEntityStorable::ReadEntityStorable() = default;
+ReadEntityStorable::ReadEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Read Entities
 /// \param ts List of entities

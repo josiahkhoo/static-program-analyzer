@@ -4,7 +4,8 @@
 
 #include "follows_storable.h"
 
-FollowsStorable::FollowsStorable() = default;
+FollowsStorable::FollowsStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store Follows Abstractions
 /// \param abstractions List of abstractions

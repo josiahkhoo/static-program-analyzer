@@ -10,7 +10,7 @@
 
 class CfgStorable : RelationshipAbstractionStorable, StorablePkb<CFG> {
  public:
-  CfgStorable();
+  explicit CfgStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<CFG> abstractions) override;
 };
 

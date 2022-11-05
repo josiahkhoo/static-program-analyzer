@@ -10,7 +10,7 @@
 
 class VariableEntityStorable : EntityStorable, StorablePkb<VariableEntity> {
  public:
-  VariableEntityStorable();
+  explicit VariableEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<VariableEntity> ts) override;
 };
 

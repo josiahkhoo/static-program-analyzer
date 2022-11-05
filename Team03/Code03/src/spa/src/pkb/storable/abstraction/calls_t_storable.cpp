@@ -4,7 +4,8 @@
 
 #include "calls_t_storable.h"
 
-CallsTStorable::CallsTStorable() = default;
+CallsTStorable::CallsTStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store CallsT Abstractions
 /// \param abstractions List of abstractions

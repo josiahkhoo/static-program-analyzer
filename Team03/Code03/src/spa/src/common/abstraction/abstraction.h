@@ -5,7 +5,7 @@
 #include "common/storable.h"
 
 template <class T, class U>
-class Abstraction : Pair<T, U>, Storable {
+class Abstraction : Pair<T, U> {
  public:
   virtual ~Abstraction() = default;
 };

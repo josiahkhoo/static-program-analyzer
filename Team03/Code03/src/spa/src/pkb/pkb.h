@@ -33,6 +33,8 @@ class PKB : public QueryablePkb {
  public:
   PKB();
 
+  [[nodiscard]] StorablePkbImpl& GetStorablePkbImpl();
+
 //  /* ====================================
 //   * Entity Store Methods
 //   * ==================================== */
@@ -242,7 +244,7 @@ class PKB : public QueryablePkb {
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
   PatternManager pattern_manager_;
-  StorablePkbImpl storable_pkb_impl;
+  StorablePkbImpl storable_pkb_impl_;
 
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
   [[nodiscard]] std::unordered_set<std::string> FindIntersect(

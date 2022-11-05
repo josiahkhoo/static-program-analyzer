@@ -10,7 +10,7 @@
 
 class CallEntityStorable : EntityStorable, StorablePkb<CallEntity> {
  public:
-  CallEntityStorable();
+  explicit CallEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<CallEntity> ts) override;
 };
 

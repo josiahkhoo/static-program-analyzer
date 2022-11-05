@@ -10,7 +10,7 @@
 
 class IfEntityStorable : EntityStorable, StorablePkb<IfEntity> {
  public:
-  IfEntityStorable();
+  explicit IfEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<IfEntity> ts) override;
 };
 

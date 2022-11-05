@@ -10,7 +10,7 @@
 
 class ParentStorable : RelationshipAbstractionStorable, StorablePkb<ParentAbstraction> {
  public:
-  ParentStorable();
+  explicit ParentStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<ParentAbstraction> abstractions) override;
 };
 

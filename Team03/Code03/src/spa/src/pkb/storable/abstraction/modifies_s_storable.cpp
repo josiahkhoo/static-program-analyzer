@@ -4,7 +4,8 @@
 
 #include "modifies_s_storable.h"
 
-ModifiesSStorable::ModifiesSStorable() = default;
+ModifiesSStorable::ModifiesSStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store ModifiesS Abstractions
 /// \param abstractions List of abstractions

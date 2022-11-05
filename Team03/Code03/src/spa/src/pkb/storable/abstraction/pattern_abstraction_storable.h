@@ -9,7 +9,8 @@
 
 class PatternAbstractionStorable {
  protected:
-  PatternManager pattern_manager_;
+  explicit PatternAbstractionStorable(PatternManager &pattern_manager_);
+  PatternManager &pattern_manager_;
 };
 
 #endif  // SPA_PATTERN_ABSTRACTION_STORABLE_H

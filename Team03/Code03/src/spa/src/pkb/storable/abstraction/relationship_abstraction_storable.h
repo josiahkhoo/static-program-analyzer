@@ -9,7 +9,9 @@
 
 class RelationshipAbstractionStorable {
  protected:
-  RelationshipManager relationship_manager_;
+  explicit RelationshipAbstractionStorable(
+      RelationshipManager &relationship_manager_);
+  RelationshipManager &relationship_manager_;
 };
 
 #endif  // SPA_RELATIONSHIP_ABSTRACTION_STORABLE_H

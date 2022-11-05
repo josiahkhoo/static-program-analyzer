@@ -5,7 +5,7 @@
 #include "common/storable.h"
 
 /// Base Entity class used to wrap around a node.
-class Entity : public HasNodePointer, Storable {
+class Entity : public HasNodePointer {
  public:
   /// Constructs a base entity object.
   /// \param node Node reference.

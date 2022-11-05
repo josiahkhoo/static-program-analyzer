@@ -11,10 +11,12 @@
 
 class AssignEntityStorable : EntityStorable, StorablePkb<AssignEntity> {
  public:
-  AssignEntityStorable();
+  explicit AssignEntityStorable(EntityManager &entity_manager_,
+                       PatternManager &pattern_manager_);
   void Store(std::vector<AssignEntity> ts) override;
+
  private:
-  PatternManager pattern_manager_;
+  PatternManager &pattern_manager_;
 };
 
 #endif  // SPA_ASSIGN_ENTITY_STORABLE_H

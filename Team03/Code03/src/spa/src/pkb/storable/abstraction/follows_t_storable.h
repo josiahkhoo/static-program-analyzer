@@ -10,7 +10,7 @@
 
 class FollowsTStorable : RelationshipAbstractionStorable, StorablePkb<FollowsTAbstraction> {
  public:
-  FollowsTStorable();
+  explicit FollowsTStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<FollowsTAbstraction> abstractions) override;
 };
 

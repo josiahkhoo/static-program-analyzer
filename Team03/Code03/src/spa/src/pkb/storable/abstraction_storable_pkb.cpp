@@ -4,6 +4,23 @@
 
 #include "abstraction_storable_pkb.h"
 
+AbstractionStorablePkb::AbstractionStorablePkb(
+    RelationshipManager& relationship_manager_,
+    PatternManager& pattern_manager_)
+    : follows_storable_(FollowsStorable(relationship_manager_)),
+      follows_t_storable_(FollowsTStorable(relationship_manager_)),
+      parent_storable_(ParentStorable(relationship_manager_)),
+      parent_t_storable_(ParentTStorable(relationship_manager_)),
+      modifies_p_storable_(ModifiesPStorable(relationship_manager_)),
+      modifies_s_storable_(ModifiesSStorable(relationship_manager_)),
+      uses_s_storable_(UsesPStorable(relationship_manager_)),
+      uses_p_storable_(UsesSStorable(relationship_manager_)),
+      calls_storable_(CallsStorable(relationship_manager_)),
+      calls_t_storable_(CallsTStorable(relationship_manager_)),
+      if_pattern_storable_(IfPatternStorable(pattern_manager_)),
+      while_pattern_storable_(WhilePatternStorable(pattern_manager_)),
+      cfg_storable_(CfgStorable(relationship_manager_)) {}
+
 /// Get FollowsStorable
 /// \return FollowsStorable
 FollowsStorable AbstractionStorablePkb::GetFollowsStorable() const {

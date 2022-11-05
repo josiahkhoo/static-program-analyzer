@@ -4,7 +4,8 @@
 
 #include "call_entity_storable.h"
 
-CallEntityStorable::CallEntityStorable() = default;
+CallEntityStorable::CallEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store Call Entities
 /// \param ts List of entities

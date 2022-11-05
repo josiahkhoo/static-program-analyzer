@@ -10,7 +10,7 @@
 
 class CallsTStorable : RelationshipAbstractionStorable, StorablePkb<CallsTAbstraction> {
  public:
-  CallsTStorable();
+  explicit CallsTStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<CallsTAbstraction> abstractions) override;
 };
 

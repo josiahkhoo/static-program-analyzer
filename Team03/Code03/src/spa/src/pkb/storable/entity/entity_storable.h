@@ -9,7 +9,8 @@
 
 class EntityStorable {
  protected:
-  EntityManager entity_manager_;
+  explicit EntityStorable(EntityManager &entity_manager_);
+  EntityManager &entity_manager_;
 };
 
 #endif  // SPA_ENTITY_STORABLE_H

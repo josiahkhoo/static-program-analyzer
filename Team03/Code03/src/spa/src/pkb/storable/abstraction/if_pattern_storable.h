@@ -10,7 +10,7 @@
 
 class IfPatternStorable : PatternAbstractionStorable, StorablePkb<IfPatternAbstraction> {
  public:
-  IfPatternStorable();
+  explicit IfPatternStorable(PatternManager &pattern_manager_);
   void Store(std::vector<IfPatternAbstraction> abstractions) override;
 };
 

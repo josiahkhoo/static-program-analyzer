@@ -10,7 +10,7 @@
 
 class UsesSStorable : RelationshipAbstractionStorable, StorablePkb<UsesSAbstraction> {
  public:
-  UsesSStorable();
+  explicit UsesSStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<UsesSAbstraction> abstractions) override;
 };
 

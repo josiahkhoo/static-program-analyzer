@@ -21,6 +21,8 @@
 
 class AbstractionStorablePkb {
  public:
+  AbstractionStorablePkb(RelationshipManager &relationship_manager_, PatternManager &pattern_manager_);
+
   [[nodiscard]] FollowsStorable GetFollowsStorable() const;
 
   [[nodiscard]] FollowsTStorable GetFollowsTStorable() const;

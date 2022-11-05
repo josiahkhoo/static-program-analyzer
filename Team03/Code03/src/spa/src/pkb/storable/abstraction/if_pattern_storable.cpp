@@ -4,7 +4,8 @@
 
 #include "if_pattern_storable.h"
 
-IfPatternStorable::IfPatternStorable() = default;
+IfPatternStorable::IfPatternStorable(PatternManager& pattern_manager_)
+    : PatternAbstractionStorable(pattern_manager_) {}
 
 /// Store If Pattern Abstractions
 /// \param abstractions List of abstractions

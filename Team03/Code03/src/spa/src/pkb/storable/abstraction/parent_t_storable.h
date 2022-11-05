@@ -8,9 +8,10 @@
 #include "common/storable_pkb.h"
 #include "relationship_abstraction_storable.h"
 
-class ParentTStorable : RelationshipAbstractionStorable, StorablePkb<ParentTAbstraction> {
+class ParentTStorable : RelationshipAbstractionStorable,
+                        StorablePkb<ParentTAbstraction> {
  public:
-  ParentTStorable();
+  explicit ParentTStorable(RelationshipManager &relationship_manager_);
   void Store(std::vector<ParentTAbstraction> abstractions) override;
 };
 

@@ -4,7 +4,8 @@
 
 #include "while_entity_storable.h"
 
-WhileEntityStorable::WhileEntityStorable() = default;
+WhileEntityStorable::WhileEntityStorable(EntityManager &entity_manager_)
+    : EntityStorable(entity_manager_) {}
 
 /// Store While Entities
 /// \param ts List of entities

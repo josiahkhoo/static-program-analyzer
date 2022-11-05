@@ -4,7 +4,8 @@
 
 #include "cfg_storable.h"
 
-CfgStorable::CfgStorable() = default;
+CfgStorable::CfgStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store CFGs
 /// \param abstractions List of Cfgs

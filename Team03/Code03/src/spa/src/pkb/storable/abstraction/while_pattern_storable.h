@@ -10,7 +10,7 @@
 
 class WhilePatternStorable : PatternAbstractionStorable, StorablePkb<WhilePatternAbstraction> {
  public:
-  WhilePatternStorable();
+  explicit WhilePatternStorable(PatternManager &pattern_manager_);
   void Store(std::vector<WhilePatternAbstraction> abstractions) override;
 };
 

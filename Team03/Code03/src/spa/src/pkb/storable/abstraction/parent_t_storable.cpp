@@ -4,7 +4,8 @@
 
 #include "parent_t_storable.h"
 
-ParentTStorable::ParentTStorable() = default;
+ParentTStorable::ParentTStorable(RelationshipManager& relationship_manager_)
+    : RelationshipAbstractionStorable(relationship_manager_) {}
 
 /// Store ParentT Abstractions
 /// \param abstractions List of abstractions

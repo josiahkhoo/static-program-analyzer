@@ -10,7 +10,7 @@
 
 class ConstantEntityStorable : EntityStorable, StorablePkb<ConstantEntity> {
  public:
-  ConstantEntityStorable();
+  explicit ConstantEntityStorable(EntityManager &entity_manager_);
   void Store(std::vector<ConstantEntity> ts) override;
 };
 
