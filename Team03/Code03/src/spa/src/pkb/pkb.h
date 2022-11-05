@@ -191,21 +191,18 @@ class PKB : public QueryablePkb {
   std::unordered_set<std::string> QueryPrevious(int statement_number,
                                                 EntityType type) const override;
   std::unordered_set<std::string> QueryNextT(int statement_number,
-                                             EntityType type) const override;
-  std::unordered_set<std::string> QueryPreviousT(
-      int statement_number, EntityType type) const override;
+                                             EntityType type) override;
+  std::unordered_set<std::string> QueryPreviousT(int statement_number,
+                                                 EntityType type) override;
 
   // Affects query methods
-  std::unordered_set<std::string> QueryAllAffects() const override;
-  std::unordered_set<std::string> QueryAllAffectsBy() const override;
-  std::unordered_set<std::string> QueryAffects(
-      int statement_number) const override;
-  std::unordered_set<std::string> QueryAffectsBy(
-      int statement_number) const override;
-  std::unordered_set<std::string> QueryAffectsT(
-      int statement_number) const override;
+  std::unordered_set<std::string> QueryAllAffects() override;
+  std::unordered_set<std::string> QueryAllAffectsBy() override;
+  std::unordered_set<std::string> QueryAffects(int statement_number) override;
+  std::unordered_set<std::string> QueryAffectsBy(int statement_number) override;
+  std::unordered_set<std::string> QueryAffectsT(int statement_number) override;
   std::unordered_set<std::string> QueryAffectsTBy(
-      int statement_number) const override;
+      int statement_number) override;
 
   // Assign pattern query methods
   std::unordered_set<std::string> QueryAllAssignPattern(

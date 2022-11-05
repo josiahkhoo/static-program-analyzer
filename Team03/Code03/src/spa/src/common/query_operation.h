@@ -22,21 +22,20 @@ class QueryOperation {
   /// Fetch is called when the query operation is a single synonym operation. It
   /// returns every value of the synonym associated with this clause.
   [[nodiscard]] virtual std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const = 0;
+      QueryablePkb &queryable_pkb) = 0;
 
   /// FetchPossibleRhs is called when the query operation is a double synonym
   /// operation.
   [[nodiscard]] virtual std::unordered_set<std::string> FetchPossibleRhs(
-      std::string lhs, const QueryablePkb &queryable_pkb) const = 0;
+      std::string lhs, QueryablePkb &queryable_pkb) = 0;
 
   /// FetchPossibleLhs is called when the query operation is a double synonym
   /// operation.
   [[nodiscard]] virtual std::unordered_set<std::string> FetchPossibleLhs(
-      std::string rhs, const QueryablePkb &queryable_pkb) const = 0;
+      std::string rhs, QueryablePkb &queryable_pkb) = 0;
 
   /// IsTrue is called when query operation is a no synonym operation.
-  [[nodiscard]] virtual bool IsTrue(
-      const QueryablePkb &queryable_pkb) const = 0;
+  [[nodiscard]] virtual bool IsTrue(QueryablePkb &queryable_pkb) = 0;
 
   [[nodiscard]] virtual Type GetType() const = 0;
 

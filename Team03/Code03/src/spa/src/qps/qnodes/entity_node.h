@@ -14,7 +14,7 @@ class EntityNode : public QNode {
  public:
   explicit EntityNode(Synonym synonym);
 
-  QResult Fetch(const QueryablePkb &pkb) override;
+  QResult Fetch(QueryablePkb &pkb) override;
 };
 
 #endif  // SPA_ENTITY_NODE_H

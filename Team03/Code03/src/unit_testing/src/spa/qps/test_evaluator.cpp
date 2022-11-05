@@ -190,42 +190,42 @@ class QueryablePkbStub : public QueryablePkb {
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {"QueryNextT"};
   }
 
   [[nodiscard]] std::unordered_set<std::string> QueryPreviousT(
-      int, EntityType) const override {
+      int, EntityType) override {
     return {"QueryPreviousT"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffects()
-      const override {
+      override {
     return {"QueryAllAffects"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAllAffectsBy()
-      const override {
+      override {
     return {"QueryAllAffectsBy"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffects(
-      int) const override {
+      int) override {
     return {"QueryAffects"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsBy(
-      int) const override {
+      int) override {
     return {"QueryAffectsBy"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsT(
-      int) const override {
+      int) override {
     return {"QueryAffectsT"};
   }
 
   [[nodiscard]] virtual std::unordered_set<std::string> QueryAffectsTBy(
-      int) const override {
+      int) override {
     return {"QueryAffectsTBy"};
   }
 

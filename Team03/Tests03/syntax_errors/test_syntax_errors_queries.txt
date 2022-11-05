@@ -178,3 +178,28 @@ stmt s;
 Select `
 SyntaxError
 5000
+31 - (SYNTAX ERROR) Invalid uses entity reference
+stmt s; variable v;
+Select s such that Uses(s, v_)
+SyntaxError
+5000
+32 - (SYNTAX ERROR) Invalid uses entity reference
+stmt s; variable v;
+Select s such that Uses(s, _v)
+SyntaxError
+5000
+33 - (SYNTAX ERROR) Missing expression-spec
+assign a;
+Select a pattern a(_, )
+SyntaxError
+5000
+34 - (SYNTAX ERROR) Invalid modifies identifier
+stmt s; variable v;
+Select s such that Modifies(s, "#")
+SyntaxError
+5000
+35 - (SYNTAX ERROR) Invalid uses identifier
+stmt s1; variable v;
+Select s1 such that Uses(s1, "")
+SyntaxError
+5000

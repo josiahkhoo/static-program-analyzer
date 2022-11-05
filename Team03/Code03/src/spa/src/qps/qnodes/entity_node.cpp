@@ -7,7 +7,7 @@
 EntityNode::EntityNode(Synonym synonym)
     : QNode(), synonym_(std::move(synonym)) {}
 
-QResult EntityNode::Fetch(const QueryablePkb& pkb) {
+QResult EntityNode::Fetch(QueryablePkb& pkb) {
   auto result = pkb.QueryAll(synonym_.GetEntityType());
   std::vector<std::vector<std::string>> rows;
   // Reserve size to prevent vector from expanding each time

@@ -27,13 +27,13 @@ class Clause : public QueryOperation {
       std::vector<std::vector<std::string>> rhs) const override;
 
   [[nodiscard]] std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const override;
+      QueryablePkb &queryable_pkb) override;
 
   [[nodiscard]] virtual std::unordered_set<std::string> FetchRhs(
-      const QueryablePkb &queryable_pkb) const = 0;
+      QueryablePkb &queryable_pkb) = 0;
 
   [[nodiscard]] virtual std::unordered_set<std::string> FetchLhs(
-      const QueryablePkb &queryable_pkb) const = 0;
+      QueryablePkb &queryable_pkb) = 0;
 };
 
 #endif  // SPA_CLAUSE_H

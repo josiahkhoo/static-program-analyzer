@@ -89,11 +89,6 @@ class QResult {
       const std::vector<std::pair<int, int>>& common_indexes,
       const std::unordered_set<int>& common_indexes_second_set,
       int n_cols) const;
-  [[nodiscard]] RowColumn HashJoin(
-      const QResult& other_result,
-      const std::vector<std::pair<int, int>>& common_indexes,
-      const std::unordered_set<int>& common_indexes_second_set,
-      int n_cols) const;
   [[nodiscard]] RowColumn CrossJoin(const QResult& other_result) const;
 };
 

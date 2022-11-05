@@ -632,7 +632,7 @@ std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
 /// \param statement_number statement
 /// \return Query statement(s) that comes nextT after given statement
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
-                                                EntityType type) const {
+                                                EntityType type) {
   return FindIntersect(relationship_manager_.GetNextT(statement_number),
                        QueryAll(type));
 }
@@ -641,7 +641,7 @@ std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
 /// \param statement_number statement
 /// \return Query statement(s) that comes previousT before given statement
 std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
-                                                    EntityType type) const {
+                                                    EntityType type) {
   return FindIntersect(relationship_manager_.GetPreviousT(statement_number),
                        QueryAll(type));
 }
@@ -652,7 +652,7 @@ std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
 
 /// QueryAllAffects
 /// \return Query all assign statements that affects some other statement
-std::unordered_set<std::string> PKB::QueryAllAffects() const {
+std::unordered_set<std::string> PKB::QueryAllAffects() {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -663,7 +663,7 @@ std::unordered_set<std::string> PKB::QueryAllAffects() const {
 /// QueryAllAffectsBy
 /// \return Query all assign statements that are affected by some other
 /// statement
-std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
+std::unordered_set<std::string> PKB::QueryAllAffectsBy() {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -674,7 +674,7 @@ std::unordered_set<std::string> PKB::QueryAllAffectsBy() const {
 /// QueryAffects
 /// \param statement_number statement
 /// \return Query all assign statements that affects given statement
-std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
+std::unordered_set<std::string> PKB::QueryAffects(int statement_number) {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -689,8 +689,7 @@ std::unordered_set<std::string> PKB::QueryAffects(int statement_number) const {
 /// QueryAffectsBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affected by given statement
-std::unordered_set<std::string> PKB::QueryAffectsBy(
-    int statement_number) const {
+std::unordered_set<std::string> PKB::QueryAffectsBy(int statement_number) {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -705,7 +704,7 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(
 /// QueryAffectsT
 /// \param statement_number statement
 /// \return Query all assign statements that affectsT given statement
-std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
+std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();
@@ -720,8 +719,7 @@ std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) const {
 /// QueryAffectsTBy
 /// \param statement_number statement
 /// \return Query all assign statements that are affectedT by given statement
-std::unordered_set<std::string> PKB::QueryAffectsTBy(
-    int statement_number) const {
+std::unordered_set<std::string> PKB::QueryAffectsTBy(int statement_number) {
   std::unordered_set<std::string> assigns =
       entity_manager_.GetAssignStatements();
   std::unordered_set<std::string> calls = entity_manager_.GetCallStatements();

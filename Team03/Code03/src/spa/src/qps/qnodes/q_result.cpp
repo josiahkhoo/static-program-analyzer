@@ -61,9 +61,6 @@ QResult QResult::Join(const QResult& other_result) {
   if (common_indexes.empty()) {
     new_rows = CrossJoin(other_result);
   } else {
-    //    new_rows = HashJoin(other_result, common_indexes,
-    //    common_indexes_second_set,
-    //                        (int)new_synonyms.size());
     new_rows =
         SortMergeJoin(other_result, common_indexes, common_indexes_second_set,
                       (int)new_synonyms.size());
@@ -166,86 +163,6 @@ RowColumn QResult::SortMergeJoin(
       }
       row1_counter = row1_endpoint + 1;
       row2_counter = row2_endpoint + 1;
-    }
-  }
-  return new_rows;
-}
-
-RowColumn QResult::HashJoin(
-    const QResult& other_result,
-    const std::vector<std::pair<int, int>>& common_indexes,
-    const std::unordered_set<int>& common_indexes_second_set,
-    int n_cols) const {
-  RowColumn new_rows;
-  std::unordered_map<std::vector<std::string>,
-                     std::vector<std::vector<std::string>>, VectorHash>
-      key_to_row_column_map;
-
-  // Iterate over smaller amount of rows where possible
-  RowColumn hashed_rows, iterate_rows;
-  std::vector<int> hashed_key_indexes, iterate_key_indexes;
-  hashed_key_indexes.reserve(common_indexes.size());
-  iterate_key_indexes.reserve(common_indexes.size());
-  if (other_result.GetRows().size() < GetRows().size()) {
-    hashed_rows = other_result.GetRows();
-    iterate_rows = GetRows();
-
-    for (const auto& [idx, other_idx] : common_indexes) {
-      hashed_key_indexes.emplace_back(other_idx);
-      iterate_key_indexes.emplace_back(idx);
-    }
-  } else {
-    hashed_rows = GetRows();
-    iterate_rows = other_result.GetRows();
-
-    for (const auto& [idx, other_idx] : common_indexes) {
-      hashed_key_indexes.emplace_back(idx);
-      iterate_key_indexes.emplace_back(other_idx);
-    }
-  }
-
-  for (const auto& hashed_row : hashed_rows) {
-    std::vector<std::string> key;
-    key.reserve(hashed_key_indexes.size());
-    for (int hashed_key_index : hashed_key_indexes) {
-      key.emplace_back(hashed_row[hashed_key_index]);
-    }
-    if (!key_to_row_column_map.count(key)) {
-      key_to_row_column_map[key] = {hashed_row};
-    } else {
-      key_to_row_column_map[key].emplace_back(hashed_row);
-    }
-  }
-
-  for (const auto& iterate_row : iterate_rows) {
-    std::vector<std::string> key;
-    key.reserve(common_indexes.size());
-    for (int iterate_key_index : iterate_key_indexes) {
-      key.emplace_back(iterate_row[iterate_key_index]);
-    }
-    if (!key_to_row_column_map.count(key)) {
-      continue;
-    }
-    for (const auto& matched_row : key_to_row_column_map[key]) {
-      std::vector<std::string> new_row;
-      new_row.reserve(n_cols);
-      auto lhs_row = matched_row;
-      auto rhs_row = iterate_row;
-      // Swap sides based on initial state
-      if (other_result.GetRows().size() < GetRows().size()) {
-        lhs_row = iterate_row;
-        rhs_row = matched_row;
-      }
-      for (const auto& entry : lhs_row) {
-        new_row.emplace_back(entry);
-      }
-      for (int i = 0; i < (int)rhs_row.size(); i++) {
-        if (common_indexes_second_set.count(i)) {
-          continue;
-        }
-        new_row.emplace_back(rhs_row.at(i));
-      }
-      new_rows.push_back(new_row);
     }
   }
   return new_rows;
