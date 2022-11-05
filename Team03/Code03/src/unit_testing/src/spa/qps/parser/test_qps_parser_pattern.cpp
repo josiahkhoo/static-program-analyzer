@@ -344,7 +344,7 @@ TEST_CASE("Pattern IF Double-Syn", "[QPS Pattern Parser]") {
               .second.IsEntityType(VARIABLE));
 }
 
-TEST_CASE("invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
+TEST_CASE("Invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
@@ -364,7 +364,7 @@ TEST_CASE("invalid Pattern IF: _,not wildcard", "[QPS Pattern Parser]") {
   REQUIRE_THROWS(qp.Parse(tokens_));
 }
 
-TEST_CASE("invalid Pattern IF: not wildcard,_", "[QPS Pattern Parser]") {
+TEST_CASE("Invalid Pattern IF: not wildcard,_", "[QPS Pattern Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "if"),
                                 Token(Token::IDENTIFIER, "i"),
@@ -437,7 +437,7 @@ TEST_CASE("Pattern WHILE Single-Syn Ident", "[QPS Pattern Parser]") {
               .GetIdentifier() == "x");
 }
 
-TEST_CASE("invalid Pattern WHILE: not wildcard", "[QPS Pattern Parser]") {
+TEST_CASE("Invalid Pattern WHILE: not wildcard", "[QPS Pattern Parser]") {
   QueryParser qp = QueryParser();
   std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "while"),
                                 Token(Token::IDENTIFIER, "w"),
@@ -450,6 +450,132 @@ TEST_CASE("invalid Pattern WHILE: not wildcard", "[QPS Pattern Parser]") {
                                 Token(Token::UNDERSCORE),
                                 Token(Token::COMMA),
                                 Token(Token::NUMBER, "2"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern syntax", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern syntax missing close bracket", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern syntax missing open bracket", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::COMMA),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern syntax open-ended operator", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::PLUS),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern syntax open-ended long operator", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SLASH),
+                                Token(Token::IDENTIFIER, "b"),
+                                Token(Token::MINUS),
+                                Token(Token::INVERTED_COMMAS),
+                                Token(Token::RIGHT_ROUND_BRACKET),
+                                Token(Token::END)};
+  REQUIRE_THROWS(qp.Parse(tokens_));
+}
+
+TEST_CASE("Invalid Pattern missing expression", "[QPS Parser]") {
+  QueryParser qp = QueryParser();
+  std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "assign"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::SEMICOLON),
+                                Token(Token::IDENTIFIER, "Select"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::IDENTIFIER, "pattern"),
+                                Token(Token::IDENTIFIER, "a"),
+                                Token(Token::LEFT_ROUND_BRACKET),
+                                Token(Token::UNDERSCORE),
+                                Token(Token::COMMA),
                                 Token(Token::RIGHT_ROUND_BRACKET),
                                 Token(Token::END)};
   REQUIRE_THROWS(qp.Parse(tokens_));

@@ -1,0 +1,25 @@
+11 - assign, assign, assign, assign, variable, underscore
+assign a; variable v;
+Select a such that Affects(a, a) pattern a(v, _)
+175,177,179,181,211,214,216,218,232,234,237,266,291,293,295,297,312,320,325,327,338,339,360,379,388,399,403,424,434,437,562,566,586,615,617,619,633,643,654,656,658,660,691,694,696,698,711,713,715,716,718,774,776,797
+5000
+12 - assign, assign, assign, assign, IDENT, underscore
+assign a;
+Select a such that Affects(a, a) pattern a("c", _)
+211,234,266,339,691,713,716
+5000
+13 - assign, assign, assign, assign, variable, expression
+assign a; variable v;
+Select a such that Affects(a, a) pattern a(v, _"c"_)
+175,177,179,181,211,214,216,218,232,234,237,266,291,293,295,297,312,320,325,327,338,339,360,379,388,399,403,424,434,437,562,566,586,615,617,619,633,643,654,656,658,660,691,694,696,698,711,713,715,716,718,774,776,797
+5000
+14 - assign, assign, assign, assign, IDENT, expression
+assign a;
+Select a such that Affects(a, a) pattern a("c", _"c"_)
+211,234,266,339,691,713,716
+5000
+15 - stmt, stmt, stmt, assign, variable, underscore
+stmt s; assign a; variable v;
+Select s such that Affects(s, s) pattern a(v, _)
+175,177,179,181,211,214,216,218,232,234,237,266,291,293,295,297,312,320,325,327,338,339,360,379,388,399,403,424,434,437,562,566,586,615,617,619,633,643,654,656,658,660,691,694,696,698,711,713,715,716,718,774,776,797
+5000

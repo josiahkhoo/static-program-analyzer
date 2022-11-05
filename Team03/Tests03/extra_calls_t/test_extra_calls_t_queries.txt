@@ -1,0 +1,140 @@
+1 Procedure1 directly Calls procedure2
+procedure p1, p2;
+Select p1 such that Calls*(p1, p2)
+basicProcedure,procedure2,procedure3
+5000
+21 Procedure messUpTheNextLine directly Calls any procedure
+procedure p;
+Select p such that Calls*(p, "procedure3")
+basicProcedure,procedure2
+5000
+22 Procedure basicProcedure directly Calls any procedure
+procedure p;
+Select p such that Calls*("basicProcedure", p)
+messUpTheNextLine,procedure2,procedure3
+5000
+23 Procedure procedure2 directly Calls any procedure
+procedure p;
+Select p such that Calls*("procedure2", p)
+procedure3,messUpTheNextLine
+5000
+24 Procedure procedure3 directly Calls any procedure
+procedure p;
+Select p such that Calls*("procedure3", p)
+messUpTheNextLine
+5000
+3 Any procedure call other procedure (wildcard)
+procedure p;
+Select p such that Calls*(_,p)
+messUpTheNextLine,procedure2,procedure3
+5000
+41 Any procedure(s) Calls procedure messUpTheNextLine 
+procedure p;
+Select p such that Calls*(p, "messUpTheNextLine")
+basicProcedure,procedure3,procedure2
+5000
+42 Any procedure(s) Calls procedure basicProcedure
+procedure p;
+Select p such that Calls*(p, "basicProcedure")
+
+5000
+43 Any procedure(s) Calls procedure procedure2
+procedure p;
+Select p such that Calls*(p, "procedure2")
+basicProcedure
+5000
+44 Any procedure(s) Calls procedure procedure3
+procedure p;
+Select p such that Calls*(p, "procedure3")
+basicProcedure,procedure2
+5000
+51 Procedure messUpTheNextLine Calls procedure basicProcedure
+procedure p;
+Select p such that Calls*("messUpTheNextLine", "basicProcedure")
+
+5000
+52 Procedure messUpTheNextLine Calls procedure procedure2
+procedure p;
+Select p such that Calls*("messUpTheNextLine", "procedure2")
+
+5000
+53 Procedure messUpTheNextLine Calls procedure procedure3
+procedure p;
+Select p such that Calls*("messUpTheNextLine", "procedure3")
+
+5000
+54 Procedure messUpTheNextLine Calls procedure messUpTheNextLine (Calls itself)
+procedure p;
+Select p such that Calls*("messUpTheNextLine", "messUpTheNextLine")
+
+5000
+55 Procedure basicProcedurecalls procedure messUpTheNextLine
+procedure p;
+Select p such that Calls*("basicProcedure", "messUpTheNextLine")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+56 Procedure basicProcedurecalls procedure procedure2
+procedure p;
+Select p such that Calls*("basicProcedure", "procedure2")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+57 Procedure basicProcedurecalls procedure procedure3
+procedure p;
+Select p such that Calls*("basicProcedure", "procedure3")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+58 Procedure basicProcedurecalls procedure messUpTheNextLine (Calls itself)
+procedure p;
+Select p such that Calls*("basicProcedure", "basicProcedure")
+
+5000
+61 Any procedure Calls messUpTheNextLine 
+procedure p;
+Select p such that Calls*(_,"messUpTheNextLine")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+62 Any procedure Calls basicProcedure
+procedure p;
+Select p such that Calls*(_,"basicProcedure")
+
+5000
+63 Any procedure Calls procedure2
+procedure p;
+Select p such that Calls*(_,"procedure2")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+64 Any procedure Calls procedure3
+procedure p;
+Select p such that Calls*(_,"procedure3")
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+7 Procedures that Calls any procedure (wildcard)
+procedure p;
+Select p such that Calls*(p, _)
+basicProcedure,procedure2,procedure3
+5000
+81 Procedure messUpTheNextLine call any procedure (wildcard)
+procedure p;
+Select p such that Calls*("messUpTheNextLine", _)
+
+5000
+82 Procedure basicProcedure call any procedure (wildcard)
+procedure p;
+Select p such that Calls*("basicProcedure", _)
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+83 Procedure procedure2call any procedure (wildcard)
+procedure p;
+Select p such that Calls*("procedure2", _)
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+84 Procedure procedure3 call any procedure (wildcard)
+procedure p;
+Select p such that Calls*("procedure3", _)
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000
+9 Any procedure that Calls procedure (wildcard)
+procedure p;
+Select p such that Calls*(_,_)
+basicProcedure,messUpTheNextLine,procedure2,procedure3
+5000

@@ -1,0 +1,164 @@
+procedure messUpTheNextLine {
+onlyAfter =  we + sort + out + the + query;
+}
+
+procedure basicProcedure       
+{
+call messUpTheNextLine;
+  read  read;
+  call = read;
+  read print  ;
+  read call;
+  read          call            ;
+
+  LineNumber = thisIsLine5;
+
+  read while;
+  read if;
+  print print;
+  z = print + 4;
+  call messUpTheNextLine;
+  
+  LineNumber = thisIsLine10;
+
+  read = read;
+  print = print;
+  call = call;
+  while = while;
+  print v;
+
+  LineNumber = thisIsLine15;
+
+  if = if;
+  read = 1 + 3 / 4;
+  read = read + 1 / 4 + 3;
+  read = 1 / 4 + 3 - 8 % read;
+
+  LineNumber = thisIsLine20;
+  
+  x = 1 + 2 + 3 + 4 + 5 + 6;
+  x = 1-2-3-4-5;
+  x = 1 + (2 + 3) + 4 - (5 - 6);
+  x = (1 - 2 - 3 - (4 - 5 - 6));
+
+  LineNumber = thisIsLine25;
+
+  x = 1 / 2;
+  x = 1 % 2;
+  x = 1 * 3;
+  x = 1 + 
+        2 / 3 
+        + 4 * (5 % (6 * 7 - 8) + 9) 
+        / 10 * 11 
+        - 12
+        ;
+        LineNumber = thisIsLine30;
+
+
+  sum = num1 + num2 + num3;
+  ave = sum / 3;
+  print ave;
+  print sum;
+
+
+if (x < z) then {
+ x = z * (3 + f);
+} else {
+z = (x + z) % (x * 5);
+}
+
+  while (sum < ave) {
+    x = x + 2+ sum;
+  }
+
+  call procedure2;
+
+  LineNumber = thisIsLine35;
+
+  x = messUpTheNextLine;
+  y= messUpTheNextLine;
+  j= messUpTheNextLine;
+  llllllllllllllllllllllll= messUpTheNextLine;
+
+  LineNumber = thisIsLine40;
+
+  read messUpTheNextLine;
+  print messUpTheNextLine;
+  call 
+  messUpTheNextLine
+  ;
+
+
+  while (num1 > num2) {
+  LineNumber = thisIsLine45;
+    print print1;
+    print Wsum;
+  }
+x = assign;
+
+  while (harder <= whileLoop) {
+    z = 1 % 2 % 3 % 4;
+
+    LineNumber = thisIsLine50;
+
+    while (!(complex >= bool)) {
+
+    z = z + z -z*z/z%z;
+        while 
+        (
+        ( ((a > b) || (c >= d)) && (e < f)) 
+        && (g<=h)
+        ) {
+        
+        while = false;
+        }
+        LineNumber = thisIsLine55;
+    }
+  }
+  if (3 < 5) then {
+    read doSomething;
+  } else {
+    while = something;
+  }
+  z = z * 1 + 3 * 4;
+  if (num1 > num2) then {
+    print Iave;
+   } else {
+   if (!(a == b)) then {
+   LineNumber = thisIsLine60;
+   } else {
+   
+    print Isum;
+    if ( (!(a != b)) || (c == d) ) then {
+    print Eave;
+    
+    } else {
+    
+    print Esum;
+    
+    }
+    LineNumber = thisIsLine65;
+    x  = x + 1;
+    call procedure2;
+   }
+
+  }
+call procedure3;
+}
+
+procedure procedure2 {
+read read1;
+read read2;
+print print1;
+print print2;
+call procedure3;
+}
+
+procedure procedure3 {
+read read3;
+read read4;
+print print3;
+print print4;
+call messUpTheNextLine;
+print print5;
+}
