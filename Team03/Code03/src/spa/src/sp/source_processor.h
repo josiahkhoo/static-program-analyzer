@@ -5,14 +5,14 @@
 
 #include "common/lexer.h"
 #include "common/parser.h"
-#include "common/storable_pkb.h"
 #include "common/t_node.h"
+#include "pkb/storable_pkb_impl.h"
 #include "sp/extractor/design_extractor.h"
 
 class SourceProcessor {
  public:
   SourceProcessor(Lexer &lexer, Parser<TNode, std::vector<Token>> &parser,
-                  DesignExtractor &design_extractor, StorablePkb &storable_pkb);
+                  DesignExtractor &design_extractor, StorablePkbImpl &storable_pkb);
 
   void Process(const std::string &filename);
 
@@ -20,11 +20,11 @@ class SourceProcessor {
   Lexer &lexer_;
   Parser<TNode, std::vector<Token>> &parser_;
   DesignExtractor &design_extractor_;
-  StorablePkb &storable_pkb_;
+  StorablePkbImpl &storable_pkb_;
 
   static void StoreDesignExtractorResult(
       const DesignExtractorResult &design_extractor_result,
-      StorablePkb &storable_pkb);
+      StorablePkbImpl &storable_pkb);
 };
 
 #endif  // SPA_SOURCE_PROCESSOR_H

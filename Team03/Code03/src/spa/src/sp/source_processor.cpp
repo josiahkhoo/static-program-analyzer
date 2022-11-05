@@ -5,7 +5,7 @@
 SourceProcessor::SourceProcessor(Lexer &lexer,
                                  Parser<TNode, std::vector<Token>> &parser,
                                  DesignExtractor &design_extractor,
-                                 StorablePkb &storable_pkb)
+                                 StorablePkbImpl &storable_pkb)
     : lexer_(lexer),
       parser_(parser),
       design_extractor_(design_extractor),
@@ -25,49 +25,50 @@ void SourceProcessor::Process(const std::string &filename) {
 
 void SourceProcessor::StoreDesignExtractorResult(
     const DesignExtractorResult &design_extractor_result,
-    StorablePkb &storable_pkb) {
-  storable_pkb.Store(
+    StorablePkbImpl &storable_pkb) {
+  storable_pkb.GetEntityStorablePkb().GetAssignEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetAssignEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetCallEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetCallEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetConstantEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetConstantEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetIfEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetIfEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetPrintEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetPrintEntities());
-  storable_pkb.Store(design_extractor_result.GetEntityExtractorResult()
-                         .GetProcedureEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetProcedureEntityStorable().Store(
+      design_extractor_result.GetEntityExtractorResult()
+          .GetProcedureEntities());
+  storable_pkb.GetEntityStorablePkb().GetReadEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetReadEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetVariableEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetVariableEntities());
-  storable_pkb.Store(
+  storable_pkb.GetEntityStorablePkb().GetWhileEntityStorable().Store(
       design_extractor_result.GetEntityExtractorResult().GetWhileEntities());
 
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetFollowsStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetFollowsTStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetFollowsTAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetParentStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetParentAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetParentTStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetParentTAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetUsesSStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetUsesSAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetUsesPStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetUsesPAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetModifiesSStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetModifiesSAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetModifiesPStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetModifiesPAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetCallsStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetCallsAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetCallsTStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetCallsTAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetIfPatternStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetIfPatternAbstractions());
-  storable_pkb.Store(design_extractor_result.GetAbstractionExtractorResult()
+  storable_pkb.GetAbstractionStorablePkb().GetWhilePatternStorable().Store(design_extractor_result.GetAbstractionExtractorResult()
                          .GetWhilePatternAbstractions());
-  storable_pkb.Store(design_extractor_result.GetCFGExtractorResult());
+  storable_pkb.GetAbstractionStorablePkb().GetCfgStorable().Store(design_extractor_result.GetCFGExtractorResult());
 }

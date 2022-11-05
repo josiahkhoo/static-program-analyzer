@@ -29,7 +29,6 @@
 #include "sp/extractor/cfg.h"
 #include "storable_pkb_impl.h"
 
-template <class T>
 class PKB : public QueryablePkb {
  public:
   PKB();
@@ -243,7 +242,7 @@ class PKB : public QueryablePkb {
   EntityManager entity_manager_;
   RelationshipManager relationship_manager_;
   PatternManager pattern_manager_;
-  StorablePkbImpl<T, T, T> storable_pkb_impl;
+  StorablePkbImpl storable_pkb_impl;
 
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
   [[nodiscard]] std::unordered_set<std::string> FindIntersect(

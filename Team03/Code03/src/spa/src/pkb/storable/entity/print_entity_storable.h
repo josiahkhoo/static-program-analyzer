@@ -1,0 +1,17 @@
+//
+// Created by kohha on 5/11/2022.
+//
+
+#ifndef SPA_PRINT_ENTITY_STORABLE_H
+#define SPA_PRINT_ENTITY_STORABLE_H
+
+#include "common/storable_pkb.h"
+#include "entity_storable.h"
+
+class PrintEntityStorable : EntityStorable, StorablePkb<PrintEntity> {
+ public:
+  PrintEntityStorable();
+  void Store(std::vector<PrintEntity> ts) override;
+};
+
+#endif  // SPA_PRINT_ENTITY_STORABLE_H

@@ -27,6 +27,8 @@ template <class T>
 class StorablePkb {
  public:
   virtual void Store(std::vector<T> storables) = 0;
+//  virtual void Store(StorableEntityWrapper storables) = 0;
+//  virtual void Store(std::vector<Abstraction<U, V>> storables) = 0;
 //  virtual void Store(std::vector<AssignEntity> entities) = 0;
 //
 //  virtual void Store(std::vector<CallEntity> entities) = 0;
