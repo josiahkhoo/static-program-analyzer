@@ -6,13 +6,13 @@ UsesSClause::UsesSClause(StatementReference lhs, EntityReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> UsesSClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryUsesS(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> UsesSClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryUsesSBy(
       rhs, GetLeftHandSide().GetSynonym().GetEntityType());
 }
@@ -22,7 +22,7 @@ const Reference &UsesSClause::GetLeftHandSide() const { return lhs_; }
 const Reference &UsesSClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> UsesSClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Uses(1, a)
     return queryable_pkb.QueryUsesS(
@@ -35,7 +35,7 @@ std::unordered_set<std::string> UsesSClause::FetchRhs(
 }
 
 std::unordered_set<std::string> UsesSClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetRightHandSide().IsIdentifier()) {
     // E.g. Uses(a, "x")
     return queryable_pkb.QueryUsesSBy(
@@ -47,7 +47,7 @@ std::unordered_set<std::string> UsesSClause::FetchLhs(
       GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-bool UsesSClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool UsesSClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsIdentifier()) {
     auto possible_rhs = queryable_pkb.QueryUsesS(
         GetLeftHandSide().GetLineNumber(), EntityType::VARIABLE);

@@ -6,13 +6,13 @@ FollowsClause::FollowsClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryFollows(
       std::stoi(lhs), GetRightHandSide().GetSynonym().GetEntityType());
 }
 
 [[nodiscard]] std::unordered_set<std::string> FollowsClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryFollowsBy(
       std::stoi(rhs), GetLeftHandSide().GetSynonym().GetEntityType());
 }
@@ -22,7 +22,7 @@ const Reference &FollowsClause::GetLeftHandSide() const { return lhs_; }
 const Reference &FollowsClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> FollowsClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber()) {
     // E.g. Follow(1, a)
     return queryable_pkb.QueryFollows(
@@ -35,7 +35,7 @@ std::unordered_set<std::string> FollowsClause::FetchRhs(
 }
 
 std::unordered_set<std::string> FollowsClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (GetRightHandSide().IsLineNumber()) {
     // E.g. Follow(a, 1)
     return queryable_pkb.QueryFollowsBy(
@@ -47,7 +47,7 @@ std::unordered_set<std::string> FollowsClause::FetchLhs(
       GetLeftHandSide().GetSynonym().GetEntityType());
 }
 
-bool FollowsClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool FollowsClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs = queryable_pkb.QueryFollows(
         GetLeftHandSide().GetLineNumber(), EntityType::STATEMENT);

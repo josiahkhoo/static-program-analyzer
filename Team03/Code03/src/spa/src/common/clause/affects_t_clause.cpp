@@ -4,12 +4,12 @@ AffectsTClause::AffectsTClause(StatementReference lhs, StatementReference rhs)
     : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
 
 [[nodiscard]] std::unordered_set<std::string> AffectsTClause::FetchPossibleRhs(
-    std::string lhs, const QueryablePkb &queryable_pkb) const {
+    std::string lhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryAffectsTBy(std::stoi(lhs));
 }
 
 [[nodiscard]] std::unordered_set<std::string> AffectsTClause::FetchPossibleLhs(
-    std::string rhs, const QueryablePkb &queryable_pkb) const {
+    std::string rhs, QueryablePkb &queryable_pkb) {
   return queryable_pkb.QueryAffectsT(std::stoi(rhs));
 }
 
@@ -18,7 +18,7 @@ const Reference &AffectsTClause::GetLeftHandSide() const { return lhs_; }
 const Reference &AffectsTClause::GetRightHandSide() const { return rhs_; }
 
 std::unordered_set<std::string> AffectsTClause::FetchRhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   // Ignore read | print | call | while | if
   if (CheckIfNotAssignStatement(GetRightHandSide())) {
     return {};
@@ -32,7 +32,7 @@ std::unordered_set<std::string> AffectsTClause::FetchRhs(
 }
 
 std::unordered_set<std::string> AffectsTClause::FetchLhs(
-    const QueryablePkb &queryable_pkb) const {
+    QueryablePkb &queryable_pkb) {
   if (CheckIfNotAssignStatement(GetLeftHandSide())) {
     return {};
   }
@@ -44,7 +44,7 @@ std::unordered_set<std::string> AffectsTClause::FetchLhs(
   return queryable_pkb.QueryAllAffects();
 }
 
-bool AffectsTClause::IsTrue(const QueryablePkb &queryable_pkb) const {
+bool AffectsTClause::IsTrue(QueryablePkb &queryable_pkb) {
   if (GetLeftHandSide().IsLineNumber() && GetRightHandSide().IsLineNumber()) {
     auto possible_rhs =
         queryable_pkb.QueryAffectsTBy(GetLeftHandSide().GetLineNumber());

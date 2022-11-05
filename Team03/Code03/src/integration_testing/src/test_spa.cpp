@@ -88,6 +88,7 @@ TEST_CASE("SPA", "[SPA]") {
       {"Select attribute", "select_attribute"},
       {"Tuple select", "tuple_select"},
       {"Next / Next T", "next_next_t"},
+      {"Affects / Affects T", "affects_affects_t"},
       {"Should not exception", "should_not_exception"}};
 
   for (auto [test_name, file_prefix] : test_cases) {

@@ -3,7 +3,7 @@
 BooleanNode::BooleanNode(std::shared_ptr<QueryOperation> no_syn_operation)
     : no_syn_operation_(no_syn_operation) {}
 
-QResult BooleanNode::Fetch(const QueryablePkb& pkb) {
+QResult BooleanNode::Fetch(QueryablePkb& pkb) {
   if (!no_syn_operation_->IsTrue(pkb)) {
     return QResult(true);
   }

@@ -12,7 +12,7 @@ class PatternWhile : public QueryOperation {
   explicit PatternWhile(Synonym syn, EntityReference entity);
 
   [[nodiscard]] std::unordered_set<std::string> Fetch(
-      const QueryablePkb &queryable_pkb) const override;
+      QueryablePkb &queryable_pkb) override;
 
   [[nodiscard]] const EntityReference &GetEntity() const;
 
@@ -23,16 +23,16 @@ class PatternWhile : public QueryOperation {
   [[nodiscard]] Type GetType() const override;
 
   [[nodiscard]] std::unordered_set<std::string> FetchPossibleRhs(
-      std::string lhs, const QueryablePkb &queryable_pkb) const override;
+      std::string lhs, QueryablePkb &queryable_pkb) override;
 
   [[nodiscard]] std::unordered_set<std::string> FetchPossibleLhs(
-      std::string rhs, const QueryablePkb &queryable_pkb) const override;
+      std::string rhs, QueryablePkb &queryable_pkb) override;
 
   [[nodiscard]] IterateSide GetIterateSide(
       std::vector<std::vector<std::string>> lhs,
       std::vector<std::vector<std::string>> rhs) const override;
 
-  [[nodiscard]] bool IsTrue(const QueryablePkb &queryable_pkb) const override;
+  [[nodiscard]] bool IsTrue(QueryablePkb &queryable_pkb) override;
 
  private:
   Synonym syn_;

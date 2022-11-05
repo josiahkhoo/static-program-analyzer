@@ -39,8 +39,7 @@ QueryOperation::IterateSide Clause::GetIterateSide(
   return LHS;
 }
 
-std::unordered_set<std::string> Clause::Fetch(
-    const QueryablePkb& queryable_pkb) const {
+std::unordered_set<std::string> Clause::Fetch(QueryablePkb& queryable_pkb) {
   assert(GetType() == SINGLE_SYNONYM);
   if (GetLeftHandSide().IsSynonym()) {
     return FetchLhs(queryable_pkb);
