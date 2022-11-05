@@ -111,8 +111,13 @@ void ModifiesAbstractionExtractorImpl::TraverseProcedureTree(
     std::unordered_map<const TNode*, std::unordered_set<const TNode*>>&
         proc_var_map,
     std::unordered_set<const TNode*>& children, const TNode* parent) const {
+  std::unordered_set<const TNode*> visited;
   for (const auto& child : children) {
     auto proc_child_node = proc_name_node_umap[child->GetStringValue()];
+    if (visited.find(proc_child_node) != visited.end()) {
+      break;
+    }
+    visited.emplace(proc_child_node);
     auto next_children = proc_node_call_ent_umap[proc_child_node];
     if (!next_children.empty()) {
       TraverseProcedureTree(t_node_proc_ent_umap, proc_name_node_umap,
