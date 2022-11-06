@@ -50,12 +50,14 @@ std::vector<std::string> splitLines(std::istream &stream) {
 }
 
 // Generates given stream of lex into tokens
-std::vector<Token> Lexer::Lex(std::istream &stream) const {
+std::vector<Token> Lexer::Lex(
+    std::istream &stream,
+    std::vector<std::pair<Token::Kind, std::string>> &token_rules) const {
   std::vector<Token> tokens;
   std::vector<std::string> lines = splitLines(stream);
 
   for (std::string line : lines) {
-    std::vector<Token> new_tokens = LexLine(line);
+    std::vector<Token> new_tokens = LexLine(line, token_rules);
     tokens.insert(tokens.end(), new_tokens.begin(), new_tokens.end());
   }
   Token end_token = Token(Token::END);
@@ -63,16 +65,17 @@ std::vector<Token> Lexer::Lex(std::istream &stream) const {
   return tokens;
 }
 
-std::vector<Token> Lexer::LexLine(std::string &line) const {
+std::vector<Token> Lexer::LexLine(std::string &line, std::vector<std::pair<Token::Kind, std::string>> &token_rules) const {
   std::vector<Token> tokens;
   while (!line.empty()) {
-    ProcessLineHead(line, tokens);
+    ProcessLineHead(line, tokens, token_rules);
   }
   return tokens;
 }
 
-void Lexer::ProcessLineHead(std::string &line, std::vector<Token> &tokens) {
-  for (auto const &pair : tokenRules) {
+void Lexer::ProcessLineHead(std::string &line, std::vector<Token> &tokens,
+                            std::vector<std::pair<Token::Kind, std::string>> &token_rules) {
+  for (auto const &pair : token_rules) {
     std::smatch matched_regex;
     try {
       if (std::regex_search(line, matched_regex, std::regex(pair.second))) {

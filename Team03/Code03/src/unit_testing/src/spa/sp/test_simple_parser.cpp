@@ -22,6 +22,37 @@ bool deepEqual(TNode node1, TNode node2) {
 
 TEST_CASE("Simple Parser", "[Simple Parser]") {
   SimpleParser simple_parser = SimpleParser();
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
   SECTION("Test print statement") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
                                   Token(Token::IDENTIFIER, "main"),
@@ -727,7 +758,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     std::string input =
         "procedure p { if (m == 0) then { while (n == 0) { read x; } } else"
         "{ while (o == 0) { read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -864,7 +895,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     std::string input =
         "procedure p { while (m == 0) { if (n == 0) then { read x; } else {"
         "read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -966,7 +997,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   SECTION("Test call non existing procedure") {
     Lexer lexer;
     std::string input = "procedure p { call q; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -982,7 +1013,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         "procedure p { call q; } procedure q { call r; } procedure r { call"
         "p; "
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -995,7 +1026,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   SECTION("Test recursive call procedure") {
     Lexer lexer;
     std::string input = "procedure p { call p; } ";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -1008,7 +1039,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   SECTION("Test same name procedures") {
     Lexer lexer;
     std::string input = "procedure p { print x; } procedure p { print y; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -1025,7 +1056,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         "while ((x1 + x2) == (y1 + y2)) {"
         "a = 0;"
         "}}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -1109,7 +1140,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         "} else {"
         "b = 0;"
         "}}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 
@@ -1213,7 +1244,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         "}"
         "b = 0;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     TNode res = simple_parser.Parse(tokens);
 

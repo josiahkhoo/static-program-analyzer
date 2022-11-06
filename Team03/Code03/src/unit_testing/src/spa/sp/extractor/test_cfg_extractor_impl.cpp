@@ -18,9 +18,40 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   CFGExtractorImpl cfg_extractor_under_test = CFGExtractorImpl();
   SimpleParser parser;
   Lexer lexer;
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
   SECTION("Extract 1-depth node") {
     std::string input = "procedure p { m = x * y + z / 100; x = x + 1;}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -54,7 +85,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "y = 2;"
         "}"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -116,7 +147,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "x = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -169,7 +200,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "x = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -250,7 +281,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -321,7 +352,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -396,7 +427,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -484,7 +515,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -567,7 +598,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -645,7 +676,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "x = 1;"
         "}"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -683,7 +714,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -725,7 +756,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "s = 1;"
         "x = 3;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -787,7 +818,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -842,7 +873,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -898,7 +929,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -958,7 +989,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1028,7 +1059,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1084,7 +1115,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1141,7 +1172,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1203,7 +1234,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1267,7 +1298,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1339,7 +1370,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1413,7 +1444,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1499,7 +1530,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1610,7 +1641,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1706,7 +1737,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1768,7 +1799,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1833,7 +1864,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1907,7 +1938,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1979,7 +2010,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -2045,7 +2076,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -2114,7 +2145,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "y = 1;"
         "}"
         "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);

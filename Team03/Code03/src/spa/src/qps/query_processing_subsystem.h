@@ -24,6 +24,7 @@ class QueryProcessingSubsystem {
   const Planner &planner_;
   const Evaluator &evaluator_;
   QueryablePkb &queryable_pkb_;
+  std::vector<Token> getTokens(std::string &query) const;
 };
 
 #endif  // SPA_QUERY_PROCESSING_SUBSYSTEM_H

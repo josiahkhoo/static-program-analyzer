@@ -56,7 +56,7 @@ test_array = (
     ("Tuple select", "tuple_select"),
     ("Next / Next T", "next_next_t"),
     ("Affects / Affects T", "affects_affects_t"),
-    ("Stress", "stress"),
+    #("Stress", "stress"),
     ("Should Not Exception", "should_not_exception")
 )
 

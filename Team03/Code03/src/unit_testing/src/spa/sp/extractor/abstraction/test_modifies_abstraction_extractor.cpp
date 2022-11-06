@@ -28,11 +28,42 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
       print_entity_node_extractor, procedure_entity_node_extractor,
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
 
   SECTION("Extract from Procedure with Read") {
     Lexer lexer;
     std::string input = "procedure p { read x; read y; read z; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -107,7 +138,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
   SECTION("Extract from Procedure with Assign") {
     Lexer lexer;
     std::string input = "procedure p { m = x * y + z / 100; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -172,7 +203,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::string input =
         "procedure p { if (v == 0) then { read x; read y; } else { read z; "
         "} }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -256,7 +287,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
   SECTION("Extract from While") {
     Lexer lexer;
     std::string input = "procedure p { while (v == 0) { read x; } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -324,7 +355,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::string input =
         "procedure p { if (m == 0) then { while (n == 0) { read x; } } else { "
         "while (o == 0) { read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -407,7 +438,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
     std::string input =
         "procedure p { while (m == 0) { if (n == 0) then { read x; } else { "
         "read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -491,7 +522,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
         "procedure p { call q; read x;} "
         "procedure q { call r; read y;} "
         "procedure r { read z;}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -591,7 +622,7 @@ TEST_CASE("Modifies Abstraction Extractor Impl",
         "procedure q { call s; call s; read y;} "
         "procedure r { call q; read z;} "
         "procedure s { read m; } ";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 

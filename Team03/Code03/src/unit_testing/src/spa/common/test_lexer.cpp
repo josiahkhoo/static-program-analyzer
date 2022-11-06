@@ -10,7 +10,38 @@ TEST_CASE("Extract all string tokens", "[Lexer]") {
       "1\nh1\n(\n)\n{\n}\n==\n=\n<=\n<\n>=\n>\n+"
       "\n-\n*\n/\n,\n.\n%\n;\n#\n||\n&&\n!");
   Lexer lex;
-  std::vector<Token> tokens = lex.Lex(str_stream);
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
+  std::vector<Token> tokens = lex.Lex(str_stream, tokenRules);
 
   REQUIRE(tokens.size() == 25);
 
@@ -52,8 +83,39 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
   std::istringstream str_stream(
       "if (x==1) then {\n"
       "    z = x + 1; }");
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
   Lexer lex;
-  std::vector<Token> tokens = lex.Lex(str_stream);
+  std::vector<Token> tokens = lex.Lex(str_stream, tokenRules);
 
   REQUIRE(tokens.size() == 16);
 
@@ -81,8 +143,39 @@ TEST_CASE("Extract if block code tokens", "[Lexer]") {
 
 TEST_CASE("Extract query pattern tokens", "[Lexer]") {
   std::istringstream str_stream("Select a pattern a(_,_\"x + 1\"_");
+  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
+      {Token::WHITESPACE, "^(\\s+)"},
+      {Token::NUMBER, "^(\\d+)"},
+      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
+      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
+      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
+      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
+      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
+      {Token::DOUBLE_EQUAL, "^(==)"},
+      {Token::EQUAL, "^(=)"},
+      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
+      {Token::LESS_THAN, "^(<)"},
+      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
+      {Token::GREATER_THAN, "^(>)"},
+      {Token::PLUS, "^(\\+)"},
+      {Token::MINUS, "^(\\-)"},
+      {Token::ASTERISK, "^(\\*)"},
+      {Token::SLASH, "^(\\/)"},
+      {Token::COMMA, "^(,)"},
+      {Token::PERIOD, "^(\\.)"},
+      {Token::PERCENT, "^(%)"},
+      {Token::SEMICOLON, "^(;)"},
+      {Token::INVERTED_COMMAS, "^(\")"},
+      {Token::UNDERSCORE, "^(_)"},
+      {Token::HASHTAG, "^(#)"},
+      {Token::OR, "^(\\|\\|)"},
+      {Token::AND, "^(&&)"},
+      {Token::NOT_EQUAL, "^(!=)"},
+      {Token::NOT, "^(!)"},
+      {Token::NEXT_LINE, "^(\n)"},
+      {Token::END, "^(\0)"}};
   Lexer lex;
-  std::vector<Token> tokens = lex.Lex(str_stream);
+  std::vector<Token> tokens = lex.Lex(str_stream, tokenRules);
 
   REQUIRE(tokens.size() == 15);
 

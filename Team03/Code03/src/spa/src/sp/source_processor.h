@@ -25,6 +25,7 @@ class SourceProcessor {
   static void StoreDesignExtractorResult(
       const DesignExtractorResult &design_extractor_result,
       StorablePkb &storable_pkb);
+  std::vector<Token> getTokens(std::ifstream &source_file) const;
 };
 
 #endif  // SPA_SOURCE_PROCESSOR_H
