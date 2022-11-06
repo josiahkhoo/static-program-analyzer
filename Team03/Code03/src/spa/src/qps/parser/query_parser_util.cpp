@@ -181,13 +181,14 @@ std::string QueryParserUtil::GetExpression(
   while (next.IsNot(Token::INVERTED_COMMAS) &&
          next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
     res.append(GetTerm(tokens, builder));
-    tokens->Forward();
-    next = tokens->Peek();
 
     // Catch _(
     if (tokens->CheckAhead(Token::LEFT_ROUND_BRACKET)) {
       throw SyntaxException("Missing operator");
     }
+
+    tokens->Forward();
+    next = tokens->Peek();
   }
   return res;
 }
