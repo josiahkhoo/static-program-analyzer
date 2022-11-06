@@ -51,6 +51,10 @@ class QueryParserUtil {
   static Integer ExtractInteger(const std::shared_ptr<TokenHandler>& tokens);
   static Expression CreateExpression(
       std::optional<Expression>& maybe_expression, int wildcard_found);
+  static void IsPreviousMathOperator(
+      const std::shared_ptr<TokenHandler>& tokens);
+  static void IsPreviousMathOperator(const std::shared_ptr<TokenHandler>& tokens,
+                              const std::string& parsed);
 };
 
 #endif  // SPA_QUERY_PARSER_UTIL_H
