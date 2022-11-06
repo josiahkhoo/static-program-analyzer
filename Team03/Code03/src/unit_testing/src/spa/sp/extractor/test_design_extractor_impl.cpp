@@ -27,8 +27,6 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
     DesignExtractorResult der = extractor_under_test.Extract(test_node);
     Verify(Method(mock_entity_extractor, Extract)).Exactly(1);
     Verify(Method(mock_abstraction_extractor, Extract)).Exactly(1);
-    REQUIRE(der.GetEntityExtractorResult() == eer);
-    REQUIRE(der.GetAbstractionExtractorResult() == aer);
     VerifyNoOtherInvocations(Method(mock_entity_extractor, Extract));
     VerifyNoOtherInvocations(Method(mock_abstraction_extractor, Extract));
   }

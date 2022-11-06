@@ -11,12 +11,56 @@ class DesignExtractorResult {
                         std::vector<CFG> cfg_extractor_result,
                         EntityExtractorResult entity_extractor_result);
 
-  [[nodiscard]] AbstractionExtractorResult GetAbstractionExtractorResult()
+  [[nodiscard]] std::vector<AssignEntity> GetAssignEntities() const;
+
+  [[nodiscard]] std::vector<CallEntity> GetCallEntities() const;
+
+  [[nodiscard]] std::vector<ConstantEntity> GetConstantEntities() const;
+
+  [[nodiscard]] std::vector<IfEntity> GetIfEntities() const;
+
+  [[nodiscard]] std::vector<PrintEntity> GetPrintEntities() const;
+
+  [[nodiscard]] std::vector<ProcedureEntity> GetProcedureEntities() const;
+
+  [[nodiscard]] std::vector<ReadEntity> GetReadEntities() const;
+
+  [[nodiscard]] std::vector<StatementEntity> GetStatementEntities() const;
+
+  [[nodiscard]] std::vector<VariableEntity> GetVariableEntities() const;
+
+  [[nodiscard]] std::vector<WhileEntity> GetWhileEntities() const;
+
+  [[nodiscard]] std::vector<FollowsAbstraction> GetFollowsAbstractions() const;
+
+  [[nodiscard]] std::vector<FollowsTAbstraction> GetFollowsTAbstractions()
       const;
 
-  [[nodiscard]] std::vector<CFG> GetCFGExtractorResult() const;
+  [[nodiscard]] std::vector<ParentAbstraction> GetParentAbstractions() const;
 
-  [[nodiscard]] EntityExtractorResult GetEntityExtractorResult() const;
+  [[nodiscard]] std::vector<ParentTAbstraction> GetParentTAbstractions() const;
+
+  [[nodiscard]] std::vector<CallsAbstraction> GetCallsAbstractions() const;
+
+  [[nodiscard]] std::vector<CallsTAbstraction> GetCallsTAbstractions() const;
+
+  [[nodiscard]] std::vector<UsesSAbstraction> GetUsesSAbstractions() const;
+
+  [[nodiscard]] std::vector<UsesPAbstraction> GetUsesPAbstractions() const;
+
+  [[nodiscard]] std::vector<ModifiesSAbstraction> GetModifiesSAbstractions()
+      const;
+
+  [[nodiscard]] std::vector<ModifiesPAbstraction> GetModifiesPAbstractions()
+      const;
+
+  [[nodiscard]] std::vector<IfPatternAbstraction> GetIfPatternAbstractions()
+      const;
+
+  [[nodiscard]] std::vector<WhilePatternAbstraction>
+  GetWhilePatternAbstractions() const;
+
+  [[nodiscard]] std::vector<CFG> GetCFGExtractorResult() const;
 
  private:
   AbstractionExtractorResult abstraction_extractor_result_;
