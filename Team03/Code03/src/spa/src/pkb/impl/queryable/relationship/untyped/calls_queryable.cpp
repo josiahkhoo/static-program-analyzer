@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "calls_queryable.h"
 
 CallsQueryable::CallsQueryable(RelationshipManager& relationship_manager_)

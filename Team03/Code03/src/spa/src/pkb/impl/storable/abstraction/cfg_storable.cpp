@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "cfg_storable.h"
 
 CfgStorable::CfgStorable(RelationshipManager& relationship_manager_)

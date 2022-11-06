@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "parent_queryable.h"
 
 ParentQueryable::ParentQueryable(RelationshipManager& relationship_manager_,

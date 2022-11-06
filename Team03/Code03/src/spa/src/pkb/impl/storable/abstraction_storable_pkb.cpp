@@ -1,7 +1,3 @@
-//
-// Created by kohha on 4/11/2022.
-//
-
 #include "abstraction_storable_pkb.h"
 
 AbstractionStorablePkb::AbstractionStorablePkb(

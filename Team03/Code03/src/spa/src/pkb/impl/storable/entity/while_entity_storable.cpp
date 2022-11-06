@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "while_entity_storable.h"
 
 WhileEntityStorable::WhileEntityStorable(EntityManager& entity_manager_)

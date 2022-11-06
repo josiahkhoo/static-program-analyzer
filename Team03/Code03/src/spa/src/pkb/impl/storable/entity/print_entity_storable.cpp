@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "print_entity_storable.h"
 
 PrintEntityStorable::PrintEntityStorable(EntityManager& entity_manager_)

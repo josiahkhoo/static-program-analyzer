@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "while_pattern_storable.h"
 
 WhilePatternStorable::WhilePatternStorable(PatternManager& pattern_manager_)

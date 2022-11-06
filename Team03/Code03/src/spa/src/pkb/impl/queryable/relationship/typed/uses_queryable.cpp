@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "uses_queryable.h"
 
 UsesQueryable::UsesQueryable(RelationshipManager& relationship_manager_,

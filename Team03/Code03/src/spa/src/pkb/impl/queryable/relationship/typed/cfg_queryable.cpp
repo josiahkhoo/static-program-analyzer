@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "cfg_queryable.h"
 
 CfgQueryable::CfgQueryable(RelationshipManager& relationship_manager_,

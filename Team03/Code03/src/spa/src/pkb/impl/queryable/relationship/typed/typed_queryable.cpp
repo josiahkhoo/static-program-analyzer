@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "typed_queryable.h"
 
 TypedQueryable::TypedQueryable(RelationshipManager &relationship_manager_,

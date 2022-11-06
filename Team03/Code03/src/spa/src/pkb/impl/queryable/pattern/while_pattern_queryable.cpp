@@ -1,7 +1,3 @@
-//
-// Created by kohha on 6/11/2022.
-//
-
 #include "while_pattern_queryable.h"
 
 WhilePatternQueryable::WhilePatternQueryable(PatternManager& pattern_manager_)

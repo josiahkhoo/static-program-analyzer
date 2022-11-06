@@ -1,7 +1,3 @@
-//
-// Created by kohha on 6/11/2022.
-//
-
 #include "pattern_queryable_pkb.h"
 
 PatternQueryablePkb::PatternQueryablePkb(PatternManager& pattern_manager_)

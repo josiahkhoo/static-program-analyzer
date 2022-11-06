@@ -1,7 +1,3 @@
-//
-// Created by kohha on 6/11/2022.
-//
-
 #include "if_pattern_queryable.h"
 
 IfPatternQueryable::IfPatternQueryable(PatternManager& pattern_manager_)

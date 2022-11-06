@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "if_entity_storable.h"
 
 IfEntityStorable::IfEntityStorable(EntityManager& entity_manager_)

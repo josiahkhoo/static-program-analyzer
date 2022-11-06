@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "procedure_entity_storable.h"
 
 ProcedureEntityStorable::ProcedureEntityStorable(EntityManager& entity_manager_)

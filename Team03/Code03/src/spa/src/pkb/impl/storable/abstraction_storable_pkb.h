@@ -1,7 +1,3 @@
-//
-// Created by kohha on 4/11/2022.
-//
-
 #include "pkb/impl/storable/abstraction/calls_storable.h"
 #include "pkb/impl/storable/abstraction/calls_t_storable.h"
 #include "pkb/impl/storable/abstraction/cfg_storable.h"

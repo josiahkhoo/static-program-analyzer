@@ -1,10 +1,4 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "constant_entity_storable.h"
-
-#include <utility>
 
 ConstantEntityStorable::ConstantEntityStorable(EntityManager& entity_manager_)
     : EntityStorable(entity_manager_) {}

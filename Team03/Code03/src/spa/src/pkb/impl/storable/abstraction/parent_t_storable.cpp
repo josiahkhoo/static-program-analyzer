@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "parent_t_storable.h"
 
 ParentTStorable::ParentTStorable(RelationshipManager& relationship_manager_)

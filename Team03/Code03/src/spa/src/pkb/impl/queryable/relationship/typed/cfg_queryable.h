@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #ifndef SPA_CFG_QUERYABLE_H
 #define SPA_CFG_QUERYABLE_H
 

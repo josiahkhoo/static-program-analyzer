@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "read_entity_storable.h"
 
 ReadEntityStorable::ReadEntityStorable(EntityManager& entity_manager_)

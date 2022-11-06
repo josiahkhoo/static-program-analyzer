@@ -1,7 +1,3 @@
-//
-// Created by kohha on 6/11/2022.
-//
-
 #ifndef SPA_PATTERN_QUERYABLE_H
 #define SPA_PATTERN_QUERYABLE_H
 

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "modifies_s_storable.h"
 
 ModifiesSStorable::ModifiesSStorable(RelationshipManager& relationship_manager_)

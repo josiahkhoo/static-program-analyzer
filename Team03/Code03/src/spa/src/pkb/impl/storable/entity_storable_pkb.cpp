@@ -1,7 +1,3 @@
-//
-// Created by kohha on 3/11/2022.
-//
-
 #include "entity_storable_pkb.h"
 
 EntityStorablePkb::EntityStorablePkb(EntityManager& entity_manager_,

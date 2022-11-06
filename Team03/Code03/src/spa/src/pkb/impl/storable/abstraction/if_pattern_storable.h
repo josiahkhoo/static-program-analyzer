@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #ifndef SPA_IF_PATTERN_STORABLE_H
 #define SPA_IF_PATTERN_STORABLE_H
 

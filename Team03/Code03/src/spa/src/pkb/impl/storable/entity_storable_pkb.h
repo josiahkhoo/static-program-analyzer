@@ -1,7 +1,3 @@
-//
-// Created by kohha on 3/11/2022.
-//
-
 #ifndef SPA_ENTITY_STORABLE_PKB_H
 #define SPA_ENTITY_STORABLE_PKB_H
 

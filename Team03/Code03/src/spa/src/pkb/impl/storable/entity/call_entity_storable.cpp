@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "call_entity_storable.h"
 
 CallEntityStorable::CallEntityStorable(EntityManager& entity_manager_)

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #ifndef SPA_READ_ENTITY_STORABLE_H
 #define SPA_READ_ENTITY_STORABLE_H
 

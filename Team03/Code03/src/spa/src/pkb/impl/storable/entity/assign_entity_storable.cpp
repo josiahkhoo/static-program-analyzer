@@ -1,10 +1,4 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "assign_entity_storable.h"
-
-#include <utility>
 
 AssignEntityStorable::AssignEntityStorable(EntityManager &entity_manager_,
                                            PatternManager &pattern_manager_)

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 6/11/2022.
-//
-
 #include "assign_pattern_queryable.h"
 
 AssignPatternQueryable::AssignPatternQueryable(PatternManager& pattern_manager_)

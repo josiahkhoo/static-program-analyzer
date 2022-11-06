@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "follows_queryable.h"
 
 FollowsQueryable::FollowsQueryable(RelationshipManager& relationship_manager_,

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "relationship_queryable_pkb.h"
 
 RelationshipQueryablePkb::RelationshipQueryablePkb(

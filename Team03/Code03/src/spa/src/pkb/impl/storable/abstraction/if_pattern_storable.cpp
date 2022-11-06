@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "if_pattern_storable.h"
 
 IfPatternStorable::IfPatternStorable(PatternManager& pattern_manager_)

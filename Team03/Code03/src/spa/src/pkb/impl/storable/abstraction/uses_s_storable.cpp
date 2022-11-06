@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "uses_s_storable.h"
 
 UsesSStorable::UsesSStorable(RelationshipManager& relationship_manager_)

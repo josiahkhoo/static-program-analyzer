@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "calls_storable.h"
 
 CallsStorable::CallsStorable(RelationshipManager& relationship_manager_)

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "modifies_p_storable.h"
 
 ModifiesPStorable::ModifiesPStorable(RelationshipManager& relationship_manager_)

@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "entity_queryable.h"
 
 EntityQueryable::EntityQueryable(EntityManager& entity_manager_)

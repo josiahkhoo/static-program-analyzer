@@ -1,7 +1,3 @@
-//
-// Created by kohha on 5/11/2022.
-//
-
 #include "affects_queryable.h"
 
 AffectsQueryable::AffectsQueryable(RelationshipManager& relationship_manager_,
