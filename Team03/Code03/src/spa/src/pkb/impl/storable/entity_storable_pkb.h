@@ -1,49 +1,35 @@
 #ifndef SPA_ENTITY_STORABLE_PKB_H
 #define SPA_ENTITY_STORABLE_PKB_H
 
-#include "pkb/impl/storable/entity/assign_entity_storable.h"
-#include "pkb/impl/storable/entity/call_entity_storable.h"
-#include "pkb/impl/storable/entity/constant_entity_storable.h"
-#include "pkb/impl/storable/entity/if_entity_storable.h"
-#include "pkb/impl/storable/entity/print_entity_storable.h"
-#include "pkb/impl/storable/entity/procedure_entity_storable.h"
-#include "pkb/impl/storable/entity/read_entity_storable.h"
-#include "pkb/impl/storable/entity/variable_entity_storable.h"
-#include "pkb/impl/storable/entity/while_entity_storable.h"
+#include "pkb/entity_store/entity_manager.h"
+#include "pkb/pattern_store/pattern_manager.h"
 
 class EntityStorablePkb {
  public:
   EntityStorablePkb(EntityManager& entity_manager_,
                     PatternManager& pattern_manager_);
 
-  [[nodiscard]] AssignEntityStorable& GetAssignEntityStorable();
+  void Store(std::vector<ProcedureEntity> ts);
 
-  [[nodiscard]] CallEntityStorable& GetCallEntityStorable();
+  void Store(std::vector<VariableEntity> ts);
 
-  [[nodiscard]] ConstantEntityStorable& GetConstantEntityStorable();
+  void Store(std::vector<ConstantEntity> ts);
 
-  [[nodiscard]] IfEntityStorable& GetIfEntityStorable();
+  void Store(std::vector<CallEntity> ts);
 
-  [[nodiscard]] PrintEntityStorable& GetPrintEntityStorable();
+  void Store(std::vector<ReadEntity> ts);
 
-  [[nodiscard]] ProcedureEntityStorable& GetProcedureEntityStorable();
+  void Store(std::vector<PrintEntity> ts);
 
-  [[nodiscard]] ReadEntityStorable& GetReadEntityStorable();
+  void Store(std::vector<AssignEntity> ts);
 
-  [[nodiscard]] VariableEntityStorable& GetVariableEntityStorable();
+  void Store(std::vector<IfEntity> ts);
 
-  [[nodiscard]] WhileEntityStorable& GetWhileEntityStorable();
+  void Store(std::vector<WhileEntity> ts);
 
  private:
-  AssignEntityStorable assign_entity_storable_;
-  CallEntityStorable call_entity_storable_;
-  ConstantEntityStorable constant_entity_storable_;
-  IfEntityStorable if_entity_storable_;
-  PrintEntityStorable print_entity_storable_;
-  ProcedureEntityStorable procedure_entity_storable_;
-  ReadEntityStorable read_entity_storable_;
-  VariableEntityStorable variable_entity_storable_;
-  WhileEntityStorable while_entity_storable_;
+  EntityManager& entity_manager_;
+  PatternManager& pattern_manager_;
 };
 
 #endif  // SPA_ENTITY_STORABLE_PKB_H

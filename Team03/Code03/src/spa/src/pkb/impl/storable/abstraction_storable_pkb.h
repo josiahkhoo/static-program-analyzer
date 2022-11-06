@@ -1,65 +1,43 @@
-#include "pkb/impl/storable/abstraction/calls_storable.h"
-#include "pkb/impl/storable/abstraction/calls_t_storable.h"
-#include "pkb/impl/storable/abstraction/cfg_storable.h"
-#include "pkb/impl/storable/abstraction/follows_storable.h"
-#include "pkb/impl/storable/abstraction/follows_t_storable.h"
-#include "pkb/impl/storable/abstraction/if_pattern_storable.h"
-#include "pkb/impl/storable/abstraction/modifies_p_storable.h"
-#include "pkb/impl/storable/abstraction/modifies_s_storable.h"
-#include "pkb/impl/storable/abstraction/parent_storable.h"
-#include "pkb/impl/storable/abstraction/parent_t_storable.h"
-#include "pkb/impl/storable/abstraction/uses_p_storable.h"
-#include "pkb/impl/storable/abstraction/uses_s_storable.h"
-#include "pkb/impl/storable/abstraction/while_pattern_storable.h"
-
 #ifndef SPA_RELATIONSHIP_STORABLE_PKB_STRATEGY_H
 #define SPA_RELATIONSHIP_STORABLE_PKB_STRATEGY_H
+
+#include "pkb/pattern_store/pattern_manager.h"
+#include "pkb/relationship_store/relationship_manager.h"
 
 class AbstractionStorablePkb {
  public:
   AbstractionStorablePkb(RelationshipManager& relationship_manager_,
                          PatternManager& pattern_manager_);
 
-  [[nodiscard]] FollowsStorable& GetFollowsStorable();
+  void Store(std::vector<FollowsAbstraction> abstractions);
 
-  [[nodiscard]] FollowsTStorable& GetFollowsTStorable();
+  void Store(std::vector<FollowsTAbstraction> abstractions);
 
-  [[nodiscard]] ParentStorable& GetParentStorable();
+  void Store(std::vector<ParentAbstraction> abstractions);
 
-  [[nodiscard]] ParentTStorable& GetParentTStorable();
+  void Store(std::vector<ParentTAbstraction> abstractions);
 
-  [[nodiscard]] ModifiesPStorable& GetModifiesPStorable();
+  void Store(std::vector<UsesSAbstraction> abstractions);
 
-  [[nodiscard]] ModifiesSStorable& GetModifiesSStorable();
+  void Store(std::vector<UsesPAbstraction> abstractions);
 
-  [[nodiscard]] UsesPStorable& GetUsesPStorable();
+  void Store(std::vector<ModifiesSAbstraction> abstractions);
 
-  [[nodiscard]] UsesSStorable& GetUsesSStorable();
+  void Store(std::vector<ModifiesPAbstraction> abstractions);
 
-  [[nodiscard]] CallsStorable& GetCallsStorable();
+  void Store(std::vector<CallsAbstraction> abstractions);
 
-  [[nodiscard]] CallsTStorable& GetCallsTStorable();
+  void Store(std::vector<CallsTAbstraction> abstractions);
 
-  [[nodiscard]] IfPatternStorable& GetIfPatternStorable();
+  void Store(std::vector<WhilePatternAbstraction> abstractions);
 
-  [[nodiscard]] WhilePatternStorable& GetWhilePatternStorable();
+  void Store(std::vector<IfPatternAbstraction> abstractions);
 
-  [[nodiscard]] CfgStorable& GetCfgStorable();
+  void Store(std::vector<CFG> cfgs);
 
  private:
-  FollowsStorable follows_storable_;
-  FollowsTStorable follows_t_storable_;
-  ParentStorable parent_storable_;
-  ParentTStorable parent_t_storable_;
-  ModifiesPStorable modifies_p_storable_;
-  ModifiesSStorable modifies_s_storable_;
-  UsesPStorable uses_s_storable_;
-  UsesSStorable uses_p_storable_;
-  CallsStorable calls_storable_;
-  CallsTStorable calls_t_storable_;
-  IfPatternStorable if_pattern_storable_;
-  WhilePatternStorable while_pattern_storable_;
-  CfgStorable cfg_storable_;
+  RelationshipManager& relationship_manager_;
+  PatternManager& pattern_manager_;
 };
 
 #endif  // SPA_RELATIONSHIP_STORABLE_PKB_STRATEGY_H

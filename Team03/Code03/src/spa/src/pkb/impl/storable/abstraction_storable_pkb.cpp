@@ -3,92 +3,110 @@
 AbstractionStorablePkb::AbstractionStorablePkb(
     RelationshipManager& relationship_manager_,
     PatternManager& pattern_manager_)
-    : follows_storable_(FollowsStorable(relationship_manager_)),
-      follows_t_storable_(FollowsTStorable(relationship_manager_)),
-      parent_storable_(ParentStorable(relationship_manager_)),
-      parent_t_storable_(ParentTStorable(relationship_manager_)),
-      modifies_p_storable_(ModifiesPStorable(relationship_manager_)),
-      modifies_s_storable_(ModifiesSStorable(relationship_manager_)),
-      uses_s_storable_(UsesPStorable(relationship_manager_)),
-      uses_p_storable_(UsesSStorable(relationship_manager_)),
-      calls_storable_(CallsStorable(relationship_manager_)),
-      calls_t_storable_(CallsTStorable(relationship_manager_)),
-      if_pattern_storable_(IfPatternStorable(pattern_manager_)),
-      while_pattern_storable_(WhilePatternStorable(pattern_manager_)),
-      cfg_storable_(CfgStorable(relationship_manager_)) {}
+    : relationship_manager_(relationship_manager_),
+      pattern_manager_(pattern_manager_) {}
 
-/// Get FollowsStorable
-/// \return FollowsStorable
-FollowsStorable& AbstractionStorablePkb::GetFollowsStorable() {
-  return follows_storable_;
+
+/// Store Follows Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<FollowsAbstraction> abstractions) {
+  for (const FollowsAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get FollowsTStorable
-/// \return FollowsTStorable
-FollowsTStorable& AbstractionStorablePkb::GetFollowsTStorable() {
-  return follows_t_storable_;
+/// Store FollowsT Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<FollowsTAbstraction> abstractions) {
+  for (const FollowsTAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get ParentStorable
-/// \return ParentStorable
-ParentStorable& AbstractionStorablePkb::GetParentStorable() {
-  return parent_storable_;
+/// Store Parent Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<ParentAbstraction> abstractions) {
+  for (const ParentAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get ParentTStorable
-/// \return ParentTStorable
-ParentTStorable& AbstractionStorablePkb::GetParentTStorable() {
-  return parent_t_storable_;
+/// Store ParentT Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<ParentTAbstraction> abstractions) {
+  for (const ParentTAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get ModifiesPStorable
-/// \return ModifiesPStorable
-ModifiesPStorable& AbstractionStorablePkb::GetModifiesPStorable() {
-  return modifies_p_storable_;
+/// Store Calls Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<CallsAbstraction> abstractions) {
+  for (const CallsAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get ModifiesSStorable
-/// \return ModifiesSStorable
-ModifiesSStorable& AbstractionStorablePkb::GetModifiesSStorable() {
-  return modifies_s_storable_;
+/// Store CallsT Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<CallsTAbstraction> abstractions) {
+  for (const CallsTAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get UsesPStorable
-/// \return UsesPStorable
-UsesPStorable& AbstractionStorablePkb::GetUsesPStorable() {
-  return uses_s_storable_;
+/// Store UsesS Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<UsesSAbstraction> abstractions) {
+  for (const UsesSAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get UsesSStorable
-/// \return UsesSStorable
-UsesSStorable& AbstractionStorablePkb::GetUsesSStorable() {
-  return uses_p_storable_;
+/// Store UsesP Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<UsesPAbstraction> abstractions) {
+  for (const UsesPAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get CallsStorable
-/// \return CallsStorable
-CallsStorable& AbstractionStorablePkb::GetCallsStorable() {
-  return calls_storable_;
+/// Store ModifiesS Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<ModifiesSAbstraction> abstractions) {
+  for (const ModifiesSAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get CallsTStorable
-/// \return CallsTStorable
-CallsTStorable& AbstractionStorablePkb::GetCallsTStorable() {
-  return calls_t_storable_;
+/// Store ModifiesP Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<ModifiesPAbstraction> abstractions) {
+  for (const ModifiesPAbstraction& abstraction : abstractions) {
+    relationship_manager_.AddAbstraction(abstraction);
+  }
 }
 
-/// Get IfPatternStorable
-/// \return IfPatternStorable
-IfPatternStorable& AbstractionStorablePkb::GetIfPatternStorable() {
-  return if_pattern_storable_;
+/// Store While Pattern Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<WhilePatternAbstraction> abstractions) {
+  for (const WhilePatternAbstraction& abstraction : abstractions) {
+    pattern_manager_.AddWhilePattern(abstraction);
+  }
 }
 
-/// Get WhilePatternStorable
-/// \return WhilePatternStorable
-WhilePatternStorable& AbstractionStorablePkb::GetWhilePatternStorable() {
-  return while_pattern_storable_;
+/// Store If Pattern Abstractions
+/// \param abstractions List of abstractions
+void AbstractionStorablePkb::Store(std::vector<IfPatternAbstraction> abstractions) {
+  for (const IfPatternAbstraction& abstraction : abstractions) {
+    pattern_manager_.AddIfPattern(abstraction);
+  }
 }
 
-/// Get CfgStorable
-/// \return CfgStorable
-CfgStorable& AbstractionStorablePkb::GetCfgStorable() { return cfg_storable_; }
+/// Store CFGs
+/// \param abstractions List of Cfgs
+void AbstractionStorablePkb::Store(std::vector<CFG> cfgs) {
+  for (const CFG& cfg : cfgs) {
+    relationship_manager_.AddCFG(cfg);
+  }
+}
