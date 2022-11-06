@@ -2,7 +2,6 @@
 #define SPA_ENTITY_H
 
 #include "has_node_pointer.h"
-#include "common/storable.h"
 
 /// Base Entity class used to wrap around a node.
 class Entity : public HasNodePointer {

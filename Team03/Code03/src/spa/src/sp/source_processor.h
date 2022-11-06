@@ -12,7 +12,8 @@
 class SourceProcessor {
  public:
   SourceProcessor(Lexer &lexer, Parser<TNode, std::vector<Token>> &parser,
-                  DesignExtractor &design_extractor, StorablePkbImpl &storable_pkb);
+                  DesignExtractor &design_extractor,
+                  StorablePkbImpl &storable_pkb);
 
   void Process(const std::string &filename);
 
