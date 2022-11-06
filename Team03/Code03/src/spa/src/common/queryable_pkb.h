@@ -1,12 +1,8 @@
 #ifndef SPA_QUERYABLE_PKB_H
 #define SPA_QUERYABLE_PKB_H
 
-#include "common/entity/entity_type.h"
 #include "common/reference/attribute.h"
-#include "common/reference/attribute_name.h"
 #include "common/reference/expression.h"
-#include "string"
-#include "unordered_set"
 
 class QueryablePkb {
  public:
