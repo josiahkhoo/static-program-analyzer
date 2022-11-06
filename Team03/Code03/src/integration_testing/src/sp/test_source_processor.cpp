@@ -81,7 +81,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
       entity_extractor, cfg_extractor, abstraction_extractor);
 
   SourceProcessor source_processor_under_test = SourceProcessor(
-      lexer, simple_parser, design_extractor, pkb.GetStorablePkbImpl());
+      lexer, simple_parser, design_extractor, pkb);
 
   SECTION("Parse valid source file") {
     std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
