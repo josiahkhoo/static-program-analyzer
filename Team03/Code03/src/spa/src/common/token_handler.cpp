@@ -81,7 +81,6 @@ bool TokenHandler::CheckAhead(Token::Kind kind) {
   return false;
 }
 
-
 int TokenHandler::GetTokenPos() { return token_pos_; }
 
 void TokenHandler::SetTokenPos(int token_pos) { token_pos_ = token_pos; }
