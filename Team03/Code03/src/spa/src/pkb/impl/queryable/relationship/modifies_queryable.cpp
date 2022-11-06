@@ -1,8 +1,8 @@
 #include "modifies_queryable.h"
 
 ModifiesQueryable::ModifiesQueryable(
-    const RelationshipManager &relationship_manager_,
-    const EntityQueryable &entity_queryable_)
+    const RelationshipManager& relationship_manager_,
+    const EntityQueryable& entity_queryable_)
     : relationship_manager_(relationship_manager_),
       entity_queryable_(entity_queryable_) {}
 
@@ -14,8 +14,9 @@ std::unordered_set<std::string> ModifiesQueryable::QueryAllModifies(
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetModifyingProcedures();
   } else {
-    return QueryableUtility::FindIntersect(relationship_manager_.GetModifyingStatements(),
-                         entity_queryable_.QueryAll(type));
+    return QueryableUtility::FindIntersect(
+        relationship_manager_.GetModifyingStatements(),
+        entity_queryable_.QueryAll(type));
   }
 }
 

@@ -1,6 +1,7 @@
 #include "while_pattern_queryable.h"
 
-WhilePatternQueryable::WhilePatternQueryable(const PatternManager& pattern_manager_)
+WhilePatternQueryable::WhilePatternQueryable(
+    const PatternManager& pattern_manager_)
     : pattern_manager_(pattern_manager_) {}
 
 /// QueryAllWhilePattern

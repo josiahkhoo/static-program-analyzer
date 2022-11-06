@@ -1,8 +1,7 @@
 #include "uses_queryable.h"
 
-UsesQueryable::UsesQueryable(
-    const RelationshipManager &relationship_manager_,
-    const EntityQueryable &entity_queryable_)
+UsesQueryable::UsesQueryable(const RelationshipManager& relationship_manager_,
+                             const EntityQueryable& entity_queryable_)
     : relationship_manager_(relationship_manager_),
       entity_queryable_(entity_queryable_) {}
 
@@ -14,8 +13,9 @@ std::unordered_set<std::string> UsesQueryable::QueryAllUses(
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetUsingProcedures();
   } else {
-    return QueryableUtility::FindIntersect(relationship_manager_.GetUsingStatements(),
-                         entity_queryable_.QueryAll(type));
+    return QueryableUtility::FindIntersect(
+        relationship_manager_.GetUsingStatements(),
+        entity_queryable_.QueryAll(type));
   }
 }
 

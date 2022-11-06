@@ -1,6 +1,7 @@
 #include "assign_pattern_queryable.h"
 
-AssignPatternQueryable::AssignPatternQueryable(const PatternManager& pattern_manager_)
+AssignPatternQueryable::AssignPatternQueryable(
+    const PatternManager& pattern_manager_)
     : pattern_manager_(pattern_manager_) {}
 
 std::unordered_set<std::string> AssignPatternQueryable::QueryAllAssignPattern(

@@ -33,7 +33,7 @@ class EntityQueryable {
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
 
  protected:
-  const EntityManager &entity_manager_;
+  const EntityManager& entity_manager_;
 };
 
 #endif  // SPA_ENTITY_QUERYABLE_H

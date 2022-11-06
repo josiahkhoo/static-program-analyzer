@@ -25,7 +25,7 @@ class ModifiesQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier) const;
-  
+
  private:
   const RelationshipManager &relationship_manager_;
   const EntityQueryable &entity_queryable_;

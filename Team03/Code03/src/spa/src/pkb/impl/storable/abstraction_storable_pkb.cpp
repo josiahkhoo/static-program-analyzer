@@ -6,10 +6,10 @@ AbstractionStorablePkb::AbstractionStorablePkb(
     : relationship_manager_(relationship_manager_),
       pattern_manager_(pattern_manager_) {}
 
-
 /// Store Follows Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<FollowsAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<FollowsAbstraction> abstractions) {
   for (const FollowsAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -17,7 +17,8 @@ void AbstractionStorablePkb::Store(std::vector<FollowsAbstraction> abstractions)
 
 /// Store FollowsT Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<FollowsTAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<FollowsTAbstraction> abstractions) {
   for (const FollowsTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -25,7 +26,8 @@ void AbstractionStorablePkb::Store(std::vector<FollowsTAbstraction> abstractions
 
 /// Store Parent Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<ParentAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<ParentAbstraction> abstractions) {
   for (const ParentAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -33,7 +35,8 @@ void AbstractionStorablePkb::Store(std::vector<ParentAbstraction> abstractions) 
 
 /// Store ParentT Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<ParentTAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<ParentTAbstraction> abstractions) {
   for (const ParentTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -49,7 +52,8 @@ void AbstractionStorablePkb::Store(std::vector<CallsAbstraction> abstractions) {
 
 /// Store CallsT Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<CallsTAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<CallsTAbstraction> abstractions) {
   for (const CallsTAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -73,7 +77,8 @@ void AbstractionStorablePkb::Store(std::vector<UsesPAbstraction> abstractions) {
 
 /// Store ModifiesS Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<ModifiesSAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<ModifiesSAbstraction> abstractions) {
   for (const ModifiesSAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -81,7 +86,8 @@ void AbstractionStorablePkb::Store(std::vector<ModifiesSAbstraction> abstraction
 
 /// Store ModifiesP Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<ModifiesPAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<ModifiesPAbstraction> abstractions) {
   for (const ModifiesPAbstraction& abstraction : abstractions) {
     relationship_manager_.AddAbstraction(abstraction);
   }
@@ -89,7 +95,8 @@ void AbstractionStorablePkb::Store(std::vector<ModifiesPAbstraction> abstraction
 
 /// Store While Pattern Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<WhilePatternAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<WhilePatternAbstraction> abstractions) {
   for (const WhilePatternAbstraction& abstraction : abstractions) {
     pattern_manager_.AddWhilePattern(abstraction);
   }
@@ -97,7 +104,8 @@ void AbstractionStorablePkb::Store(std::vector<WhilePatternAbstraction> abstract
 
 /// Store If Pattern Abstractions
 /// \param abstractions List of abstractions
-void AbstractionStorablePkb::Store(std::vector<IfPatternAbstraction> abstractions) {
+void AbstractionStorablePkb::Store(
+    std::vector<IfPatternAbstraction> abstractions) {
   for (const IfPatternAbstraction& abstraction : abstractions) {
     pattern_manager_.AddIfPattern(abstraction);
   }

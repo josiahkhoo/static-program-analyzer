@@ -7,13 +7,15 @@ PatternQueryablePkb::PatternQueryablePkb(const PatternManager& pattern_manager_)
 
 /// Get AssignPatternQueryable
 /// \return AssignPatternQueryable
-const AssignPatternQueryable& PatternQueryablePkb::GetAssignPatternQueryable() const {
+const AssignPatternQueryable& PatternQueryablePkb::GetAssignPatternQueryable()
+    const {
   return assign_pattern_queryable_;
 }
 
 /// Get WhilePatternQueryable
 /// \return WhilePatternQueryable
-const WhilePatternQueryable& PatternQueryablePkb::GetWhilePatternQueryable() const {
+const WhilePatternQueryable& PatternQueryablePkb::GetWhilePatternQueryable()
+    const {
   return while_pattern_queryable_;
 }
 

@@ -14,7 +14,7 @@ class WhilePatternQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromWhile(
       int statement_number) const;
-  
+
  private:
   const PatternManager &pattern_manager_;
 };

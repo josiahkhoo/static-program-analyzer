@@ -10,16 +10,18 @@ ParentQueryable::ParentQueryable(
 /// \return Query all statements that are direct parents of any statement
 std::unordered_set<std::string> ParentQueryable::QueryAllParent(
     EntityType type) const {
-  return QueryableUtility::FindIntersect(relationship_manager_.GetParentStatements(),
-                       entity_queryable_.QueryAll(type));
+  return QueryableUtility::FindIntersect(
+      relationship_manager_.GetParentStatements(),
+      entity_queryable_.QueryAll(type));
 }
 
 /// QueryAllParentBy
 /// \return Query all statements that are direct children of any statement
 std::unordered_set<std::string> ParentQueryable::QueryAllParentBy(
     EntityType type) const {
-  return QueryableUtility::FindIntersect(relationship_manager_.GetParentByStatements(),
-                       entity_queryable_.QueryAll(type));
+  return QueryableUtility::FindIntersect(
+      relationship_manager_.GetParentByStatements(),
+      entity_queryable_.QueryAll(type));
 }
 
 /// QueryAllParentsRelations

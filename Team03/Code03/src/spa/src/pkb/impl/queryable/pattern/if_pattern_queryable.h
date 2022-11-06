@@ -14,7 +14,7 @@ class IfPatternQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
       int statement_number) const;
-  
+
  private:
   const PatternManager &pattern_manager_;
 };

@@ -25,7 +25,8 @@ const ParentQueryable& RelationshipQueryablePkb::GetParentQueryable() const {
 
 /// Get ModifiesQueryable
 /// \return ModifiesQueryable
-const ModifiesQueryable& RelationshipQueryablePkb::GetModifiesQueryable() const {
+const ModifiesQueryable& RelationshipQueryablePkb::GetModifiesQueryable()
+    const {
   return modifies_queryable_;
 }
 

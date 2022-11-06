@@ -10,8 +10,9 @@ class QueryablePkbImpl {
                    const RelationshipManager &relationship_manager_,
                    const PatternManager &pattern_manager_);
 
-  [[nodiscard]] const EntityQueryable& GetEntityQueryable() const;
-  [[nodiscard]] const RelationshipQueryablePkb &GetRelationshipQueryablePkb() const;
+  [[nodiscard]] const EntityQueryable &GetEntityQueryable() const;
+  [[nodiscard]] const RelationshipQueryablePkb &GetRelationshipQueryablePkb()
+      const;
   [[nodiscard]] const PatternQueryablePkb &GetPatternQueryablePkb() const;
 
  private:

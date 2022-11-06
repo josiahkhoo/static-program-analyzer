@@ -8,7 +8,7 @@ class QueryableUtility {
  public:
   [[nodiscard]] static std::unordered_set<std::string> FindIntersect(
       std::unordered_set<std::string> statements,
-      std::unordered_set<std::string> typed_statements) ;
+      std::unordered_set<std::string> typed_statements);
 };
 
 #endif  // SPA_QUERYABLE_UTILITY_H

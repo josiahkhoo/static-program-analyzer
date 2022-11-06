@@ -22,12 +22,12 @@ class CfgQueryable {
   [[nodiscard]] std::unordered_set<std::string> QueryPrevious(
       int statement_number, EntityType type) const;
 
-  [[nodiscard]] std::unordered_set<std::string> QueryNextT(int statement_number,
-                                                           EntityType type) const;
+  [[nodiscard]] std::unordered_set<std::string> QueryNextT(
+      int statement_number, EntityType type) const;
 
   [[nodiscard]] std::unordered_set<std::string> QueryPreviousT(
       int statement_number, EntityType type) const;
-  
+
  private:
   const RelationshipManager &relationship_manager_;
   const EntityQueryable &entity_queryable_;
