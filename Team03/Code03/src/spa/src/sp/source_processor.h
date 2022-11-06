@@ -6,7 +6,7 @@
 #include "common/lexer.h"
 #include "common/parser.h"
 #include "common/t_node.h"
-#include "pkb/storable_pkb_impl.h"
+#include "pkb/impl/storable_pkb_impl.h"
 #include "sp/extractor/design_extractor.h"
 
 class SourceProcessor {

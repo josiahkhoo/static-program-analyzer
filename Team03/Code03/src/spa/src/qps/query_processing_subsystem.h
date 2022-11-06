@@ -6,6 +6,7 @@
 
 #include "common/lexer.h"
 #include "evaluator.h"
+#include "pkb/impl/queryable_pkb_impl.h"
 #include "planner.h"
 #include "query_parser.h"
 
@@ -14,7 +15,7 @@ class QueryProcessingSubsystem {
   QueryProcessingSubsystem(const Lexer &lexer,
                            Parser<QueryString, std::vector<Token>> &parser,
                            const Planner &planner, const Evaluator &evaluator,
-                           QueryablePkb &queryable_pkb);
+                           QueryablePkbImpl &queryable_pkb);
 
   void Process(std::string query, std::list<std::string> &results);
 
@@ -23,7 +24,7 @@ class QueryProcessingSubsystem {
   Parser<QueryString, std::vector<Token>> &parser_;
   const Planner &planner_;
   const Evaluator &evaluator_;
-  QueryablePkb &queryable_pkb_;
+  QueryablePkbImpl &queryable_pkb_;
 };
 
 #endif  // SPA_QUERY_PROCESSING_SUBSYSTEM_H

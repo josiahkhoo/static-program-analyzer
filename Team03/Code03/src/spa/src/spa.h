@@ -96,8 +96,8 @@ class SPA {
   DesignExtractorImpl design_extractor_ = DesignExtractorImpl(
       entity_extractor_, cfg_extractor_, abstraction_extractor_);
 
-  SourceProcessor source_processor_ =
-      SourceProcessor(lexer_, simple_parser_, design_extractor_, pkb_.GetStorablePkbImpl());
+  SourceProcessor source_processor_ = SourceProcessor(
+      lexer_, simple_parser_, design_extractor_, pkb_.GetStorablePkbImpl());
 
   // QPS dependencies:
   QueryParser query_parser_;
@@ -106,7 +106,7 @@ class SPA {
 
   QueryProcessingSubsystem query_processing_subsystem =
       QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                               pkb_);
+                               pkb_.GetQueryablePkbImpl());
 };
 
 #endif  // SPA_SPA_H_
