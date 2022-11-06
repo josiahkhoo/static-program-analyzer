@@ -1,8 +1,8 @@
 #include "relationship_queryable_pkb.h"
 
 RelationshipQueryablePkb::RelationshipQueryablePkb(
-    RelationshipManager& relationship_manager_,
-    EntityQueryable& entity_queryable_)
+    const RelationshipManager& relationship_manager_,
+    const EntityQueryable& entity_queryable_)
     : follows_queryable_(relationship_manager_, entity_queryable_),
       parent_queryable_(relationship_manager_, entity_queryable_),
       modifies_queryable_(relationship_manager_, entity_queryable_),
@@ -13,42 +13,42 @@ RelationshipQueryablePkb::RelationshipQueryablePkb(
 
 /// Get FollowsQueryable
 /// \return FollowsQueryable
-FollowsQueryable& RelationshipQueryablePkb::GetFollowsQueryable() {
+const FollowsQueryable& RelationshipQueryablePkb::GetFollowsQueryable() const {
   return follows_queryable_;
 }
 
 /// Get ParentQueryable
 /// \return ParentQueryable
-ParentQueryable& RelationshipQueryablePkb::GetParentQueryable() {
+const ParentQueryable& RelationshipQueryablePkb::GetParentQueryable() const {
   return parent_queryable_;
 }
 
 /// Get ModifiesQueryable
 /// \return ModifiesQueryable
-ModifiesQueryable& RelationshipQueryablePkb::GetModifiesQueryable() {
+const ModifiesQueryable& RelationshipQueryablePkb::GetModifiesQueryable() const {
   return modifies_queryable_;
 }
 
 /// Get UsesQueryable
 /// \return UsesQueryable
-UsesQueryable& RelationshipQueryablePkb::GetUsesQueryable() {
+const UsesQueryable& RelationshipQueryablePkb::GetUsesQueryable() const {
   return uses_queryable_;
 }
 
 /// Get CallsQueryable
 /// \return CallsQueryable
-CallsQueryable& RelationshipQueryablePkb::GetCallsQueryable() {
+const CallsQueryable& RelationshipQueryablePkb::GetCallsQueryable() const {
   return calls_queryable_;
 }
 
 /// Get CfgQueryable
 /// \return CfgQueryable
-CfgQueryable& RelationshipQueryablePkb::GetCfgQueryable() {
+const CfgQueryable& RelationshipQueryablePkb::GetCfgQueryable() const {
   return cfg_queryable_;
 }
 
 /// Get AffectsQueryable
 /// \return AffectsQueryable
-AffectsQueryable& RelationshipQueryablePkb::GetAffectsQueryable() {
+const AffectsQueryable& RelationshipQueryablePkb::GetAffectsQueryable() const {
   return affects_queryable_;
 }

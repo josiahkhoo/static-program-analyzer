@@ -1,6 +1,6 @@
 #include "calls_queryable.h"
 
-CallsQueryable::CallsQueryable(RelationshipManager& relationship_manager_)
+CallsQueryable::CallsQueryable(const RelationshipManager& relationship_manager_)
     : relationship_manager_(relationship_manager_) {}
 
 /// QueryAllCalls

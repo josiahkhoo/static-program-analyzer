@@ -1,26 +1,27 @@
 #include "queryable_pkb_impl.h"
 
-QueryablePkbImpl::QueryablePkbImpl(EntityManager& entity_manager_,
-                                   RelationshipManager& relationship_manager_,
-                                   PatternManager& pattern_manager_)
+QueryablePkbImpl::QueryablePkbImpl(const EntityManager& entity_manager_,
+                                   const RelationshipManager& relationship_manager_,
+                                   const PatternManager& pattern_manager_)
     : entity_queryable_(entity_manager_),
       relationship_queryable_pkb_(relationship_manager_, entity_queryable_),
       pattern_queryable_pkb_(pattern_manager_) {}
 
 /// Get EntityQueryable
 /// \return EntityQueryable
-EntityQueryable& QueryablePkbImpl::GetEntityQueryable() {
+const EntityQueryable& QueryablePkbImpl::GetEntityQueryable() const {
   return entity_queryable_;
 }
 
 /// Get RelationshipQueryablePkb
 /// \return RelationshipQueryablePkb
-RelationshipQueryablePkb& QueryablePkbImpl::GetRelationshipQueryablePkb() {
+const RelationshipQueryablePkb& QueryablePkbImpl::GetRelationshipQueryablePkb()
+    const {
   return relationship_queryable_pkb_;
 }
 
 /// Get PatternQueryablePkb
 /// \return PatternQueryablePkb
-PatternQueryablePkb& QueryablePkbImpl::GetPatternQueryablePkb() {
+const PatternQueryablePkb& QueryablePkbImpl::GetPatternQueryablePkb() const {
   return pattern_queryable_pkb_;
 }

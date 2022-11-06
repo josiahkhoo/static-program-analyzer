@@ -1,12 +1,12 @@
 #ifndef SPA_PARENT_QUERYABLE_H
 #define SPA_PARENT_QUERYABLE_H
 
-#include "typed_queryable.h"
+#include "pkb/impl/queryable/queryable_utility.h"
 
-class ParentQueryable : TypedQueryable {
+class ParentQueryable {
  public:
-  explicit ParentQueryable(RelationshipManager &relationship_manager_,
-                           EntityQueryable &entity_queryable_);
+  explicit ParentQueryable(const RelationshipManager &relationship_manager_,
+                           const EntityQueryable &entity_queryable_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllParent(
       EntityType type) const;
@@ -28,6 +28,10 @@ class ParentQueryable : TypedQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryParentTBy(
       int statement_number, EntityType type) const;
+
+ private:
+  const RelationshipManager &relationship_manager_;
+  const EntityQueryable &entity_queryable_;
 };
 
 #endif  // SPA_PARENT_QUERYABLE_H

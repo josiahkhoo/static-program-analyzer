@@ -1,15 +1,17 @@
 #include "follows_queryable.h"
 
-FollowsQueryable::FollowsQueryable(RelationshipManager& relationship_manager_,
-                                   EntityQueryable& entity_queryable_)
-    : TypedQueryable(relationship_manager_, entity_queryable_) {}
+FollowsQueryable::FollowsQueryable(
+    const RelationshipManager &relationship_manager_,
+    const EntityQueryable &entity_queryable_)
+    : relationship_manager_(relationship_manager_),
+      entity_queryable_(entity_queryable_) {}
 
 /// QueryAllFollows
 /// \param type
 /// \return Query all statements following any statement of a specified type
 std::unordered_set<std::string> FollowsQueryable::QueryAllFollows(
     EntityType type) const {
-  return FindIntersect(relationship_manager_.GetFollowsStatements(),
+  return QueryableUtility::FindIntersect(relationship_manager_.GetFollowsStatements(),
                        entity_queryable_.QueryAll(type));
 }
 
@@ -18,7 +20,7 @@ std::unordered_set<std::string> FollowsQueryable::QueryAllFollows(
 /// \return Query all statements followed by any statement of a specified type
 std::unordered_set<std::string> FollowsQueryable::QueryAllFollowsBy(
     EntityType type) const {
-  return FindIntersect(relationship_manager_.GetFollowsByStatements(),
+  return QueryableUtility::FindIntersect(relationship_manager_.GetFollowsByStatements(),
                        entity_queryable_.QueryAll(type));
 }
 
@@ -37,7 +39,7 @@ std::unordered_set<std::string> FollowsQueryable::QueryAllFollowsRelations()
 /// statement
 std::unordered_set<std::string> FollowsQueryable::QueryFollows(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetFollowsStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -49,7 +51,7 @@ std::unordered_set<std::string> FollowsQueryable::QueryFollows(
 /// statement
 std::unordered_set<std::string> FollowsQueryable::QueryFollowsBy(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetFollowsByStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -61,7 +63,7 @@ std::unordered_set<std::string> FollowsQueryable::QueryFollowsBy(
 /// statement
 std::unordered_set<std::string> FollowsQueryable::QueryFollowsT(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetFollowsTStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -73,7 +75,7 @@ std::unordered_set<std::string> FollowsQueryable::QueryFollowsT(
 /// statement
 std::unordered_set<std::string> FollowsQueryable::QueryFollowsTBy(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetFollowsTByStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }

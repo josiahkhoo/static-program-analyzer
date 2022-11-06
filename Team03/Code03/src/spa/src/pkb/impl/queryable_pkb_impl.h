@@ -6,18 +6,18 @@
 
 class QueryablePkbImpl {
  public:
-  QueryablePkbImpl(EntityManager &entity_manager_,
-                   RelationshipManager &relationship_manager_,
-                   PatternManager &pattern_manager_);
+  QueryablePkbImpl(const EntityManager &entity_manager_,
+                   const RelationshipManager &relationship_manager_,
+                   const PatternManager &pattern_manager_);
 
-  [[nodiscard]] EntityQueryable &GetEntityQueryable();
-  [[nodiscard]] RelationshipQueryablePkb &GetRelationshipQueryablePkb();
-  [[nodiscard]] PatternQueryablePkb &GetPatternQueryablePkb();
+  [[nodiscard]] const EntityQueryable& GetEntityQueryable() const;
+  [[nodiscard]] const RelationshipQueryablePkb &GetRelationshipQueryablePkb() const;
+  [[nodiscard]] const PatternQueryablePkb &GetPatternQueryablePkb() const;
 
  private:
-  EntityQueryable entity_queryable_;
-  RelationshipQueryablePkb relationship_queryable_pkb_;
-  PatternQueryablePkb pattern_queryable_pkb_;
+  const EntityQueryable entity_queryable_;
+  const RelationshipQueryablePkb relationship_queryable_pkb_;
+  const PatternQueryablePkb pattern_queryable_pkb_;
 };
 
 #endif  // SPA_QUERYABLE_PKB_IMPL_H

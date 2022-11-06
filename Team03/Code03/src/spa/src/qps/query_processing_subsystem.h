@@ -15,7 +15,7 @@ class QueryProcessingSubsystem {
   QueryProcessingSubsystem(const Lexer &lexer,
                            Parser<QueryString, std::vector<Token>> &parser,
                            const Planner &planner, const Evaluator &evaluator,
-                           QueryablePkbImpl &queryable_pkb);
+                           QueryablePkb &queryable_pkb);
 
   void Process(std::string query, std::list<std::string> &results);
 
@@ -24,7 +24,7 @@ class QueryProcessingSubsystem {
   Parser<QueryString, std::vector<Token>> &parser_;
   const Planner &planner_;
   const Evaluator &evaluator_;
-  QueryablePkbImpl &queryable_pkb_;
+  QueryablePkb &queryable_pkb_;
 };
 
 #endif  // SPA_QUERY_PROCESSING_SUBSYSTEM_H

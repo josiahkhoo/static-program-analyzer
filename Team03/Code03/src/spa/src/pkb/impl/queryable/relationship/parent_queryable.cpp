@@ -1,14 +1,16 @@
 #include "parent_queryable.h"
 
-ParentQueryable::ParentQueryable(RelationshipManager& relationship_manager_,
-                                 EntityQueryable& entity_queryable_)
-    : TypedQueryable(relationship_manager_, entity_queryable_) {}
+ParentQueryable::ParentQueryable(
+    const RelationshipManager &relationship_manager_,
+    const EntityQueryable &entity_queryable_)
+    : relationship_manager_(relationship_manager_),
+      entity_queryable_(entity_queryable_) {}
 
 /// QueryAllParent
 /// \return Query all statements that are direct parents of any statement
 std::unordered_set<std::string> ParentQueryable::QueryAllParent(
     EntityType type) const {
-  return FindIntersect(relationship_manager_.GetParentStatements(),
+  return QueryableUtility::FindIntersect(relationship_manager_.GetParentStatements(),
                        entity_queryable_.QueryAll(type));
 }
 
@@ -16,7 +18,7 @@ std::unordered_set<std::string> ParentQueryable::QueryAllParent(
 /// \return Query all statements that are direct children of any statement
 std::unordered_set<std::string> ParentQueryable::QueryAllParentBy(
     EntityType type) const {
-  return FindIntersect(relationship_manager_.GetParentByStatements(),
+  return QueryableUtility::FindIntersect(relationship_manager_.GetParentByStatements(),
                        entity_queryable_.QueryAll(type));
 }
 
@@ -39,7 +41,7 @@ std::unordered_set<std::string> ParentQueryable::QueryAllParentsRelations()
 /// statement
 std::unordered_set<std::string> ParentQueryable::QueryParent(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetParentStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -51,7 +53,7 @@ std::unordered_set<std::string> ParentQueryable::QueryParent(
 /// statement
 std::unordered_set<std::string> ParentQueryable::QueryParentBy(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetParentByStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -63,7 +65,7 @@ std::unordered_set<std::string> ParentQueryable::QueryParentBy(
 /// specified statement
 std::unordered_set<std::string> ParentQueryable::QueryParentT(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetParentTStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -75,7 +77,7 @@ std::unordered_set<std::string> ParentQueryable::QueryParentT(
 /// specified statement
 std::unordered_set<std::string> ParentQueryable::QueryParentTBy(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetParentTByStatements(statement_number),
       entity_queryable_.QueryAll(type));
 }

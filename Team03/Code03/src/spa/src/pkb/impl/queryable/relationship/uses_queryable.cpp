@@ -1,8 +1,10 @@
 #include "uses_queryable.h"
 
-UsesQueryable::UsesQueryable(RelationshipManager& relationship_manager_,
-                             EntityQueryable& entity_queryable_)
-    : TypedQueryable(relationship_manager_, entity_queryable_) {}
+UsesQueryable::UsesQueryable(
+    const RelationshipManager &relationship_manager_,
+    const EntityQueryable &entity_queryable_)
+    : relationship_manager_(relationship_manager_),
+      entity_queryable_(entity_queryable_) {}
 
 /// QueryAllUses
 /// \param type
@@ -12,7 +14,7 @@ std::unordered_set<std::string> UsesQueryable::QueryAllUses(
   if (type == EntityType::PROCEDURE) {
     return relationship_manager_.GetUsingProcedures();
   } else {
-    return FindIntersect(relationship_manager_.GetUsingStatements(),
+    return QueryableUtility::FindIntersect(relationship_manager_.GetUsingStatements(),
                          entity_queryable_.QueryAll(type));
   }
 }
@@ -51,7 +53,7 @@ std::unordered_set<std::string> UsesQueryable::QueryAllUsesBy(
 /// \return Query all variables used by a specified statement
 std::unordered_set<std::string> UsesQueryable::QueryUsesS(
     int statement_number, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetVariablesUsedByStatement(statement_number),
       entity_queryable_.QueryAll(type));
 }
@@ -62,7 +64,7 @@ std::unordered_set<std::string> UsesQueryable::QueryUsesS(
 /// \return Query all statements that use a specified variable
 std::unordered_set<std::string> UsesQueryable::QueryUsesSBy(
     std::string identifier, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetStatementsUsingVariable(identifier),
       entity_queryable_.QueryAll(type));
 }
@@ -73,7 +75,7 @@ std::unordered_set<std::string> UsesQueryable::QueryUsesSBy(
 /// \return Query all variables used by a specified procedure
 std::unordered_set<std::string> UsesQueryable::QueryUsesP(
     std::string identifier, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetVariablesUsedByProcedure(identifier),
       entity_queryable_.QueryAll(type));
 }
@@ -84,7 +86,7 @@ std::unordered_set<std::string> UsesQueryable::QueryUsesP(
 /// \return Query all procedures that use a specified variable
 std::unordered_set<std::string> UsesQueryable::QueryUsesPBy(
     std::string identifier, EntityType type) const {
-  return FindIntersect(
+  return QueryableUtility::FindIntersect(
       relationship_manager_.GetProceduresUsingVariable(identifier),
       entity_queryable_.QueryAll(type));
 }

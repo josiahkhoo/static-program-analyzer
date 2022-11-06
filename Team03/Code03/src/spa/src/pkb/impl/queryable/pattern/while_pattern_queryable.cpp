@@ -1,7 +1,7 @@
 #include "while_pattern_queryable.h"
 
-WhilePatternQueryable::WhilePatternQueryable(PatternManager& pattern_manager_)
-    : PatternQueryable(pattern_manager_) {}
+WhilePatternQueryable::WhilePatternQueryable(const PatternManager& pattern_manager_)
+    : pattern_manager_(pattern_manager_) {}
 
 /// QueryAllWhilePattern
 /// \return Get all While Statements that use a variable in conditional

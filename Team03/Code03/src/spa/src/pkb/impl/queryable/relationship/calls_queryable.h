@@ -5,7 +5,7 @@
 
 class CallsQueryable {
  public:
-  explicit CallsQueryable(RelationshipManager &relationship_manager_);
+  explicit CallsQueryable(const RelationshipManager &relationship_manager_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllCalls() const;
 
@@ -25,8 +25,8 @@ class CallsQueryable {
   [[nodiscard]] std::unordered_set<std::string> QueryCallsTBy(
       std::string identifier) const;
 
- protected:
-  RelationshipManager &relationship_manager_;
+ private:
+  const RelationshipManager &relationship_manager_;
 };
 
 #endif  // SPA_CALLS_QUERYABLE_H

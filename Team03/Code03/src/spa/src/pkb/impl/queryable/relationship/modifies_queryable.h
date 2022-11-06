@@ -1,12 +1,12 @@
 #ifndef SPA_MODIFIES_QUERYABLE_H
 #define SPA_MODIFIES_QUERYABLE_H
 
-#include "typed_queryable.h"
+#include "pkb/impl/queryable/queryable_utility.h"
 
-class ModifiesQueryable : TypedQueryable {
+class ModifiesQueryable {
  public:
-  explicit ModifiesQueryable(RelationshipManager &relationship_manager_,
-                             EntityQueryable &entity_queryable_);
+  explicit ModifiesQueryable(const RelationshipManager &relationship_manager_,
+                             const EntityQueryable &entity_queryable_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllModifies(
       EntityType type) const;
@@ -25,6 +25,10 @@ class ModifiesQueryable : TypedQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryModifiesPBy(
       std::string identifier) const;
+  
+ private:
+  const RelationshipManager &relationship_manager_;
+  const EntityQueryable &entity_queryable_;
 };
 
 #endif  // SPA_MODIFIES_QUERYABLE_H

@@ -4,14 +4,13 @@
 #include <optional>
 
 #include "common/queryable_pkb.h"
-#include "pkb/impl/queryable_pkb_impl.h"
 
-/// CachedQueryablePkb is a wrapper around QueryablePkbImpl that caches the
+/// CachedQueryablePkb is a wrapper around QueryablePkb that caches the
 /// results
 /// for select queries. This includes affects, affects* and next*.
 class CachedQueryablePkb : public QueryablePkb {
  public:
-  explicit CachedQueryablePkb(QueryablePkbImpl& queryable_pkb);
+  explicit CachedQueryablePkb(QueryablePkb& queryable_pkb);
   [[nodiscard]] std::unordered_set<std::string> QueryAll(
       EntityType type) const override;
   [[nodiscard]] std::unordered_set<std::string> QueryAllFollows(
@@ -131,7 +130,7 @@ class CachedQueryablePkb : public QueryablePkb {
   [[nodiscard]] bool CheckValidAffectsStmtNo(int stmt_no) const override;
 
  private:
-  QueryablePkbImpl& queryable_pkb_;
+  QueryablePkb& queryable_pkb_;
 
   struct statement_no_type_hash {
     std::size_t operator()(const std::pair<int, EntityType>& k) const {

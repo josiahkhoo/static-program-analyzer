@@ -1,7 +1,7 @@
 #include "if_pattern_queryable.h"
 
-IfPatternQueryable::IfPatternQueryable(PatternManager& pattern_manager_)
-    : PatternQueryable(pattern_manager_) {}
+IfPatternQueryable::IfPatternQueryable(const PatternManager& pattern_manager_)
+    : pattern_manager_(pattern_manager_) {}
 
 /// QueryAllIfPattern
 /// \return Get all If Statements that use a variable in conditional container

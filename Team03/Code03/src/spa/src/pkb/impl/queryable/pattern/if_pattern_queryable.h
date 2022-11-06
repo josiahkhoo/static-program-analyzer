@@ -1,11 +1,11 @@
 #ifndef SPA_IF_PATTERN_QUERYABLE_H
 #define SPA_IF_PATTERN_QUERYABLE_H
 
-#include "pattern_queryable.h"
+#include "pkb/pattern_store/pattern_manager.h"
 
-class IfPatternQueryable : PatternQueryable {
+class IfPatternQueryable {
  public:
-  explicit IfPatternQueryable(PatternManager &pattern_manager_);
+  explicit IfPatternQueryable(const PatternManager &pattern_manager_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllIfPattern() const;
 
@@ -14,6 +14,9 @@ class IfPatternQueryable : PatternQueryable {
 
   [[nodiscard]] std::unordered_set<std::string> QueryPatternVariablesFromIf(
       int statement_number) const;
+  
+ private:
+  const PatternManager &pattern_manager_;
 };
 
 #endif  // SPA_IF_PATTERN_QUERYABLE_H

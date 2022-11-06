@@ -1,12 +1,12 @@
 #ifndef SPA_CFG_QUERYABLE_H
 #define SPA_CFG_QUERYABLE_H
 
-#include "typed_queryable.h"
+#include "pkb/impl/queryable/queryable_utility.h"
 
-class CfgQueryable : TypedQueryable {
+class CfgQueryable {
  public:
-  explicit CfgQueryable(RelationshipManager &relationship_manager_,
-                        EntityQueryable &entity_queryable_);
+  explicit CfgQueryable(const RelationshipManager &relationship_manager_,
+                        const EntityQueryable &entity_queryable_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAllNext(
       EntityType type) const;
@@ -23,10 +23,14 @@ class CfgQueryable : TypedQueryable {
       int statement_number, EntityType type) const;
 
   [[nodiscard]] std::unordered_set<std::string> QueryNextT(int statement_number,
-                                                           EntityType type);
+                                                           EntityType type) const;
 
   [[nodiscard]] std::unordered_set<std::string> QueryPreviousT(
-      int statement_number, EntityType type);
+      int statement_number, EntityType type) const;
+  
+ private:
+  const RelationshipManager &relationship_manager_;
+  const EntityQueryable &entity_queryable_;
 };
 
 #endif  // SPA_CFG_QUERYABLE_H

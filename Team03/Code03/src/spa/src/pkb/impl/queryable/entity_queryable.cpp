@@ -1,6 +1,6 @@
 #include "entity_queryable.h"
 
-EntityQueryable::EntityQueryable(EntityManager& entity_manager_)
+EntityQueryable::EntityQueryable(const EntityManager& entity_manager_)
     : entity_manager_(entity_manager_) {}
 
 std::unordered_set<std::string> EntityQueryable::QueryAll(

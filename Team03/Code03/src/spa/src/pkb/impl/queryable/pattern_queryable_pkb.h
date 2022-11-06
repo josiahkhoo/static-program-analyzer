@@ -7,18 +7,18 @@
 
 class PatternQueryablePkb {
  public:
-  explicit PatternQueryablePkb(PatternManager& pattern_manager_);
+  explicit PatternQueryablePkb(const PatternManager& pattern_manager_);
 
-  [[nodiscard]] AssignPatternQueryable& GetAssignPatternQueryable();
+  [[nodiscard]] const AssignPatternQueryable& GetAssignPatternQueryable() const;
 
-  [[nodiscard]] WhilePatternQueryable& GetWhilePatternQueryable();
+  [[nodiscard]] const WhilePatternQueryable& GetWhilePatternQueryable() const;
 
-  [[nodiscard]] IfPatternQueryable& GetIfPatternQueryable();
+  [[nodiscard]] const IfPatternQueryable& GetIfPatternQueryable() const;
 
  private:
-  AssignPatternQueryable assign_pattern_queryable_;
-  WhilePatternQueryable while_pattern_queryable_;
-  IfPatternQueryable if_pattern_queryable_;
+  const AssignPatternQueryable assign_pattern_queryable_;
+  const WhilePatternQueryable while_pattern_queryable_;
+  const IfPatternQueryable if_pattern_queryable_;
 };
 
 #endif  // SPA_PATTERN_QUERYABLE_PKB_H

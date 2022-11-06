@@ -7,7 +7,7 @@
 
 class EntityQueryable {
  public:
-  explicit EntityQueryable(EntityManager &entity_manager_);
+  explicit EntityQueryable(const EntityManager& entity_manager_);
 
   [[nodiscard]] std::unordered_set<std::string> QueryAll(EntityType type) const;
 
@@ -33,7 +33,7 @@ class EntityQueryable {
   [[nodiscard]] bool CheckNotAssignStmtNo(int stmt_no) const;
 
  protected:
-  EntityManager &entity_manager_;
+  const EntityManager &entity_manager_;
 };
 
 #endif  // SPA_ENTITY_QUERYABLE_H

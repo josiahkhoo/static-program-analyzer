@@ -8,7 +8,7 @@
 QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
     const Planner &planner, const Evaluator &evaluator,
-    QueryablePkbImpl &queryable_pkb)
+    QueryablePkb &queryable_pkb)
     : lexer_(lexer),
       parser_(parser),
       planner_(planner),

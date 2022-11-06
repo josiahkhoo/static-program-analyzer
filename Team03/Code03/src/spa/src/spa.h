@@ -106,7 +106,7 @@ class SPA {
 
   QueryProcessingSubsystem query_processing_subsystem =
       QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                               pkb_.GetQueryablePkbImpl());
+                               pkb_);
 };
 
 #endif  // SPA_SPA_H_

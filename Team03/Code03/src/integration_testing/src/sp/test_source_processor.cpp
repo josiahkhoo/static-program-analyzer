@@ -92,7 +92,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer, query_parser_, planner_, evaluator_,
-                                 pkb.GetQueryablePkbImpl());
+                                 pkb);
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};
