@@ -96,8 +96,8 @@ class SPA {
   DesignExtractorImpl design_extractor_ = DesignExtractorImpl(
       entity_extractor_, cfg_extractor_, abstraction_extractor_);
 
-  SourceProcessor source_processor_ = SourceProcessor(
-      lexer_, simple_parser_, design_extractor_, pkb_);
+  SourceProcessor source_processor_ =
+      SourceProcessor(lexer_, simple_parser_, design_extractor_, pkb_);
 
   // QPS dependencies:
   QueryParser query_parser_;
