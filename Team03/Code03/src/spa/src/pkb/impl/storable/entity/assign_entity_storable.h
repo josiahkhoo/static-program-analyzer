@@ -3,6 +3,7 @@
 
 #include "common/storable_pkb.h"
 #include "entity_storable.h"
+#include "pkb/pattern_store/pattern_manager.h"
 
 class AssignEntityStorable : EntityStorable, StorablePkb<AssignEntity> {
  public:

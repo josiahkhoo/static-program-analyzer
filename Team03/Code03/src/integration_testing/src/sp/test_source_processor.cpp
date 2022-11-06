@@ -80,8 +80,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
   DesignExtractorImpl design_extractor = DesignExtractorImpl(
       entity_extractor, cfg_extractor, abstraction_extractor);
 
-  SourceProcessor source_processor_under_test =
-      SourceProcessor(lexer, simple_parser, design_extractor, pkb);
+  SourceProcessor source_processor_under_test = SourceProcessor(
+      lexer, simple_parser, design_extractor, pkb.GetStorablePkbImpl());
 
   SECTION("Parse valid source file") {
     std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
@@ -92,7 +92,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb.GetQueryablePkbImpl());
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};

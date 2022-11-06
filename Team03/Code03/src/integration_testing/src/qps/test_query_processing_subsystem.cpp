@@ -20,7 +20,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb.GetQueryablePkbImpl());
 
     std::string query = "assign a; Select a";
     std::list<std::string> res = {};
@@ -31,7 +31,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb.GetQueryablePkbImpl());
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};
@@ -42,7 +42,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb.GetQueryablePkbImpl());
 
     std::string query = "assign a; Select a such that Follows*(1, a)";
     std::list<std::string> res = {};
