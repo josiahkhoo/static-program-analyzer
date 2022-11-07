@@ -26,7 +26,7 @@ std::shared_ptr<QueryOperation> NextTParser::Parse(TokenBuilderPair data) {
   // Get stmt2
   StatementReference stmtRef2 =
       QueryParserUtil::ExtractStmtRef(tokens, builder);
-  QueryParserUtil::CheckStatementTypeRef(stmtRef1);
+  QueryParserUtil::CheckStatementTypeRef(stmtRef2);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<NextTClause> nxtCl =
       std::make_shared<NextTClause>(stmtRef1, stmtRef2);
