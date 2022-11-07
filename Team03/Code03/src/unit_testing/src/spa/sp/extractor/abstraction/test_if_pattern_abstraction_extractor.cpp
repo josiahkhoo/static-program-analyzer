@@ -1,14 +1,18 @@
+#include <sstream>
+
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "sp/extractor/abstraction/if_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 TEST_CASE("IfPatternAbstraction Extractor", "[IfPatternAbstractionExtractor]") {
   IfPatternAbstractionExtractor extractor_under_test =
       IfPatternAbstractionExtractor();
   SimpleParser parser;
+  SimpleLexer lexer = SimpleLexer(Lexer());
   AssignEntityNodeExtractor assign_entity_node_extractor;
   CallEntityNodeExtractor call_entity_node_extractor;
   ConstantEntityNodeExtractor constant_entity_node_extractor;
@@ -27,9 +31,8 @@ TEST_CASE("IfPatternAbstraction Extractor", "[IfPatternAbstractionExtractor]") {
       variable_entity_node_extractor, while_entity_node_extractor);
 
   SECTION("Extract from single Procedure with no if statements") {
-    Lexer lexer;
-    std::string input = "procedure p { while(x == 0) { y = 2; } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input("procedure p { while(x == 0) { y = 2; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -66,10 +69,9 @@ TEST_CASE("IfPatternAbstraction Extractor", "[IfPatternAbstractionExtractor]") {
 
   SECTION(
       "Extract from single Procedure with if statements containing variables") {
-    Lexer lexer;
-    std::string input =
-        "procedure p { if (1 == 0) then { y = 2; } else { z = 1; } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input(
+        "procedure p { if (1 == 0) then { y = 2; } else { z = 1; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -106,10 +108,9 @@ TEST_CASE("IfPatternAbstraction Extractor", "[IfPatternAbstractionExtractor]") {
 
   SECTION(
       "Extract from single Procedure with multi nested variable statements") {
-    Lexer lexer;
-    std::string input =
-        "procedure p { if (!(x1 == y1)) then { a = 0; } else { b = 0; } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input(
+        "procedure p { if (!(x1 == y1)) then { a = 0; } else { b = 0; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 

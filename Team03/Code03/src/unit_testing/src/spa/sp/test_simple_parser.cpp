@@ -1,6 +1,8 @@
 #include <iostream>
+#include <sstream>
 
 #include "catch.hpp"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 bool deepEqual(TNode node1, TNode node2);
@@ -21,7 +23,9 @@ bool deepEqual(TNode node1, TNode node2) {
 }
 
 TEST_CASE("Simple Parser", "[Simple Parser]") {
-  SimpleParser simple_parser = SimpleParser();
+  SimpleParser parser = SimpleParser();
+  SimpleLexer lexer = SimpleLexer(Lexer());
+
   SECTION("Test print statement") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
                                   Token(Token::IDENTIFIER, "main"),
@@ -31,7 +35,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -65,7 +69,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         Token(Token::LEFT_CURLY_BRACKET),      Token(Token::IDENTIFIER, "read"),
         Token(Token::IDENTIFIER, "x"),         Token(Token::SEMICOLON),
         Token(Token::RIGHT_CURLY_BRACKET),     Token(Token::END)};
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -111,7 +115,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode call_node = TNode(1, TNode::Call, 1, "x");
 
@@ -179,7 +183,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode print_variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -260,7 +264,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode rhs_var_node = TNode(1, TNode::Variable, 1, "x");
     std::shared_ptr<TNode> lhs_plus_var_node_ptr_ =
@@ -317,7 +321,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
 
@@ -399,7 +403,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     // THEN STATEMENT LIST
     TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
@@ -487,7 +491,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::SEMICOLON),
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x");
 
@@ -563,7 +567,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 2, "x");
 
@@ -656,7 +660,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
                                   Token(Token::RIGHT_CURLY_BRACKET),
                                   Token(Token::END)};
 
-    TNode res = simple_parser.Parse(tokens_);
+    TNode res = parser.Parse(tokens_);
 
     // x times x node
     TNode first_x_node = TNode(1, TNode::Variable, 1, "x");
@@ -723,13 +727,12 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test nested If-while") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { if (m == 0) then { while (n == 0) { read x; } } else"
-        "{ while (o == 0) { read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "{ while (o == 0) { read y; } } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     // THEN WHILE NODE CONSTRUCTION
     // Read x node
@@ -860,13 +863,12 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test nested While-if") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { while (m == 0) { if (n == 0) then { read x; } else {"
-        "read y; } } }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "read y; } } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     // IF ELSE NODE CONSTRUCTION
     // Read x node
@@ -964,11 +966,10 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     REQUIRE(deepEqual(res, program_node));
   }
   SECTION("Test call non existing procedure") {
-    Lexer lexer;
-    std::string input = "procedure p { call q; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input("procedure p { call q; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode invalid_node(19, TNode::Invalid,
                        std::vector<std::shared_ptr<TNode>>());
@@ -977,14 +978,13 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test cyclic call procedure") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { call q; } procedure q { call r; } procedure r { call"
         "p; "
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode invalid_node =
         TNode(10, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
@@ -993,11 +993,10 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test recursive call procedure") {
-    Lexer lexer;
-    std::string input = "procedure p { call p; } ";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input("procedure p { call p; } ");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode invalid_node =
         TNode(10, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
@@ -1006,11 +1005,11 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test same name procedures") {
-    Lexer lexer;
-    std::string input = "procedure p { print x; } procedure p { print y; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input(
+        "procedure p { print x; } procedure p { print y; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode invalid_node =
         TNode(10, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());
@@ -1019,15 +1018,14 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test condition (Relexpr) == (RelExpr)") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { "
         "while ((x1 + x2) == (y1 + y2)) {"
         "a = 0;"
-        "}}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "}}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x1");
     TNode variable_x_node2 = TNode(1, TNode::Variable, 1, "x2");
@@ -1101,17 +1099,16 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test if condition (Relexpr) == (RelExpr)") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { "
         "if ((x1 + x2) == (y1 + y2)) then{"
         "a = 0;"
         "} else {"
         "b = 0;"
-        "}}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "}}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode variable_x_node = TNode(1, TNode::Variable, 1, "x1");
     TNode variable_x_node2 = TNode(1, TNode::Variable, 1, "x2");
@@ -1202,8 +1199,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test more while condition (Relexpr) == (RelExpr)") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure p { "
         "while ((z) == (0)) {"
         "print e;"
@@ -1212,10 +1208,10 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
         "a = 0;"
         "}"
         "b = 0;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
-    TNode res = simple_parser.Parse(tokens);
+    TNode res = parser.Parse(tokens);
 
     TNode invalid_node =
         TNode(10, TNode::Invalid, std::vector<std::shared_ptr<TNode>>());

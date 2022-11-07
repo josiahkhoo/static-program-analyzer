@@ -6,7 +6,7 @@ SourceProcessor::SourceProcessor(Lexer &lexer,
                                  Parser<TNode, std::vector<Token>> &parser,
                                  DesignExtractor &design_extractor,
                                  StorablePkb &storable_pkb)
-    : lexer_(lexer),
+    : lexer_(SimpleLexer(lexer)),
       parser_(parser),
       design_extractor_(design_extractor),
       storable_pkb_(storable_pkb) {}
@@ -16,7 +16,7 @@ void SourceProcessor::Process(const std::string &filename) {
   if (!source_file) {
     throw std::runtime_error("Source file not found");
   }
-  std::vector<Token> tokens = lexer_.Lex(source_file);
+  std::vector<Token> tokens = lexer_.Execute(source_file);
   TNode ast = parser_.Parse(tokens);
   DesignExtractorResult design_extractor_result =
       design_extractor_.Extract(ast);
