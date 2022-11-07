@@ -36,7 +36,7 @@ TokenRules SimpleLexer::token_rules_ = {
 SimpleLexer::SimpleLexer(const Lexer &lexer) : lexer_(lexer) {}
 
 // Splits given stream of text into a list of lines
-std::vector<std::string> SimpleLexer::splitLines(std::istream &stream) {
+std::vector<std::string> SimpleLexer::ConvertStreamToLines(std::istream &stream) {
   std::vector<std::string> lines;
   std::string line;
 
@@ -50,7 +50,7 @@ std::vector<std::string> SimpleLexer::splitLines(std::istream &stream) {
 std::vector<Token> SimpleLexer::Execute(std::istream &stream) const {
   // Generates given stream of lex into tokens
   std::vector<Token> tokens;
-  std::vector<std::string> lines = splitLines(stream);
+  std::vector<std::string> lines = ConvertStreamToLines(stream);
 
   for (std::string line : lines) {
     std::vector<Token> new_tokens = lexer_.Lex(line, token_rules_);
