@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <unordered_set>
 #include <sstream>
+#include <unordered_set>
 
 #include "catch.hpp"
 #include "pkb/relationship_store/relationship_manager.h"
@@ -9,8 +9,8 @@
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/cfg_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
-#include "sp/simple_parser.h"
 #include "sp/simple_lexer.h"
+#include "sp/simple_parser.h"
 
 TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
   CFGExtractorImpl cfg_extractor_under_test = CFGExtractorImpl();
