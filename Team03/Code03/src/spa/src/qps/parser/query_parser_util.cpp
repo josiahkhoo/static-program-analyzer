@@ -208,14 +208,25 @@ std::string QueryParserUtil::GetTerm(
   // var_name, const_value, operator
   if (tokens->MatchKind(Token::IDENTIFIER)) {
     res.append(tokens->PeekValue());
+    if (tokens->CheckAhead(Token::IDENTIFIER) ||
+        tokens->CheckAhead(Token::NUMBER)) {
+      throw SyntaxException("");
+    }
   } else if (tokens->MatchKind(Token::NUMBER)) {
     // Validate integer
     ExtractInteger(tokens);
     tokens->Back();
     res.append(tokens->PeekValue());
+    if (tokens->CheckAhead(Token::IDENTIFIER) ||
+        tokens->CheckAhead(Token::NUMBER)) {
+      throw SyntaxException("");
+    }
   } else if (tokens->IsMathOperator()) {
     res.append(tokens->PeekValue());
     tokens->Forward();
+    if (tokens->IsMathOperator()) {
+      throw SyntaxException("Invalid expression");
+    }
     res.append(GetTerm(tokens, builder));
   }
   // ( exp )

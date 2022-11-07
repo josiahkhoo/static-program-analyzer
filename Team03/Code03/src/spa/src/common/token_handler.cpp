@@ -65,9 +65,6 @@ bool TokenHandler::IsMathOperator() {
 }
 
 bool TokenHandler::CheckAhead(Token::Kind kind) {
-  if (MatchKind(kind)) {
-    return true;
-  }
   Forward();
   if (MatchKind(kind)) {
     return true;
