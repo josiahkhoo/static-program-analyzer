@@ -21,12 +21,12 @@ std::shared_ptr<QueryOperation> AffectsTParser::Parse(TokenBuilderPair data) {
   // Get stmt1
   StatementReference stmtRef1 =
       QueryParserUtil::ExtractStmtRef(tokens, builder);
-  QueryParserUtil::CheckAffectsRef(stmtRef1);
+  QueryParserUtil::CheckStatementTypeRef(stmtRef1);
   tokens->Expect(Token::COMMA);
   // Get stmt2
   StatementReference stmtRef2 =
       QueryParserUtil::ExtractStmtRef(tokens, builder);
-  QueryParserUtil::CheckAffectsRef(stmtRef2);
+  QueryParserUtil::CheckStatementTypeRef(stmtRef2);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<AffectsTClause> affCl =
       std::make_shared<AffectsTClause>(stmtRef1, stmtRef2);

@@ -231,7 +231,7 @@ std::string QueryParserUtil::GetTerm(
   return res;
 }
 
-/// Verifies statement reference
+/// Verifies statement reference is followable-parentable
 /// \param synonym
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   if (stmtRef.IsSynonym() &&
@@ -241,15 +241,15 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
-/// Verifies statement reference is an Assign synonym
+/// Verifies statement reference is an statement synonym
 /// \param stmtRef
-void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
+void QueryParserUtil::CheckStatementTypeRef(const StatementReference& stmtRef) {
   std::unordered_set<EntityType> allowedEntityTypes = {
       ASSIGN, STATEMENT, IF, WHILE, READ, PRINT, CALL};
   if (stmtRef.IsSynonym()) {
     EntityType type = stmtRef.GetSynonym().GetEntityType();
     if (!allowedEntityTypes.count(type)) {
-      throw SemanticException("Invalid statement reference for Affects clause");
+      throw SemanticException("Invalid statement reference");
     }
   }
 }
