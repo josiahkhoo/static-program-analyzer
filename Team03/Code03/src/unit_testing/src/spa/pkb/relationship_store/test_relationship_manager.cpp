@@ -1,9 +1,8 @@
 #include <algorithm>
-#include <iostream>
 #include <unordered_set>
+#include <sstream>
 
 #include "catch.hpp"
-#include "common/lexer.h"
 #include "pkb/relationship_store/relationship_manager.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
@@ -11,11 +10,12 @@
 #include "sp/extractor/cfg_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
 #include "sp/simple_parser.h"
+#include "sp/simple_lexer.h"
 
 TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
   CFGExtractorImpl cfg_extractor_under_test = CFGExtractorImpl();
   SimpleParser parser;
-  Lexer lexer;
+  SimpleLexer lexer = SimpleLexer(Lexer());
   RelationshipManager relationship_manager;
   ModifiesAbstractionExtractorImpl modifies_extractor =
       ModifiesAbstractionExtractorImpl();
@@ -37,39 +37,8 @@ TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
       print_entity_node_extractor, procedure_entity_node_extractor,
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
-  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
-      {Token::WHITESPACE, "^(\\s+)"},
-      {Token::NUMBER, "^(\\d+)"},
-      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
-      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
-      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
-      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
-      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
-      {Token::DOUBLE_EQUAL, "^(==)"},
-      {Token::EQUAL, "^(=)"},
-      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
-      {Token::LESS_THAN, "^(<)"},
-      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
-      {Token::GREATER_THAN, "^(>)"},
-      {Token::PLUS, "^(\\+)"},
-      {Token::MINUS, "^(\\-)"},
-      {Token::ASTERISK, "^(\\*)"},
-      {Token::SLASH, "^(\\/)"},
-      {Token::COMMA, "^(,)"},
-      {Token::PERIOD, "^(\\.)"},
-      {Token::PERCENT, "^(%)"},
-      {Token::SEMICOLON, "^(;)"},
-      {Token::INVERTED_COMMAS, "^(\")"},
-      {Token::UNDERSCORE, "^(_)"},
-      {Token::HASHTAG, "^(#)"},
-      {Token::OR, "^(\\|\\|)"},
-      {Token::AND, "^(&&)"},
-      {Token::NOT_EQUAL, "^(!=)"},
-      {Token::NOT, "^(!)"},
-      {Token::NEXT_LINE, "^(\n)"},
-      {Token::END, "^(\0)"}};
 
-  std::string input =
+  std::istringstream input(
       "procedure First "
       "{ "
       "x = 0;"
@@ -93,14 +62,14 @@ TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
       "z = 5;"
       "v = z;"
       "print v;"
-      "}";
+      "}");
 
   std::unordered_set<std::string> assigns(
       {"1", "2", "4", "6", "8", "9", "10", "11", "12", "13", "14"});
   std::unordered_set<std::string> calls({"5"});
   std::unordered_set<std::string> reads;
 
-  std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+  std::vector<Token> tokens = lexer.Execute(input);
   tokens.emplace_back(Token::END);
   auto ast = parser.Parse(tokens);
   std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);

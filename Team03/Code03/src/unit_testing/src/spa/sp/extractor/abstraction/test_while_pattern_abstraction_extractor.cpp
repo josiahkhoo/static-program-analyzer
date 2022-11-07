@@ -1,8 +1,11 @@
+#include <sstream>
+
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "sp/extractor/abstraction/while_pattern_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 TEST_CASE("WhilePatternAbstraction Extractor",
@@ -10,6 +13,7 @@ TEST_CASE("WhilePatternAbstraction Extractor",
   WhilePatternAbstractionExtractor extractor_under_test =
       WhilePatternAbstractionExtractor();
   SimpleParser parser;
+  SimpleLexer lexer = SimpleLexer(Lexer());
   AssignEntityNodeExtractor assign_entity_node_extractor;
   CallEntityNodeExtractor call_entity_node_extractor;
   ConstantEntityNodeExtractor constant_entity_node_extractor;
@@ -26,43 +30,11 @@ TEST_CASE("WhilePatternAbstraction Extractor",
       print_entity_node_extractor, procedure_entity_node_extractor,
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
-  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
-      {Token::WHITESPACE, "^(\\s+)"},
-      {Token::NUMBER, "^(\\d+)"},
-      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
-      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
-      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
-      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
-      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
-      {Token::DOUBLE_EQUAL, "^(==)"},
-      {Token::EQUAL, "^(=)"},
-      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
-      {Token::LESS_THAN, "^(<)"},
-      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
-      {Token::GREATER_THAN, "^(>)"},
-      {Token::PLUS, "^(\\+)"},
-      {Token::MINUS, "^(\\-)"},
-      {Token::ASTERISK, "^(\\*)"},
-      {Token::SLASH, "^(\\/)"},
-      {Token::COMMA, "^(,)"},
-      {Token::PERIOD, "^(\\.)"},
-      {Token::PERCENT, "^(%)"},
-      {Token::SEMICOLON, "^(;)"},
-      {Token::INVERTED_COMMAS, "^(\")"},
-      {Token::UNDERSCORE, "^(_)"},
-      {Token::HASHTAG, "^(#)"},
-      {Token::OR, "^(\\|\\|)"},
-      {Token::AND, "^(&&)"},
-      {Token::NOT_EQUAL, "^(!=)"},
-      {Token::NOT, "^(!)"},
-      {Token::NEXT_LINE, "^(\n)"},
-      {Token::END, "^(\0)"}};
 
   SECTION("Extract from single Procedure with no while statements") {
-    Lexer lexer;
-    std::string input =
-        "procedure p { if (x == 0) then { y = 2; } else { z = 1; } }";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+    std::istringstream input(
+        "procedure p { if (x == 0) then { y = 2; } else { z = 1; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -100,9 +72,8 @@ TEST_CASE("WhilePatternAbstraction Extractor",
   SECTION(
       "Extract from single Procedure with while statements not containing any "
       "variables") {
-    Lexer lexer;
-    std::string input = "procedure p { while (1 == 0) { y = 2; } }";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+    std::istringstream input("procedure p { while (1 == 0) { y = 2; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -140,9 +111,8 @@ TEST_CASE("WhilePatternAbstraction Extractor",
   SECTION(
       "Extract from single Procedure with while statements containing "
       "variables") {
-    Lexer lexer;
-    std::string input = "procedure p { while (x1 == y1) { h = 1; } }";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+    std::istringstream input("procedure p { while (x1 == y1) { h = 1; } }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 

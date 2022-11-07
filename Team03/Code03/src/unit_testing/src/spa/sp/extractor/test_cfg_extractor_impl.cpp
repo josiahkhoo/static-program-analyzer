@@ -1,8 +1,10 @@
 #include <algorithm>
+#include <sstream>
 
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "sp/extractor/cfg_extractor_impl.h"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 std::vector<CFGNode> CreateVector(
@@ -17,41 +19,11 @@ std::vector<CFGNode> CreateVector(
 TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   CFGExtractorImpl cfg_extractor_under_test = CFGExtractorImpl();
   SimpleParser parser;
-  Lexer lexer;
-  std::vector<std::pair<Token::Kind, std::string>> tokenRules = {
-      {Token::WHITESPACE, "^(\\s+)"},
-      {Token::NUMBER, "^(\\d+)"},
-      {Token::IDENTIFIER, "^[a-zA-Z]+[0-9]*"},
-      {Token::LEFT_ROUND_BRACKET, "^(\\()"},
-      {Token::RIGHT_ROUND_BRACKET, "^(\\))"},
-      {Token::LEFT_CURLY_BRACKET, "^(\\{)"},
-      {Token::RIGHT_CURLY_BRACKET, "^(\\})"},
-      {Token::DOUBLE_EQUAL, "^(==)"},
-      {Token::EQUAL, "^(=)"},
-      {Token::LESS_THAN_OR_EQUAL, "^(<=)"},
-      {Token::LESS_THAN, "^(<)"},
-      {Token::GREATER_THAN_OR_EQUAL, "^(>=)"},
-      {Token::GREATER_THAN, "^(>)"},
-      {Token::PLUS, "^(\\+)"},
-      {Token::MINUS, "^(\\-)"},
-      {Token::ASTERISK, "^(\\*)"},
-      {Token::SLASH, "^(\\/)"},
-      {Token::COMMA, "^(,)"},
-      {Token::PERIOD, "^(\\.)"},
-      {Token::PERCENT, "^(%)"},
-      {Token::SEMICOLON, "^(;)"},
-      {Token::INVERTED_COMMAS, "^(\")"},
-      {Token::UNDERSCORE, "^(_)"},
-      {Token::HASHTAG, "^(#)"},
-      {Token::OR, "^(\\|\\|)"},
-      {Token::AND, "^(&&)"},
-      {Token::NOT_EQUAL, "^(!=)"},
-      {Token::NOT, "^(!)"},
-      {Token::NEXT_LINE, "^(\n)"},
-      {Token::END, "^(\0)"}};
+  SimpleLexer lexer = SimpleLexer(Lexer());
+
   SECTION("Extract 1-depth node") {
-    std::string input = "procedure p { m = x * y + z / 100; x = x + 1;}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+    std::istringstream input( "procedure p { m = x * y + z / 100; x = x + 1;}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -74,7 +46,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract if node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "a = 1;"
@@ -84,8 +56,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "} else {"
         "y = 2;"
         "}"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -136,7 +108,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract starting if node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -146,8 +118,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "x = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -185,7 +157,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements before and after if node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "s = 1;"
@@ -199,8 +171,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "z = 1;"
         "x = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -266,7 +238,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested if node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -280,8 +252,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -337,7 +309,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested if node 2") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -351,8 +323,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "y = 2;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -408,7 +380,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements triple nested if node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -426,8 +398,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -497,7 +469,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements triple nested if node 2") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -514,8 +486,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -579,7 +551,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements triple nested if node 3") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{ "
         "if (z == 1) then {"
@@ -597,8 +569,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -668,15 +640,15 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements before while node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "s = 1;"
         "while (i == 0) {"
         "x = 1;"
         "}"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -706,15 +678,15 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements after while node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
         "x = 1;"
         "}"
         "s = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -744,7 +716,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements before and after while node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "x = 1;"
@@ -755,8 +727,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "s = 1;"
         "x = 3;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -807,7 +779,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested while node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -817,8 +789,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "s = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -862,7 +834,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested while node 2") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -872,8 +844,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "x = 1;"
         "}"
         "s = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -917,7 +889,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested triple while node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -928,8 +900,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "s = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -975,7 +947,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements nested triple while node 2") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -988,8 +960,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "s = 1;"
         "}"
         "s = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1047,7 +1019,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements if-while nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -1058,8 +1030,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1103,7 +1075,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1114,8 +1086,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1159,7 +1131,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-s-if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1171,8 +1143,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1221,7 +1193,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes6.empty());
   }
   SECTION("Extract statements while-if-s nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1233,8 +1205,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "x = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1284,7 +1256,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-s-if-s nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1297,8 +1269,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "x = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1354,7 +1326,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-if-if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1369,8 +1341,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1427,7 +1399,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes7.empty());
   }
   SECTION("Extract statements while-if-if s nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1443,8 +1415,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1507,7 +1479,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes8.empty());
   }
   SECTION("Extract statements while-if-if if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1529,8 +1501,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1620,7 +1592,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-if-while if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -1640,8 +1612,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1724,7 +1696,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes11.empty());
   }
   SECTION("Extract statements if-while-s nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -1736,8 +1708,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "z = 1;"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1786,7 +1758,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes6.empty());
   }
   SECTION("Extract statements if-s-while nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -1798,8 +1770,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1848,7 +1820,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
     REQUIRE(res_nodes6.empty());
   }
   SECTION("Extract statements if-if-while nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -1863,8 +1835,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1922,7 +1894,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements if-while-if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -1937,8 +1909,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -1996,7 +1968,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements if-while-while nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "if (i == 0) then {"
@@ -2009,8 +1981,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -2062,7 +2034,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract statements while-while-if nested node") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "while (i == 0) {"
@@ -2075,8 +2047,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "}"
         "}"
         "z = 1;"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
@@ -2128,7 +2100,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   }
 
   SECTION("Extract multiple procedures") {
-    std::string input =
+    std::istringstream input(
         "procedure p "
         "{"
         "z = 1;"
@@ -2144,8 +2116,8 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
         "} else {"
         "y = 1;"
         "}"
-        "}";
-    std::vector<Token> tokens = lexer.LexLine(input, tokenRules);
+        "}");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);
     std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);
