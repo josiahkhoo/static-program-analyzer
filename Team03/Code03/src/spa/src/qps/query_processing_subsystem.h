@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 
+#include "common/lexer.h"
 #include "evaluator.h"
 #include "planner.h"
 #include "query_lexer.h"

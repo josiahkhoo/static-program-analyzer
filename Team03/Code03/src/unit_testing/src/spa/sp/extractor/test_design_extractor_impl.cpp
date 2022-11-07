@@ -23,7 +23,7 @@ TEST_CASE("Design Extractor", "[DesignExtractor]") {
                           mock_abstraction_extractor.get());
 
   TNode test_node = TNode(1, TNode::Program, 0, "");
-  SECTION("Calls entity extractor and abstraction extractor") {
+  SECTION("Calls entity extractor and typed extractor") {
     DesignExtractorResult der = extractor_under_test.Extract(test_node);
     Verify(Method(mock_entity_extractor, Extract)).Exactly(1);
     Verify(Method(mock_abstraction_extractor, Extract)).Exactly(1);

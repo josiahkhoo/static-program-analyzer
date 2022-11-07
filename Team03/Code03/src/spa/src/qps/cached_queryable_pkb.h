@@ -5,7 +5,8 @@
 
 #include "common/queryable_pkb.h"
 
-/// CachedQueryablePkb is a wrapper around QueryablePkb that caches the results
+/// CachedQueryablePkb is a wrapper around QueryablePkb that caches the
+/// results
 /// for select queries. This includes affects, affects* and next*.
 class CachedQueryablePkb : public QueryablePkb {
  public:

@@ -11,7 +11,14 @@
 TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
   Lexer lexer_;
 
-  PKB pkb;
+  EntityManager entity_manager_;
+  RelationshipManager relationship_manager_;
+  PatternManager pattern_manager_;
+  QueryablePkbFacade queryable_pkb_facade_ = QueryablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  StorablePkbFacade storable_pkb_facade_ = StorablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  PKB pkb_ = PKB(storable_pkb_facade_, queryable_pkb_facade_);
 
   Planner planner_;
   Evaluator evaluator_;
@@ -20,7 +27,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb_);
 
     std::string query = "assign a; Select a";
     std::list<std::string> res = {};
@@ -31,7 +38,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb_);
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};
@@ -42,7 +49,7 @@ TEST_CASE("Query Processing Subsystem", "[QueryProcessingSubsystem]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer_, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb_);
 
     std::string query = "assign a; Select a such that Follows*(1, a)";
     std::list<std::string> res = {};
