@@ -1,7 +1,7 @@
 #ifndef SPA_PARENT_QUERYABLE_H
 #define SPA_PARENT_QUERYABLE_H
 
-#include "pkb/impl/queryable/queryable_utility.h"
+#include "pkb/facades/queryable/queryable_utility.h"
 
 class ParentQueryable {
  public:

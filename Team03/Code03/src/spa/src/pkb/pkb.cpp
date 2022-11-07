@@ -1,155 +1,149 @@
 #include "pkb.h"
 
-PKB::PKB()
-    : storable_pkb_impl_(StorablePkbImpl(entity_manager_, relationship_manager_,
-                                         pattern_manager_)),
-      queryable_pkb_impl_(QueryablePkbImpl(
-          entity_manager_, relationship_manager_, pattern_manager_)) {}
-
 /// Store Procedure Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<ProcedureEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Variable Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<VariableEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Constant Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<ConstantEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Call Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<CallEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Read Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<ReadEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Print Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<PrintEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Assign Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<AssignEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store If Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<IfEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store While Entities
 /// \param ts List of entities
 void PKB::Store(std::vector<WhileEntity> ts) {
-  return storable_pkb_impl_.GetEntityStorablePkb().Store(ts);
+  return storable_pkb_facade_.GetEntityStorablePkb().Store(ts);
 }
 
 /// Store Follows Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<FollowsAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store FollowsT Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<FollowsTAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store Parent Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<ParentAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store ParentT Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<ParentTAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store Calls Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<CallsAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store CallsT Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<CallsTAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store UsesS Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<UsesSAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store UsesP Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<UsesPAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store ModifiesS Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<ModifiesSAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store ModifiesP Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<ModifiesPAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store While Pattern Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<WhilePatternAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store If Pattern Abstractions
 /// \param abstractions List of abstractions
 void PKB::Store(std::vector<IfPatternAbstraction> abstractions) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(abstractions);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(abstractions);
 }
 
 /// Store CFGs
 /// \param abstractions List of Cfgs
 void PKB::Store(std::vector<CFG> cfgs) {
-  return storable_pkb_impl_.GetAbstractionStorablePkb().Store(cfgs);
+  return storable_pkb_facade_.GetAbstractionStorablePkb().Store(cfgs);
 }
 
 /// QueryAll
 /// \param type
 /// \return Query all statements of a specified type
 std::unordered_set<std::string> PKB::QueryAll(EntityType type) const {
-  return queryable_pkb_impl_.GetEntityQueryable().QueryAll(type);
+  return queryable_pkb_facade_.GetEntityQueryable().QueryAll(type);
 }
 
 /// QueryAllFollows
 /// \param type
 /// \return Query all statements following any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryAllFollows(type);
 }
@@ -158,7 +152,7 @@ std::unordered_set<std::string> PKB::QueryAllFollows(EntityType type) const {
 /// \param type
 /// \return Query all statements followed by any statement of a specified type
 std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryAllFollowsBy(type);
 }
@@ -167,7 +161,7 @@ std::unordered_set<std::string> PKB::QueryAllFollowsBy(EntityType type) const {
 /// \param type
 /// \return Gets all statements following or followed by any statement
 std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryAllFollowsRelations();
 }
@@ -179,7 +173,7 @@ std::unordered_set<std::string> PKB::QueryAllFollowsRelations() const {
 /// statement
 std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
                                                   EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryFollows(statement_number, type);
 }
@@ -191,7 +185,7 @@ std::unordered_set<std::string> PKB::QueryFollows(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
                                                     EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryFollowsBy(statement_number, type);
 }
@@ -203,7 +197,7 @@ std::unordered_set<std::string> PKB::QueryFollowsBy(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
                                                    EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryFollowsT(statement_number, type);
 }
@@ -215,7 +209,7 @@ std::unordered_set<std::string> PKB::QueryFollowsT(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
                                                      EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetFollowsQueryable()
       .QueryFollowsTBy(statement_number, type);
 }
@@ -223,7 +217,7 @@ std::unordered_set<std::string> PKB::QueryFollowsTBy(int statement_number,
 /// QueryAllParent
 /// \return Query all statements that are direct parents of any statement
 std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryAllParent(type);
 }
@@ -231,7 +225,7 @@ std::unordered_set<std::string> PKB::QueryAllParent(EntityType type) const {
 /// QueryAllParentBy
 /// \return Query all statements that are direct children of any statement
 std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryAllParentBy(type);
 }
@@ -239,7 +233,7 @@ std::unordered_set<std::string> PKB::QueryAllParentBy(EntityType type) const {
 /// QueryAllParentsRelations
 /// \return Query all parent and children statements of any statement
 std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryAllParentsRelations();
 }
@@ -251,7 +245,7 @@ std::unordered_set<std::string> PKB::QueryAllParentsRelations() const {
 /// statement
 std::unordered_set<std::string> PKB::QueryParent(int statement_number,
                                                  EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryParent(statement_number, type);
 }
@@ -263,7 +257,7 @@ std::unordered_set<std::string> PKB::QueryParent(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
                                                    EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryParentBy(statement_number, type);
 }
@@ -275,7 +269,7 @@ std::unordered_set<std::string> PKB::QueryParentBy(int statement_number,
 /// specified statement
 std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
                                                   EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryParentT(statement_number, type);
 }
@@ -287,7 +281,7 @@ std::unordered_set<std::string> PKB::QueryParentT(int statement_number,
 /// specified statement
 std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
                                                     EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetParentQueryable()
       .QueryParentTBy(statement_number, type);
 }
@@ -300,7 +294,7 @@ std::unordered_set<std::string> PKB::QueryParentTBy(int statement_number,
 /// \param type
 /// \return All statements or procedures that uses some Variable
 std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryAllUses(type);
 }
@@ -310,7 +304,7 @@ std::unordered_set<std::string> PKB::QueryAllUses(EntityType type) const {
 /// \return All Variables that are used by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryAllUsesBy(type);
 }
@@ -321,7 +315,7 @@ std::unordered_set<std::string> PKB::QueryAllUsesBy(EntityType type) const {
 /// \return Query all variables used by a specified statement
 std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
                                                 EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryUsesS(statement_number, type);
 }
@@ -332,7 +326,7 @@ std::unordered_set<std::string> PKB::QueryUsesS(int statement_number,
 /// \return Query all statements that use a specified variable
 std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
                                                   EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryUsesSBy(identifier, type);
 }
@@ -343,7 +337,7 @@ std::unordered_set<std::string> PKB::QueryUsesSBy(std::string identifier,
 /// \return Query all variables used by a specified procedure
 std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
                                                 EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryUsesP(identifier, type);
 }
@@ -354,7 +348,7 @@ std::unordered_set<std::string> PKB::QueryUsesP(std::string identifier,
 /// \return Query all procedures that use a specified variable
 std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
                                                   EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetUsesQueryable()
       .QueryUsesPBy(identifier, type);
 }
@@ -367,7 +361,7 @@ std::unordered_set<std::string> PKB::QueryUsesPBy(std::string identifier,
 /// \param type
 /// \return All statements or procedures that modifies some Variable
 std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryAllModifies(type);
 }
@@ -377,7 +371,7 @@ std::unordered_set<std::string> PKB::QueryAllModifies(EntityType type) const {
 /// \return All Variables that are modified by EntityType (Procedure or
 /// Statement types)
 std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryAllModifiesBy(type);
 }
@@ -387,7 +381,7 @@ std::unordered_set<std::string> PKB::QueryAllModifiesBy(EntityType type) const {
 /// \return Variables modified in given statement_number
 std::unordered_set<std::string> PKB::QueryModifiesS(
     int statement_number) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryModifiesS(statement_number);
 }
@@ -398,7 +392,7 @@ std::unordered_set<std::string> PKB::QueryModifiesS(
 /// \return Statements that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
                                                       EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryModifiesSBy(identifier, type);
 }
@@ -408,7 +402,7 @@ std::unordered_set<std::string> PKB::QueryModifiesSBy(std::string identifier,
 /// \return Variables modified in given Procedure identifier
 std::unordered_set<std::string> PKB::QueryModifiesP(
     std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryModifiesP(identifier);
 }
@@ -418,7 +412,7 @@ std::unordered_set<std::string> PKB::QueryModifiesP(
 /// \return Procedures that modifies given Variable identifier
 std::unordered_set<std::string> PKB::QueryModifiesPBy(
     std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetModifiesQueryable()
       .QueryModifiesPBy(identifier);
 }
@@ -429,7 +423,7 @@ std::unordered_set<std::string> PKB::QueryModifiesPBy(
 /// QueryAllCalls
 /// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCalls() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryAllCalls();
 }
@@ -437,7 +431,7 @@ std::unordered_set<std::string> PKB::QueryAllCalls() const {
 /// QueryAllCallsBy
 /// \return Query all procedures that call any procedure
 std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryAllCallsBy();
 }
@@ -445,7 +439,7 @@ std::unordered_set<std::string> PKB::QueryAllCallsBy() const {
 /// QueryAllCallsBy
 /// \return Query all procedures that call or are called by any procedure
 std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryAllCallsRelations();
 }
@@ -454,7 +448,7 @@ std::unordered_set<std::string> PKB::QueryAllCallsRelations() const {
 /// \param identifier
 /// \return Gets all procedures that directly call a specified procedure
 std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryCalls(identifier);
 }
@@ -465,7 +459,7 @@ std::unordered_set<std::string> PKB::QueryCalls(std::string identifier) const {
 /// procedure
 std::unordered_set<std::string> PKB::QueryCallsBy(
     std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryCallsBy(identifier);
 }
@@ -475,7 +469,7 @@ std::unordered_set<std::string> PKB::QueryCallsBy(
 /// \return Gets all procedures that directly or indirectly call a specified
 /// procedure
 std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryCallsT(identifier);
 }
@@ -486,7 +480,7 @@ std::unordered_set<std::string> PKB::QueryCallsT(std::string identifier) const {
 /// specified procedure
 std::unordered_set<std::string> PKB::QueryCallsTBy(
     std::string identifier) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCallsQueryable()
       .QueryCallsTBy(identifier);
 }
@@ -497,7 +491,7 @@ std::unordered_set<std::string> PKB::QueryCallsTBy(
 /// QueryAllNext
 /// \return Query all statements that come next to some statement
 std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryAllNext(type);
 }
@@ -505,7 +499,7 @@ std::unordered_set<std::string> PKB::QueryAllNext(EntityType type) const {
 /// QueryAllPrevious
 /// \return Query all statements that come previous to some statement
 std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryAllPrevious(type);
 }
@@ -513,7 +507,7 @@ std::unordered_set<std::string> PKB::QueryAllPrevious(EntityType type) const {
 /// QueryAllNext
 /// \return Query all statements that come next or previous to some statement
 std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryAllNextRelations();
 }
@@ -523,7 +517,7 @@ std::unordered_set<std::string> PKB::QueryAllNextRelations() const {
 /// \return Query statement(s) that immediately comes next after given statement
 std::unordered_set<std::string> PKB::QueryNext(int statement_number,
                                                EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryNext(statement_number, type);
 }
@@ -534,7 +528,7 @@ std::unordered_set<std::string> PKB::QueryNext(int statement_number,
 /// statement
 std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
                                                    EntityType type) const {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryPrevious(statement_number, type);
 }
@@ -544,7 +538,7 @@ std::unordered_set<std::string> PKB::QueryPrevious(int statement_number,
 /// \return Query statement(s) that comes nextT after given statement
 std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
                                                 EntityType type) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryNextT(statement_number, type);
 }
@@ -554,7 +548,7 @@ std::unordered_set<std::string> PKB::QueryNextT(int statement_number,
 /// \return Query statement(s) that comes previousT before given statement
 std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
                                                     EntityType type) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetCfgQueryable()
       .QueryPreviousT(statement_number, type);
 }
@@ -566,7 +560,7 @@ std::unordered_set<std::string> PKB::QueryPreviousT(int statement_number,
 /// QueryAllAffects
 /// \return Query all assign statements that affects some other statement
 std::unordered_set<std::string> PKB::QueryAllAffects() {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAllAffects();
 }
@@ -575,7 +569,7 @@ std::unordered_set<std::string> PKB::QueryAllAffects() {
 /// \return Query all assign statements that are affected by some other
 /// statement
 std::unordered_set<std::string> PKB::QueryAllAffectsBy() {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAllAffectsBy();
 }
@@ -584,7 +578,7 @@ std::unordered_set<std::string> PKB::QueryAllAffectsBy() {
 /// \param statement_number statement
 /// \return Query all assign statements that affects given statement
 std::unordered_set<std::string> PKB::QueryAffects(int statement_number) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAffects(statement_number);
 }
@@ -593,7 +587,7 @@ std::unordered_set<std::string> PKB::QueryAffects(int statement_number) {
 /// \param statement_number statement
 /// \return Query all assign statements that are affected by given statement
 std::unordered_set<std::string> PKB::QueryAffectsBy(int statement_number) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAffectsBy(statement_number);
 }
@@ -602,7 +596,7 @@ std::unordered_set<std::string> PKB::QueryAffectsBy(int statement_number) {
 /// \param statement_number statement
 /// \return Query all assign statements that affectsT given statement
 std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAffectsT(statement_number);
 }
@@ -611,7 +605,7 @@ std::unordered_set<std::string> PKB::QueryAffectsT(int statement_number) {
 /// \param statement_number statement
 /// \return Query all assign statements that are affectedT by given statement
 std::unordered_set<std::string> PKB::QueryAffectsTBy(int statement_number) {
-  return queryable_pkb_impl_.GetRelationshipQueryablePkb()
+  return queryable_pkb_facade_.GetRelationshipQueryablePkb()
       .GetAffectsQueryable()
       .QueryAffectsTBy(statement_number);
 }
@@ -622,21 +616,21 @@ std::unordered_set<std::string> PKB::QueryAffectsTBy(int statement_number) {
 
 std::unordered_set<std::string> PKB::QueryAllAssignPattern(
     Expression exp) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetAssignPatternQueryable()
       .QueryAllAssignPattern(exp);
 }
 
 std::unordered_set<std::string> PKB::QueryAssignPattern(std::string lhs,
                                                         Expression exp) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetAssignPatternQueryable()
       .QueryAssignPattern(lhs, exp);
 }
 
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
     int statement_number) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetAssignPatternQueryable()
       .QueryPatternVariablesFromAssign(statement_number);
 }
@@ -649,7 +643,7 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromAssign(
 /// \return Get all While Statements that use a variable in conditional
 /// container
 std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetWhilePatternQueryable()
       .QueryAllWhilePattern();
 }
@@ -660,7 +654,7 @@ std::unordered_set<std::string> PKB::QueryAllWhilePattern() const {
 /// container
 std::unordered_set<std::string> PKB::QueryWhilePattern(
     std::string ident) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetWhilePatternQueryable()
       .QueryWhilePattern(ident);
 }
@@ -671,7 +665,7 @@ std::unordered_set<std::string> PKB::QueryWhilePattern(
 /// Statement
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
     int statement_number) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetWhilePatternQueryable()
       .QueryPatternVariablesFromWhile(statement_number);
 }
@@ -683,7 +677,7 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromWhile(
 /// QueryAllIfPattern
 /// \return Get all If Statements that use a variable in conditional container
 std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetIfPatternQueryable()
       .QueryAllIfPattern();
 }
@@ -693,7 +687,7 @@ std::unordered_set<std::string> PKB::QueryAllIfPattern() const {
 /// \return Get all If Statements that use variable ident in conditional
 /// container
 std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetIfPatternQueryable()
       .QueryIfPattern(ident);
 }
@@ -704,7 +698,7 @@ std::unordered_set<std::string> PKB::QueryIfPattern(std::string ident) const {
 /// Statement
 std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
     int statement_number) const {
-  return queryable_pkb_impl_.GetPatternQueryablePkb()
+  return queryable_pkb_facade_.GetPatternQueryablePkb()
       .GetIfPatternQueryable()
       .QueryPatternVariablesFromIf(statement_number);
 }
@@ -715,7 +709,7 @@ std::unordered_set<std::string> PKB::QueryPatternVariablesFromIf(
 
 std::string PKB::QueryWithAttributeFromStatement(EntityType type,
                                                  int statement_number) const {
-  return queryable_pkb_impl_.GetEntityQueryable()
+  return queryable_pkb_facade_.GetEntityQueryable()
       .QueryWithAttributeFromStatement(type, statement_number);
 }
 
@@ -726,7 +720,7 @@ std::string PKB::QueryWithAttributeFromStatement(EntityType type,
 /// \return Query entities that matches attribute proc_name or var_name
 std::unordered_set<std::string> PKB::QueryWithAttribute(
     EntityType type, AttributeName name, std::string identifier) const {
-  return queryable_pkb_impl_.GetEntityQueryable().QueryWithAttribute(
+  return queryable_pkb_facade_.GetEntityQueryable().QueryWithAttribute(
       type, name, identifier);
 }
 
@@ -738,11 +732,16 @@ std::unordered_set<std::string> PKB::QueryWithAttribute(
 std::unordered_set<std::string> PKB::QueryWithAttribute(EntityType type,
                                                         AttributeName name,
                                                         int number) const {
-  return queryable_pkb_impl_.GetEntityQueryable().QueryWithAttribute(type, name,
-                                                                     number);
+  return queryable_pkb_facade_.GetEntityQueryable().QueryWithAttribute(
+      type, name, number);
 }
 
 bool PKB::CheckValidAffectsStmtNo(int stmt_no) const {
-  return queryable_pkb_impl_.GetEntityQueryable().CheckValidAffectsStmtNo(
+  return queryable_pkb_facade_.GetEntityQueryable().CheckValidAffectsStmtNo(
       stmt_no);
 }
+
+PKB::PKB(StorablePkbFacade& storable_pkb_facade,
+         QueryablePkbFacade& queryable_pkb_facade)
+    : storable_pkb_facade_(storable_pkb_facade),
+      queryable_pkb_facade_(queryable_pkb_facade) {}

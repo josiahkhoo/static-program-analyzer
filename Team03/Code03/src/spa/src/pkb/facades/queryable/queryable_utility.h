@@ -1,7 +1,7 @@
 #ifndef SPA_QUERYABLE_UTILITY_H
 #define SPA_QUERYABLE_UTILITY_H
 
-#include "pkb/impl/queryable/entity_queryable.h"
+#include "pkb/facades/queryable/entity_queryable.h"
 #include "pkb/relationship_store/relationship_manager.h"
 
 class QueryableUtility {

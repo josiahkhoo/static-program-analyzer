@@ -1,14 +1,14 @@
 #ifndef SPA_QUERYABLE_PKB_IMPL_H
 #define SPA_QUERYABLE_PKB_IMPL_H
 
-#include "pkb/impl/queryable/pattern_queryable_pkb.h"
-#include "pkb/impl/queryable/relationship_queryable_pkb.h"
+#include "pkb/facades/queryable/pattern_queryable_pkb.h"
+#include "pkb/facades/queryable/relationship_queryable_pkb.h"
 
-class QueryablePkbImpl {
+class QueryablePkbFacade {
  public:
-  QueryablePkbImpl(const EntityManager &entity_manager_,
-                   const RelationshipManager &relationship_manager_,
-                   const PatternManager &pattern_manager_);
+  QueryablePkbFacade(const EntityManager &entity_manager_,
+                     const RelationshipManager &relationship_manager_,
+                     const PatternManager &pattern_manager_);
 
   [[nodiscard]] const EntityQueryable &GetEntityQueryable() const;
   [[nodiscard]] const RelationshipQueryablePkb &GetRelationshipQueryablePkb()

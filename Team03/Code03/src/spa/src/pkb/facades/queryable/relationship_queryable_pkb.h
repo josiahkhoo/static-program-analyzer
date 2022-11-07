@@ -1,13 +1,13 @@
 #ifndef SPA_RELATIONSHIP_QUERYABLE_PKB_H
 #define SPA_RELATIONSHIP_QUERYABLE_PKB_H
 
-#include "pkb/impl/queryable/relationship/affects_queryable.h"
-#include "pkb/impl/queryable/relationship/calls_queryable.h"
-#include "pkb/impl/queryable/relationship/cfg_queryable.h"
-#include "pkb/impl/queryable/relationship/follows_queryable.h"
-#include "pkb/impl/queryable/relationship/modifies_queryable.h"
-#include "pkb/impl/queryable/relationship/parent_queryable.h"
-#include "pkb/impl/queryable/relationship/uses_queryable.h"
+#include "pkb/facades/queryable/relationship/affects_queryable.h"
+#include "pkb/facades/queryable/relationship/calls_queryable.h"
+#include "pkb/facades/queryable/relationship/cfg_queryable.h"
+#include "pkb/facades/queryable/relationship/follows_queryable.h"
+#include "pkb/facades/queryable/relationship/modifies_queryable.h"
+#include "pkb/facades/queryable/relationship/parent_queryable.h"
+#include "pkb/facades/queryable/relationship/uses_queryable.h"
 
 class RelationshipQueryablePkb {
  public:

@@ -36,7 +36,14 @@
 TEST_CASE("Source Processor", "[SourceProcessor]") {
   Lexer lexer;
 
-  PKB pkb;
+  EntityManager entity_manager_;
+  RelationshipManager relationship_manager_;
+  PatternManager pattern_manager_;
+  QueryablePkbFacade queryable_pkb_facade_ = QueryablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  StorablePkbFacade storable_pkb_facade_ = StorablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  PKB pkb_ = PKB(storable_pkb_facade_, queryable_pkb_facade_);
 
   // SP dependencies:
   SimpleParser simple_parser;
@@ -80,8 +87,8 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
   DesignExtractorImpl design_extractor = DesignExtractorImpl(
       entity_extractor, cfg_extractor, abstraction_extractor);
 
-  SourceProcessor source_processor_under_test = SourceProcessor(
-      lexer, simple_parser, design_extractor, pkb);
+  SourceProcessor source_processor_under_test =
+      SourceProcessor(lexer, simple_parser, design_extractor, pkb_);
 
   SECTION("Parse valid source file") {
     std::string filepath = std::getenv("SAMPLE_SOURCE_PATH");
@@ -92,7 +99,7 @@ TEST_CASE("Source Processor", "[SourceProcessor]") {
     QueryParser query_parser_;
     QueryProcessingSubsystem query_processing_subsystem_under_test =
         QueryProcessingSubsystem(lexer, query_parser_, planner_, evaluator_,
-                                 pkb);
+                                 pkb_);
 
     std::string query = "assign a; Select a such that Follows(1, a)";
     std::list<std::string> res = {};
