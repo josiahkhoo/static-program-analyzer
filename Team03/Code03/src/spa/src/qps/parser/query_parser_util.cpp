@@ -113,8 +113,12 @@ Expression QueryParserUtil::CreateExpression(
   Expression exp = maybe_expression.value();
   switch (wildcard_found) {
     case 2:
-      exp.has_wildcard = true;
-      break;
+      if (exp.to_match.empty()) {
+        throw SyntaxException("Expected string expression");
+      } else {
+        exp.has_wildcard = true;
+        break;
+      }
     case 1:
       if (!exp.to_match.empty()) {
         throw SyntaxException("Expected different declaration");
@@ -177,6 +181,12 @@ std::string QueryParserUtil::GetExpression(
   while (next.IsNot(Token::INVERTED_COMMAS) &&
          next.IsNot(Token::RIGHT_ROUND_BRACKET)) {
     res.append(GetTerm(tokens, builder));
+
+    // Catch _(
+    if (tokens->CheckAhead(Token::LEFT_ROUND_BRACKET)) {
+      throw SyntaxException("Missing operator");
+    }
+
     tokens->Forward();
     next = tokens->Peek();
   }
@@ -191,17 +201,16 @@ std::string QueryParserUtil::GetTerm(
     const std::shared_ptr<TokenHandler>& tokens,
     const QueryStringBuilder& builder) {
   std::string res;
-  Token next = tokens->Peek();
   // var_name, const_value, operator
-  if (next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER)) {
-    res.append(next.GetValue());
+  if (tokens->IsVarOrConst()) {
+    res.append(tokens->PeekValue());
   } else if (tokens->IsMathOperator()) {
-    res.append(next.GetValue());
+    res.append(tokens->PeekValue());
     tokens->Forward();
     res.append(GetTerm(tokens, builder));
   }
   // ( exp )
-  else if (next.Is(Token::LEFT_ROUND_BRACKET)) {
+  else if (tokens->MatchKind(Token::LEFT_ROUND_BRACKET)) {
     tokens->Forward();
     res.append("(");
 
