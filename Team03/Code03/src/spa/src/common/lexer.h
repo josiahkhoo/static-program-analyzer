@@ -14,7 +14,7 @@ class Lexer {
 
  private:
   static void ProcessLineHead(std::string &line, std::vector<Token> &tokens,
-                       TokenRules &token_rules);
+                              TokenRules &token_rules);
   static void FindTokens(std::vector<Token> &tokens,
                          const std::pair<Token::Kind, std::string> &pair,
                          const std::smatch &matched_regex);
