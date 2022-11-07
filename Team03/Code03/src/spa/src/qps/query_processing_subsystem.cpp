@@ -9,7 +9,7 @@ QueryProcessingSubsystem::QueryProcessingSubsystem(
     const Lexer &lexer, Parser<QueryString, std::vector<Token>> &parser,
     const Planner &planner, const Evaluator &evaluator,
     QueryablePkb &queryable_pkb)
-    : lexer_(lexer),
+    : lexer_(QueryLexer(lexer)),
       parser_(parser),
       planner_(planner),
       evaluator_(evaluator),
@@ -19,7 +19,7 @@ void QueryProcessingSubsystem::Process(std::string query,
                                        std::list<std::string> &results) {
   QueryString q_string;
   try {
-    std::vector<Token> tokens = lexer_.LexLine(query);
+    std::vector<Token> tokens = lexer_.Execute(query);
     q_string = parser_.Parse(tokens);
   } catch (const SyntaxException &ex) {
     results.emplace_back(ex.what());

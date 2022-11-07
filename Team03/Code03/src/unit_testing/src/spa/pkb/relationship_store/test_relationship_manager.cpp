@@ -1,21 +1,21 @@
 #include <algorithm>
-#include <iostream>
+#include <sstream>
 #include <unordered_set>
 
 #include "catch.hpp"
-#include "common/lexer.h"
 #include "pkb/relationship_store/relationship_manager.h"
 #include "sp/extractor/abstraction/modifies_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/cfg_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
   CFGExtractorImpl cfg_extractor_under_test = CFGExtractorImpl();
   SimpleParser parser;
-  Lexer lexer;
+  SimpleLexer lexer = SimpleLexer(Lexer());
   RelationshipManager relationship_manager;
   ModifiesAbstractionExtractorImpl modifies_extractor =
       ModifiesAbstractionExtractorImpl();
@@ -38,7 +38,7 @@ TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
       read_entity_node_extractor, statement_entity_node_extractor,
       variable_entity_node_extractor, while_entity_node_extractor);
 
-  std::string input =
+  std::istringstream input(
       "procedure First "
       "{ "
       "x = 0;"
@@ -62,14 +62,14 @@ TEST_CASE("CFG_AFFECTS_QUERIES", "[CFGAffectsQueries]") {
       "z = 5;"
       "v = z;"
       "print v;"
-      "}";
+      "}");
 
   std::unordered_set<std::string> assigns(
       {"1", "2", "4", "6", "8", "9", "10", "11", "12", "13", "14"});
   std::unordered_set<std::string> calls({"5"});
   std::unordered_set<std::string> reads;
 
-  std::vector<Token> tokens = lexer.LexLine(input);
+  std::vector<Token> tokens = lexer.Execute(input);
   tokens.emplace_back(Token::END);
   auto ast = parser.Parse(tokens);
   std::vector<CFG> res = cfg_extractor_under_test.Extract(ast);

@@ -7,6 +7,7 @@
 #include "common/lexer.h"
 #include "evaluator.h"
 #include "planner.h"
+#include "query_lexer.h"
 #include "query_parser.h"
 
 class QueryProcessingSubsystem {
@@ -19,7 +20,7 @@ class QueryProcessingSubsystem {
   void Process(std::string query, std::list<std::string> &results);
 
  private:
-  const Lexer &lexer_;
+  QueryLexer lexer_;
   Parser<QueryString, std::vector<Token>> &parser_;
   const Planner &planner_;
   const Evaluator &evaluator_;

@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "common/lexer.h"
 #include "common/parser.h"
 #include "common/storable_pkb.h"
 #include "common/t_node.h"
+#include "simple_lexer.h"
 #include "sp/extractor/design_extractor.h"
 
 class SourceProcessor {
@@ -17,7 +17,7 @@ class SourceProcessor {
   void Process(const std::string &filename);
 
  private:
-  Lexer &lexer_;
+  SimpleLexer lexer_;
   Parser<TNode, std::vector<Token>> &parser_;
   DesignExtractor &design_extractor_;
   StorablePkb &storable_pkb_;

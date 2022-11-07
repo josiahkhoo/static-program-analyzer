@@ -51,8 +51,14 @@ class SPA {
   Lexer lexer_;
 
   // PKB dependencies:
-  // Temp:
-  PKB pkb_;
+  EntityManager entity_manager_;
+  RelationshipManager relationship_manager_;
+  PatternManager pattern_manager_;
+  QueryablePkbFacade queryable_pkb_facade_ = QueryablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  StorablePkbFacade storable_pkb_facade_ = StorablePkbFacade(
+      entity_manager_, relationship_manager_, pattern_manager_);
+  PKB pkb_ = PKB(storable_pkb_facade_, queryable_pkb_facade_);
 
   // SP dependencies:
   SimpleParser simple_parser_;

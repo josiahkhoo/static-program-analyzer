@@ -1,16 +1,19 @@
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 #include "catch.hpp"
 #include "common/lexer.h"
 #include "sp/extractor/abstraction/calls_abstraction_extractor.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
+#include "sp/simple_lexer.h"
 #include "sp/simple_parser.h"
 
 TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
   CallsAbstractionExtractor extractor_under_test = CallsAbstractionExtractor();
   SimpleParser parser;
+  SimpleLexer lexer = SimpleLexer(Lexer());
   AssignEntityNodeExtractor assign_entity_node_extractor;
   CallEntityNodeExtractor call_entity_node_extractor;
   ConstantEntityNodeExtractor constant_entity_node_extractor;
@@ -29,9 +32,8 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
       variable_entity_node_extractor, while_entity_node_extractor);
 
   SECTION("Extract from single Procedure with no call") {
-    Lexer lexer;
-    std::string input = "procedure p { m = x * y + z / 100; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+    std::istringstream input("procedure p { m = x * y + z / 100; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -67,11 +69,10 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
   }
 
   SECTION("Extract from Procedure with 2 call") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure main { m = x * y + z / 100; call second; call third;} "
-        "procedure second { print x; } procedure third { print z; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "procedure second { print x; } procedure third { print z; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -122,11 +123,10 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
   }
 
   SECTION("Extract from Procedure with chain call") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure main { m = x * y + z / 100; call second;} "
-        "procedure second { call third; } procedure third { print z; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "procedure second { call third; } procedure third { print z; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
@@ -179,11 +179,10 @@ TEST_CASE("CallsAbstraction Extractor", "[CallsAbstractionExtractor]") {
   }
 
   SECTION("Extract from Procedure 2 calls and with chain call") {
-    Lexer lexer;
-    std::string input =
+    std::istringstream input(
         "procedure main { m = x * y + z / 100; call second; call third;} "
-        "procedure second { call third; } procedure third { print z; }";
-    std::vector<Token> tokens = lexer.LexLine(input);
+        "procedure second { call third; } procedure third { print z; }");
+    std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
 
