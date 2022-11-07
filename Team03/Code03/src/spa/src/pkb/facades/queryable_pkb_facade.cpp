@@ -1,6 +1,6 @@
-#include "queryable_pkb_impl.h"
+#include "queryable_pkb_facade.h"
 
-QueryablePkbImpl::QueryablePkbImpl(
+QueryablePkbFacade::QueryablePkbFacade(
     const EntityManager& entity_manager_,
     const RelationshipManager& relationship_manager_,
     const PatternManager& pattern_manager_)
@@ -10,19 +10,19 @@ QueryablePkbImpl::QueryablePkbImpl(
 
 /// Get EntityQueryable
 /// \return EntityQueryable
-const EntityQueryable& QueryablePkbImpl::GetEntityQueryable() const {
+const EntityQueryable& QueryablePkbFacade::GetEntityQueryable() const {
   return entity_queryable_;
 }
 
 /// Get RelationshipQueryablePkb
 /// \return RelationshipQueryablePkb
-const RelationshipQueryablePkb& QueryablePkbImpl::GetRelationshipQueryablePkb()
-    const {
+const RelationshipQueryablePkb&
+QueryablePkbFacade::GetRelationshipQueryablePkb() const {
   return relationship_queryable_pkb_;
 }
 
 /// Get PatternQueryablePkb
 /// \return PatternQueryablePkb
-const PatternQueryablePkb& QueryablePkbImpl::GetPatternQueryablePkb() const {
+const PatternQueryablePkb& QueryablePkbFacade::GetPatternQueryablePkb() const {
   return pattern_queryable_pkb_;
 }

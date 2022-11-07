@@ -3,12 +3,13 @@
 
 #include "common/queryable_pkb.h"
 #include "common/storable_pkb.h"
-#include "pkb/impl/queryable_pkb_impl.h"
-#include "pkb/impl/storable_pkb_impl.h"
+#include "pkb/facades/queryable_pkb_facade.h"
+#include "pkb/facades/storable_pkb_facade.h"
 
 class PKB : public QueryablePkb, public StorablePkb {
  public:
-  PKB();
+  PKB(StorablePkbFacade& storable_pkb_facade,
+      QueryablePkbFacade& queryable_pkb_facade);
 
   /* ====================================
    * Entity Store Methods
@@ -225,11 +226,8 @@ class PKB : public QueryablePkb, public StorablePkb {
   [[nodiscard]] bool CheckValidAffectsStmtNo(int stmt_no) const override;
 
  private:
-  EntityManager entity_manager_;
-  RelationshipManager relationship_manager_;
-  PatternManager pattern_manager_;
-  StorablePkbImpl storable_pkb_impl_;
-  QueryablePkbImpl queryable_pkb_impl_;
+  StorablePkbFacade& storable_pkb_facade_;
+  QueryablePkbFacade& queryable_pkb_facade_;
 };
 
 #endif  // SPA_PKB_H

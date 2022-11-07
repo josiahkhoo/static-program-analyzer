@@ -1,9 +1,9 @@
 #ifndef SPA_PATTERN_QUERYABLE_PKB_H
 #define SPA_PATTERN_QUERYABLE_PKB_H
 
-#include "pkb/impl/queryable/pattern/assign_pattern_queryable.h"
-#include "pkb/impl/queryable/pattern/if_pattern_queryable.h"
-#include "pkb/impl/queryable/pattern/while_pattern_queryable.h"
+#include "pkb/facades/queryable/pattern/assign_pattern_queryable.h"
+#include "pkb/facades/queryable/pattern/if_pattern_queryable.h"
+#include "pkb/facades/queryable/pattern/while_pattern_queryable.h"
 
 class PatternQueryablePkb {
  public:
