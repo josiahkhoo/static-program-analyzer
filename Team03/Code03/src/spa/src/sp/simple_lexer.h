@@ -11,8 +11,10 @@ class SimpleLexer {
 
  private:
   const Lexer &lexer_;
-  static std::vector<std::string> ConvertStreamToLines(std::istream &stream);
   static TokenRules token_rules_;
+
+  // Splits given stream of text into a list of lines
+  static std::vector<std::string> ConvertStreamToLines(std::istream &stream);
 };
 
 #endif  // SPA_SIMPLE_LEXER_H

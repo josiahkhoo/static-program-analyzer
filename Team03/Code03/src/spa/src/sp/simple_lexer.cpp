@@ -35,8 +35,8 @@ TokenRules SimpleLexer::token_rules_ = {
 
 SimpleLexer::SimpleLexer(const Lexer &lexer) : lexer_(lexer) {}
 
-// Splits given stream of text into a list of lines
-std::vector<std::string> SimpleLexer::ConvertStreamToLines(std::istream &stream) {
+std::vector<std::string> SimpleLexer::ConvertStreamToLines(
+    std::istream &stream) {
   std::vector<std::string> lines;
   std::string line;
 
