@@ -253,3 +253,18 @@ assign a;
 Select a pattern (_, "asd")
 SyntaxError
 5000
+52 - (SYNTAX ERROR) Invalid const_value starts with 0
+assign a;
+Select a pattern a(_, "x + (z % 09)")
+SyntaxError
+5000
+53 - (SYNTAX ERROR) Invalid var_name starts with digit
+assign a;
+Select a pattern a(_, "x + (8z % (9))")
+SyntaxError
+5000
+54 - (SYNTAX ERROR) Sequential operators
+assign a;
+Select a pattern a(_, "z +- y")
+SyntaxError
+5000

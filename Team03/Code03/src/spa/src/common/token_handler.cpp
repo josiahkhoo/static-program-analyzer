@@ -64,11 +64,6 @@ bool TokenHandler::IsMathOperator() {
          next.Is(Token::PERCENT);
 }
 
-bool TokenHandler::IsVarOrConst() {
-  Token next = Peek();
-  return next.Is(Token::IDENTIFIER) || next.Is(Token::NUMBER);
-}
-
 bool TokenHandler::CheckAhead(Token::Kind kind) {
   if (MatchKind(kind)) {
     return true;

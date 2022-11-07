@@ -26,7 +26,6 @@ class TokenHandler {
   bool IsMathOperator();
   int GetTokenPos();
   void SetTokenPos(int token_pos);
-  bool IsVarOrConst();
   bool CheckAhead(Token::Kind kind);
 };
 

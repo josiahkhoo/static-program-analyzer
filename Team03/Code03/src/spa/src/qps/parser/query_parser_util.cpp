@@ -206,7 +206,12 @@ std::string QueryParserUtil::GetTerm(
     const QueryStringBuilder& builder) {
   std::string res;
   // var_name, const_value, operator
-  if (tokens->IsVarOrConst()) {
+  if (tokens->MatchKind(Token::IDENTIFIER)) {
+    res.append(tokens->PeekValue());
+  } else if (tokens->MatchKind(Token::NUMBER)) {
+    // Validate integer
+    ExtractInteger(tokens);
+    tokens->Back();
     res.append(tokens->PeekValue());
   } else if (tokens->IsMathOperator()) {
     res.append(tokens->PeekValue());
