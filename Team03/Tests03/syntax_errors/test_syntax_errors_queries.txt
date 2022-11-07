@@ -13,91 +13,6 @@ variable v;
 select v such
 SyntaxError
 5000
-4 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression single operator
-assign a;
-Select a pattern a(_, "+")
-SyntaxError
-5000
-5 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression trailing operator
-assign a;
-Select a pattern a(_, _"x+")
-SyntaxError
-5000
-6 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression missing bracket
-assign a;
-Select a pattern a(_, _"x+y)")
-SyntaxError
-5000
-7 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression must be string
-assign a2; variable v;
-Select a2  pattern a2 (_, v)
-SyntaxError
-5000
-8 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression must be string
-constant c; assign a; variable v;
-Select c such that Uses (a, v) pattern a (_,  c)
-SyntaxError
-5000
-9 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression bracket single operator
-assign a;
-Select a pattern a ( _, _"(*)"_)
-SyntaxError
-5000
-10 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternAssign expression missing 1st const
-assign a;
-Select a pattern a (_, _" +temp"_)
-SyntaxError
-5000
-11 - (SYNTAX ERROR) [MILESTONE 1 REGRESSION] Invalid PatternIf arg1 must be entityRef, not expression
-if i;
-Select i pattern i ("a+b",_,_)
-SyntaxError
-5000
-12 - (SYNTAX ERROR) Invalid PatternIf arg1 must be entityRef, not statementRef
-if i;
-Select i pattern i (1,_,_)
-SyntaxError
-5000
-13 - (SYNTAX ERROR) Invalid PatternIf arg2 must be wildcard
-assign a; if i;
-Select a pattern i (_, "x", _)
-SyntaxError
-5000
-14 - (SYNTAX ERROR) Invalid PatternIf arg3 must be wildcard
-assign a; if i;
-Select a pattern i (_, _, 1)
-SyntaxError
-5000
-15 - (SYNTAX ERROR) Invalid PatternIf missing arg
-assign a; if i;
-Select a pattern i (_, _)
-SyntaxError
-5000
-16 - (SYNTAX ERROR) Invalid PatternWhile arg1 must be entityRef, not expression
-if i; while w;
-Select i pattern i ("a+b",_)
-SyntaxError
-5000
-12 - (SYNTAX ERROR) Invalid PatternWhile arg1 must be entityRef, not statementRef
-while i;
-Select i pattern i (1,_)
-SyntaxError
-5000
-13 - (SYNTAX ERROR) Invalid PatternWhile arg2 must be wildcard
-assign a; while w;
-Select a pattern w (_, "x")
-SyntaxError
-5000
-14 - (SYNTAX ERROR) Invalid PatternWhile arg3 must be wildcard, not statementRef
-assign a; while w;
-Select a pattern w (_, 1)
-SyntaxError
-5000
-15 - (SYNTAX ERROR) Invalid PatternWhile missing arg
-while w;
-Select w pattern w (_)
-SyntaxError
-5000
 16 - (SYNTAX ERROR) Invalid With missing arg2
 procedure p;
 Select p with p.procName =
@@ -158,16 +73,6 @@ assign a, b;
 Select <a b>
 SyntaxError
 5000
-27 - (SYNTAX ERROR) Invalid PatternAssign expression front only wildcard
-assign a;
-Select a pattern a(_, _"x+y")
-SyntaxError
-5000
-28 - (SYNTAX ERROR) Invalid PatternAssign expression back only wildcard
-assign a;
-Select a pattern a(_, "x+y"_)
-SyntaxError
-5000
 29 - (SYNTAX ERROR) Invalid [] bracket
 stmt s;
 Select s such that Follows[1, s]
@@ -188,17 +93,12 @@ stmt s; variable v;
 Select s such that Uses(s, _v)
 SyntaxError
 5000
-33 - (SYNTAX ERROR) Missing expression-spec
-assign a;
-Select a pattern a(_, )
-SyntaxError
-5000
-34 - (SYNTAX ERROR) Invalid modifies identifier
+37 - (SYNTAX ERROR) Invalid modifies identifier
 stmt s; variable v;
 Select s such that Modifies(s, "#")
 SyntaxError
 5000
-35 - (SYNTAX ERROR) Invalid uses identifier
+38 - (SYNTAX ERROR) Invalid uses identifier
 stmt s1; variable v;
 Select s1 such that Uses(s1, "")
 SyntaxError
