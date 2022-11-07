@@ -381,6 +381,10 @@ Integer QueryParserUtil::ExtractInteger(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::NUMBER);
   tokens->Back();
+  std::string value = tokens->PeekValue();
+  if (value.size() > 1 && value[0] == '0') {
+    throw SyntaxException("Leading zeros");
+  }
   Integer integer = stoi(tokens->PeekValue());
   tokens->Forward();
   return integer;
