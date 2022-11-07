@@ -190,6 +190,10 @@ std::string QueryParserUtil::GetExpression(
     tokens->Forward();
     next = tokens->Peek();
   }
+  // No expression
+  if (res.empty()) {
+    throw SyntaxException("Invalid expression");
+  }
   return res;
 }
 
@@ -220,9 +224,9 @@ std::string QueryParserUtil::GetTerm(
     tokens->Back();
     res.append(")");
   }
-  // No term, const, exp detected
+  // No term, const, factor detected
   if (res.empty()) {
-    throw SyntaxException("Invalid expression");
+    throw SyntaxException("Invalid term");
   }
   return res;
 }

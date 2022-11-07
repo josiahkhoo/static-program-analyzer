@@ -1,5 +1,6 @@
 #include "query_operation_matcher.h"
 
+#include "common/exceptions/syntax_exception.h"
 #include "query_parser_util.h"
 
 /// Checks if current tokens match clause/operation grammar word
@@ -24,6 +25,9 @@ bool QueryOperationMatcher::MatchParser(
   std::shared_ptr<TokenHandler> tokens = data.first;
   QueryStringBuilder builder = data.second;
   bool res = false;
+  if (!tokens->MatchKind(Token::IDENTIFIER)) {
+    throw SyntaxException("Missing syn-pattern");
+  }
   Synonym synonym =
       QueryParserUtil::ExtractSynonym(builder, tokens->PeekValue());
   // Check if ASSIGN, IF, WHILE
