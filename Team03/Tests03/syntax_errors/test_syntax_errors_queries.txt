@@ -103,3 +103,13 @@ stmt s1; variable v;
 Select s1 such that Uses(s1, "")
 SyntaxError
 5000
+39 - (SYNTAX ERROR) Leading zero
+assign a;
+Select a such that Follows(1, 02)
+SyntaxError
+5000
+40 - (SYNTAX ERROR) Leading zero
+assign a;
+Select a such that Parent*(01, 2)
+SyntaxError
+5000

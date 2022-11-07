@@ -190,6 +190,10 @@ std::string QueryParserUtil::GetExpression(
     tokens->Forward();
     next = tokens->Peek();
   }
+  // No expression
+  if (res.empty()) {
+    throw SyntaxException("Invalid expression");
+  }
   return res;
 }
 
@@ -202,11 +206,27 @@ std::string QueryParserUtil::GetTerm(
     const QueryStringBuilder& builder) {
   std::string res;
   // var_name, const_value, operator
-  if (tokens->IsVarOrConst()) {
+  if (tokens->MatchKind(Token::IDENTIFIER)) {
     res.append(tokens->PeekValue());
+    if (tokens->CheckAhead(Token::IDENTIFIER) ||
+        tokens->CheckAhead(Token::NUMBER)) {
+      throw SyntaxException("Invalid expression");
+    }
+  } else if (tokens->MatchKind(Token::NUMBER)) {
+    // Validate integer
+    ExtractInteger(tokens);
+    tokens->Back();
+    res.append(tokens->PeekValue());
+    if (tokens->CheckAhead(Token::IDENTIFIER) ||
+        tokens->CheckAhead(Token::NUMBER)) {
+      throw SyntaxException("Invalid expression");
+    }
   } else if (tokens->IsMathOperator()) {
     res.append(tokens->PeekValue());
     tokens->Forward();
+    if (tokens->IsMathOperator()) {
+      throw SyntaxException("Invalid expression");
+    }
     res.append(GetTerm(tokens, builder));
   }
   // ( exp )
@@ -220,14 +240,14 @@ std::string QueryParserUtil::GetTerm(
     tokens->Back();
     res.append(")");
   }
-  // No term, const, exp detected
+  // No term, const, factor detected
   if (res.empty()) {
-    throw SyntaxException("Invalid expression");
+    throw SyntaxException("Invalid term");
   }
   return res;
 }
 
-/// Verifies statement reference
+/// Verifies statement reference is followable-parentable
 /// \param synonym
 void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   if (stmtRef.IsSynonym() &&
@@ -237,15 +257,15 @@ void QueryParserUtil::CheckFollowsParentRef(const StatementReference& stmtRef) {
   }
 }
 
-/// Verifies statement reference is an Assign synonym
+/// Verifies statement reference is an statement synonym
 /// \param stmtRef
-void QueryParserUtil::CheckAffectsRef(const StatementReference& stmtRef) {
+void QueryParserUtil::CheckStatementTypeRef(const StatementReference& stmtRef) {
   std::unordered_set<EntityType> allowedEntityTypes = {
       ASSIGN, STATEMENT, IF, WHILE, READ, PRINT, CALL};
   if (stmtRef.IsSynonym()) {
     EntityType type = stmtRef.GetSynonym().GetEntityType();
     if (!allowedEntityTypes.count(type)) {
-      throw SemanticException("Invalid statement reference for Affects clause");
+      throw SemanticException("Invalid statement reference");
     }
   }
 }
@@ -377,6 +397,10 @@ Integer QueryParserUtil::ExtractInteger(
     const std::shared_ptr<TokenHandler>& tokens) {
   tokens->Expect(Token::NUMBER);
   tokens->Back();
+  std::string value = tokens->PeekValue();
+  if (value.size() > 1 && value[0] == '0') {
+    throw SyntaxException("Leading zeros");
+  }
   Integer integer = stoi(tokens->PeekValue());
   tokens->Forward();
   return integer;

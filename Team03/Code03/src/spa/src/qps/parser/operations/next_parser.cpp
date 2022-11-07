@@ -20,10 +20,12 @@ std::shared_ptr<QueryOperation> NextParser::Parse(TokenBuilderPair data) {
   // Get stmt1
   StatementReference stmtRef1 =
       QueryParserUtil::ExtractStmtRef(tokens, builder);
+  QueryParserUtil::CheckStatementTypeRef(stmtRef1);
   tokens->Expect(Token::COMMA);
   // Get stmt2
   StatementReference stmtRef2 =
       QueryParserUtil::ExtractStmtRef(tokens, builder);
+  QueryParserUtil::CheckStatementTypeRef(stmtRef2);
   tokens->Expect(Token::RIGHT_ROUND_BRACKET);
   std::shared_ptr<NextClause> nxtCl =
       std::make_shared<NextClause>(stmtRef1, stmtRef2);
