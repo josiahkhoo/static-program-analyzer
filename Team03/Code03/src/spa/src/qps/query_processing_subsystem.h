@@ -5,6 +5,7 @@
 #include <string>
 
 #include "common/lexer.h"
+#include "common/storable_pkb.h"
 #include "evaluator.h"
 #include "planner.h"
 #include "query_parser.h"
