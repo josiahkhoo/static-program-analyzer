@@ -210,7 +210,7 @@ std::string QueryParserUtil::GetTerm(
     res.append(tokens->PeekValue());
     if (tokens->CheckAhead(Token::IDENTIFIER) ||
         tokens->CheckAhead(Token::NUMBER)) {
-      throw SyntaxException("");
+      throw SyntaxException("Invalid expression");
     }
   } else if (tokens->MatchKind(Token::NUMBER)) {
     // Validate integer
@@ -219,7 +219,7 @@ std::string QueryParserUtil::GetTerm(
     res.append(tokens->PeekValue());
     if (tokens->CheckAhead(Token::IDENTIFIER) ||
         tokens->CheckAhead(Token::NUMBER)) {
-      throw SyntaxException("");
+      throw SyntaxException("Invalid expression");
     }
   } else if (tokens->IsMathOperator()) {
     res.append(tokens->PeekValue());
