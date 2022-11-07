@@ -22,7 +22,7 @@ TEST_CASE("CFG Extractor", "[CFGExtractor]") {
   SimpleLexer lexer = SimpleLexer(Lexer());
 
   SECTION("Extract 1-depth node") {
-    std::istringstream input( "procedure p { m = x * y + z / 100; x = x + 1;}");
+    std::istringstream input("procedure p { m = x * y + z / 100; x = x + 1;}");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     auto ast = parser.Parse(tokens);

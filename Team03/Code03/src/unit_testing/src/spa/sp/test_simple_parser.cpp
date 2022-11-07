@@ -2,8 +2,8 @@
 #include <sstream>
 
 #include "catch.hpp"
-#include "sp/simple_parser.h"
 #include "sp/simple_lexer.h"
+#include "sp/simple_parser.h"
 
 bool deepEqual(TNode node1, TNode node2);
 
@@ -25,7 +25,7 @@ bool deepEqual(TNode node1, TNode node2) {
 TEST_CASE("Simple Parser", "[Simple Parser]") {
   SimpleParser parser = SimpleParser();
   SimpleLexer lexer = SimpleLexer(Lexer());
- 
+
   SECTION("Test print statement") {
     std::vector<Token> tokens_ = {Token(Token::IDENTIFIER, "procedure"),
                                   Token(Token::IDENTIFIER, "main"),
@@ -966,7 +966,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
     REQUIRE(deepEqual(res, program_node));
   }
   SECTION("Test call non existing procedure") {
-    std::istringstream input( "procedure p { call q; }");
+    std::istringstream input("procedure p { call q; }");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     TNode res = parser.Parse(tokens);
@@ -993,7 +993,7 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test recursive call procedure") {
-    std::istringstream input( "procedure p { call p; } ");
+    std::istringstream input("procedure p { call p; } ");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     TNode res = parser.Parse(tokens);
@@ -1005,7 +1005,8 @@ TEST_CASE("Simple Parser", "[Simple Parser]") {
   }
 
   SECTION("Test same name procedures") {
-    std::istringstream input( "procedure p { print x; } procedure p { print y; }");
+    std::istringstream input(
+        "procedure p { print x; } procedure p { print y; }");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     TNode res = parser.Parse(tokens);

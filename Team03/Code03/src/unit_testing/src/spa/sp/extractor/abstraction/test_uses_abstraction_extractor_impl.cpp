@@ -5,8 +5,8 @@
 #include "sp/extractor/abstraction/uses_abstraction_extractor_impl.h"
 #include "sp/extractor/abstraction_extractor_impl.h"
 #include "sp/extractor/entity_extractor_impl.h"
-#include "sp/simple_parser.h"
 #include "sp/simple_lexer.h"
+#include "sp/simple_parser.h"
 
 TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
   UsesAbstractionExtractorImpl extractor_under_test =
@@ -31,7 +31,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
       variable_entity_node_extractor, while_entity_node_extractor);
 
   SECTION("Extract from Procedure with Print") {
-    std::istringstream input( "procedure p { print x; print y; print z; }");
+    std::istringstream input("procedure p { print x; print y; print z; }");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
@@ -105,7 +105,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
   }
 
   SECTION("Extract from Procedure with Assign") {
-    std::istringstream input( "procedure p { m = x * y + z / 100; }");
+    std::istringstream input("procedure p { m = x * y + z / 100; }");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
@@ -270,7 +270,7 @@ TEST_CASE("Uses Abstraction Extractor Impl", "[UsesAbstractionExtractorImpl]") {
   }
 
   SECTION("Extract from While") {
-    std::istringstream input( "procedure p { while (v == 0) { print x; } }");
+    std::istringstream input("procedure p { while (v == 0) { print x; } }");
     std::vector<Token> tokens = lexer.Execute(input);
     tokens.emplace_back(Token::END);
     EntityExtractorResult eer = entity_extractor.Extract(parser.Parse(tokens));
